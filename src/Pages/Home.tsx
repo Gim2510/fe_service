@@ -15,7 +15,7 @@ export function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800"/>
 
                 {/* Animated globe */}
-                <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute inset-0 pointer-events-none z-10">
                     <HeroGlobe/>
                 </div>
 
@@ -25,7 +25,7 @@ export function Home() {
                 />
 
                 <div
-                    className="relative mx-auto max-w-7xl px-8 py-32 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center text-white">
+                    className="relative mx-auto max-w-7xl px-8 py-32 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center text-white z-10">
 
                     {/* Copy */}
                     <div className="flex flex-col gap-10">
@@ -67,7 +67,7 @@ export function Home() {
                     </div>
 
                     {/* Visual metaphor */}
-                    <div className="relative">
+                    <div className="relative z-20">
                         <div className="rounded-3xl border border-neutral-700 bg-neutral-900/70 p-8 shadow-2xl">
                             <div className="text-neutral-400 text-sm mb-4">
                                 Esempio di output
@@ -89,13 +89,14 @@ export function Home() {
             <section className="relative bg-neutral-950 text-white overflow-hidden">
                 {/* Texture */}
                 <div
-                    className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[size:28px_28px]"/>
+                    className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[size:32px_32px]"
+                />
 
                 <div className="relative mx-auto max-w-7xl px-8 py-32">
 
                     {/* Intro */}
                     <div className="max-w-3xl mb-24">
-                        <h2 className="text-4xl font-semibold leading-tight">
+                    <h2 className="text-4xl font-semibold leading-tight">
                             I problemi non sono isolati.
                             <br/>
                             <span className="text-neutral-400">
@@ -162,6 +163,7 @@ export function Home() {
 
             {/* COSA FACCIAMO */}
             <section className="relative">
+
                 <div className="mx-auto max-w-7xl px-8 py-28 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
 
                     {/* Visual */}
