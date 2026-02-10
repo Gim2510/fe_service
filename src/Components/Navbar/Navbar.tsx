@@ -6,17 +6,17 @@ export function Navbar() {
 
     return (
         <header className="sticky top-0 z-50 bg-white backdrop-blur border-b border-gray-200">
-            <nav className="mx-auto max-w-7xl px-8 py-4 flex items-center justify-between">
+            <nav className="mx-auto px-2 sm:px-8 py-4 flex items-center justify-between">
 
                 {/* Brand */}
                 <Link
                     to="/"
                     className="text-xl font-semibold tracking-tight text-gray-900">
-                    MyCompany<span className="text-gray-400">.</span>
+                    TechBridge<span className="text-gray-400">.</span>
                 </Link>
 
                 {/* Actions */}
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-2 sm:gap-6">
                     {!isAuthenticated ? (
                         <>
                             <NavLink
@@ -54,7 +54,7 @@ export function Navbar() {
                                 Survey
                             </NavLink>
                             <NavLink
-                                to="/dashboard"
+                                to="/contact"
                                 className={({ isActive }) =>
                                     `text-sm font-medium transition-colors ${
                                         isActive
@@ -63,7 +63,7 @@ export function Navbar() {
                                     }`
                                 }
                             >
-                                Dashboard
+                                Contacts
                             </NavLink>
 
                             <button
