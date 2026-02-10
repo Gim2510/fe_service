@@ -70,7 +70,7 @@ export function Home() {
                     <div className="relative z-20">
                         <div className="rounded-3xl border border-neutral-700 bg-neutral-900/70 p-8 shadow-2xl">
                             <div className="text-neutral-400 text-sm mb-4">
-                                Esempio di output
+                                Lorem ipsum dolor sit amet
                             </div>
 
                             <div className="space-y-4">
