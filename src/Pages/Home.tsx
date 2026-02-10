@@ -51,7 +51,7 @@ export function Home() {
                         <div className="flex items-center gap-8">
                             <button
                                 onClick={goToSurvey}
-                                className="group relative px-2 py-1 lg:px-12 lg:py-5 rounded-full bg-white text-neutral-900 font-medium lg:text-lg overflow-hidden cursor-pointer"
+                                className="group hover:scale-110 active:scale-90 transition-all ease-in-out relative px-2 py-1 lg:px-12 lg:py-5 rounded-full bg-white text-neutral-900 font-medium lg:text-lg overflow-hidden cursor-pointer"
                             >
           <span className="relative z-10">
             Scopri cosa stai perdendo
@@ -100,7 +100,7 @@ export function Home() {
                             I problemi non sono isolati.
                             <br/>
                             <span className="text-neutral-400">
-                                Sono tutti collegati.
+                                C'è sempre un filo conduttore.
                             </span>
                         </h2>
 
