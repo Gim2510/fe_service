@@ -8,7 +8,7 @@ export function VerifyEmailPage() {
     useEffect(() => {
         if (!_id) return;
 
-        fetch(`http://localhost:3001/v1/user/verify/${_id}`)
+        fetch(`https://${import.meta.env.VITE_USER_BASE_URL}/v1/user/verify/${_id}`)
             .then(res => {
                 if (res.ok) return res.json();
                 throw new Error("Verification failed");
