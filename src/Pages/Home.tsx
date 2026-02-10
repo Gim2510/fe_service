@@ -10,7 +10,7 @@ export function Home() {
         <main className="flex flex-col ">
 
             {/* HERO */}
-            <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+            <section className="relative min-h-[100vh] flex items-center overflow-hidden">
                 {/* Background texture / gradient */}
                 <div className="absolute inset-0 bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800"/>
 
