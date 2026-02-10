@@ -51,7 +51,7 @@ export function Home() {
                         <div className="flex items-center gap-8">
                             <button
                                 onClick={goToSurvey}
-                                className="group relative px-12 py-5 rounded-full bg-white text-neutral-900 font-medium text-lg overflow-hidden cursor-pointer"
+                                className="group relative px-2 py-1 lg:px-12 lg:py-5 rounded-full bg-white text-neutral-900 font-medium lg:text-lg overflow-hidden cursor-pointer"
                             >
           <span className="relative z-10">
             Scopri cosa stai perdendo
