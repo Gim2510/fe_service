@@ -6,6 +6,7 @@ export type UserType = {
     password: string;
     email: string;
     fiscal_code: string;
+    partita_iva: string;
     user_image?: string;
     given_name: string;
     family_name: string;

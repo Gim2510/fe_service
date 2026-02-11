@@ -107,7 +107,7 @@ export function Navbar() {
 
                                 <button
                                     onClick={logout}
-                                    className="text-sm font-medium text-gray-500 hover:text-red-600"
+                                    className="text-sm cursor-pointer font-medium text-gray-500 hover:text-red-600"
                                 >
                                     Logout
                                 </button>

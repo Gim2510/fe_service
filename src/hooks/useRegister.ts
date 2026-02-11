@@ -6,6 +6,7 @@ type RegisterInput = {
     family_name: string;
     password: string;
     fiscal_code: string;
+    partita_iva?: string;
 };
 
 export function useRegister() {
@@ -19,11 +20,14 @@ export function useRegister() {
         setSuccess(null);
 
         try {
-            const res = await fetch(`${import.meta.env.VITE_USER_BASE_URL}/v1/user/register`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data),
-            });
+            const res = await fetch(
+                `${import.meta.env.VITE_USER_BASE_URL}/v1/user/register`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                }
+            );
 
             if (!res.ok) {
                 const msg = await res.json();
@@ -40,6 +44,5 @@ export function useRegister() {
             setLoading(false);
         }
     }
-
     return { register, loading, error, success };
 }
