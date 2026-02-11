@@ -12,6 +12,7 @@ import {Home} from "./Pages/Home.tsx";
 import {VerifyEmailPage} from "./Pages/VerifyEmailPage.tsx";
 import {ContactPage} from "./Pages/ContactPage.tsx";
 import {LayoutSurvey} from "./Layout/LayoutSurvey.tsx";
+import {UserDashboard} from "./Pages/UserDashboard.tsx";
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/survey" element={<Protected><LayoutSurvey><Survey /></LayoutSurvey></Protected>}/>
                 <Route path="/survey/:survey_id/recap" element={<Protected><LayoutSurvey><SurveyRecap/></LayoutSurvey></Protected>} />
                 <Route path="/contact" element={<LayoutHomepage><ContactPage/></LayoutHomepage>} />
+                <Route path="/user" element={<Protected><LayoutHomepage><UserDashboard/></LayoutHomepage></Protected>} />
             </Routes>
         </AuthProvider>
     );

@@ -1,14 +1,19 @@
-import { useParams } from "react-router-dom"
+import {useNavigate, useParams} from "react-router-dom"
 import { useSurvey } from "../hooks/useSurvey"
 import { useSurveyTemplate } from "../hooks/useSurveyTemplate"
 import { formatAnswer } from "../utils/formatAnswer"
 import type { Question } from "../types"
+import {useResetSurvey} from "../hooks/useResetSurvey.ts";
 
 export function SurveyRecap() {
     const { survey_id } = useParams()
     const { survey, loading } = useSurvey(survey_id)
     const survey_template_id = import.meta.env.VITE_SURVEY_TEMPLATE_ID
     const { questions } = useSurveyTemplate(survey_template_id)
+    const locale: "it" | "en" = "it"; // oppure prendilo da context
+    const { resetSurvey, loading: resetting } = useResetSurvey();
+    const navigate = useNavigate()
+
 
     if (loading || !survey) {
         return (
@@ -74,6 +79,25 @@ export function SurveyRecap() {
                             )
                         }
                     )}
+                </div>
+                <div className="mt-24 text-center">
+                    <button
+                        onClick={async () => {
+                            if (!survey_id) return;
+
+                            const confirmReset = window.confirm(
+                                "Sei sicuro di voler resettare il survey?"
+                            );
+                            if (!confirmReset) return;
+
+                            await resetSurvey(survey_id, survey_template_id, locale);
+                            navigate('/survey') // oppure refetch survey
+                        }}
+                        disabled={resetting}
+                        className="px-8 py-4 rounded-2xl bg-red-500 hover:bg-[#FF4B4B] cursor-pointer hover:scale-110 active:scale-90 transition text-white font-medium disabled:opacity-50"
+                    >
+                        {resetting ? "Resetting..." : "Reset Survey"}
+                    </button>
                 </div>
             </section>
         </main>

@@ -1,6 +1,7 @@
 import type {ReactNode} from "react";
 import {Navbar} from "../Components/Navbar/Navbar.tsx";
 import {Footer} from "../Components/Footer.tsx";
+import {GDPRBanner} from "../Components/GDPRBANNER.tsx";
 
 export function LayoutHomepage({children}: {children: ReactNode}) {
     return (
@@ -9,6 +10,7 @@ export function LayoutHomepage({children}: {children: ReactNode}) {
                 <Navbar/>
                 {children}
                 <Footer/>
+                <GDPRBanner />
             </div>
         </>
     )

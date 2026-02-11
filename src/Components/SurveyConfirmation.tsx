@@ -8,6 +8,11 @@ export function SurveyConfirmation({ surveyId }: Props) {
     const { generateReport, loading, error, success } =
         useGenerateSurveyReport(surveyId)
 
+    const handleGenerateSurveyReport = async () => {
+        await generateReport()
+        window.location.reload()
+    }
+
     return (
         <section className="max-w-2xl mx-auto text-center space-y-10">
             {/* Icon / Emotion anchor */}
@@ -36,7 +41,7 @@ export function SurveyConfirmation({ surveyId }: Props) {
             {/* CTA */}
             <div className="pt-6">
                 <button
-                    onClick={generateReport}
+                    onClick={handleGenerateSurveyReport}
                     disabled={loading || success}
                     className="
                         px-10 py-4 rounded-2xl
