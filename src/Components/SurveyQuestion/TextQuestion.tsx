@@ -5,7 +5,7 @@ export const TextQuestion: FC<PropsTextQuestion> = ({
                                                         answer,
                                                         onChange,
                                                     }) => (
-    <div className="space-y-4">
+    <div className="space-y-4 py-10">
         <textarea
             className="
                 w-full min-h-[160px] p-6 rounded-2xl

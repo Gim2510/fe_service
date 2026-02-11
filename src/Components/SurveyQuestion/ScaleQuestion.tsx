@@ -10,7 +10,7 @@ export const ScaleQuestion: FC<PropsScaleQuestion> = ({
     const value = answer ?? Math.round((min + max) / 2)
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 py-10">
             <div className="text-center text-4xl font-light text-white">
                 {value}
             </div>

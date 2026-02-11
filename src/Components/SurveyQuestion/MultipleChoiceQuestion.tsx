@@ -6,7 +6,7 @@ export const MultipleChoiceQuestion: FC<PropsMultipleChoiceQuestion> = ({
                                                                             answer,
                                                                             onChange,
                                                                         }) => (
-    <div className="grid gap-4">
+    <div className="grid gap-4 py-10">
         {options.map(opt => {
             const selected = answer === opt
 
