@@ -146,7 +146,7 @@ export function HeroGlobe() {
     }, []);
 
     return (
-        <div className="absolute inset-0 w-full h-full pointer-events-none top-0 left-0 lg:left-60">
+        <div className="absolute inset-0 w-full h-full pointer-events-none top-0 left-0 lg:left-100">
             <Globe
                 ref={globeRef}
                 backgroundColor="rgba(0,0,0,0)"
