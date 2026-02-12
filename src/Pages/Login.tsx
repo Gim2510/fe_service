@@ -88,7 +88,7 @@ export function Login() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className={`group relative mt-4 px-8 py-4 rounded-full font-medium text-lg overflow-hidden transition-all ${
+                                className={`group relative mt-4 px-8 py-4 rounded-full cursor-pointer hover:text-white font-medium text-lg overflow-hidden transition-all ${
                                     loading
                                         ? "bg-neutral-700 text-neutral-400 cursor-not-allowed"
                                         : "bg-white text-neutral-900 hover:scale-105 active:scale-95"
@@ -99,7 +99,7 @@ export function Login() {
                 </span>
 
                                 {!loading && (
-                                    <span className="absolute inset-0 bg-[#FF6B6B] translate-y-full group-hover:translate-y-0 transition-transform" />
+                                    <span className="absolute inset-0 bg-[#000] translate-y-full group-hover:translate-y-0 transition-transform" />
                                 )}
                             </button>
 
@@ -108,7 +108,7 @@ export function Login() {
                                 <button
                                     type="button"
                                     onClick={() => navigate("/register")}
-                                    className="text-neutral-300 hover:text-white transition"
+                                    className="text-neutral-300 hover:text-white transition cursor-pointer"
                                 >
                                     Registrati
                                 </button>
