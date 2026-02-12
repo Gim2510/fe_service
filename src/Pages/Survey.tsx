@@ -52,7 +52,7 @@ export function Survey() {
 
     return (
         <main className="min-h-screen bg-black text-slate-100 flex items-center justify-center px-6">
-            <section className="w-full max-w-3xl">
+            <section className="w-full max-w-3xl py-20">
                 {/* Step indicator */}
                 <div className="mb-12 text-sm text-slate-500 flex justify-between">
                     <span>
