@@ -187,7 +187,7 @@ export function Home() {
                         <h2 className="text-3xl font-semibold text-gray-900 leading-tight">
                             Soluzioni digitali progettate intorno
                             <br className="hidden sm:block"/>
-                            ai tuoi processi reali
+                             ai tuoi processi reali
                         </h2>
 
                         <p className="text-gray-600 leading-relaxed">
