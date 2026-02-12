@@ -72,7 +72,7 @@ export function ContactPage() {
               <span className="relative z-10">
                 Scrivici ora
               </span>
-                            <span className="absolute inset-0 bg-[#FF6B6B] translate-y-full group-hover:translate-y-0 transition-transform" />
+                            <span className="absolute inset-0 bg-[#FFD93D] translate-y-full group-hover:translate-y-0 transition-transform" />
                         </button>
 
                     </div>

@@ -33,7 +33,7 @@ export function Survey() {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-slate-950 text-slate-400">
+            <div className="min-h-screen flex items-center justify-center bg-black text-slate-400">
                 Preparing interview…
             </div>
         )
@@ -96,7 +96,7 @@ export function Survey() {
                                     onClick={() => flow.next(survey._id)}
                                     className="px-8 py-4 rounded-xl bg-gray-800 text-white font-medium
                                                disabled:opacity-40 disabled:cursor-not-allowed
-                                               hover:bg-[#FF6B6B] transition-colors cursor-pointer"
+                                               hover:bg-[#FFD93D] transition-colors cursor-pointer hover:text-black"
                                 >
                                     {flow.isLast ? "Completa survey" : "Continua"}
                                 </button>

@@ -16,10 +16,10 @@ export const MultipleChoiceQuestion: FC<PropsMultipleChoiceQuestion> = ({
                     onClick={() => onChange(opt)}
                     className={`
                         w-full text-left px-6 py-5 rounded-2xl border
-                        transition-all duration-200
+                        transition-all duration-200 cursor-pointer
                         ${
                         selected
-                            ? "bg-gray-200 border-[#FF6B6B] ring-2 ring-[#FF6B6B]"
+                            ? "bg-[#FFD93D] text-black border-[#FFD93D] ring-2 ring-[#FFD93D]"
                             : "bg-white border-slate-700 hover:border-slate-500"
                     }
                     `}

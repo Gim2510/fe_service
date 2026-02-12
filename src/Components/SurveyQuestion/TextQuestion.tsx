@@ -11,7 +11,7 @@ export const TextQuestion: FC<PropsTextQuestion> = ({
                 w-full min-h-[160px] p-6 rounded-2xl
                 bg-gray-200 border border-slate-700
                 text-black placeholder:text-slate-500
-                focus:outline-none focus:ring-2 focus:ring-[#FF6B6B]
+                focus:outline-none focus:ring-2 focus:ring-[#FFD93D]
                 transition
             "
             placeholder="Scrivi qui la tua risposta…"

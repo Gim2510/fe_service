@@ -21,7 +21,7 @@ export const ScaleQuestion: FC<PropsScaleQuestion> = ({
                 max={max}
                 value={value}
                 onChange={e => onChange(Number(e.target.value))}
-                className="w-full accent-[#FF6B6B]"
+                className="w-full accent-[#FFD93D] cursor-pointer"
             />
 
             <div className="flex justify-between text-sm text-slate-500">
