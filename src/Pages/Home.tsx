@@ -89,8 +89,8 @@ export function Home() {
             <section className="relative bg-neutral-950 text-white overflow-hidden">
                 {/* Texture */}
                 <div
-                    className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[size:32px_32px]"
-                />
+                    className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)]
+                    bg-[size:32px_32px] bg-[position:0_40px]"/>
 
                 <div className="relative mx-auto max-w-7xl px-8 py-32">
 
@@ -221,19 +221,37 @@ export function Home() {
 
 
             {/* METODO */}
-            <section className="bg-gray-900 text-white">
-                <div className="mx-auto max-w-7xl px-8 py-28">
-                    <h2 className="text-3xl font-semibold mb-4">
-                        Un approccio strutturato, orientato ai risultati
-                    </h2>
+            <section className="relative bg-neutral-950 text-white border-t border-neutral-800">
 
-                    <p className="text-gray-400 max-w-2xl mb-20">
-                        Ogni progetto segue un percorso chiaro.
-                        Riduciamo l’incertezza, aumentiamo la visibilità
-                        e trasformiamo le decisioni in dati concreti.
-                    </p>
+                {/* Subtle grid texture */}
+                <div
+                    className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[size:32px_32px]"/>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-14">
+                <div className="relative mx-auto max-w-7xl px-8 py-32">
+
+                    {/* Section Header */}
+                    <div className="max-w-3xl mb-24">
+      <span className="text-sm uppercase tracking-widest text-neutral-500">
+        Metodo
+      </span>
+
+                        <h2 className="text-4xl font-semibold mt-4 leading-tight">
+                            Un approccio strutturato,
+                            <br/>
+                            <span className="text-neutral-400">
+          orientato ai risultati concreti.
+        </span>
+                        </h2>
+
+                        <p className="text-neutral-400 mt-6 text-lg leading-relaxed">
+                            Ogni progetto segue un percorso chiaro e misurabile.
+                            Riduciamo l’incertezza, aumentiamo la visibilità
+                            e trasformiamo le decisioni in vantaggio competitivo.
+                        </p>
+                    </div>
+
+                    {/* Steps */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                         {[
                             {
                                 step: "01",
@@ -251,21 +269,34 @@ export function Home() {
                                 text: "Costruiamo soluzioni operative che trasformano i dati in azioni misurabili."
                             }
                         ].map((item) => (
-                            <div key={item.step} className="flex flex-col gap-4">
-                    <span className="text-gray-500 text-sm tracking-wide">
-                        {item.step}
-                    </span>
+                            <div
+                                key={item.step}
+                                className="group relative p-8 rounded-2xl border border-neutral-800 bg-neutral-900/40 backdrop-blur-md transition-all hover:border-neutral-700 hover:bg-neutral-900"
+                            >
+                                {/* Step Number */}
+                                <div
+                                    className="text-6xl font-semibold text-neutral-800 group-hover:text-neutral-700 transition">
+                                    {item.step}
+                                </div>
 
-                                <h3 className="text-xl font-medium">
-                                    {item.title}
-                                </h3>
+                                {/* Content */}
+                                <div className="mt-6">
+                                    <h3 className="text-xl font-medium mb-4">
+                                        {item.title}
+                                    </h3>
 
-                                <p className="text-gray-400 text-sm leading-relaxed">
-                                    {item.text}
-                                </p>
+                                    <p className="text-neutral-400 text-sm leading-relaxed">
+                                        {item.text}
+                                    </p>
+                                </div>
+
+                                {/* Subtle hover glow */}
+                                <div
+                                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition pointer-events-none bg-gradient-to-br from-white/5 to-transparent"/>
                             </div>
                         ))}
                     </div>
+
                 </div>
             </section>
 
