@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { useRegister } from "../hooks/useRegister"
 
 export function Register() {
     const navigate = useNavigate()
+    const { register, loading, error, success } = useRegister()
 
     const [form, setForm] = useState({
         given_name: "",
@@ -17,27 +19,28 @@ export function Register() {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        console.log(form)
+
+        try {
+            await register(form)
+            setTimeout(() => {
+                navigate("/login")
+            }, 1500)
+        } catch (_) {}
     }
 
     return (
         <main className="relative min-h-screen flex items-center overflow-hidden bg-neutral-950 text-white pb-10">
 
-            {/* Gradient background */}
+            {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800" />
-
-            {/* Grid texture */}
-            <div
-                className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[size:32px_32px]"
-            />
+            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[size:32px_32px]" />
 
             <div className="relative z-10 mx-auto w-full max-w-6xl px-8 py-24 grid lg:grid-cols-2 gap-20 items-center">
 
                 {/* LEFT COPY */}
                 <div className="flex flex-col gap-8">
-
           <span className="text-sm uppercase tracking-widest text-neutral-400">
             Accesso piattaforma
           </span>
@@ -61,66 +64,58 @@ export function Register() {
                 </div>
 
                 {/* FORM CARD */}
-                <div className="relative">
+                <div>
                     <div className="rounded-3xl border border-neutral-800 bg-neutral-900/70 backdrop-blur-xl p-10 shadow-2xl">
 
                         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
 
-                            {/* Name Row */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                <Input
-                                    label="Nome"
-                                    name="given_name"
-                                    value={form.given_name}
-                                    onChange={handleChange}
-                                />
-                                <Input
-                                    label="Cognome"
-                                    name="family_name"
-                                    value={form.family_name}
-                                    onChange={handleChange}
-                                />
+                            <div className="text-center mb-2">
+                                <h2 className="text-2xl font-semibold">Crea account</h2>
+                                <p className="text-sm text-neutral-500 mt-1">
+                                    Inserisci i tuoi dati
+                                </p>
                             </div>
 
-                            <Input
-                                label="Email"
-                                name="email"
-                                type="email"
-                                value={form.email}
-                                onChange={handleChange}
-                            />
+                            {/* Error */}
+                            {error && (
+                                <div className="text-sm px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400">
+                                    {error}
+                                </div>
+                            )}
 
-                            <Input
-                                label="Password"
-                                name="password"
-                                type="password"
-                                value={form.password}
-                                onChange={handleChange}
-                            />
+                            {/* Success */}
+                            {success && (
+                                <div className="text-sm px-4 py-3 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400">
+                                    {success}
+                                </div>
+                            )}
 
-                            <Input
-                                label="Codice Fiscale"
-                                name="fiscal_code"
-                                value={form.fiscal_code}
-                                onChange={handleChange}
-                            />
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <Input label="Nome" name="given_name" value={form.given_name} onChange={handleChange} />
+                                <Input label="Cognome" name="family_name" value={form.family_name} onChange={handleChange} />
+                            </div>
 
-                            <Input
-                                label="Partita IVA"
-                                name="partita_iva"
-                                value={form.partita_iva}
-                                onChange={handleChange}
-                            />
+                            <Input label="Email" name="email" type="email" value={form.email} onChange={handleChange} />
+                            <Input label="Password" name="password" type="password" value={form.password} onChange={handleChange} />
+                            <Input label="Codice Fiscale" name="fiscal_code" value={form.fiscal_code} onChange={handleChange} />
+                            <Input label="Partita IVA" name="partita_iva" value={form.partita_iva} onChange={handleChange} />
 
-                            {/* CTA */}
                             <button
                                 type="submit"
-                                className="group relative mt-4 px-8 py-4 rounded-full bg-white text-neutral-900 font-medium text-lg overflow-hidden transition-all hover:scale-105 active:scale-95"
+                                disabled={loading}
+                                className={`group relative mt-4 px-8 py-4 rounded-full font-medium text-lg overflow-hidden transition-all ${
+                                    loading
+                                        ? "bg-neutral-700 text-neutral-400 cursor-not-allowed"
+                                        : "bg-white text-neutral-900 hover:scale-105 active:scale-95"
+                                }`}
                             >
                 <span className="relative z-10">
-                  Crea account
+                  {loading ? "Creazione account…" : "Crea account"}
                 </span>
-                                <span className="absolute inset-0 bg-[#FF6B6B] translate-y-full group-hover:translate-y-0 transition-transform" />
+
+                                {!loading && (
+                                    <span className="absolute inset-0 bg-[#FF6B6B] translate-y-full group-hover:translate-y-0 transition-transform" />
+                                )}
                             </button>
 
                             <div className="text-center text-sm text-neutral-500 mt-4">
@@ -144,7 +139,7 @@ export function Register() {
 }
 
 
-/* Reusable Input component */
+/* Input */
 function Input({
                    label,
                    name,
@@ -167,7 +162,7 @@ function Input({
                 value={value}
                 onChange={onChange}
                 required
-                className="px-4 py-3 rounded-xl bg-neutral-800 border border-neutral-700 focus:border-white focus:ring-1 focus:ring-white outline-none transition text-white placeholder-neutral-500"
+                className="px-4 py-3 rounded-xl bg-neutral-800 border border-neutral-700 focus:border-white focus:ring-1 focus:ring-white outline-none transition text-white"
             />
         </div>
     )
