@@ -186,7 +186,7 @@ export function Home() {
                     <div className="order-1 lg:order-2 flex flex-col gap-6">
                         <h2 className="text-3xl font-semibold text-gray-900 leading-tight">
                             Soluzioni digitali progettate intorno
-                            <br className="hidden sm:block"/>
+                            <br className=""/>
                              ai tuoi processi reali
                         </h2>
 
