@@ -1,11 +1,17 @@
-import {createContext, type ReactNode, useContext} from "react";
-import {jwtDecode} from "jwt-decode";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+import {
+    createContext,
+    useContext,
+    useState,
+    useEffect,
+    useRef,
+    type ReactNode,
+} from "react";
+import { jwtDecode } from "jwt-decode";
 
 type JwtPayload = {
     sub: string;
     role: string;
-    exp: number;
+    exp: number; // seconds
 };
 
 type AuthContextType = {
@@ -20,28 +26,89 @@ type AuthContextType = {
 export const AuthContext = createContext<AuthContextType>(null!);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-    const { value: token, setStoredValue, clear } =
-        useLocalStorage<string | null>("token", null);
+    const [token, setToken] = useState<string | null>(() =>
+        localStorage.getItem("token")
+    );
 
-    let role = null;
-    let id = null;
+    const logoutTimer = useRef<number | null>(null);
 
+    const clearLogoutTimer = () => {
+        if (logoutTimer.current) {
+            clearTimeout(logoutTimer.current);
+            logoutTimer.current = null;
+        }
+    };
+
+    const logout = () => {
+        clearLogoutTimer();
+        setToken(null);
+    };
+
+    const login = (newToken: string) => {
+        clearLogoutTimer();
+        setToken(newToken);
+    };
+
+    // Persist token
+    useEffect(() => {
+        if (token) {
+            localStorage.setItem("token", token);
+        } else {
+            localStorage.removeItem("token");
+        }
+    }, [token]);
+
+    let role: string | null = null;
+    let id: string | null = null;
+
+    // ⏱️ Auto logout su scadenza token
+    useEffect(() => {
+        if (!token) return;
+
+        try {
+            const decoded = jwtDecode<JwtPayload>(token);
+            role = decoded.role;
+            id = decoded.sub;
+
+            const expiresAt = decoded.exp * 1000;
+            const timeout = expiresAt - Date.now();
+
+            if (timeout <= 0) {
+                logout();
+                return;
+            }
+
+            logoutTimer.current = window.setTimeout(logout, timeout);
+        } catch {
+            logout();
+        }
+
+        return clearLogoutTimer;
+    }, [token]);
+
+    // deriviamo role/id *solo* se token valido
     if (token) {
-        const decoded = jwtDecode<JwtPayload>(token);
-        role = decoded.role;
-        id = decoded.sub;
-    }
-
-    function login(token: string) {
-        setStoredValue(token);
-    }
-
-    function logout() {
-        clear();
+        try {
+            const decoded = jwtDecode<JwtPayload>(token);
+            role = decoded.role;
+            id = decoded.sub;
+        } catch {
+            role = null;
+            id = null;
+        }
     }
 
     return (
-        <AuthContext.Provider value={{token, role, id, login, logout, isAuthenticated: !!token,}}>
+        <AuthContext.Provider
+            value={{
+                token,
+                role,
+                id,
+                login,
+                logout,
+                isAuthenticated: !!token,
+            }}
+        >
             {children}
         </AuthContext.Provider>
     );

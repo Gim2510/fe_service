@@ -57,7 +57,7 @@ export function Home() {
             Scopri cosa stai perdendo
           </span>
                                 <span
-                                    className="absolute inset-0 bg-[#000000] translate-y-full group-hover:translate-y-0 transition-transform"/>
+                                    className="absolute inset-0 bg-[#000000] translate-y-full group-hover:translate-y-0 transition-transform duration-400"/>
                             </button>
 
                             <span className="text-sm text-neutral-400">
@@ -316,9 +316,13 @@ export function Home() {
 
                     <button
                         onClick={goToSurvey}
-                        className="px-12 py-5 rounded-full bg-gray-900 text-white text-lg font-medium hover:bg-gray-800 transition cursor-pointer"
+                        className="group hover:scale-110 border-4 border-black hover:text-white active:scale-90 transition-all ease-in-out relative px-2 py-1 lg:px-12 lg:py-5 rounded-full bg-white text-neutral-900 font-medium lg:text-lg overflow-hidden cursor-pointer"
                     >
-                        Inizia l’analisi
+          <span className="relative z-10">
+              Inizia l'analisi
+          </span>
+                        <span
+                            className="absolute inset-0 bg-[#000000] translate-y-full group-hover:translate-y-0 transition-transform duration-400"/>
                     </button>
 
                     <span className="text-sm text-gray-400">

@@ -81,12 +81,12 @@ export function SurveyStart() {
                 <button
                     onClick={() => setShouldInit(true)}
                     disabled={initLoading}
-                    className="relative group px-12 py-5 rounded-full bg-white text-neutral-900 text-lg font-medium overflow-hidden transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="relative group px-12 py-5 rounded-full cursor-pointer bg-white text-neutral-900 text-lg font-medium overflow-hidden transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
           <span className="relative z-10">
             {initLoading ? "Preparazione in corso…" : "Vai al questionario"}
           </span>
-                    <span className="absolute inset-0 bg-[#FFD93D] translate-y-full group-hover:translate-y-0 transition-transform" />
+                    <span className="absolute inset-0 bg-[#FFD93D] translate-y-full group-hover:translate-y-0 transition-transform duration-400" />
                 </button>
 
                 {initLoading && (
