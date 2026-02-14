@@ -15,10 +15,12 @@ import {LayoutSurvey} from "./Layout/LayoutSurvey.tsx";
 import {UserDashboard} from "./Pages/UserDashboard.tsx";
 import {PasswordResetRequest} from "./Pages/PasswordResetRequest.tsx";
 import {ResetPassword} from "./Pages/ResetPassword.tsx";
+import {ScrollToTop} from "./utils/scrollToTop.tsx";
 
 function App() {
     return (
         <AuthProvider>
+            <ScrollToTop />
             <Routes>
                 <Route path="/" element={<LayoutHomepage><Home/></LayoutHomepage>}></Route>
                 <Route path="/survey/start" element={<LayoutHomepage><SurveyStart /></LayoutHomepage>} />
