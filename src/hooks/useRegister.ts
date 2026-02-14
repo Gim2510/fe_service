@@ -35,7 +35,7 @@ export function useRegister() {
             }
 
             const result = await res.json();
-            setSuccess("Registrazione completata! Controlla la tua email.");
+            setSuccess("Registrazione completata!");
             return result;
         } catch (err: any) {
             setError(err.message || "Errore imprevisto");

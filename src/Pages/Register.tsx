@@ -1,10 +1,11 @@
-import { useState } from "react"
+import {useEffect, useRef, useState} from "react"
 import { useNavigate } from "react-router-dom"
 import { useRegister } from "../hooks/useRegister"
 
 export function Register() {
     const navigate = useNavigate()
     const { register, loading, error, success } = useRegister()
+    const successRef = useRef<HTMLDivElement | null>(null)
 
     const [form, setForm] = useState({
         given_name: "",
@@ -14,6 +15,15 @@ export function Register() {
         fiscal_code: "",
         partita_iva: "",
     })
+
+    useEffect(() => {
+        if (success && successRef.current) {
+            successRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            })
+        }
+    }, [success])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -26,7 +36,7 @@ export function Register() {
             await register(form)
             setTimeout(() => {
                 navigate("/login")
-            }, 1500)
+            }, 5000)
         } catch (_) {}
     }
 
@@ -85,8 +95,14 @@ export function Register() {
 
                             {/* Success */}
                             {success && (
-                                <div className="text-sm px-4 py-3 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400">
+                                <div
+                                    ref={successRef}
+                                    className="text-sm px-4 py-3 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400"
+                                >
                                     {success}
+                                    <p className="mt-2 text-neutral-300">
+                                        Controlla la tua email per verificare l’account.
+                                    </p>
                                 </div>
                             )}
 
