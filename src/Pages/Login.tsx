@@ -66,7 +66,8 @@ export function Login() {
                             </div>
 
                             {error && (
-                                <div className="text-sm px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400">
+                                <div
+                                    className="text-sm px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400">
                                     {error}
                                 </div>
                             )}
@@ -99,9 +100,19 @@ export function Login() {
                 </span>
 
                                 {!loading && (
-                                    <span className="absolute inset-0 bg-[#000] translate-y-full group-hover:translate-y-0 transition-transform" />
+                                    <span
+                                        className="absolute inset-0 bg-[#000] translate-y-full group-hover:translate-y-0 transition-transform"/>
                                 )}
                             </button>
+                            <div className="text-center text-sm text-neutral-500 mt-2">
+                                <button
+                                    type="button"
+                                    onClick={() => navigate("/password-reset")}
+                                    className="text-neutral-300 hover:text-white transition cursor-pointer"
+                                >
+                                    Password dimenticata?
+                                </button>
+                            </div>
 
                             <div className="text-center text-sm text-neutral-500 mt-4">
                                 Non hai un account?{" "}

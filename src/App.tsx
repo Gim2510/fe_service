@@ -13,6 +13,8 @@ import {VerifyEmailPage} from "./Pages/VerifyEmailPage.tsx";
 import {ContactPage} from "./Pages/ContactPage.tsx";
 import {LayoutSurvey} from "./Layout/LayoutSurvey.tsx";
 import {UserDashboard} from "./Pages/UserDashboard.tsx";
+import {PasswordResetRequest} from "./Pages/PasswordResetRequest.tsx";
+import {ResetPassword} from "./Pages/ResetPassword.tsx";
 
 function App() {
     return (
@@ -27,6 +29,8 @@ function App() {
                 <Route path="/survey/:survey_id/recap" element={<Protected><LayoutSurvey><SurveyRecap/></LayoutSurvey></Protected>} />
                 <Route path="/contact" element={<LayoutHomepage><ContactPage/></LayoutHomepage>} />
                 <Route path="/user" element={<Protected><LayoutHomepage><UserDashboard/></LayoutHomepage></Protected>} />
+                <Route path="/password-reset" element={<LayoutHomepage><PasswordResetRequest/></LayoutHomepage>} />
+                <Route path="/password-reset/confirm/:token" element={<LayoutHomepage><ResetPassword/></LayoutHomepage>} />
             </Routes>
         </AuthProvider>
     );
