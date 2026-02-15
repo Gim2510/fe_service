@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 export function VerifyEmailPage() {
     const { _id } = useParams<{ _id: string }>();
     const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(status === 'success') {
+            setTimeout(() => { navigate('/login')}, 5000)
+        }
+    }, [status]);
 
     useEffect(() => {
         if (!_id) return;
