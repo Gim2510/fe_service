@@ -3,6 +3,7 @@ import { useAuth } from "../../auth/AuthContext"
 import MenuIcon from "@mui/icons-material/Menu"
 import CloseIcon from "@mui/icons-material/Close"
 import { useState, useEffect } from "react"
+import {NavItem} from "./NavItem.tsx";
 
 export function Navbar() {
     const { isAuthenticated, logout } = useAuth()
@@ -147,52 +148,71 @@ export function Navbar() {
 
                     {/* Drawer */}
                     <div
-                        className={`fixed top-0 left-0 h-full w-72 bg-white z-50 shadow-xl transform transition-transform duration-300 ${
-                            open ? "translate-x-0" : "-translate-x-full"
+                        className={`fixed inset-0 z-50 ${
+                            open ? "pointer-events-auto" : "pointer-events-none"
                         }`}
                     >
-                        <div className="p-6 flex flex-col gap-6">
+                        {/* Overlay */}
+                        <div
+                            onClick={closeMenu}
+                            className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
+                                open ? "opacity-100" : "opacity-0"
+                            }`}
+                        />
 
-                            {/* Close */}
-                            <div className="flex justify-end">
-                                <button onClick={closeMenu}>
-                                    <CloseIcon />
+                        {/* Side panel */}
+                        <div
+                            className={`absolute top-0 left-0 h-full w-72 bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950 border-r border-neutral-800 shadow-2xl transform transition-transform duration-300 ${
+                                open ? "translate-x-0" : "-translate-x-full"
+                            }`}
+                        >
+                            <div className="h-full flex flex-col p-8">
+
+                                {/* Header */}
+                                <div className="flex items-center justify-between mb-12">
+        <span className="text-sm uppercase tracking-widest text-neutral-500">
+          Area riservata
+        </span>
+
+                                    <button
+                                        onClick={closeMenu}
+                                        className="text-neutral-400 hover:text-white transition"
+                                    >
+                                        <CloseIcon/>
+                                    </button>
+                                </div>
+
+                                {/* Navigation */}
+                                <nav className="flex flex-col gap-4 text-lg">
+
+                                    <NavItem to="/survey/start" label="Survey" closeMenu={closeMenu}/>
+                                    <NavItem to="/contact" label="Contatti" closeMenu={closeMenu}/>
+                                    <NavItem to="/user" label="Account" closeMenu={closeMenu}/>
+
+                                </nav>
+
+                                {/* Divider */}
+                                <div
+                                    className="mt-10 mb-6 h-px bg-gradient-to-r from-transparent via-neutral-700 to-transparent"/>
+
+                                {/* Logout */}
+                                <button
+                                    onClick={() => {
+                                        logout();
+                                        closeMenu();
+                                    }}
+                                    className="group flex items-center gap-3 text-neutral-400 hover:text-red-400 transition"
+                                >
+                                    <span className="text-lg">Logout</span>
+                                    <div className="flex-1 h-px bg-neutral-800 group-hover:bg-red-500 transition"/>
                                 </button>
+
+                                {/* Footer */}
+                                <div className="mt-auto pt-10 text-xs text-neutral-600">
+                                    © {new Date().getFullYear()} Digital Advisory
+                                </div>
+
                             </div>
-
-                            <NavLink
-                                to="/survey/start"
-                                onClick={closeMenu}
-                                className="text-lg font-medium text-gray-700 hover:text-gray-900"
-                            >
-                                Survey
-                            </NavLink>
-
-                            <NavLink
-                                to="/contact"
-                                onClick={closeMenu}
-                                className="text-lg font-medium text-gray-700 hover:text-gray-900"
-                            >
-                                Contacts
-                            </NavLink>
-
-                            <NavLink
-                                to="/user"
-                                onClick={closeMenu}
-                                className="text-lg font-medium text-gray-700 hover:text-gray-900"
-                            >
-                                Account
-                            </NavLink>
-
-                            <button
-                                onClick={() => {
-                                    logout()
-                                    closeMenu()
-                                }}
-                                className="text-lg cursor-pointer font-medium text-red-500 hover:text-red-600 text-left"
-                            >
-                                Logout
-                            </button>
                         </div>
                     </div>
                 </>
