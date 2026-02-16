@@ -23,7 +23,7 @@ export function ChatWidget({open, setOpen}: {open: boolean, setOpen: (open: bool
             {/* Floating Button */}
             <button
                 onClick={() => setOpen(!open)}
-                className="fixed bottom-6 right-6 z-50 bg-white cursor-pointer text-black rounded-full px-6 py-3 shadow-xl hover:scale-110 active:scale-95 transition-all"
+                className="fixed bottom-6 right-6 z-50 bg-white cursor-pointer text-black rounded-full px-4 py-4 shadow-xl hover:scale-110 active:scale-95 transition-all"
             >
                 <ChatIcon width={20} height={20} fill='black' />
             </button>
