@@ -144,7 +144,7 @@ export function SurveyDashboard() {
 
                 <button
                     onClick={() => navigate("/contact")}
-                    className="group relative px-10 py-4 rounded-full bg-white text-neutral-900 font-medium overflow-hidden hover:scale-105 transition"
+                    className="group relative px-10 cursor-pointer hover:text-white py-4 rounded-full bg-white text-neutral-900 font-medium overflow-hidden hover:scale-105 transition"
                 >
                     <span className="relative z-10">
                         Richiedi consulenza strategica
@@ -164,7 +164,7 @@ export function SurveyDashboard() {
                         navigate("/survey")
                     }}
                     disabled={resetting}
-                    className="text-sm hover:text-white transition"
+                    className="text-sm hover:text-white transition cursor-pointer"
                 >
                     {resetting ? "Resetting..." : "Reset Survey"}
                 </button>
