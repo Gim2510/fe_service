@@ -20,7 +20,7 @@ export function Navbar() {
     const closeMenu = () => setOpen(false)
 
     return (
-        <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
+        <header className="sticky top-0 z-50 bg-gradient-to-b from-[#B4B8C5] via-[#E9EBF8] to-[#B4B8C5]">
             <nav className="mx-auto px-2 sm:px-8 flex items-center justify-between">
 
                 {/* Brand */}
