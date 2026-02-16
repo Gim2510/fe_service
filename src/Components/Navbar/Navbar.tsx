@@ -8,7 +8,6 @@ export function Navbar() {
     const { isAuthenticated, logout } = useAuth()
     const [open, setOpen] = useState(false)
 
-    // Blocca lo scroll quando il menu è aperto
     useEffect(() => {
         if (open) {
             document.body.style.overflow = "hidden"
@@ -45,7 +44,6 @@ export function Navbar() {
                         </text>
                         <rect x="0" y="60" width="140" height="4" fill="#1D4ED8"/>
                     </svg>
-                    <span className="text-gray-400">.</span>
                 </Link>
 
                 <div className="flex items-center gap-6">

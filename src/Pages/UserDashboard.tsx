@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
+import {useAuth} from "../auth/AuthContext.tsx";
 
 export function UserDashboard() {
     const { user, loading, error, refetch } = useUser();
+    const {logout} = useAuth()
     const navigate = useNavigate();
 
     if (loading) {
@@ -157,12 +159,12 @@ export function UserDashboard() {
                         <ActionCard
                             title="Visualizza analisi"
                             description="Consulta i risultati della tua maturità digitale."
-                            onClick={() => navigate("/survey/results")}
+                            onClick={() => navigate("/survey")}
                         />
                         <ActionCard
                             title="Logout"
                             description="Termina la sessione corrente."
-                            onClick={() => navigate("/logout")}
+                            onClick={logout}
                         />
                     </div>
                 </section>

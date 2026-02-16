@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { useUser } from "../hooks/useUser";
-import {Input} from "../Components/Input.tsx";
-import type {UserEditForm} from "../types/userEditForm.ts";
-import {Section} from "../Components/SurveyQuestion/Section.tsx";
-import {useDeleteUser} from "../hooks/useDeleteUser.ts";
-import {useAuth} from "../auth/AuthContext.tsx";
+import { Input } from "../Components/Input.tsx";
+import type { UserEditForm } from "../types/userEditForm.ts";
+import { Section } from "../Components/SurveyQuestion/Section.tsx";
+import { useDeleteUser } from "../hooks/useDeleteUser.ts";
+import { useAuth } from "../auth/AuthContext.tsx";
+import { useUpdateUserInfo } from "../hooks/useUpdateUserInfo.ts";
 
 export function UserEditProfile() {
     const { user, loading, error, refetch } = useUser();
-    const {id, token, logout} = useAuth()
+    const { id, token, logout } = useAuth();
+    const { doUpdateUserInfo, loading: loadingUpdate } = useUpdateUserInfo();
 
     const [form, setForm] = useState<UserEditForm>({
         given_name: "",
@@ -18,21 +20,27 @@ export function UserEditProfile() {
         fiscal_code: "",
     });
 
-    const [saving, setSaving] = useState<boolean>(false);
-    const [success, setSuccess] = useState<boolean>(false);
+    const [success, setSuccess] = useState(false);
     const [formError, setFormError] = useState<string | null>(null);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-    const {deleteUser, loading: deleting, error: deleteError, success: deleteSuccess} = useDeleteUser();
+    const {
+        deleteUser,
+        loading: deleting,
+        error: deleteError,
+        success: deleteSuccess,
+    } = useDeleteUser();
 
+    // Logout dopo eliminazione
     useEffect(() => {
         if (deleteSuccess) {
-            // opzionale: piccola pausa per far leggere il messaggio
             setTimeout(() => {
                 logout();
             }, 1500);
         }
     }, [deleteSuccess, logout]);
 
+    // Popola form quando arriva user
     useEffect(() => {
         if (user) {
             setForm({
@@ -45,34 +53,44 @@ export function UserEditProfile() {
         }
     }, [user]);
 
-    const handleSubmit = async (): Promise<void> => {
-        setSaving(true);
+    // 🔥 Calcola solo campi modificati (dinamico)
+    function getChangedFields() {
+        if (!user) return {};
+
+        const changed: Partial<UserEditForm> = {};
+
+        Object.keys(form).forEach((key) => {
+            const k = key as keyof UserEditForm;
+
+            if ((form[k] ?? "") !== (user[k] ?? "")) {
+                changed[k] = form[k];
+            }
+        });
+
+        return changed;
+    }
+
+    async function confirmUpdate() {
         setFormError(null);
         setSuccess(false);
 
+        const changedFields = getChangedFields();
+
+        if (Object.keys(changedFields).length === 0) {
+            setFormError("Nessuna modifica rilevata");
+            setShowConfirmModal(false);
+            return;
+        }
+
         try {
-            const res = await fetch(
-                `${import.meta.env.VITE_USER_BASE_URL}/v1/user/me`,
-                {
-                    method: "PATCH",
-                    headers: { "Content-Type": "application/json" },
-                    credentials: "include",
-                    body: JSON.stringify(form),
-                }
-            );
-
-            if (!res.ok) {
-                throw new Error("Update failed");
-            }
-
+            await doUpdateUserInfo(changedFields);
             setSuccess(true);
             refetch();
+            setShowConfirmModal(false);
         } catch {
-            setFormError("Errore durante il salvataggio dei dati");
-        } finally {
-            setSaving(false);
+            setFormError("Errore durante l'aggiornamento");
         }
-    };
+    }
 
     if (loading) return <div>Caricamento…</div>;
     if (error) return <div>{error}</div>;
@@ -82,7 +100,9 @@ export function UserEditProfile() {
         <main className="min-h-screen bg-neutral-950 text-white px-8 pt-20 pb-40">
             <div className="max-w-3xl mx-auto space-y-12">
                 <header>
-                    <h1 className="text-4xl font-semibold mb-2">Modifica profilo</h1>
+                    <h1 className="text-4xl font-semibold mb-2">
+                        Modifica profilo
+                    </h1>
                     <p className="text-neutral-400">
                         Aggiorna le informazioni personali del tuo account.
                     </p>
@@ -91,7 +111,7 @@ export function UserEditProfile() {
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
-                        handleSubmit();
+                        setShowConfirmModal(true);
                     }}
                     className="space-y-10"
                 >
@@ -141,6 +161,7 @@ export function UserEditProfile() {
                             Cambiare email richiederà una nuova verifica.
                         </p>
                     </Section>
+
                     <Section title="Elimina profilo">
                         <div className="space-y-4">
                             <p className="text-sm text-neutral-400">
@@ -148,28 +169,26 @@ export function UserEditProfile() {
                             </p>
 
                             <p className="text-sm text-neutral-400">
-                                Potrai comunque riattivarlo effettuando nuovamente il login entro
+                                Potrai riattivarlo effettuando nuovamente il login entro
                                 <span className="text-white font-medium"> 60 giorni</span>.
                                 Dopo questo periodo, i dati verranno eliminati definitivamente.
                             </p>
 
-                            <div className="pt-4">
-                                <button
-                                    type="button"
-                                    disabled={deleting}
-                                    onClick={async () => {
-                                        const confirmed = window.confirm(
-                                            "Sei sicuro di voler eliminare il tuo profilo?"
-                                        );
-                                        if (!confirmed) return;
+                            <button
+                                type="button"
+                                disabled={deleting}
+                                onClick={async () => {
+                                    const confirmed = window.confirm(
+                                        "Sei sicuro di voler eliminare il tuo profilo?"
+                                    );
+                                    if (!confirmed) return;
 
-                                        await deleteUser(id,token);
-                                    }}
-                                    className="px-6 py-3 cursor-pointer rounded-full border border-red-600 text-red-400 hover:bg-red-600 hover:text-white transition disabled:opacity-50"
-                                >
-                                    {deleting ? "Eliminazione…" : "Elimina profilo"}
-                                </button>
-                            </div>
+                                    await deleteUser(id, token);
+                                }}
+                                className="px-6 py-3 cursor-pointer rounded-full border border-red-600 text-red-400 hover:bg-red-600 hover:text-white transition disabled:opacity-50"
+                            >
+                                {deleting ? "Eliminazione…" : "Elimina profilo"}
+                            </button>
 
                             {deleteError && (
                                 <p className="text-red-400 text-sm">{deleteError}</p>
@@ -183,20 +202,57 @@ export function UserEditProfile() {
                         </div>
                     </Section>
 
-                    {formError && <p className="text-red-400">{formError}</p>}
+                    {formError && (
+                        <p className="text-red-400">{formError}</p>
+                    )}
+
                     {success && (
-                        <p className="text-green-400">Profilo aggiornato</p>
+                        <p className="text-green-400">
+                            Profilo aggiornato correttamente
+                        </p>
                     )}
 
                     <button
                         type="submit"
-                        disabled={saving}
+                        disabled={loadingUpdate}
                         className="px-8 py-3 rounded-full bg-white text-neutral-900 disabled:opacity-50"
                     >
-                        {saving ? "Salvataggio…" : "Salva modifiche"}
+                        Salva modifiche
                     </button>
                 </form>
             </div>
+
+            {/* 🔥 MODALE CONFERMA */}
+            {showConfirmModal && (
+                <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+                    <div className="bg-neutral-900 p-8 rounded-2xl w-full max-w-md space-y-6">
+                        <h2 className="text-xl font-semibold">
+                            Conferma aggiornamento
+                        </h2>
+
+                        <p className="text-neutral-400 text-sm">
+                            Sei sicuro di voler salvare le modifiche?
+                        </p>
+
+                        <div className="flex justify-end gap-4 pt-4">
+                            <button
+                                onClick={() => setShowConfirmModal(false)}
+                                className="px-6 py-2 rounded-full border border-neutral-600"
+                            >
+                                Annulla
+                            </button>
+
+                            <button
+                                onClick={confirmUpdate}
+                                disabled={loadingUpdate}
+                                className="px-6 py-2 rounded-full bg-white text-black"
+                            >
+                                {loadingUpdate ? "Salvataggio…" : "Conferma"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </main>
     );
 }

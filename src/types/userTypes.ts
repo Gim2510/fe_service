@@ -39,3 +39,11 @@ export type UserType = {
     deposit?: string[];
     inactive?: boolean;
 }
+
+export type UpdateUserInfo = {
+    given_name?: string;
+    family_name?: string;
+    partita_iva?: string;
+    fiscal_code?: string;
+    email?: string;
+}
