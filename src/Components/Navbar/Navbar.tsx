@@ -21,14 +21,31 @@ export function Navbar() {
 
     return (
         <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
-            <nav className="mx-auto px-4 sm:px-8 py-4 flex items-center justify-between">
+            <nav className="mx-auto px-2 sm:px-8 flex items-center justify-between">
 
                 {/* Brand */}
                 <Link
                     to="/"
-                    className="text-xl font-semibold tracking-tight text-gray-900"
+                    className="text-xl font-semibold tracking-tight text-gray-900 flex justify-center items-center gap-2"
                 >
-                    TechBridge<span className="text-gray-400">.</span>
+                    <svg width="40" height="40" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="44" height="44" rx="10" fill="#0E1A2B"/>
+                        <path d="M10 14 H34 V18 H24 V34 H20 V18 H10 Z" fill="#FFFFFF"/>
+                        <path d="M24 20 H32 C35 20 35 26 32 26 H24 Z" fill="#1D4ED8"/>
+                        <path d="M24 26 H34 C37 26 37 34 34 34 H24 Z" fill="#1D4ED8"/>
+                    </svg>
+                    <svg width="160" height="50" viewBox="0 0 360 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <text x="0" y="50"
+                              font-family="Sora, Inter, Arial, sans-serif"
+                              font-size="34"
+                              font-weight="600"
+                              letter-spacing="3"
+                              fill="#0E1A2B">
+                            TECHBRIDGE
+                        </text>
+                        <rect x="0" y="60" width="140" height="4" fill="#1D4ED8"/>
+                    </svg>
+                    <span className="text-gray-400">.</span>
                 </Link>
 
                 <div className="flex items-center gap-6">
@@ -36,7 +53,7 @@ export function Navbar() {
                         <>
                             <NavLink
                                 to="/login"
-                                className={({ isActive }) =>
+                                className={({isActive}) =>
                                     `text-sm font-medium transition-colors ${
                                         isActive
                                             ? "text-gray-900"
