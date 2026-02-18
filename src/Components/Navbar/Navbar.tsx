@@ -22,7 +22,7 @@ export function Navbar() {
 
     return (
         <header className="sticky top-0 z-50 bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950">
-            <nav className="mx-auto py-2 px-2 sm:px-8 flex items-center justify-between">
+            <nav className="mx-auto py-4 sm:py-2 px-2 sm:px-8 flex items-center justify-between">
 
                 {/* Brand */}
                 <Link
@@ -62,7 +62,7 @@ export function Navbar() {
                                 className="lg:hidden"
                                 onClick={() => setOpen(true)}
                             >
-                                <MenuIcon className='stroke-white text-gray-200' />
+                                <MenuIcon className='stroke-white text-gray-200 mr-5' />
                             </button>
 
                             {/* DESKTOP MENU */}
