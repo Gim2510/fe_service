@@ -20,6 +20,7 @@ import {UserEditProfile} from "./Pages/UserEditProfile.tsx";
 
 function App() {
     return (
+        <div className='bg-black'>
         <AuthProvider>
             <ScrollToTop />
             <Routes>
@@ -37,6 +38,7 @@ function App() {
                 <Route path="/user/edit" element={<Protected><LayoutHomepage><UserEditProfile /></LayoutHomepage></Protected>} />
             </Routes>
         </AuthProvider>
+        </div>
     );
 }
 
