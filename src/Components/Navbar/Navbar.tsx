@@ -62,7 +62,7 @@ export function Navbar() {
                                 className="lg:hidden"
                                 onClick={() => setOpen(true)}
                             >
-                                <MenuIcon />
+                                <MenuIcon className='stroke-white text-gray-200' />
                             </button>
 
                             {/* DESKTOP MENU */}
