@@ -5,3 +5,7 @@
     --color-green-buttons: #40916c;
     --color-green-buttons-hover: #52b788;
 }
+
+html, body {
+    background-color: #000;
+}
