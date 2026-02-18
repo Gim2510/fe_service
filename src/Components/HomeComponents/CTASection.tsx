@@ -6,7 +6,7 @@ export function CTASection() {
 
     return (
         <section>
-            <div className="mx-auto max-w-7xl px-8 py-32 text-center flex flex-col items-center gap-8">
+            <div className="mx-auto max-w-7xl px-8 py-32 text-center flex flex-col items-center gap-8 bg-white">
                 <h2 className="text-4xl font-semibold text-gray-900 leading-tight">
                     Trasforma i tuoi processi in un vantaggio competitivo
                 </h2>

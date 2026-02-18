@@ -9,7 +9,7 @@ export function CosaFacciamoSection() {
     ];
 
     return (
-        <section className="relative">
+        <section className="relative bg-white">
             <div className="mx-auto max-w-7xl px-8 py-28 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
 
                 {/* Visual */}
