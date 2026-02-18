@@ -20,7 +20,7 @@ export function HeroSection() {
             {/* Grid */}
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[size:32px_32px]" />
 
-            <div className="relative mx-auto max-w-7xl px-8 py-32 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center text-white z-10">
+            <div className="relative mx-auto max-w-7xl px-8 py-8 sm:py-32 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center text-white z-10">
 
                 {/* LEFT */}
                 <div className="flex flex-col gap-10">
