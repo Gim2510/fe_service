@@ -45,13 +45,13 @@ export function SurveyConfirmation({ surveyId }: Props) {
                 </p>
 
                 {/* CTA GENERA REPORT */}
-                <div className="flex gap-3 w-full max-w-xl mx-auto">
+                <div className="flex flex-col sm:flex-raw gap-6 sm:gap-3 w-full max-w-xl mx-auto">
                     <button
                         onClick={handleGenerateSurveyReport}
                         disabled={loading || success}
-                        className="flex-1 group relative px-10 py-4 rounded-full bg-white text-black font-medium text-lg transition disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+                        className="flex-1 group relative px-10 py-2 sm:py-4 rounded-full bg-white text-black font-medium text-lg transition disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
                     >
-        <span className="relative z-10">
+        <span className="relative z-10 sm:text-lg text-sm">
             {loading
                 ? "Generazione report in corso…"
                 : success
@@ -65,7 +65,7 @@ export function SurveyConfirmation({ surveyId }: Props) {
                     {success && (
                         <button
                             onClick={handleBookAppointment}
-                            className="flex-1 group relative cursor-pointer px-10 py-4 rounded-full bg-white text-black font-medium text-lg transition overflow-hidden"
+                            className="flex-1 group relative cursor-pointer px-10 py-2 sm:py-4 rounded-full bg-white text-black font-medium text-sm sm:text-lg transition overflow-hidden"
                         >
             <span className="relative z-10">
                 Prenota una consulenza
