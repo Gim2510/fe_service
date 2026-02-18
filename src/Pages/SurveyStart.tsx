@@ -52,7 +52,7 @@ export function SurveyStart() {
                     className="relative px-12 py-5 rounded-full bg-white border-4 border-black hover:text-black cursor-pointer text-neutral-900 text-lg font-medium overflow-hidden group hover:scale-105 active:scale-95 transition-all"
                 >
                     <span className="relative z-10">Registrati per iniziare</span>
-                    <span className="absolute inset-0 bg-cyan-400 translate-y-full group-hover:translate-y-0 transition-transform" />
+                    <span className="absolute inset-0 bg-yellow-400 translate-y-full group-hover:translate-y-0 transition-transform" />
                 </button>
             </main>
         )

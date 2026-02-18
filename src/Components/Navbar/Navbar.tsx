@@ -29,7 +29,7 @@ export function Navbar() {
                     to="/"
                     className="text-xl font-semibold tracking-tight text-gray-900 flex justify-center items-center"
                 >
-                    <img src={logo} alt='logo' width={200} height={70} className=''/>
+                    <img src={logo} alt='logo' height={70} className='sm:w-[200px] w-[140px]'/>
                 </Link>
 
                 <div className="flex items-center gap-6">
@@ -50,7 +50,7 @@ export function Navbar() {
 
                             <NavLink
                                 to="/register"
-                                className="text-sm font-medium px-5 py-2 rounded-full bg-gray-900 text-white hover:bg-gray-800 transition"
+                                className="text-sm font-medium px-5 py-2 rounded-full bg-gray-200 text-black hover:bg-gray-800 transition"
                             >
                                 Inizia ora
                             </NavLink>

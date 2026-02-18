@@ -26,11 +26,7 @@ export function HeroSection() {
                 <div className="flex flex-col gap-10">
 
                     {/* Logo */}
-                    <img
-                        src={logo}
-                        alt="TechBridge"
-                        className="sm:w-120 mb-6 opacity-90"
-                    />
+                    <img src={logo} alt="TechBridge" className="md:w-120 sm:block hidden mb-6 opacity-90"/>
 
                     <span className="text-sm uppercase tracking-widest text-neutral-400">
             Consulenza digitale per PMI
@@ -58,7 +54,7 @@ export function HeroSection() {
                         >
                             <span className="relative z-10">Scopri cosa stai perdendo</span>
                             <span
-                                className="absolute inset-0 bg-cyan-400 translate-y-full group-hover:translate-y-0 transition-transform"/>
+                                className="absolute inset-0 bg-yellow-400 translate-y-full group-hover:translate-y-0 transition-transform"/>
                         </button>
 
                         <span className="text-sm text-neutral-400">
