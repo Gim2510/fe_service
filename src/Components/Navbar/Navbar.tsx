@@ -4,6 +4,7 @@ import MenuIcon from "@mui/icons-material/Menu"
 import CloseIcon from "@mui/icons-material/Close"
 import { useState, useEffect } from "react"
 import {NavItem} from "./NavItem.tsx";
+import logo from '/logo1.png'
 
 export function Navbar() {
     const { isAuthenticated, logout } = useAuth()
@@ -20,31 +21,15 @@ export function Navbar() {
     const closeMenu = () => setOpen(false)
 
     return (
-        <header className="sticky top-0 z-50 bg-gradient-to-b from-[#B4B8C5] via-[#E9EBF8] to-[#B4B8C5]">
-            <nav className="mx-auto px-2 sm:px-8 flex items-center justify-between">
+        <header className="sticky top-0 z-50 bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950">
+            <nav className="mx-auto py-2 px-2 sm:px-8 flex items-center justify-between">
 
                 {/* Brand */}
                 <Link
                     to="/"
-                    className="text-xl font-semibold tracking-tight text-gray-900 flex justify-center items-center gap-2"
+                    className="text-xl font-semibold tracking-tight text-gray-900 flex justify-center items-center"
                 >
-                    <svg width="40" height="40" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="44" height="44" rx="10" fill="#0E1A2B"/>
-                        <path d="M10 14 H34 V18 H24 V34 H20 V18 H10 Z" fill="#FFFFFF"/>
-                        <path d="M24 20 H32 C35 20 35 26 32 26 H24 Z" fill="#1D4ED8"/>
-                        <path d="M24 26 H34 C37 26 37 34 34 34 H24 Z" fill="#1D4ED8"/>
-                    </svg>
-                    <svg width="160" height="50" viewBox="0 0 360 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <text x="0" y="50"
-                              font-family="Sora, Inter, Arial, sans-serif"
-                              font-size="34"
-                              font-weight="600"
-                              letter-spacing="3"
-                              fill="#0E1A2B">
-                            TECHBRIDGE
-                        </text>
-                        <rect x="0" y="60" width="140" height="4" fill="#1D4ED8"/>
-                    </svg>
+                    <img src={logo} alt='logo' width={200} height={70} className=''/>
                 </Link>
 
                 <div className="flex items-center gap-6">
@@ -55,8 +40,8 @@ export function Navbar() {
                                 className={({isActive}) =>
                                     `text-sm font-medium transition-colors ${
                                         isActive
-                                            ? "text-gray-900"
-                                            : "text-gray-500 hover:text-gray-900"
+                                            ? "text-gray-500"
+                                            : "text-gray-200 hover:text-gray-500"
                                     }`
                                 }
                             >
@@ -87,8 +72,8 @@ export function Navbar() {
                                     className={({ isActive }) =>
                                         `text-sm font-medium ${
                                             isActive
-                                                ? "text-gray-900"
-                                                : "text-gray-500 hover:text-gray-900"
+                                                ? "text-gray-500"
+                                                : "text-gray-200 hover:text-gray-500"
                                         }`
                                     }
                                 >
@@ -100,8 +85,8 @@ export function Navbar() {
                                     className={({ isActive }) =>
                                         `text-sm font-medium ${
                                             isActive
-                                                ? "text-gray-900"
-                                                : "text-gray-500 hover:text-gray-900"
+                                                ? "text-gray-500"
+                                                : "text-gray-200 hover:text-gray-500"
                                         }`
                                     }
                                 >
@@ -113,8 +98,8 @@ export function Navbar() {
                                     className={({ isActive }) =>
                                         `text-sm font-medium ${
                                             isActive
-                                                ? "text-gray-900"
-                                                : "text-gray-500 hover:text-gray-900"
+                                                ? "text-gray-500"
+                                                : "text-gray-200 hover:text-gray-500"
                                         }`
                                     }
                                 >
@@ -123,7 +108,7 @@ export function Navbar() {
 
                                 <button
                                     onClick={logout}
-                                    className="text-sm cursor-pointer font-medium text-gray-500 hover:text-red-600"
+                                    className="text-sm cursor-pointer font-medium text-gray-200 hover:text-red-600"
                                 >
                                     Logout
                                 </button>

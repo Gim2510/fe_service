@@ -7,7 +7,7 @@ import { useAuth } from "../auth/AuthContext.tsx";
 
 export function LayoutHomepage({ children }: { children: ReactNode }) {
     const [open, setOpen] = useState(false);
-    const { isAuthenticated } = useAuth(); // 👈
+    const { isAuthenticated } = useAuth();
 
     return (
         <div className="w-full h-full relative">

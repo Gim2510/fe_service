@@ -21,6 +21,15 @@ export function SurveyDashboard() {
         )
     }
 
+    const handleBookAppointment = () => {
+        window.open(
+            import.meta.env.VITE_CALENDLY_URL,
+            "_blank"
+        );
+        navigate('/survey')
+
+    };
+
     const questionMap = new Map(
         questions.map(q => [q.id, q])
     )
@@ -143,7 +152,7 @@ export function SurveyDashboard() {
                 </p>
 
                 <button
-                    onClick={() => navigate("/contact")}
+                    onClick={handleBookAppointment}
                     className="group relative px-10 cursor-pointer hover:text-white py-4 rounded-full bg-white text-neutral-900 font-medium overflow-hidden hover:scale-105 transition"
                 >
                     <span className="relative z-10">
