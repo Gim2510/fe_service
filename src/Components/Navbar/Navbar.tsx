@@ -50,7 +50,7 @@ export function Navbar() {
 
                             <NavLink
                                 to="/register"
-                                className="text-sm font-medium px-5 py-2 rounded-full bg-gray-200 text-black hover:bg-gray-800 transition"
+                                className="text-sm font-medium px-5 py-2 rounded-full bg-gray-200 text-black hover:bg-gray-400 transition"
                             >
                                 Inizia ora
                             </NavLink>
