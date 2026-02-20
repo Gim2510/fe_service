@@ -17,6 +17,8 @@ import {PasswordResetRequest} from "./Pages/PasswordResetRequest.tsx";
 import {ResetPassword} from "./Pages/ResetPassword.tsx";
 import {ScrollToTop} from "./utils/scrollToTop.tsx";
 import {UserEditProfile} from "./Pages/UserEditProfile.tsx";
+import {RoleProtected} from "./Components/Protected/RoleProtected.tsx";
+import {AdminDashboard} from "./Pages/AdminDashboard.tsx";
 
 function App() {
     return (
@@ -36,6 +38,7 @@ function App() {
                 <Route path="/password-reset" element={<LayoutHomepage><PasswordResetRequest/></LayoutHomepage>} />
                 <Route path="/password-reset/confirm/:token" element={<LayoutHomepage><ResetPassword/></LayoutHomepage>} />
                 <Route path="/user/edit" element={<Protected><LayoutHomepage><UserEditProfile /></LayoutHomepage></Protected>} />
+                <Route path="/dashboard" element={<RoleProtected role={`ADMIN`}><LayoutHomepage><AdminDashboard/></LayoutHomepage></RoleProtected>} />
             </Routes>
         </AuthProvider>
         </div>

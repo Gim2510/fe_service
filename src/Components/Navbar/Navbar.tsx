@@ -7,7 +7,8 @@ import {NavItem} from "./NavItem.tsx";
 import logo from '/logo1.png'
 
 export function Navbar() {
-    const { isAuthenticated, logout } = useAuth()
+    const { isAuthenticated, logout, role } = useAuth()
+    console.log(role)
     const [open, setOpen] = useState(false)
 
     useEffect(() => {
@@ -67,6 +68,20 @@ export function Navbar() {
 
                             {/* DESKTOP MENU */}
                             <div className="hidden lg:flex gap-6 items-center">
+                                {isAuthenticated && role === "ADMIN" && (
+                                    <NavLink
+                                        to="/dashboard"
+                                        className={({ isActive }) =>
+                                            `text-sm font-medium ${
+                                                isActive
+                                                    ? "text-gray-500"
+                                                    : "text-gray-200 hover:text-gray-500"
+                                            }`
+                                        }
+                                    >
+                                        Dashboard
+                                    </NavLink>
+                                )}
                                 <NavLink
                                     to="/survey/start"
                                     className={({ isActive }) =>
