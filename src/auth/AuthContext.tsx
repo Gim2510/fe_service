@@ -11,12 +11,14 @@ import { jwtDecode } from "jwt-decode";
 type JwtPayload = {
     sub: string;
     role: string;
+    emailVer: boolean;
     exp: number; // seconds
 };
 
 type AuthContextType = {
     token: string | null;
     role: string | null;
+    emailVer: boolean | null;
     id: string | null;
     login: (token: string) => void;
     logout: () => void;
@@ -60,6 +62,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     let role: string | null = null;
     let id: string | null = null;
+    let emailVer: boolean | null = null
 
     // ⏱️ Auto logout su scadenza token
     useEffect(() => {
@@ -69,6 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const decoded = jwtDecode<JwtPayload>(token);
             role = decoded.role;
             id = decoded.sub;
+            emailVer = decoded.emailVer
 
             const expiresAt = decoded.exp * 1000;
             const timeout = expiresAt - Date.now();
@@ -86,15 +90,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return clearLogoutTimer;
     }, [token]);
 
-    // deriviamo role/id *solo* se token valido
     if (token) {
         try {
             const decoded = jwtDecode<JwtPayload>(token);
             role = decoded.role;
             id = decoded.sub;
+            emailVer = decoded.emailVer;
         } catch {
             role = null;
             id = null;
+            emailVer = null;
         }
     }
 
@@ -103,6 +108,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             value={{
                 token,
                 role,
+                emailVer,
                 id,
                 login,
                 logout,

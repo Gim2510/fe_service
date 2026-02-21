@@ -7,7 +7,7 @@ import {CTASection} from "../Components/HomeComponents/CTASection.tsx";
 
 export function Home() {
     return (
-        <main className="flex flex-col">
+        <main className="flex flex-col bg-white">
             <HeroSection />
             <ProblemiSection />
             <DigitalMaturitySection />

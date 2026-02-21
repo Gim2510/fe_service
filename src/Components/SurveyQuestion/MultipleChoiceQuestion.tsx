@@ -15,18 +15,14 @@ export const MultipleChoiceQuestion: FC<PropsMultipleChoiceQuestion> = ({
                     key={opt}
                     onClick={() => onChange(opt)}
                     className={`
-                        w-full text-left px-6 py-5 rounded-2xl border
-                        transition-all duration-200 cursor-pointer
-                        ${
-                        selected
-                            ? "bg-[#FFD93D] text-black border-[#FFD93D] ring-2 ring-[#FFD93D]"
-                            : "bg-white border-slate-700 hover:border-slate-500"
-                    }
-                    `}
+            w-full text-left px-6 py-5 rounded-2xl border
+            transition-all duration-300 cursor-pointer
+            ${selected
+                        ? "bg-white/10 border-white/20 text-white backdrop-blur-md"
+                        : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:border-white/20"}
+          `}
                 >
-                    <span className="text-lg font-medium text-black">
-                        {opt}
-                    </span>
+                    <span className="text-lg font-medium">{opt}</span>
                 </button>
             )
         })}

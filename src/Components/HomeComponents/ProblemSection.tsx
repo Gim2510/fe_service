@@ -11,6 +11,11 @@ export function ProblemiSection() {
     return (
         <section className="relative bg-neutral-950 text-white overflow-hidden">
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[size:32px_32px] bg-[position:0_40px]" />
+            {/* liquid glass blobs */}
+            <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-gradient-to-br from-indigo-500/20 to-cyan-400/20 rounded-full blur-3xl opacity-40" />
+            <div className="absolute top-1/2 -right-40 w-[400px] h-[400px] bg-gradient-to-tr from-purple-500/20 to-blue-400/20 rounded-full blur-3xl opacity-30" />
+            <div className="absolute bottom-[-200px] left-1/3 w-[450px] h-[450px] bg-gradient-to-r from-fuchsia-500/10 to-indigo-400/10 rounded-full blur-3xl opacity-40" />
+
             <div className="relative mx-auto max-w-7xl px-8 py-32">
                 <div className="max-w-3xl mb-24">
                     <h2 className="text-4xl font-semibold leading-tight">

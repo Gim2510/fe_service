@@ -38,9 +38,15 @@ export function DigitalMaturitySection() {
     ];
 
     return (
-        <section className="relative bg-neutral-950 text-white py-32 overflow-hidden">
+        <section className="relative bg-neutral-950 text-white sm:py-32 pt-16 pb-32 overflow-hidden">
             {/* Texture a punti */}
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[size:32px_32px]" />
+            {/* Liquid glass background */}
+            <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-gradient-to-br from-blue-500/20 via-indigo-500/20 to-purple-500/20 rounded-full blur-3xl opacity-40" />
+
+            <div className="absolute top-1/3 -right-40 w-[500px] h-[500px] bg-gradient-to-tr from-cyan-400/20 via-blue-500/20 to-fuchsia-500/20 rounded-full blur-3xl opacity-30" />
+
+            <div className="absolute inset-0 backdrop-blur-[100px] bg-white/[0.02]" />
 
             <div className="relative mx-auto max-w-7xl px-8">
                 {/* Header */}
@@ -62,10 +68,21 @@ export function DigitalMaturitySection() {
                 {/* Livelli */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
                     {livelli.map((lvl) => (
-                        <div key={lvl.level} className={`rounded-2xl p-6 ${lvl.color} backdrop-blur-xl border border-neutral-800`}>
+                        <div
+                            key={lvl.level}
+                            className="group relative rounded-2xl p-6 bg-white/[0.04] backdrop-blur-2xl border border-white/10 hover:border-white/20 transition-all duration-500"
+                        >
+                            <div
+                                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-white/5 to-transparent before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br before:from-blue-500/10 before:to-transparent before:animate-[softPulse_6s_ease-in-out_infinite]"/>
+
+                            <div className='flex justify-between items-center'>
                             <h3 className="text-xl font-semibold mb-2">{lvl.level}</h3>
+                            <div className={`w-30 h-2 rounded-full ${lvl.color}`}/>
+                            </div>
                             <p className="text-sm text-neutral-300 mb-4">{lvl.description}</p>
-                            <div className="text-sm font-medium text-neutral-200">Score: {lvl.score}</div>
+                            <div className="text-sm font-medium text-neutral-200">
+                                Score: {lvl.score}
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -83,9 +100,12 @@ export function DigitalMaturitySection() {
                                 </div>
                                 <div className="w-full h-4 bg-neutral-800 rounded-full">
                                     <div
-                                        className="h-4 rounded-full"
-                                        style={{ width: `${p.weight * 100}%`, backgroundColor: "white" }}
-                                    />
+                                        className="relative w-full h-4 bg-neutral-800/70 rounded-full overflow-hidden backdrop-blur-xl border border-white/5">
+                                        <div
+                                            className="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500"
+                                            style={{width: `${p.weight * 100}%`}}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         ))}

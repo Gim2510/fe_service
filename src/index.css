@@ -4,8 +4,19 @@
     --color-main-white: #f0efeb;
     --color-green-buttons: #40916c;
     --color-green-buttons-hover: #52b788;
+    --color-abstract-grey: #EAEAEA;
 }
 
 html, body {
     background-color: #000;
+}
+
+@keyframes floatSlow {
+    0%, 100% { transform: translateY(0px) }
+    50% { transform: translateY(-30px) }
+}
+
+@keyframes softPulse {
+    0%, 100% { opacity: 0.3 }
+    50% { opacity: 0.6 }
 }

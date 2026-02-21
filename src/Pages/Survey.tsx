@@ -91,8 +91,27 @@ export function Survey() {
                                 setAnswer={flow.setAnswer}
                             />
 
-                            <div className="flex justify-end pt-8">
-                                <LiquidGlassButton disabled={!flow.canProceed} onClick={() => flow.next(survey._id)}>
+                            <div
+                                className={`flex pt-8 ${
+                                    flow.step > 0 ? "justify-between" : "justify-end"
+                                }`}
+                            >
+                                {/* Pulsante Indietro */}
+                                {flow.step > 0 && (
+                                    <LiquidGlassButton
+                                        color_text="white"
+                                        onClick={flow.prev}
+                                        className="bg-white/5 border-white/10"
+                                    >
+                                        Indietro
+                                    </LiquidGlassButton>
+                                )}
+
+                                {/* Pulsante Avanti */}
+                                <LiquidGlassButton
+                                    disabled={!flow.canProceed}
+                                    onClick={() => flow.next(survey._id)}
+                                >
                                     {flow.isLast ? "Completa survey" : "Continua"}
                                 </LiquidGlassButton>
                             </div>
@@ -106,7 +125,7 @@ export function Survey() {
                         />
                     )}
 
-                    {isConfirmationStep && <SurveyConfirmation surveyId={surveyId} />}
+                    {isConfirmationStep && <SurveyConfirmation surveyId={surveyId}/>}
                 </div>
             </section>
         </main>

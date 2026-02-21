@@ -8,7 +8,7 @@ import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
 
 export function SurveyStart() {
     const navigate = useNavigate()
-    const { isAuthenticated } = useAuth()
+    const { isAuthenticated, emailVer } = useAuth()
 
     const templateId = import.meta.env.VITE_SURVEY_TEMPLATE_ID
     const locale: "it" = "it"
@@ -74,8 +74,12 @@ export function SurveyStart() {
                     Raccogli informazioni strutturate e avvia un processo di analisi mirato.
                     Ottieni subito una panoramica chiara del livello di maturità digitale della tua azienda.
                 </p>
-                <LiquidGlassButton onClick={() => setShouldInit(true)} disabled={initLoading}>{initLoading ? "Preparazione in corso..." : "Vai al questionario"}</LiquidGlassButton>
-
+                { emailVer
+                    ?
+                        <LiquidGlassButton onClick={() => setShouldInit(true)} disabled={initLoading}>{initLoading ? "Preparazione in corso..." : "Vai al questionario"}</LiquidGlassButton>
+                    :
+                        <LiquidGlassButton disabled={true}>Verifica la tua email</LiquidGlassButton>
+                }
                 {initLoading && (
                     <p className="text-sm text-neutral-400 mt-2">
                         Sto preparando il questionario, attendi qualche secondo…

@@ -1,5 +1,5 @@
-import type {Question} from "../types.ts";
 import {useState} from "react";
+import type {Question} from "../types.ts";
 import {useAuth} from "../auth/AuthContext.tsx";
 
 export function useSurveyFlow(questions: Question[]) {
@@ -22,10 +22,7 @@ export function useSurveyFlow(questions: Question[]) {
             headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
             body: JSON.stringify({
                 question_id: question.id,
-                answer: {
-                    value: answer,
-                    filled: true,
-                },
+                answer: { value: answer, filled: true },
             }),
         });
 
@@ -40,6 +37,12 @@ export function useSurveyFlow(questions: Question[]) {
         setStep(s => s + 1);
     }
 
+    // **Nuova funzione per tornare indietro**
+    function prev() {
+        if (animating || step === 0) return;
+        setStep(s => s - 1);
+    }
+
     return {
         step,
         question,
@@ -49,6 +52,7 @@ export function useSurveyFlow(questions: Question[]) {
         animating,
         canProceed,
         next,
-        nextStep, // <-- esposto per avanzamenti speciali
+        nextStep,
+        prev, // <-- esposto
     };
 }

@@ -4,6 +4,7 @@ import { Footer } from "../Components/Footer.tsx";
 import { GDPRBanner } from "../Components/GDPRBANNER.tsx";
 import { ChatWidget } from "../Components/ChatBot/ChatWidget.tsx";
 import { useAuth } from "../auth/AuthContext.tsx";
+import {EmailVerificationBanner} from "../Components/EmailVerificationBanner.tsx";
 
 export function LayoutHomepage({ children }: { children: ReactNode }) {
     const [open, setOpen] = useState(false);
@@ -16,6 +17,7 @@ export function LayoutHomepage({ children }: { children: ReactNode }) {
                 {children}
                 <Footer />
                 <GDPRBanner />
+                <EmailVerificationBanner />
             </div>
             {isAuthenticated && (
                 <ChatWidget open={open} setOpen={setOpen} />
