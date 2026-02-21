@@ -1,220 +1,153 @@
-import { Link, NavLink } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useAuth } from "../../auth/AuthContext"
 import MenuIcon from "@mui/icons-material/Menu"
 import CloseIcon from "@mui/icons-material/Close"
 import { useState, useEffect } from "react"
+import logo from "/logo1.png"
 import {NavItem} from "./NavItem.tsx";
-import logo from '/logo1.png'
-import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
+import {MobileNavItem} from "./MobileNavItem.tsx";
 
 export function Navbar() {
     const { isAuthenticated, logout, role } = useAuth()
-    console.log(role)
     const [open, setOpen] = useState(false)
 
     useEffect(() => {
-        if (open) {
-            document.body.style.overflow = "hidden"
-        } else {
-            document.body.style.overflow = "auto"
-        }
+        document.body.style.overflow = open ? "hidden" : "auto"
     }, [open])
 
     const closeMenu = () => setOpen(false)
 
     return (
-        <header className="sticky top-0 z-50 bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950">
-            <nav className="mx-auto py-4 sm:py-2 px-2 sm:px-8 flex items-center justify-between">
+        <>
+            <header className="fixed top-0 left-0 w-full z-50">
+                <div className="mx-auto max-w-7xl px-6">
+                    <div className="mt-4 backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.4)]">
 
-                {/* Brand */}
-                <Link
-                    to="/"
-                    className="text-xl font-semibold tracking-tight text-gray-900 flex justify-center items-center"
-                >
-                    <img src={logo} alt='logo' height={70} className='sm:w-[200px] w-[140px]'/>
-                </Link>
+                        <div className="flex items-center justify-between h-16 px-6">
 
-                <div className="flex items-center gap-6">
-                    {!isAuthenticated ? (
-                        <>
-                            <NavLink
-                                to="/login"
-                                className={({isActive}) =>
-                                    `text-sm font-medium transition-colors ${
-                                        isActive
-                                            ? "text-gray-500"
-                                            : "text-gray-200 hover:text-gray-500"
-                                    }`
-                                }
-                            >
-                                Login
-                            </NavLink>
+                            {/* Logo */}
+                            <Link to="/" className="flex items-center">
+                                <img src={logo} alt="TechBridge" className="h-10 object-contain" />
+                            </Link>
 
-                            <LiquidGlassButton to="/register" variant="navbar">
-                                Inizia ora
-                            </LiquidGlassButton>
-                        </>
-                    ) : (
-                        <>
-                            {/* MOBILE HAMBURGER */}
+                            {/* Desktop Navigation */}
+                            <div className="hidden lg:flex items-center gap-10 text-sm tracking-wide">
+
+                                {isAuthenticated && role === "ADMIN" && (
+                                    <NavItem to="/dashboard" label="Dashboard" />
+                                )}
+
+                                <NavItem to="/survey/start" label="Survey" />
+                                <NavItem to="/contact" label="Contacts" />
+
+                                {isAuthenticated ? (
+                                    <>
+                                        <NavItem to="/user" label="Account" />
+
+                                        <button
+                                            onClick={logout}
+                                            className="text-neutral-400 hover:text-white transition"
+                                        >
+                                            Logout
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <NavItem to="/login" label="Login" />
+                                        <Link
+                                            to="/register"
+                                            className="px-5 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md transition text-white"
+                                        >
+                                            Inizia ora
+                                        </Link>
+                                    </>
+                                )}
+                            </div>
+
+                            {/* Mobile Button */}
                             <button
-                                className="lg:hidden"
+                                className="lg:hidden text-neutral-300 hover:text-white transition"
                                 onClick={() => setOpen(true)}
                             >
-                                <MenuIcon className='stroke-white text-gray-200 mr-5' />
+                                <MenuIcon />
                             </button>
-
-                            {/* DESKTOP MENU */}
-                            <div className="hidden lg:flex gap-6 items-center">
-                                {isAuthenticated && role === "ADMIN" && (
-                                    <NavLink
-                                        to="/dashboard"
-                                        className={({ isActive }) =>
-                                            `text-sm font-medium ${
-                                                isActive
-                                                    ? "text-gray-500"
-                                                    : "text-gray-200 hover:text-gray-500"
-                                            }`
-                                        }
-                                    >
-                                        Dashboard
-                                    </NavLink>
-                                )}
-                                <NavLink
-                                    to="/survey/start"
-                                    className={({ isActive }) =>
-                                        `text-sm font-medium ${
-                                            isActive
-                                                ? "text-gray-500"
-                                                : "text-gray-200 hover:text-gray-500"
-                                        }`
-                                    }
-                                >
-                                    Survey
-                                </NavLink>
-
-                                <NavLink
-                                    to="/contact"
-                                    className={({ isActive }) =>
-                                        `text-sm font-medium ${
-                                            isActive
-                                                ? "text-gray-500"
-                                                : "text-gray-200 hover:text-gray-500"
-                                        }`
-                                    }
-                                >
-                                    Contacts
-                                </NavLink>
-
-                                <NavLink
-                                    to="/user"
-                                    className={({ isActive }) =>
-                                        `text-sm font-medium ${
-                                            isActive
-                                                ? "text-gray-500"
-                                                : "text-gray-200 hover:text-gray-500"
-                                        }`
-                                    }
-                                >
-                                    Account
-                                </NavLink>
-
-                                <button
-                                    onClick={logout}
-                                    className="text-sm cursor-pointer font-medium text-gray-200 hover:text-red-600"
-                                >
-                                    Logout
-                                </button>
-                            </div>
-                        </>
-                    )}
-                </div>
-            </nav>
-
-            {/* ================= MOBILE DRAWER ================= */}
-            {isAuthenticated && (
-                <>
-                    {/* Overlay */}
-                    <div
-                        className={`fixed inset-0 bg-black/40 z-40 transition-opacity ${
-                            open
-                                ? "opacity-100 visible"
-                                : "opacity-0 invisible"
-                        }`}
-                        onClick={closeMenu}
-                    />
-
-                    {/* Drawer */}
-                    <div
-                        className={`fixed inset-0 z-50 ${
-                            open ? "pointer-events-auto" : "pointer-events-none"
-                        }`}
-                    >
-                        {/* Overlay */}
-                        <div
-                            onClick={closeMenu}
-                            className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
-                                open ? "opacity-100" : "opacity-0"
-                            }`}
-                        />
-
-                        {/* Side panel */}
-                        <div
-                            className={`absolute top-0 left-0 h-full w-72 bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950 border-r border-neutral-800 shadow-2xl transform transition-transform duration-300 ${
-                                open ? "translate-x-0" : "-translate-x-full"
-                            }`}
-                        >
-                            <div className="h-full flex flex-col p-8">
-
-                                {/* Header */}
-                                <div className="flex items-center justify-between mb-12">
-        <span className="text-sm uppercase tracking-widest text-neutral-500">
-          Area riservata
-        </span>
-
-                                    <button
-                                        onClick={closeMenu}
-                                        className="text-neutral-400 hover:text-white transition"
-                                    >
-                                        <CloseIcon/>
-                                    </button>
-                                </div>
-
-                                {/* Navigation */}
-                                <nav className="flex flex-col gap-4 text-lg">
-
-                                    <NavItem to="/survey/start" label="Survey" closeMenu={closeMenu}/>
-                                    <NavItem to="/contact" label="Contatti" closeMenu={closeMenu}/>
-                                    <NavItem to="/user" label="Account" closeMenu={closeMenu}/>
-
-                                </nav>
-
-                                {/* Divider */}
-                                <div
-                                    className="mt-10 mb-6 h-px bg-gradient-to-r from-transparent via-neutral-700 to-transparent"/>
-
-                                {/* Logout */}
-                                <button
-                                    onClick={() => {
-                                        logout();
-                                        closeMenu();
-                                    }}
-                                    className="group flex items-center gap-3 text-neutral-400 hover:text-red-400 transition"
-                                >
-                                    <span className="text-lg">Logout</span>
-                                    <div className="flex-1 h-px bg-neutral-800 group-hover:bg-red-500 transition"/>
-                                </button>
-
-                                {/* Footer */}
-                                <div className="mt-auto pt-10 text-xs text-neutral-600">
-                                    © {new Date().getFullYear()} Digital Advisory
-                                </div>
-
-                            </div>
                         </div>
                     </div>
-                </>
-            )}
-        </header>
+                </div>
+            </header>
+
+            {/* ================= MOBILE DRAWER ================= */}
+            <div
+                className={`fixed inset-0 z-60 transition ${
+                    open ? "visible opacity-100" : "invisible opacity-0"
+                }`}
+            >
+                {/* Overlay */}
+                <div
+                    onClick={closeMenu}
+                    className="absolute inset-0 bg-black/70 backdrop-blur-md transition-opacity duration-300"
+                />
+
+                {/* Panel */}
+                <div
+                    className={`absolute right-0 top-0 h-full w-80 bg-neutral-950/90 backdrop-blur-2xl border-l border-white/10 transform transition-transform duration-500 ${
+                        open ? "translate-x-0" : "translate-x-full"
+                    }`}
+                >
+                    <div className="flex flex-col h-full p-8">
+
+                        {/* Header */}
+                        <div className="flex items-center justify-between mb-12">
+                            <span className="text-xs uppercase tracking-widest text-neutral-500">
+                                Navigation
+                            </span>
+
+                            <button
+                                onClick={closeMenu}
+                                className="text-neutral-400 hover:text-white transition"
+                            >
+                                <CloseIcon />
+                            </button>
+                        </div>
+
+                        {/* Links */}
+                        <div className="flex flex-col gap-6 text-lg font-light tracking-wide">
+
+                            {isAuthenticated && role === "ADMIN" && (
+                                <MobileNavItem to="/dashboard" label="Dashboard" closeMenu={closeMenu} />
+                            )}
+
+                            <MobileNavItem to="/survey/start" label="Survey" closeMenu={closeMenu} />
+                            <MobileNavItem to="/contact" label="Contacts" closeMenu={closeMenu} />
+
+                            {isAuthenticated ? (
+                                <>
+                                    <MobileNavItem to="/user" label="Account" closeMenu={closeMenu} />
+
+                                    <button
+                                        onClick={() => {
+                                            logout()
+                                            closeMenu()
+                                        }}
+                                        className="text-neutral-400 hover:text-red-400 transition text-left"
+                                    >
+                                        Logout
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <MobileNavItem to="/login" label="Login" closeMenu={closeMenu} />
+                                    <MobileNavItem to="/register" label="Inizia ora" closeMenu={closeMenu} />
+                                </>
+                            )}
+                        </div>
+
+                        <div className="mt-auto pt-10 text-xs text-neutral-600">
+                            © {new Date().getFullYear()} TechBridge
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
     )
 }

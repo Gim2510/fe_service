@@ -1,9 +1,10 @@
 import {NavLink} from "react-router-dom";
 
-export function NavItem({ to, label }: { to: string; label: string }) {
+export function MobileNavItem({to, label, closeMenu,}: { to: string, label: string, closeMenu: () => void }) {
     return (
         <NavLink
             to={to}
+            onClick={closeMenu}
             className={({ isActive }) =>
                 `transition ${
                     isActive
