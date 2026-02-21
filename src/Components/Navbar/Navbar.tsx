@@ -5,6 +5,7 @@ import CloseIcon from "@mui/icons-material/Close"
 import { useState, useEffect } from "react"
 import {NavItem} from "./NavItem.tsx";
 import logo from '/logo1.png'
+import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
 
 export function Navbar() {
     const { isAuthenticated, logout, role } = useAuth()
@@ -49,12 +50,9 @@ export function Navbar() {
                                 Login
                             </NavLink>
 
-                            <NavLink
-                                to="/register"
-                                className="text-sm font-medium px-5 py-2 rounded-full bg-gray-200 text-black hover:bg-gray-400 transition"
-                            >
+                            <LiquidGlassButton to="/register" variant="navbar">
                                 Inizia ora
-                            </NavLink>
+                            </LiquidGlassButton>
                         </>
                     ) : (
                         <>

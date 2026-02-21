@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
 
 export function CTASection() {
     const navigate = useNavigate();
@@ -16,13 +17,9 @@ export function CTASection() {
                     della tua azienda e delle aree con il maggiore potenziale di miglioramento.
                 </p>
 
-                <button
-                    onClick={goToSurvey}
-                    className="group hover:scale-110 border-4 border-black hover:text-black active:scale-90 transition-all ease-in-out relative px-2 py-1 lg:px-12 lg:py-5 rounded-full bg-white text-neutral-900 font-medium lg:text-lg overflow-hidden cursor-pointer"
-                >
-                    <span className="relative z-10">Inizia l'analisi</span>
-                    <span className="absolute inset-0 bg-yellow-400 translate-y-full group-hover:translate-y-0 transition-transform duration-400" />
-                </button>
+                <LiquidGlassButton color_text='black' onClick={goToSurvey} >
+                    Inizia l'analisi
+                </LiquidGlassButton>
 
                 <span className="text-sm text-gray-400">Nessun impegno • Tempo stimato: pochi minuti</span>
             </div>

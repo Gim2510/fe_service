@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { HeroGlobe } from "../HeroGlobe";
 import logo from '/logo1.png'
 import {HeroSystemStatus} from "./HeroSystemStatus.tsx";
+import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
 
 export function HeroSection() {
     const navigate = useNavigate();
@@ -48,18 +49,12 @@ export function HeroSection() {
 
                     {/* CTA */}
                     <div className="flex items-center gap-8">
-                        <button
-                            onClick={goToSurvey}
-                            className="relative px-2 sm:px-12 sm:py-5 py-2 rounded-full bg-white border-4 border-black hover:text-black cursor-pointer text-neutral-900 text-sm sm:text-lg font-medium overflow-hidden group hover:scale-105 active:scale-95 transition-all"
-                        >
-                            <span className="relative z-10">Scopri cosa stai perdendo</span>
-                            <span
-                                className="absolute inset-0 bg-yellow-400 translate-y-full group-hover:translate-y-0 transition-transform"/>
-                        </button>
-
+                        <LiquidGlassButton onClick={goToSurvey}>
+                            Scopri cosa stai perdendo
+                        </LiquidGlassButton>
                         <span className="text-sm text-neutral-400 text-center">
-              Analisi guidata • Nessun impegno
-            </span>
+                            Analisi guidata • Nessun impegno
+                        </span>
                     </div>
                 </div>
 

@@ -3,6 +3,7 @@ import { useSurvey } from "../hooks/useSurvey"
 import { useSurveyTemplate } from "../hooks/useSurveyTemplate"
 import { formatAnswer } from "../utils/formatAnswer"
 import { useResetSurvey } from "../hooks/useResetSurvey.ts"
+import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
 
 export function SurveyDashboard() {
     const { survey_id } = useParams()
@@ -150,16 +151,7 @@ export function SurveyDashboard() {
                 <p className="text-neutral-400 mb-8">
                     Possiamo costruire insieme una roadmap operativa personalizzata.
                 </p>
-
-                <button
-                    onClick={handleBookAppointment}
-                    className="group relative px-10 cursor-pointer hover:text-white py-4 rounded-full bg-white text-neutral-900 font-medium overflow-hidden hover:scale-105 transition"
-                >
-                    <span className="relative z-10">
-                        Richiedi consulenza strategica
-                    </span>
-                    <span className="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                </button>
+                <LiquidGlassButton onClick={handleBookAppointment}>Richiedi consulenza strategica</LiquidGlassButton>
             </section>
 
             {/* RESET SECONDARIO */}

@@ -6,6 +6,7 @@ import { Section } from "../Components/SurveyQuestion/Section.tsx";
 import { useDeleteUser } from "../hooks/useDeleteUser.ts";
 import { useAuth } from "../auth/AuthContext.tsx";
 import { useUpdateUserInfo } from "../hooks/useUpdateUserInfo.ts";
+import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
 
 export function UserEditProfile() {
     const { user, loading, error, refetch } = useUser();
@@ -211,14 +212,7 @@ export function UserEditProfile() {
                             Profilo aggiornato correttamente
                         </p>
                     )}
-
-                    <button
-                        type="submit"
-                        disabled={loadingUpdate}
-                        className="px-8 py-3 rounded-full bg-white text-neutral-900 disabled:opacity-50"
-                    >
-                        Salva modifiche
-                    </button>
+                    <LiquidGlassButton type="submit" disabled={loadingUpdate}>Salva modifiche</LiquidGlassButton>
                 </form>
             </div>
 

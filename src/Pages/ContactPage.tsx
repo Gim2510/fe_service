@@ -1,4 +1,5 @@
 import { Mail, Phone, MapPin } from "lucide-react"
+import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
 
 export function ContactPage() {
     return (
@@ -65,15 +66,9 @@ export function ContactPage() {
                         />
 
                         {/* CTA */}
-                        <button
-                            onClick={() => window.location.href = "mailto:support@myapp.com"}
-                            className="cursor-pointer group relative mt-6 px-8 py-4 rounded-full bg-white text-neutral-900 font-medium text-lg overflow-hidden transition-all hover:scale-105 active:scale-95"
-                        >
-              <span className="relative z-10">
-                Scrivici ora
-              </span>
-                            <span className="absolute inset-0 bg-[#FFD93D] translate-y-full group-hover:translate-y-0 transition-transform" />
-                        </button>
+                        <LiquidGlassButton onClick={() => window.location.href = "mailto:support@myapp.com"}>
+                            Scrivici ora
+                        </LiquidGlassButton>
 
                     </div>
                 </div>

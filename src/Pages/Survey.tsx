@@ -7,6 +7,7 @@ import { useInitSurvey } from "../hooks/useInitSurvey"
 import { SurveyQuestion } from "../Components/SurveyQuestion"
 import { SurveyContacts } from "../Components/SurveyContacts"
 import { SurveyConfirmation } from "../Components/SurveyConfirmation"
+import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
 
 export function Survey() {
     const surveyTemplateId = "6980ad77de0a1489a3663896"
@@ -91,15 +92,9 @@ export function Survey() {
                             />
 
                             <div className="flex justify-end pt-8">
-                                <button
-                                    disabled={!flow.canProceed}
-                                    onClick={() => flow.next(survey._id)}
-                                    className="px-8 py-4 rounded-xl bg-gray-800 text-white font-medium
-                                               disabled:opacity-40 disabled:cursor-not-allowed
-                                               hover:bg-[#FFD93D] transition-colors cursor-pointer hover:text-black"
-                                >
+                                <LiquidGlassButton disabled={!flow.canProceed} onClick={() => flow.next(survey._id)}>
                                     {flow.isLast ? "Completa survey" : "Continua"}
-                                </button>
+                                </LiquidGlassButton>
                             </div>
                         </div>
                     )}

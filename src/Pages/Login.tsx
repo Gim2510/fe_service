@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useLogin } from "../hooks/useLogin"
+import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
 
 export function Login() {
     const navigate = useNavigate()
@@ -85,25 +86,7 @@ export function Login() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
-
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className={`group relative mt-4 px-8 py-4 rounded-full cursor-pointer hover:text-white font-medium text-lg overflow-hidden transition-all ${
-                                    loading
-                                        ? "bg-neutral-700 text-neutral-400 cursor-not-allowed"
-                                        : "bg-white text-neutral-900 hover:scale-105 active:scale-95"
-                                }`}
-                            >
-                <span className="relative z-10">
-                  {loading ? "Accesso in corso…" : "Accedi"}
-                </span>
-
-                                {!loading && (
-                                    <span
-                                        className="absolute inset-0 bg-[#000] translate-y-full group-hover:translate-y-0 transition-transform"/>
-                                )}
-                            </button>
+                            <LiquidGlassButton type="submit" disabled={loading} className="mt-4">{loading ? "Accesso in corso" : "Accedi"}</LiquidGlassButton>
                             <div className="text-center text-sm text-neutral-500 mt-2">
                                 <button
                                     type="button"

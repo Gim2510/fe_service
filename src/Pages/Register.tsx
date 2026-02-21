@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from "react"
 import { useNavigate } from "react-router-dom"
 import { useRegister } from "../hooks/useRegister"
+import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
 
 export function Register() {
     const navigate = useNavigate()
@@ -116,23 +117,7 @@ export function Register() {
                             <Input label="Codice Fiscale" name="fiscal_code" value={form.fiscal_code} onChange={handleChange} />
                             <Input label="Partita IVA" name="partita_iva" value={form.partita_iva} onChange={handleChange} />
 
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className={`group relative mt-4 px-8 py-4 rounded-full hover:text-white cursor-pointer font-medium text-lg overflow-hidden transition-all ${
-                                    loading
-                                        ? "bg-neutral-700 text-neutral-400 cursor-not-allowed"
-                                        : "bg-white text-neutral-900 hover:scale-105 active:scale-95"
-                                }`}
-                            >
-                <span className="relative z-10">
-                  {loading ? "Creazione account…" : "Crea account"}
-                </span>
-
-                                {!loading && (
-                                    <span className="absolute inset-0 bg-[#000] translate-y-full group-hover:translate-y-0 transition-transform" />
-                                )}
-                            </button>
+                                <LiquidGlassButton type='submit' disabled={loading}>{loading ? "Creazione account..." : "Crea account"}</LiquidGlassButton>
 
                             <div className="text-center text-sm text-neutral-500 mt-4">
                                 Hai già un account?{" "}
