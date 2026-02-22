@@ -10,7 +10,7 @@ export function HeroSection() {
     return (
         <section className="relative min-h-[100vh] flex items-center overflow-hidden">
             {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800" />
+            <div className="absolute inset-0 bg-neutral-950" />
 
             {/* Globe */}
             <div className="absolute inset-0 pointer-events-none z-10">
