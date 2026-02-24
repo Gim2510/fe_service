@@ -5,6 +5,12 @@ import {DetailItem} from "../Components/Dashboard/DetailItem.tsx";
 import {useEffect, useState} from "react";
 import {useSetUserAdmin} from "../hooks/useSetUserAdmin.ts";
 import {useGetAllUsers} from "../hooks/useGetAllUsers.ts";
+import {useDeleteUser} from "../hooks/useDeleteUser.ts";
+import {useAuth} from "../auth/AuthContext.tsx";
+import {DeleteUserModal} from "../Components/Dashboard/DeleteUserModal.tsx";
+import {SetVipSection} from "../Components/Dashboard/SetVipSection.tsx";
+import {useUpdateUserToVip} from "../hooks/useSetVip.ts";
+import {SetUserToVipModal} from "../Components/Dashboard/SetUserToVipModal.tsx";
 
 
 export function AdminDashboard() {
@@ -12,10 +18,17 @@ export function AdminDashboard() {
     const { data: surveys, loading: loadingSurveys } = useSurveyDashboard();
     const { getAllUsers } = useGetAllUsers();
     const { doSetUserRoleToAdmin, loading: loadingSetAdmin } = useSetUserAdmin();
+    const {deleteUser, loading: loadingDelete, success} = useDeleteUser()
+    const {setVip, loading: loadingUpdateToVip, success: successToVip} = useUpdateUserToVip()
+    const {token} = useAuth()
 
     const [allUsers, setAllUsers] = useState<any[]>([]);
+    const [selectedUserToUpdateToVip, setSelectedUserToUpdateToVip] = useState<string>("")
+    const [showUpdateUserToVipModal, setShowUpdateUserToVipModal] = useState<boolean>(false)
     const [selectedUserId, setSelectedUserId] = useState<string>("");
-    const [showModal, setShowModal] = useState(false);
+    const [selectedUserToDelete, setSelectedUserToDelete] = useState<string>("")
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [showDeleteUserModal, setShowDeleteUserModal] = useState<boolean>(false);
 
     useEffect(() => {
         async function loadUsers() {
@@ -41,6 +54,32 @@ export function AdminDashboard() {
             setShowModal(false);
             setSelectedUserId("");
         } catch (e) {
+            console.error(e);
+        }
+    }
+
+    async function handleConfirmDeleteUser() {
+        try{
+            await deleteUser(selectedUserToDelete, token)
+
+            const updatedUsers = await getAllUsers();
+            setAllUsers(updatedUsers)
+            setShowDeleteUserModal(false);
+            setSelectedUserToDelete("")
+        }catch (e) {
+            console.error(e);
+        }
+    }
+
+    async function handleUpdateUserToVip() {
+        try{
+            await setVip(selectedUserToUpdateToVip, token)
+
+            const updatedUsers = await getAllUsers();
+            setAllUsers(updatedUsers);
+            setShowUpdateUserToVipModal(false);
+            setSelectedUserToUpdateToVip("")
+        }catch (e) {
             console.error(e);
         }
     }
@@ -97,7 +136,8 @@ export function AdminDashboard() {
                 </div>
 
                 {/* ADMIN MANAGEMENT */}
-                <div className="relative rounded-[32px] bg-white/[0.04] border border-white/[0.08] backdrop-blur-2xl p-10">
+                <div
+                    className="relative rounded-[32px] bg-white/[0.04] border border-white/[0.08] backdrop-blur-2xl p-10">
 
                     <div className="flex items-center justify-between mb-8">
                         <h2 className="text-xl sm:text-2xl font-semibold tracking-tight">
@@ -152,11 +192,47 @@ export function AdminDashboard() {
                     </div>
                 </div>
 
+                {/* API SECTION */}
+                <div className="rounded-3xl border border-neutral-700 bg-neutral-900/70 p-8 backdrop-blur">
+                    <h2 className="text-2xl mb-6">Elimina utente</h2>
+                    <div className='flex items-center gap-5'>
+                        <select
+                            value={selectedUserToDelete}
+                            onChange={(e) => setSelectedUserToDelete(e.target.value)}
+                            className=" border border-white/[0.1] rounded-2xl px-5 py-3 text-black backdrop-blur-xl
+                                focus:outline-none focus:border-white/[0.2] transition w-full sm:w-96 bg-white">
+                            <option value="">Seleziona utente</option>
+                            {allUsers
+                                .filter((u) => u.role !== "ADMIN")
+                                .map((user) => (
+                                    <option key={user._id} value={user._id}>
+                                        {user.email}
+                                    </option>
+                                ))}
+                        </select>
+
+                        <button
+                            disabled={!selectedUserToDelete}
+                            onClick={() => setShowDeleteUserModal(true)}
+                            className=" relative cursor-pointer px-8 py-3 rounded-2xl bg-red-400 text-black font-medium transition-all hover:scale-105 active:scale-95 disabled:opacity-30 ">
+                            Elimina
+                        </button>
+
+                        {success &&
+                            <div className='bg-green-200/40 p-2 rounded-xl border-2 border-green-600'>
+                                <p className='font-bold text-green-400'>Utente eliminato con successo</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <SetVipSection selectedUserToUpdateToVip={selectedUserToUpdateToVip} allUsers={allUsers} setShowUpdateUserToVipModal={setShowUpdateUserToVipModal} setSelectedUserToUpdateToVip={setSelectedUserToUpdateToVip} success={successToVip}/>
+
             </div>
             {showModal && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-md z-50">
 
-                    <div className=" rounded-[32px] bg-white/[0.05] border border-white/[0.1] backdrop-blur-2xl p-10 w-[420px] shadow-[0_0_80px_rgba(255,255,255,0.05)]">
+                    <div
+                        className=" rounded-[32px] bg-white/[0.05] border border-white/[0.1] backdrop-blur-2xl p-10 w-[420px] shadow-[0_0_80px_rgba(255,255,255,0.05)]">
                         <h3 className="text-2xl font-semibold mb-4">
                             Confirm Elevation
                         </h3>
@@ -184,7 +260,13 @@ export function AdminDashboard() {
                     </div>
                 </div>
             )}
-
+            {showDeleteUserModal &&
+                <DeleteUserModal setShowDeleteUserModal={setShowDeleteUserModal} handleConfirmDeleteUser={handleConfirmDeleteUser} loadingDeleteUser={loadingDelete} />
+            }
+            {
+                showUpdateUserToVipModal &&
+                <SetUserToVipModal setShowUpdateUserToVipModal={setShowUpdateUserToVipModal} handleUpdateUserToVip={handleUpdateUserToVip} loadingUpdateToVip={loadingUpdateToVip} />
+            }
 
         </section>
     );

@@ -1,18 +1,41 @@
 import { useAuth } from "../auth/AuthContext.tsx";
-import { useState } from "react";
-import CloseIcon from '@mui/icons-material/Close';
+import { useState, useEffect } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+
+const STORAGE_KEY = "emailVerificationBannerDismissed";
 
 export function EmailVerificationBanner() {
     const { isAuthenticated, emailVer } = useAuth();
-    const [show, setShow] = useState<boolean>(!emailVer);
 
-    if (!isAuthenticated || emailVer || !show) return null;
+    const [dismissed, setDismissed] = useState<boolean>(() => {
+        return localStorage.getItem(STORAGE_KEY) === "true";
+    });
+
+    useEffect(() => {
+        if (emailVer) {
+            localStorage.removeItem(STORAGE_KEY);
+            setDismissed(false);
+        }
+    }, [emailVer]);
+
+    const handleDismiss = () => {
+        localStorage.setItem(STORAGE_KEY, "true");
+        setDismissed(true);
+    };
+
+    if (!isAuthenticated || emailVer || dismissed) return null;
 
     return (
         <div className="w-full h-12 bg-white/20 backdrop-blur-md sticky bottom-0 z-20 flex items-center overflow-hidden border-t border-white/10 relative">
-            <CloseIcon className='stroke-white absolute left-2 cursor-pointer' onClick={() => setShow(false)} />
-            <div className="animate-scroll whitespace-nowrap text-center w-full text-white font-medium px-4">
-                È necessario verificare la tua email per poter inizializzare il survey. Controlla la tua casella di posta e conferma il link di verifica.
+
+            <CloseIcon
+                className="absolute left-3 cursor-pointer text-white hover:scale-110 transition"
+                onClick={handleDismiss}
+            />
+
+            <div className="animate-scroll whitespace-nowrap text-center w-full text-white font-medium px-8">
+                È necessario verificare la tua email per poter inizializzare il survey.
+                Controlla la tua casella di posta e conferma il link di verifica.
             </div>
 
             <style>

@@ -20,6 +20,7 @@ export function HeroGlobe() {
     const globeRef = useRef<any | null>(null);
 
     const points: Point[] = [
+        
         // Europa
         { name: "Milano", lat: 45.46, lng: 9.19 },
         { name: "London", lat: 51.50, lng: -0.12 },
