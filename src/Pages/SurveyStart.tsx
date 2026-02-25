@@ -5,6 +5,7 @@ import { useUserSurvey } from "../hooks/useUserSurvey"
 import { useSurvey } from "../hooks/useSurvey"
 import { useInitSurvey } from "../hooks/useInitSurvey"
 import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
+import {FallingLines} from "react-loader-spinner";
 
 export function SurveyStart() {
     const navigate = useNavigate()
@@ -76,14 +77,22 @@ export function SurveyStart() {
                 </p>
                 { emailVer
                     ?
-                        <LiquidGlassButton onClick={() => setShouldInit(true)} disabled={initLoading}>{initLoading ? "Preparazione in corso..." : "Vai al questionario"}</LiquidGlassButton>
+                        <LiquidGlassButton onClick={() => setShouldInit(true)} disabled={initLoading}>{initLoading ? <FallingLines
+                            color="#fff"
+                            width="50"
+                            visible={true}
+                            ariaLabel="falling-circles-loading"
+                        /> : "Vai al questionario"}</LiquidGlassButton>
                     :
                         <LiquidGlassButton disabled={true}>Verifica la tua email</LiquidGlassButton>
                 }
                 {initLoading && (
-                    <p className="text-sm text-neutral-400 mt-2">
-                        Sto preparando il questionario, attendi qualche secondo…
-                    </p>
+                        <FallingLines
+                            color="#fff"
+                            width="100"
+                            visible={true}
+                            ariaLabel="falling-circles-loading"
+                        />
                 )}
             </section>
         </main>

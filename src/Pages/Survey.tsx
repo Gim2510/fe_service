@@ -8,6 +8,7 @@ import { SurveyQuestion } from "../Components/SurveyQuestion"
 import { SurveyContacts } from "../Components/SurveyContacts"
 import { SurveyConfirmation } from "../Components/SurveyConfirmation"
 import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
+import {FallingLines} from "react-loader-spinner";
 
 export function Survey() {
     const surveyTemplateId = "6980ad77de0a1489a3663896"
@@ -35,7 +36,12 @@ export function Survey() {
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-black text-slate-400">
-                Preparing interview…
+                <FallingLines
+                    color="#fff"
+                    width="150"
+                    visible={true}
+                    ariaLabel="falling-circles-loading"
+                />
             </div>
         )
     }
@@ -52,10 +58,10 @@ export function Survey() {
     const isConfirmationStep = flow.step > questions.length
 
     return (
-        <main className="min-h-screen bg-black text-slate-100 flex items-center justify-center px-6">
+        <main className="min-h-screen bg-black text-slate-100 flex items-center justify-center px-6 py-10">
             <section className="w-full max-w-3xl py-20">
                 {/* Step indicator */}
-                <div className="mb-12 text-sm text-slate-500 flex justify-between">
+                <div className="mb-6 text-sm text-slate-500 flex justify-between">
                     <span>
                         Step {Math.min(flow.step + 1, questions.length + 1)} of{" "}
                         {questions.length + 1}
@@ -74,7 +80,7 @@ export function Survey() {
                     }`}
                 >
                     {flow.step < questions.length && (
-                        <div className="space-y-16">
+                        <div className="space-y-4">
                             <header className="space-y-6">
                                 <span className="text-white font-mono text-sm">
                                     {String(flow.step + 1).padStart(2, "0")}

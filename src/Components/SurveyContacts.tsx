@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../auth/AuthContext.tsx";
+import {LiquidGlassButton} from "./Buttons/LiquidGlassButton.tsx";
+import {FallingLines} from "react-loader-spinner";
 
 type ContactProps = {
     surveyId: string;
@@ -72,13 +74,12 @@ export function SurveyContacts({ surveyId, onNext }: ContactProps) {
 
             {error && <div className="text-red-500">{error}</div>}
 
-            <button
-                disabled={loading || !number}
-                onClick={handleSubmit}
-                className="mt-4 px-6 py-3 bg-green-buttons text-white rounded-xl hover:scale-105 transition-all"
-            >
-                {loading ? "Salvataggio..." : "Invia"}
-            </button>
+            <LiquidGlassButton disabled={loading || !number} onClick={handleSubmit}>{loading ? <FallingLines
+                color="#fff"
+                width="50"
+                visible={true}
+                ariaLabel="falling-circles-loading"
+            /> : "Invia"}</LiquidGlassButton>
         </div>
     );
 }

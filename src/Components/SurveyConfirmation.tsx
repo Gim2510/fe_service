@@ -65,7 +65,7 @@ export function SurveyConfirmation({ surveyId }: Props) {
                         {loading
                             ? <FallingLines
                                 color="#fff"
-                                width="80"
+                                width="50"
                                 visible={true}
                                 ariaLabel="falling-circles-loading"
                             />

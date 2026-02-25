@@ -4,6 +4,7 @@ import { useSurveyTemplate } from "../hooks/useSurveyTemplate"
 import { formatAnswer } from "../utils/formatAnswer"
 import { useResetSurvey } from "../hooks/useResetSurvey.ts"
 import { LiquidGlassButton } from "../Components/Buttons/LiquidGlassButton.tsx";
+import {FallingLines} from "react-loader-spinner";
 
 export function SurveyDashboard() {
     const { survey_id } = useParams()
@@ -17,7 +18,12 @@ export function SurveyDashboard() {
     if (loading || !survey) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-neutral-950 text-neutral-400">
-                Preparing dashboard…
+                <FallingLines
+                    color="#fff"
+                    width="150"
+                    visible={true}
+                    ariaLabel="falling-circles-loading"
+                />
             </div>
         )
     }
