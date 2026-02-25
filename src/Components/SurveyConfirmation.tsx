@@ -57,7 +57,7 @@ export function SurveyConfirmation({ surveyId }: Props) {
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row justify-center gap-6 mt-6 items-center">
                     <LiquidGlassButton
-                        onClick={handleGenerateSurveyReport}
+                        onClick={() => success ? navigate('/survey') : handleGenerateSurveyReport}
                         disabled={loading || success}
                         color_text="white"
                         className="flex-1"
@@ -70,7 +70,7 @@ export function SurveyConfirmation({ surveyId }: Props) {
                                 ariaLabel="falling-circles-loading"
                             />
                             : success
-                                ? "Report richiesto con successo"
+                                ? "guarda i risultati"
                                 : "Genera il report"}
                     </LiquidGlassButton>
 
