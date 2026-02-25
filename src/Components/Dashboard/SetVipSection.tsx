@@ -15,7 +15,7 @@ export function SetVipSection({selectedUserToUpdateToVip, setSelectedUserToUpdat
                     <select
                         value={selectedUserToUpdateToVip}
                         onChange={(e) => setSelectedUserToUpdateToVip(e.target.value)}
-                        className=" border border-white/[0.1] rounded-2xl px-5 py-3 text-black backdrop-blur-xl
+                        className=" border border-white/[0.1] rounded-lg px-5 py-3 text-black backdrop-blur-xl
                                 focus:outline-none focus:border-white/[0.2] transition w-full sm:w-96 bg-white">
                         <option value="">Seleziona utente</option>
                         {allUsers
@@ -30,8 +30,7 @@ export function SetVipSection({selectedUserToUpdateToVip, setSelectedUserToUpdat
                     <button
                         disabled={!selectedUserToUpdateToVip}
                         onClick={() => setShowUpdateUserToVipModal(true)}
-                        className=" relative cursor-pointer px-8 py-3 rounded-2xl bg-green-400 text-black font-medium transition-all hover:scale-105 active:scale-95 disabled:opacity-30 ">
-                        Aggiorna
+                        className="w-40 h-12 flex items-center justify-center cursor-pointer rounded-lg bg-green-400 text-black font-medium transition-all hover:scale-105 active:scale-95 disabled:opacity-30">                        Aggiorna
                     </button>
 
                     {success &&

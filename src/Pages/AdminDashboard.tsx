@@ -11,6 +11,8 @@ import {DeleteUserModal} from "../Components/Dashboard/DeleteUserModal.tsx";
 import {SetVipSection} from "../Components/Dashboard/SetVipSection.tsx";
 import {useUpdateUserToVip} from "../hooks/useSetVip.ts";
 import {SetUserToVipModal} from "../Components/Dashboard/SetUserToVipModal.tsx";
+import {DeleteUserSection} from "../Components/Dashboard/DeleteUserSection.tsx";
+import {BulkNotificationSection} from "../Components/Dashboard/BulkNotificationSection.tsx";
 
 
 export function AdminDashboard() {
@@ -136,16 +138,15 @@ export function AdminDashboard() {
                 </div>
 
                 {/* ADMIN MANAGEMENT */}
-                <div
-                    className="relative rounded-[32px] bg-white/[0.04] border border-white/[0.08] backdrop-blur-2xl p-10">
+                <div className="relative rounded-[32px] bg-white/[0.04] border border-white/[0.08] backdrop-blur-2xl p-10">
 
                     <div className="flex items-center justify-between mb-8">
                         <h2 className="text-xl sm:text-2xl font-semibold tracking-tight">
                             Privilege Management
                         </h2>
                         <span className="text-xs sm:block hidden uppercase tracking-widest text-neutral-500">
-            System Control
-        </span>
+                            System Control
+                        </span>
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-6">
@@ -153,7 +154,7 @@ export function AdminDashboard() {
                         <select
                             value={selectedUserId}
                             onChange={(e) => setSelectedUserId(e.target.value)}
-                            className=" border border-white/[0.1] rounded-2xl px-5 py-3 text-black backdrop-blur-xl
+                            className=" border border-white/[0.1] rounded-lg px-5 py-3 text-black backdrop-blur-xl
                             focus:outline-none focus:border-white/[0.2] transition w-full sm:w-96 bg-white">
                             <option value="">Seleziona utente</option>
                             {allUsers
@@ -168,12 +169,12 @@ export function AdminDashboard() {
                         <button
                             disabled={!selectedUserId}
                             onClick={() => setShowModal(true)}
-                            className=" relative cursor-pointer px-8 py-3 rounded-2xl bg-white text-black font-medium transition-all hover:scale-105 active:scale-95 disabled:opacity-30 ">
+                            className=" relative cursor-pointer px-8 py-3 rounded-lg bg-white text-black font-medium transition-all hover:scale-105 active:scale-95 disabled:opacity-30 ">
                             Promote to Admin
                         </button>
                     </div>
                 </div>
-
+                <BulkNotificationSection />
 
                 {/* SURVEY DETAIL */}
                 <div className="rounded-3xl border border-neutral-700 bg-neutral-900/70 p-8 backdrop-blur">
@@ -193,38 +194,7 @@ export function AdminDashboard() {
                 </div>
 
                 {/* API SECTION */}
-                <div className="rounded-3xl border border-neutral-700 bg-neutral-900/70 p-8 backdrop-blur">
-                    <h2 className="text-2xl mb-6">Elimina utente</h2>
-                    <div className='flex items-center gap-5'>
-                        <select
-                            value={selectedUserToDelete}
-                            onChange={(e) => setSelectedUserToDelete(e.target.value)}
-                            className=" border border-white/[0.1] rounded-2xl px-5 py-3 text-black backdrop-blur-xl
-                                focus:outline-none focus:border-white/[0.2] transition w-full sm:w-96 bg-white">
-                            <option value="">Seleziona utente</option>
-                            {allUsers
-                                .filter((u) => u.role !== "ADMIN")
-                                .map((user) => (
-                                    <option key={user._id} value={user._id}>
-                                        {user.email}
-                                    </option>
-                                ))}
-                        </select>
-
-                        <button
-                            disabled={!selectedUserToDelete}
-                            onClick={() => setShowDeleteUserModal(true)}
-                            className=" relative cursor-pointer px-8 py-3 rounded-2xl bg-red-400 text-black font-medium transition-all hover:scale-105 active:scale-95 disabled:opacity-30 ">
-                            Elimina
-                        </button>
-
-                        {success &&
-                            <div className='bg-green-200/40 p-2 rounded-xl border-2 border-green-600'>
-                                <p className='font-bold text-green-400'>Utente eliminato con successo</p>
-                            </div>
-                        }
-                    </div>
-                </div>
+                <DeleteUserSection selectedUserToDelete={selectedUserToDelete} setSelectedUserToDelete={setSelectedUserToDelete} allUsers={allUsers} setShowDeleteUserModal={setShowDeleteUserModal} success={success} />
                 <SetVipSection selectedUserToUpdateToVip={selectedUserToUpdateToVip} allUsers={allUsers} setShowUpdateUserToVipModal={setShowUpdateUserToVipModal} setSelectedUserToUpdateToVip={setSelectedUserToUpdateToVip} success={successToVip}/>
 
             </div>

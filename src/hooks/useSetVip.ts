@@ -19,7 +19,6 @@ export function useUpdateUserToVip() {
                     },
                 }
             );
-
             if (!res.ok) {
                 throw new Error("Update failed");
             }
