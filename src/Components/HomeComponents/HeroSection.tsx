@@ -12,7 +12,7 @@ export function HeroSection() {
     const goToSurvey = () => navigate("/survey/start");
 
     return (
-        <section className="relative min-h-[100vh] flex items-center overflow-hidden sm:pt-0 pt-10">
+        <section className="relative min-h-[100vh] flex items-center overflow-hidden sm:pt-0 pt-20">
             {/* Background */}
             <div className="absolute inset-0 bg-neutral-950" />
 
