@@ -13,6 +13,7 @@ import {useUpdateUserToVip} from "../hooks/useSetVip.ts";
 import {SetUserToVipModal} from "../Components/Dashboard/SetUserToVipModal.tsx";
 import {DeleteUserSection} from "../Components/Dashboard/DeleteUserSection.tsx";
 import {BulkNotificationSection} from "../Components/Dashboard/BulkNotificationSection.tsx";
+import {FallingLines} from "react-loader-spinner";
 
 
 export function AdminDashboard() {
@@ -89,7 +90,12 @@ export function AdminDashboard() {
     if (loadingUsers || loadingSurveys) {
         return (
             <div className="min-h-screen bg-neutral-950 flex items-center justify-center text-white">
-                Caricamento dashboard...
+                <FallingLines
+                    color="#fff"
+                    width="150"
+                    visible={true}
+                    ariaLabel="falling-circles-loading"
+                />
             </div>
         );
     }

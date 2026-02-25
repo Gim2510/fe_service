@@ -7,6 +7,7 @@ import { useDeleteUser } from "../hooks/useDeleteUser.ts";
 import { useAuth } from "../auth/AuthContext.tsx";
 import { useUpdateUserInfo } from "../hooks/useUpdateUserInfo.ts";
 import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
+import {FallingLines} from "react-loader-spinner";
 
 export function UserEditProfile() {
     const { user, loading, error, refetch } = useUser();
@@ -93,7 +94,12 @@ export function UserEditProfile() {
         }
     }
 
-    if (loading) return <div>Caricamento…</div>;
+    if (loading) return <div className='w-screen h-screen flex justify-center items-center'><FallingLines
+        color="#fff"
+        width="100"
+        visible={true}
+        ariaLabel="falling-circles-loading"
+    /></div>;
     if (error) return <div>{error}</div>;
     if (!user) return null;
 

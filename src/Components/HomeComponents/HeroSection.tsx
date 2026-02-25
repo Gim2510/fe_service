@@ -2,9 +2,13 @@ import { useNavigate } from "react-router-dom";
 import { HeroGlobe } from "../HeroGlobe";
 import {HeroSystemStatus} from "./HeroSystemStatus.tsx";
 import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
+import {useInitSurvey} from "../../hooks/useInitSurvey.ts";
 
 export function HeroSection() {
     const navigate = useNavigate();
+    const template_id = import.meta.env.VITE_SURVEY_TEMPLATE_ID
+    useInitSurvey(template_id, 'it', true)
+
     const goToSurvey = () => navigate("/survey/start");
 
     return (

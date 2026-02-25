@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
 import {useAuth} from "../auth/AuthContext.tsx";
+import {FallingLines} from "react-loader-spinner";
 
 export function UserDashboard() {
     const { user, loading, error, refetch } = useUser();
@@ -10,7 +11,12 @@ export function UserDashboard() {
     if (loading) {
         return (
             <main className="min-h-screen flex items-center justify-center bg-neutral-950 text-white">
-                <p className="text-neutral-400">Caricamento dati utente...</p>
+                <FallingLines
+                    color="#fff"
+                    width="100"
+                    visible={true}
+                    ariaLabel="falling-circles-loading"
+                />
             </main>
         );
     }
@@ -54,6 +60,8 @@ export function UserDashboard() {
 
                         <InfoRow label="Codice fiscale" value={user.fiscal_code} />
                         <InfoRow label="Partita IVA" value={user.partita_iva || "—"} />
+                        <InfoRow label="Company Name" value={user.company_name?.toLowerCase() || "-"} />
+                        <InfoRow label="Company Role" value={user.company_role?.toLowerCase() || "—"} />
 
                         <InfoRow
                             label="Email verificata"

@@ -1,4 +1,5 @@
 import type {UserRoles} from "./userRoles.ts";
+import type {CompanyRoles} from "./CompanyRoles.ts";
 
 export type UserType = {
     _id: string;
@@ -10,6 +11,8 @@ export type UserType = {
     user_image?: string;
     given_name: string;
     family_name: string;
+    company_name?: string;
+    company_role: CompanyRoles;
     favorites?: string[];
     last_login?: Date;
     lastEmailChange?: Date;

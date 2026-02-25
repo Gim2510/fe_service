@@ -30,7 +30,7 @@ export function LiquidGlassButton({children, onClick, to, type = 'button', varia
         <>
             <span className="absolute inset-0 bg-gradient-to-br from-white/30 via-white/10 to-transparent opacity-40 group-hover:opacity-70 transition-opacity" />
             <span className="absolute -inset-[2px] rounded-full bg-gradient-to-r from-cyan-400/30 via-red-400/30 to-yellow-400/30 blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-500" />
-            <span className="relative z-10 tracking-wide">{children}</span>
+            <span className="relative z-10 tracking-wide flex justify-center items-center">{children}</span>
         </>
     );
 

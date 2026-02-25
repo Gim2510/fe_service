@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type {CompanyRoles} from "../types/CompanyRoles.ts";
 
 type RegisterInput = {
     email: string;
@@ -7,6 +8,8 @@ type RegisterInput = {
     password: string;
     fiscal_code: string;
     partita_iva?: string;
+    company_name: string;
+    company_role: CompanyRoles
 };
 
 export function useRegister() {

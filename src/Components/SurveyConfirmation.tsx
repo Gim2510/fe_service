@@ -1,6 +1,7 @@
 import { useGenerateSurveyReport } from "../hooks/useGenerateReport.ts";
 import { useNavigate } from "react-router-dom";
 import { LiquidGlassButton } from "./Buttons/LiquidGlassButton.tsx";
+import {FallingLines} from "react-loader-spinner";
 
 type Props = {
     surveyId: string;
@@ -54,7 +55,7 @@ export function SurveyConfirmation({ surveyId }: Props) {
                 </div>
 
                 {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row justify-center gap-6 mt-6">
+                <div className="flex flex-col sm:flex-row justify-center gap-6 mt-6 items-center">
                     <LiquidGlassButton
                         onClick={handleGenerateSurveyReport}
                         disabled={loading || success}
@@ -62,7 +63,12 @@ export function SurveyConfirmation({ surveyId }: Props) {
                         className="flex-1"
                     >
                         {loading
-                            ? "Generazione report in corso…"
+                            ? <FallingLines
+                                color="#fff"
+                                width="80"
+                                visible={true}
+                                ariaLabel="falling-circles-loading"
+                            />
                             : success
                                 ? "Report richiesto con successo"
                                 : "Genera il report"}

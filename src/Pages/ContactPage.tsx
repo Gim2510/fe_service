@@ -78,16 +78,7 @@ export function ContactPage() {
     )
 }
 
-function ContactItem({
-                         icon,
-                         label,
-                         value,
-                         href,
-                     }: {
-    icon: React.ReactNode
-    label: string
-    value: string
-    href?: string
+function ContactItem({icon, label, value, href,}: { icon: React.ReactNode, label: string, value: string, href?: string
 }) {
     return (
         <div className="flex items-start gap-4 p-4 rounded-xl bg-neutral-800/60 border border-neutral-700 hover:border-neutral-500 transition">

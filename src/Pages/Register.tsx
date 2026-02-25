@@ -1,12 +1,14 @@
-import {useEffect, useRef, useState} from "react"
-import { useNavigate } from "react-router-dom"
-import { useRegister } from "../hooks/useRegister"
+import {type ChangeEvent, type FormEvent, useEffect, useRef, useState} from "react"
+import {useNavigate} from "react-router-dom"
+import {useRegister} from "../hooks/useRegister"
 import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
+import {CompanyRoles} from "../types/CompanyRoles.ts"
 
 export function Register() {
     const navigate = useNavigate()
     const { register, loading, error, success } = useRegister()
     const successRef = useRef<HTMLDivElement | null>(null)
+    const company_roles: CompanyRoles[] = [CompanyRoles.Founder, CompanyRoles.CEO, CompanyRoles.Employee, CompanyRoles.CTO, CompanyRoles.Manager]
 
     const [form, setForm] = useState({
         given_name: "",
@@ -15,6 +17,8 @@ export function Register() {
         password: "",
         fiscal_code: "",
         partita_iva: "",
+        company_name: "",
+        company_role: CompanyRoles.Employee
     })
 
     useEffect(() => {
@@ -26,11 +30,18 @@ export function Register() {
         }
     }, [success])
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setForm({ ...form, [e.target.name]: e.target.value })
+    const handleChange = (
+        e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => {
+        const { name, value } = e.target
+
+        setForm({
+            ...form,
+            [name]: value,
+        })
     }
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
 
         try {
@@ -108,13 +119,20 @@ export function Register() {
                             )}
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                <Input label="Nome" name="given_name" value={form.given_name} onChange={handleChange} />
-                                <Input label="Cognome" name="family_name" value={form.family_name} onChange={handleChange} />
+                                <Input label="Nome" name="given_name" value={form.given_name.trim()} onChange={handleChange} />
+                                <Input label="Cognome" name="family_name" value={form.family_name.trim()} onChange={handleChange} />
                             </div>
 
                             <Input label="Email" name="email" type="email" value={form.email} onChange={handleChange} />
                             <Input label="Password" name="password" type="password" value={form.password} onChange={handleChange} />
-                            <Input label="Codice Fiscale" name="fiscal_code" value={form.fiscal_code} onChange={handleChange} />
+                            <Input label="Company Name" name="company_name" value={form.company_name} onChange={handleChange} />
+                            <div className='flex flex-col gap-2'>
+                                <p className='text-sm text-neutral-400'>Company Role</p>
+                                <select onChange={handleChange} value={form.company_role} name="company_role" className='bg-neutral-800 cursor-pointer text-white px-4 py-3 rounded-xl border border-neutral-700 focus:border-white focus:ring-1 focus:ring-white outline-none transition'>
+                                    {company_roles.map((role: CompanyRoles) => <option>{role}</option>)}
+                                </select>
+                            </div>
+                            <Input label="Codice Fiscale" name="fiscal_code" value={form.fiscal_code.toUpperCase()} onChange={handleChange} />
                             <Input label="Partita IVA" name="partita_iva" value={form.partita_iva} onChange={handleChange} />
 
                                 <LiquidGlassButton type='submit' disabled={loading}>{loading ? "Creazione account..." : "Crea account"}</LiquidGlassButton>
@@ -141,18 +159,7 @@ export function Register() {
 
 
 /* Input */
-function Input({
-                   label,
-                   name,
-                   type = "text",
-                   value,
-                   onChange,
-               }: {
-    label: string
-    name: string
-    type?: string
-    value: string
-    onChange: React.ChangeEventHandler<HTMLInputElement>
+function Input({label, name, type = "text", value, onChange,}: { label: string, name: string, type?: string, value: string, onChange: React.ChangeEventHandler<HTMLInputElement>
 }) {
     return (
         <div className="flex flex-col gap-2">
