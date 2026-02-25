@@ -14,7 +14,7 @@ const metrics: Metric[] = [
 export function HeroOperationalSnapshot() {
     return (
         <div className="group relative rounded-3xl border border-white/10 p-8 space-y-6 bg-neutral-900/70
-                        backdrop-blur-sm opacity-20 hover:opacity-100 transition-all duration-700 ease-out
+                        backdrop-blur-sm opacity-100 sm:opacity-20 sm:hover:opacity-100 transition-all duration-700 ease-out
                         shadow-[0_30px_80px_rgba(0,0,0,0.6)]">
 
             <div className="flex justify-between items-baseline">
