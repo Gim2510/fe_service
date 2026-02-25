@@ -57,7 +57,7 @@ export function SurveyConfirmation({ surveyId }: Props) {
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row justify-center gap-6 mt-6 items-center">
                     <LiquidGlassButton
-                        onClick={() => success ? navigate('/survey') : handleGenerateSurveyReport}
+                        onClick={() => success ? window.location.reload() : handleGenerateSurveyReport()}
                         disabled={loading || success}
                         color_text="white"
                         className="flex-1"

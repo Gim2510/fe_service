@@ -7,6 +7,7 @@ export type SurveyInstance = {
     answers: Record<string, any>;
     status: "draft" | "published";
     currentStep?: number;
+    score: number;
 };
 
 export function useSurvey(surveyId: string | undefined) {

@@ -46,7 +46,7 @@ export function Navbar() {
 
                                         <button
                                             onClick={logout}
-                                            className="text-neutral-400 hover:text-white transition"
+                                            className="text-neutral-400 hover:text-white transition cursor-pointer"
                                         >
                                             Logout
                                         </button>
@@ -129,7 +129,7 @@ export function Navbar() {
                                             logout()
                                             closeMenu()
                                         }}
-                                        className="text-neutral-400 hover:text-red-400 transition text-left"
+                                        className="text-neutral-400 hover:text-red-400 cursor-pointer transition text-left"
                                     >
                                         Logout
                                     </button>

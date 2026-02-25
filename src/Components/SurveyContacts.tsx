@@ -76,7 +76,7 @@ export function SurveyContacts({ surveyId, onNext }: ContactProps) {
 
             <LiquidGlassButton disabled={loading || !number} onClick={handleSubmit}>{loading ? <FallingLines
                 color="#fff"
-                width="50"
+                width="30"
                 visible={true}
                 ariaLabel="falling-circles-loading"
             /> : "Invia"}</LiquidGlassButton>

@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { HeroGlobe } from "../HeroGlobe";
-import {HeroSystemStatus} from "./HeroSystemStatus.tsx";
 import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
 import {useInitSurvey} from "../../hooks/useInitSurvey.ts";
+import {HeroOperationalSnapshot} from "./HeroOperationalSnapshot.tsx";
 
 export function HeroSection() {
     const navigate = useNavigate();
@@ -61,8 +61,10 @@ export function HeroSection() {
                 {/* RIGHT */}
                 <div className="relative z-20">
                     <div
-                        className="rounded-3xl border border-neutral-700 bg-neutral-900/70 py-8 px-10 shadow-2xl backdrop-blur mt-8">
-                        <HeroSystemStatus/>
+                        className="group relative mt-8 rounded-3xl border border-neutral-700 bg-neutral-900/80
+                                    py-8 px-10 shadow-2xl backdrop-blur opacity-100 lg:opacity-20 lg:hover:opacity-100
+                                    transition-all duration-700 ease-out cursor-pointer">
+                        <HeroOperationalSnapshot/>
                     </div>
                 </div>
 
