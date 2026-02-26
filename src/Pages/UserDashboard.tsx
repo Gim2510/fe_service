@@ -64,13 +64,13 @@ export function UserDashboard() {
                 </section>
 
                 {/* TAB NAVIGATION */}
-                <div className="flex space-x-4 border-b border-neutral-800 mb-6">
+                <div className="flex space-x-4 overflow-x-auto border-b border-neutral-800 mb-6">
                     {tabs.map(tab => (
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={`px-4 py-2 font-medium rounded-t-xl transition cursor-pointer
-                                ${activeTab === tab.id
+                ${activeTab === tab.id
                                 ? "bg-neutral-900 text-white border-t border-l border-r border-neutral-800"
                                 : "text-neutral-400 hover:text-white"
                             }`}
@@ -85,9 +85,9 @@ export function UserDashboard() {
                     {activeTab === "account" && (
                         <Section title="Informazioni account">
                             <div className="grid md:grid-cols-3 gap-8 text-sm">
-                                <InfoRow label="Nome" value={user.given_name} />
-                                <InfoRow label="Cognome" value={user.family_name} />
-                                <InfoRow label="Email" value={user.email} />
+                                <InfoRow label="Nome" value={user.given_name}/>
+                                <InfoRow label="Cognome" value={user.family_name}/>
+                                <InfoRow label="Email" value={user.email}/>
                                 <InfoRow label="Codice fiscale" value={user.fiscal_code} />
                                 <InfoRow label="Partita IVA" value={user.partita_iva || "—"} />
                                 <InfoRow label="Company Name" value={user.company_name?.toLowerCase() || "-"} />

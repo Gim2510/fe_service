@@ -15,38 +15,39 @@ export function AdminShowSpecificUserSection({allUsers, selectedUserIdToShow, se
     const { user, loading, error } = useSelectedUser(selectedUserIdToShow);
 
     return (
-        <div className="relative rounded-[36px] bg-white/[0.04] border border-white/[0.08] backdrop-blur-3xl p-12 space-y-12 shadow-[0_0_80px_rgba(255,255,255,0.04)]">
+        <div className="relative rounded-[36px] bg-white/[0.04] border border-white/[0.08] backdrop-blur-3xl sm:p-12 space-y-12 shadow-[0_0_80px_rgba(255,255,255,0.04)]">
 
             {/* HEADER */}
-            <div className="flex justify-between items-center">
-                <div>
-                    <h2 className="text-2xl font-semibold tracking-tight">
-                        Inspect Specific User
-                    </h2>
-                    <p className="text-neutral-500 text-sm mt-1">
-                        View detailed account information
-                    </p>
+            <div className='p-8 sm:p-0 gap-8 sm:flex flex-col'>
+                <div className="flex justify-between items-center">
+                    <div>
+                        <h2 className="text-2xl font-semibold tracking-tight">
+                            Inspect Specific User
+                        </h2>
+                        <p className="text-neutral-500 text-sm mt-1">
+                            View detailed account information
+                        </p>
+                    </div>
+                </div>
+
+                {/* SELECT USER */}
+                <div className="space-y-6">
+                    <select
+                        value={selectedUserIdToShow}
+                        onChange={(e) => setSelectedUserIdToShow(e.target.value)}
+                        className="glass-input w-full cursor-pointer"
+                    >
+                        <option value="">Select user</option>
+                        {allUsers
+                            .filter((u) => u._id !== id)
+                            .map((u) => (
+                                <option key={u._id} value={u._id}>
+                                    {u.email}
+                                </option>
+                            ))}
+                    </select>
                 </div>
             </div>
-
-            {/* SELECT USER */}
-            <div className="space-y-6">
-                <select
-                    value={selectedUserIdToShow}
-                    onChange={(e) => setSelectedUserIdToShow(e.target.value)}
-                    className="glass-input w-full cursor-pointer"
-                >
-                    <option value="">Select user</option>
-                    {allUsers
-                        .filter((u) => u._id !== id)
-                        .map((u) => (
-                            <option key={u._id} value={u._id}>
-                                {u.email}
-                            </option>
-                        ))}
-                </select>
-            </div>
-
             {/* LOADING */}
             {loading && (
                 <div className='w-full h-full flex justify-center items-center'>
@@ -66,7 +67,7 @@ export function AdminShowSpecificUserSection({allUsers, selectedUserIdToShow, se
 
             {/* USER DETAILS */}
             {user && !loading && (
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-8">
+                <div className="flex flex-col justify-center items-center sm:grid grid-cols-1 lg:grid-cols-3 gap-10 mt-6">
 
                     {/* PROFILE CARD */}
                     <div className="col-span-1 bg-neutral-900/60 rounded-2xl p-6 border border-neutral-700 flex flex-col items-center text-center">

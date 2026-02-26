@@ -41,7 +41,7 @@ export function AdminDashboard() {
 
                 <DashboardHeader users={users} surveys={surveys} />
 
-                <div className="flex gap-10 mt-12">
+                <div className="flex gap-10 mt-12 sm:flex-row flex-col">
                     <SidebarNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
 
                     <DashboardContent

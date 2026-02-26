@@ -17,25 +17,11 @@ type Props = {
 export function DashboardContent({activeTab, users, surveys, allUsers, refreshUsers,}: Props) {
 
     return (
-        <div className="flex-1">
-
-            {activeTab === "overview" && (
-                <OverviewPanel users={users} surveys={surveys} />
-            )}
-
-            {activeTab === "users" && (
-                <UserManagementPanel
-                    allUsers={allUsers}
-                    refreshUsers={refreshUsers}
-                />
-            )}
-
-            {activeTab === "inspect" && (
-                <UserInspectionPanel allUsers={allUsers} />
-            )}
-
-            {activeTab === "messaging" && <MessagingPanel />}
-
+        <div className="flex-1 px-0 sm:px-4 md:px-8">
+            {activeTab === "overview" && <OverviewPanel users={users} surveys={surveys}/>}
+            {activeTab === "users" && <UserManagementPanel allUsers={allUsers} refreshUsers={refreshUsers}/>}
+            {activeTab === "inspect" && <UserInspectionPanel allUsers={allUsers}/>}
+            {activeTab === "messaging" && <MessagingPanel/>}
         </div>
     );
 }
