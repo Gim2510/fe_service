@@ -20,3 +20,23 @@ html, body {
     0%, 100% { opacity: 0.3 }
     50% { opacity: 0.6 }
 }
+
+.glass-input {
+    @apply bg-white text-black rounded-xl px-5 py-3 border border-white/[0.1]
+    focus:outline-none focus:border-white/[0.3] transition;
+}
+
+.glass-button {
+    @apply px-6 py-3 rounded-xl bg-white text-black font-medium
+    transition hover:scale-105 active:scale-95 disabled:opacity-30;
+}
+
+.glass-button-danger {
+    @apply px-6 py-3 rounded-xl bg-red-400 text-black font-medium
+    transition hover:scale-105 active:scale-95 disabled:opacity-30;
+}
+
+.glass-button-success {
+    @apply px-6 py-3 rounded-xl bg-green-400 text-black font-medium
+    transition hover:scale-105 active:scale-95 disabled:opacity-30;
+}

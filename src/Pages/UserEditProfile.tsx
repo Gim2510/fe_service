@@ -104,7 +104,7 @@ export function UserEditProfile() {
     if (!user) return null;
 
     return (
-        <main className="min-h-screen bg-neutral-950 text-white px-8 pt-20 pb-40">
+        <main className="min-h-screen bg-neutral-950 text-white px-8 pt-30 pb-40">
             <div className="max-w-3xl mx-auto space-y-12">
                 <header>
                     <h1 className="text-4xl font-semibold mb-2">
@@ -247,7 +247,12 @@ export function UserEditProfile() {
                                 disabled={loadingUpdate}
                                 className="px-6 py-2 rounded-full bg-white text-black"
                             >
-                                {loadingUpdate ? "Salvataggio…" : "Conferma"}
+                                {loadingUpdate ? <FallingLines
+                                    color="#fff"
+                                    width="30"
+                                    visible={true}
+                                    ariaLabel="falling-circles-loading"
+                                /> : "Conferma"}
                             </button>
                         </div>
                     </div>

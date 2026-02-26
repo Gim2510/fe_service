@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useChatBot } from "../../hooks/useChatBot.ts";
 import ChatIcon from '@mui/icons-material/Chat';
 import { LiquidGlassButton } from "../Buttons/LiquidGlassButton.tsx";
+import {FallingLines} from "react-loader-spinner";
 
 export function ChatWidget({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
     const [input, setInput] = useState("");
@@ -62,7 +63,7 @@ export function ChatWidget({ open, setOpen }: { open: boolean; setOpen: (open: b
                             </div>
                         ))}
 
-                        {loading && <div className="text-white/60 text-sm">Scrivendo...</div>}
+                        {loading && <div className="text-white/60 text-sm"><FallingLines color="#fff" width="30" visible={true} ariaLabel="falling-circles-loading"/></div>}
                         {error && <div className="text-red-400 text-sm">{error}</div>}
                         <div ref={messagesEndRef} />
                     </div>

@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom"
 import {useRegister} from "../hooks/useRegister"
 import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
 import {CompanyRoles} from "../types/CompanyRoles.ts"
+import {FallingLines} from "react-loader-spinner";
 
 export function Register() {
     const navigate = useNavigate()
@@ -135,7 +136,12 @@ export function Register() {
                             <Input label="Codice Fiscale" name="fiscal_code" value={form.fiscal_code.toUpperCase()} onChange={handleChange} />
                             <Input label="Partita IVA" name="partita_iva" value={form.partita_iva} onChange={handleChange} />
 
-                                <LiquidGlassButton type='submit' disabled={loading}>{loading ? "Creazione account..." : "Crea account"}</LiquidGlassButton>
+                                <LiquidGlassButton type='submit' disabled={loading}>{loading ? <FallingLines
+                                    color="#fff"
+                                    width="30"
+                                    visible={true}
+                                    ariaLabel="falling-circles-loading"
+                                /> : "Crea account"}</LiquidGlassButton>
 
                             <div className="text-center text-sm text-neutral-500 mt-4">
                                 Hai già un account?{" "}

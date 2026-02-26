@@ -1,7 +1,7 @@
 export function DashboardCard({title,value,}: {title: string; value?: number | string; }) {
     return (
         <div className="group relative overflow-hidden rounded-[28px] bg-white/[0.04] border border-white/[0.08] backdrop-blur-2xl
-        p-8 transition-all duration-500 hover:scale-[1.03] hover:border-white/[0.15] ">
+        p-8 transition-all duration-500 hover:scale-[1.03] hover:border-white/[0.15] cursor-pointer">
 
             {/* Inner glow */}
             <div className="absolute inset-0 rounded-[28px] bg-gradient-to-br from-white/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />

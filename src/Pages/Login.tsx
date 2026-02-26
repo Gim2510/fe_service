@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useLogin } from "../hooks/useLogin"
 import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
+import {FallingLines} from "react-loader-spinner";
 
 export function Login() {
     const navigate = useNavigate()
@@ -86,7 +87,12 @@ export function Login() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
-                            <LiquidGlassButton type="submit" disabled={loading} className="mt-4">{loading ? "Accesso in corso" : "Accedi"}</LiquidGlassButton>
+                            <LiquidGlassButton type="submit" disabled={loading} className="mt-4">{loading ? <FallingLines
+                                color="#fff"
+                                width="30"
+                                visible={true}
+                                ariaLabel="falling-circles-loading"
+                            /> : "Accedi"}</LiquidGlassButton>
                             <div className="text-center text-sm text-neutral-500 mt-2">
                                 <button
                                     type="button"

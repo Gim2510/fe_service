@@ -42,7 +42,7 @@ export function SurveyDashboard() {
         <main className="flex flex-col bg-neutral-950 text-white">
 
             {/* HERO */}
-            <section className="relative px-6 py-24">
+            <section className="relative px-6 pb-14 py-30">
                 <div className="mx-auto max-w-6xl flex flex-col gap-12">
           <span className="text-xs uppercase tracking-widest text-white/40">
             Digital Maturity Dashboard

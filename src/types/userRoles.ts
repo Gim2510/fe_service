@@ -1,5 +1,5 @@
 // @ts-ignore
 export enum UserRoles {
-    Admin = "admin",
-    User = "user",
+    Admin = "ADMIN",
+    User = "USER",
 }
