@@ -70,7 +70,7 @@ export function DigitalMaturitySection() {
                     {livelli.map((lvl) => (
                         <div
                             key={lvl.level}
-                            className="group relative rounded-2xl p-6 bg-white/[0.04] backdrop-blur-2xl border border-white/10 hover:border-white/20 transition-all duration-500"
+                            className="group cursor-pointer relative rounded-2xl p-6 bg-white/[0.04] backdrop-blur-2xl border border-white/10 hover:border-white/20 transition-all duration-500"
                         >
                             <div
                                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition bg-gradient-to-br from-white/5 to-transparent before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br before:from-blue-500/10 before:to-transparent before:animate-[softPulse_6s_ease-in-out_infinite]"/>
