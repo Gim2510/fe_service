@@ -48,7 +48,7 @@ export function HeroSection() {
                     </p>
 
                     {/* CTA */}
-                    <div className="flex items-center gap-8">
+                    <div className="flex items-center sm:gap-8 gap-4">
                         <LiquidGlassButton onClick={goToSurvey}>
                             Scopri cosa stai perdendo
                         </LiquidGlassButton>

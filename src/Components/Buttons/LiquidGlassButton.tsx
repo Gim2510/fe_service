@@ -19,7 +19,7 @@ export function LiquidGlassButton({children, onClick, to, type = 'button', varia
     const sizeStyle =
         variant === "navbar"
             ? "px-5 py-2 text-sm font-medium hover:scale-105"
-            : "px-10 py-4 text-sm sm:text-lg font-medium hover:scale-105 active:scale-95";
+            : "sm:px-10 px-2 py-4 text-sm sm:text-lg font-medium hover:scale-105 active:scale-95";
 
     const glowStyle =
         variant === "navbar"
