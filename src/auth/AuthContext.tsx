@@ -12,6 +12,7 @@ type JwtPayload = {
     sub: string;
     role: string;
     emailVer: boolean;
+    isPremium: boolean;
     exp: number; // seconds
 };
 
@@ -23,6 +24,7 @@ type AuthContextType = {
     login: (token: string) => void;
     logout: () => void;
     isAuthenticated: boolean;
+    isPremium: boolean | null;
 };
 
 export const AuthContext = createContext<AuthContextType>(null!);
@@ -63,6 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     let role: string | null = null;
     let id: string | null = null;
     let emailVer: boolean | null = null
+    let isPremium: boolean | null = null;
 
     // ⏱️ Auto logout su scadenza token
     useEffect(() => {
@@ -73,6 +76,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             role = decoded.role;
             id = decoded.sub;
             emailVer = decoded.emailVer
+            isPremium = decoded.isPremium
 
             const expiresAt = decoded.exp * 1000;
             const timeout = expiresAt - Date.now();
@@ -96,10 +100,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             role = decoded.role;
             id = decoded.sub;
             emailVer = decoded.emailVer;
+            isPremium = decoded.isPremium;
         } catch {
             role = null;
             id = null;
             emailVer = null;
+            isPremium = null;
         }
     }
 
@@ -113,6 +119,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 login,
                 logout,
                 isAuthenticated: !!token,
+                isPremium
             }}
         >
             {children}

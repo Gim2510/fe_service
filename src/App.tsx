@@ -19,6 +19,9 @@ import {ScrollToTop} from "./utils/scrollToTop.tsx";
 import {UserEditProfile} from "./Pages/UserEditProfile.tsx";
 import {RoleProtected} from "./Components/Protected/RoleProtected.tsx";
 import {AdminDashboard} from "./Pages/AdminDashboard.tsx";
+import {PaymentSuccess} from "./Pages/Payments/PaymentSuccess.tsx";
+import {PaymentCancel} from "./Pages/Payments/PaymentCancel.tsx";
+import {PremiumPreCheckout} from "./Pages/PremiumPreCheckout.tsx";
 
 function App() {
     return (
@@ -39,6 +42,9 @@ function App() {
                 <Route path="/password-reset/confirm/:token" element={<LayoutHomepage><ResetPassword/></LayoutHomepage>} />
                 <Route path="/user/edit" element={<Protected><LayoutHomepage><UserEditProfile /></LayoutHomepage></Protected>} />
                 <Route path="/dashboard" element={<RoleProtected role={`ADMIN`}><LayoutHomepage><AdminDashboard/></LayoutHomepage></RoleProtected>} />
+                <Route path={"/premium"} element={<Protected><LayoutHomepage><PremiumPreCheckout/></LayoutHomepage></Protected>} />
+                <Route path="/payment_success" element={<LayoutHomepage><PaymentSuccess /></LayoutHomepage>} />
+                <Route path="/payment_cancel" element={<LayoutHomepage><PaymentCancel /></LayoutHomepage>} />
             </Routes>
         </AuthProvider>
         </div>

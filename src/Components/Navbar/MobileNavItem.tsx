@@ -1,19 +1,28 @@
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-export function MobileNavItem({to, label, closeMenu,}: { to: string, label: string, closeMenu: () => void }) {
+type Props = {
+    to: string;
+    label: string;
+    closeMenu: () => void;
+};
+
+export function MobileNavItem({ to, label, closeMenu }: Props) {
     return (
         <NavLink
             to={to}
             onClick={closeMenu}
             className={({ isActive }) =>
-                `transition ${
+                `
+                block px-4 py-3 rounded-xl transition-all duration-200
+                ${
                     isActive
-                        ? "text-white"
-                        : "text-neutral-400 hover:text-white"
-                }`
+                        ? "bg-white/10 text-white"
+                        : "text-neutral-400 hover:text-white hover:bg-white/5"
+                }
+                `
             }
         >
             {label}
         </NavLink>
-    )
+    );
 }

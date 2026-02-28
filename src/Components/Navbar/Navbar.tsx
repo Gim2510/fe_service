@@ -1,15 +1,23 @@
-import { Link } from "react-router-dom"
+import {Link} from "react-router-dom"
 import { useAuth } from "../../auth/AuthContext"
 import MenuIcon from "@mui/icons-material/Menu"
 import CloseIcon from "@mui/icons-material/Close"
 import { useState, useEffect } from "react"
 import logo from "/logo1.png"
-import {NavItem} from "./NavItem.tsx";
+import {NavItem, NavItemPremium} from "./NavItem.tsx";
 import {MobileNavItem} from "./MobileNavItem.tsx";
+import {LogoutConfirmModal} from "./LogoutConfirmModal.tsx";
+import {MobileNavItemPremium} from "./MobileNavItemPremium.tsx";
 
 export function Navbar() {
-    const { isAuthenticated, logout, role } = useAuth()
+    const { isAuthenticated, logout, role, isPremium } = useAuth()
     const [open, setOpen] = useState(false)
+    const [showLogoutModal, setShowLogoutModal] = useState(false)
+
+    const handleLogout = () => {
+        logout()
+        setShowLogoutModal(false)
+    }
 
     useEffect(() => {
         document.body.style.overflow = open ? "hidden" : "auto"
@@ -33,10 +41,12 @@ export function Navbar() {
                             {/* Desktop Navigation */}
                             <div className="hidden lg:flex items-center gap-10 text-sm tracking-wide">
 
+                                {isAuthenticated ? <NavItemPremium isPremium={isPremium} to='/premium' label='Premium'/> : ""}
                                 {isAuthenticated && role === "ADMIN" && (
-                                    <NavItem to="/dashboard" label="Dashboard" />
+                                    <>
+                                        <NavItem to="/dashboard" label="Dashboard" />
+                                    </>
                                 )}
-
                                 <NavItem to="/survey/start" label="Survey" />
                                 <NavItem to="/contact" label="Contacts" />
 
@@ -45,7 +55,7 @@ export function Navbar() {
                                         <NavItem to="/user" label="Account" />
 
                                         <button
-                                            onClick={logout}
+                                            onClick={() => setShowLogoutModal(true)}
                                             className="text-neutral-400 hover:text-white transition cursor-pointer"
                                         >
                                             Logout
@@ -106,40 +116,91 @@ export function Navbar() {
                                 onClick={closeMenu}
                                 className="text-neutral-400 hover:text-white transition"
                             >
-                                <CloseIcon />
+                                <CloseIcon/>
                             </button>
                         </div>
 
                         {/* Links */}
-                        <div className="flex flex-col gap-6 text-lg font-light tracking-wide">
+                        <div className="flex flex-col gap-8 text-base">
 
-                            {isAuthenticated && role === "ADMIN" && (
-                                <MobileNavItem to="/dashboard" label="Dashboard" closeMenu={closeMenu} />
-                            )}
+                            {/* NAVIGATION */}
+                            <div className="space-y-4">
+                                <div className="text-xs uppercase tracking-widest text-neutral-600">
+                                    Navigation
+                                </div>
 
-                            <MobileNavItem to="/survey/start" label="Survey" closeMenu={closeMenu} />
-                            <MobileNavItem to="/contact" label="Contacts" closeMenu={closeMenu} />
+                                {isAuthenticated && (
+                                    <MobileNavItemPremium
+                                        to="/premium"
+                                        label={isPremium ? "Premium Attivo" : "Premium"}
+                                        isPremium={isPremium}
+                                        closeMenu={closeMenu}
+                                    />
+                                )}
 
-                            {isAuthenticated ? (
-                                <>
-                                    <MobileNavItem to="/user" label="Account" closeMenu={closeMenu} />
+                                {isAuthenticated && role === "ADMIN" && (
+                                    <MobileNavItem
+                                        to="/dashboard"
+                                        label="Dashboard"
+                                        closeMenu={closeMenu}
+                                    />
+                                )}
 
-                                    <button
-                                        onClick={() => {
-                                            logout()
-                                            closeMenu()
-                                        }}
-                                        className="text-neutral-400 hover:text-red-400 cursor-pointer transition text-left"
-                                    >
-                                        Logout
-                                    </button>
-                                </>
-                            ) : (
-                                <>
-                                    <MobileNavItem to="/login" label="Login" closeMenu={closeMenu} />
-                                    <MobileNavItem to="/register" label="Inizia ora" closeMenu={closeMenu} />
-                                </>
-                            )}
+                                <MobileNavItem
+                                    to="/survey/start"
+                                    label="Survey"
+                                    closeMenu={closeMenu}
+                                />
+
+                                <MobileNavItem
+                                    to="/contact"
+                                    label="Contacts"
+                                    closeMenu={closeMenu}
+                                />
+                            </div>
+
+                            {/* Divider */}
+                            <div className="h-px bg-white/10"/>
+
+                            {/* ACCOUNT */}
+                            <div className="space-y-4">
+                                <div className="text-xs uppercase tracking-widest text-neutral-600">
+                                    Account
+                                </div>
+
+                                {isAuthenticated ? (
+                                    <>
+                                        <MobileNavItem
+                                            to="/user"
+                                            label="Account"
+                                            closeMenu={closeMenu}
+                                        />
+
+                                        <button
+                                            onClick={() => {
+                                                closeMenu();
+                                                setShowLogoutModal(true);
+                                            }}
+                                            className="w-full text-left px-4 py-3 rounded-xl text-neutral-400 hover:text-red-400 hover:bg-red-500/10 transition"
+                                        >
+                                            Logout
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <MobileNavItem
+                                            to="/login"
+                                            label="Login"
+                                            closeMenu={closeMenu}
+                                        />
+                                        <MobileNavItem
+                                            to="/register"
+                                            label="Inizia ora"
+                                            closeMenu={closeMenu}
+                                        />
+                                    </>
+                                )}
+                            </div>
                         </div>
 
                         <div className="mt-auto pt-10 text-xs text-neutral-600">
@@ -148,6 +209,11 @@ export function Navbar() {
                     </div>
                 </div>
             </div>
+            <LogoutConfirmModal
+                open={showLogoutModal}
+                onConfirm={handleLogout}
+                onCancel={() => setShowLogoutModal(false)}
+            />
         </>
     )
 }
