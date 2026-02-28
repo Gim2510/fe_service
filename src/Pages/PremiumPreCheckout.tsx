@@ -1,11 +1,9 @@
-import { useNavigate } from "react-router-dom";
 import { LiquidGlassButton } from "../Components/Buttons/LiquidGlassButton";
 import {useState} from "react";
 import {useCreateCheckoutSession} from "../hooks/useCreateCheckoutSession.ts";
 import {CheckoutConfirmModal} from "../Components/Payments/CheckoutConfirmModal.tsx";
 
 export function PremiumPreCheckout() {
-    const navigate = useNavigate();
     const [showModal, setShowModal] = useState(false);
     const { createCheckoutSession, loading, error } = useCreateCheckoutSession();
 
@@ -16,11 +14,6 @@ export function PremiumPreCheckout() {
             window.location.href = data.url; // redirect immediato a Stripe
         }
     };
-
-    const handleCheckout = () => {
-        navigate("/checkout/start"); // rotta che chiama il backend start_session
-    };
-
     return (
         <main className="relative min-h-screen bg-neutral-950 text-white overflow-hidden">
 
@@ -163,7 +156,7 @@ export function PremiumPreCheckout() {
                             dopo ogni compilazione del survey.
                         </p>
 
-                        <LiquidGlassButton onClick={handleCheckout}>
+                        <LiquidGlassButton onClick={() => setShowModal(true)}>
                             Attiva ora
                         </LiquidGlassButton>
 
