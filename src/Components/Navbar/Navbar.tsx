@@ -8,9 +8,11 @@ import {NavItem, NavItemPremium} from "./NavItem.tsx";
 import {MobileNavItem} from "./MobileNavItem.tsx";
 import {LogoutConfirmModal} from "./LogoutConfirmModal.tsx";
 import {MobileNavItemPremium} from "./MobileNavItemPremium.tsx";
+import {usePremium} from "../../utils/UserProvider.tsx";
 
 export function Navbar() {
-    const { isAuthenticated, logout, role, isPremium } = useAuth()
+    const { isAuthenticated, logout, role } = useAuth()
+    const {isPremium} = usePremium()
     const [open, setOpen] = useState(false)
     const [showLogoutModal, setShowLogoutModal] = useState(false)
 

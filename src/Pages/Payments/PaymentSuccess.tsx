@@ -1,8 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import {LiquidGlassButton} from "../../Components/Buttons/LiquidGlassButton.tsx";
+import {usePremium} from "../../utils/UserProvider.tsx";
+import {useEffect} from "react";
 
 export function PaymentSuccess() {
     const navigate = useNavigate();
+    const { refreshPremium } = usePremium();
+
+    useEffect(() => {
+        refreshPremium();
+    }, []);
 
     const handleGoToDashboard = () => {
         navigate("/dashboard");
