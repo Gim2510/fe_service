@@ -5,10 +5,12 @@ import { GDPRBanner } from "../Components/GDPRBANNER.tsx";
 import { ChatWidget } from "../Components/ChatBot/ChatWidget.tsx";
 import { useAuth } from "../auth/AuthContext.tsx";
 import {EmailVerificationBanner} from "../Components/EmailVerificationBanner.tsx";
+import {useTheme} from "../Context/ThemeContext.tsx";
 
 export function LayoutHomepage({ children }: { children: ReactNode }) {
     const [open, setOpen] = useState(false);
     const { isAuthenticated } = useAuth();
+    const {theme} = useTheme()
 
     return (
         <div className="w-full h-full relative">
@@ -20,7 +22,7 @@ export function LayoutHomepage({ children }: { children: ReactNode }) {
                 <EmailVerificationBanner />
             </div>
             {isAuthenticated && (
-                <ChatWidget open={open} setOpen={setOpen} />
+                <ChatWidget theme={theme} open={open} setOpen={setOpen} />
             )}
         </div>
     );
