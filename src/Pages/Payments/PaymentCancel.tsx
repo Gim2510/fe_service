@@ -41,7 +41,6 @@ export function PaymentCancel() {
                 <div className="flex justify-center mt-6">
                     <LiquidGlassButton
                         onClick={() => navigate("/")}
-                        color_text="white"
                     >
                         Torna alla Home
                     </LiquidGlassButton>

@@ -59,7 +59,6 @@ export function SurveyConfirmation({ surveyId }: Props) {
                     <LiquidGlassButton
                         onClick={() => success ? window.location.reload() : handleGenerateSurveyReport()}
                         disabled={loading || success}
-                        color_text="white"
                         className="flex-1"
                     >
                         {loading
@@ -77,7 +76,6 @@ export function SurveyConfirmation({ surveyId }: Props) {
                     {success && (
                         <LiquidGlassButton
                             onClick={handleBookAppointment}
-                            color_text="white"
                             className="flex-1"
                         >
                             Prenota una consulenza

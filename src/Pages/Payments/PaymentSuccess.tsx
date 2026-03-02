@@ -47,7 +47,6 @@ export function PaymentSuccess() {
                 <div className="flex justify-center mt-6">
                     <LiquidGlassButton
                         onClick={handleGoToDashboard}
-                        color_text="white"
                     >
                         Vai alla Dashboard
                     </LiquidGlassButton>
