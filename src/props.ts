@@ -5,6 +5,7 @@ export type PropsSurveyQuestion = {
     lang: "it" | "en"
     answer: any
     setAnswer: (v: any) => void
+    theme: string
 }
 
 

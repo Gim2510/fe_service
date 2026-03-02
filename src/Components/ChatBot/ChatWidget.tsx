@@ -4,7 +4,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 import { LiquidGlassButton } from "../Buttons/LiquidGlassButton.tsx";
 import {FallingLines} from "react-loader-spinner";
 
-export function ChatWidget({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
+export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (open: boolean) => void, theme: string }) {
     const [input, setInput] = useState("");
     const [show, setShow] = useState(false);
     const { messages, loading, error, sendMessage, messagesEndRef } = useChatBot();
@@ -31,7 +31,7 @@ export function ChatWidget({ open, setOpen }: { open: boolean; setOpen: (open: b
             {/* Floating Chat Button */}
             <button
                 onClick={() => setOpen(!open)}
-                className="fixed bottom-6 cursor-pointer right-6 z-50 w-14 h-14 sm:w-16 sm:h-16 rounded-full backdrop-blur-lg bg-white/20 border border-white/20 shadow-lg flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all"
+                className={`fixed bottom-6 cursor-pointer right-6 z-50 w-14 h-14 sm:w-16 sm:h-16 rounded-full backdrop-blur-lg ${ theme === "dark" ? "bg-white/20" : "bg-black/40"} border border-white/20 shadow-lg flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all ease-in-out duration-500`}
             >
                 <ChatIcon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
             </button>
@@ -80,7 +80,6 @@ export function ChatWidget({ open, setOpen }: { open: boolean; setOpen: (open: b
                         <LiquidGlassButton
                             onClick={handleSend}
                             disabled={loading}
-                            color_text="white"
                             variant="navbar"
                         >
                             →

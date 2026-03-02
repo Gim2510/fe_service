@@ -1,16 +1,20 @@
 import { Navigate } from "react-router-dom"
+import { FallingLines } from "react-loader-spinner"
+
 import { useSurvey } from "../hooks/useSurvey"
 import { useUserSurvey } from "../hooks/useUserSurvey"
 import { useSurveyTemplate } from "../hooks/useSurveyTemplate"
 import { useSurveyFlow } from "../hooks/useSurveyFlow"
 import { useInitSurvey } from "../hooks/useInitSurvey"
+
 import { SurveyQuestion } from "../Components/SurveyQuestion"
 import { SurveyContacts } from "../Components/SurveyContacts"
 import { SurveyConfirmation } from "../Components/SurveyConfirmation"
-import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
-import {FallingLines} from "react-loader-spinner";
+import { LiquidGlassButton } from "../Components/Buttons/LiquidGlassButton"
+import {useTheme} from "../Context/ThemeContext.tsx";
 
 export function Survey() {
+    const {theme} = useTheme()
     const surveyTemplateId = "6980ad77de0a1489a3663896"
     const lang: "it" = "it"
 
@@ -35,13 +39,8 @@ export function Survey() {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-black text-slate-400">
-                <FallingLines
-                    color="#fff"
-                    width="150"
-                    visible={true}
-                    ariaLabel="falling-circles-loading"
-                />
+            <div className="min-h-screen flex items-center justify-center bg-black">
+                <FallingLines color="#fff" width="150" visible />
             </div>
         )
     }
@@ -54,11 +53,12 @@ export function Survey() {
         return <Navigate to={`/survey/${survey._id}/recap`} replace />
     }
 
+    const isQuestionStep = flow.step < questions.length
     const isContactStep = flow.step === questions.length
     const isConfirmationStep = flow.step > questions.length
 
     return (
-        <main className="min-h-screen bg-black text-slate-100 flex items-center justify-center px-6 py-10">
+        <main className={`min-h-screen ${theme === "dark" ? "bg-black" : "bg-white"} bg-black text-slate-100 flex items-center justify-center px-6 py-10`}>
             <section className="w-full max-w-3xl py-20">
                 {/* Step indicator */}
                 <div className="mb-6 text-sm text-slate-500 flex justify-between">
@@ -71,7 +71,6 @@ export function Survey() {
                     </span>
                 </div>
 
-                {/* Animated container */}
                 <div
                     className={`transition-all duration-500 ${
                         flow.animating
@@ -79,13 +78,13 @@ export function Survey() {
                             : "opacity-100 translate-y-0"
                     }`}
                 >
-                    {flow.step < questions.length && (
-                        <div className="space-y-4">
+                    {isQuestionStep && (
+                        <div className="space-y-6">
                             <header className="space-y-6">
-                                <span className="text-white font-mono text-sm">
+                                <span className={`${theme === "dark" ? "text-white" : "text-black"} font-mono text-sm`}>
                                     {String(flow.step + 1).padStart(2, "0")}
                                 </span>
-                                <h1 className="text-3xl md:text-4xl font-light leading-tight">
+                                <h1 className={`text-3xl md:text-4xl font-light leading-tight ${theme === "dark" ? "text-neutral-400" : "text-black"}`}>
                                     {flow.question.text[lang]}
                                 </h1>
                             </header>
@@ -95,17 +94,18 @@ export function Survey() {
                                 lang={lang}
                                 answer={flow.answer}
                                 setAnswer={flow.setAnswer}
+                                theme={theme}
                             />
 
                             <div
                                 className={`flex pt-8 ${
-                                    flow.step > 0 ? "justify-between" : "justify-end"
+                                    flow.step > 0
+                                        ? "justify-between"
+                                        : "justify-end"
                                 }`}
                             >
-                                {/* Pulsante Indietro */}
                                 {flow.step > 0 && (
                                     <LiquidGlassButton
-                                        color_text="white"
                                         onClick={flow.prev}
                                         className="bg-white/5 border-white/10"
                                     >
@@ -113,12 +113,13 @@ export function Survey() {
                                     </LiquidGlassButton>
                                 )}
 
-                                {/* Pulsante Avanti */}
                                 <LiquidGlassButton
                                     disabled={!flow.canProceed}
                                     onClick={() => flow.next(survey._id)}
                                 >
-                                    {flow.isLast ? "Completa survey" : "Continua"}
+                                    {flow.isLast
+                                        ? "Completa survey"
+                                        : "Continua"}
                                 </LiquidGlassButton>
                             </div>
                         </div>
@@ -127,11 +128,13 @@ export function Survey() {
                     {isContactStep && (
                         <SurveyContacts
                             surveyId={survey._id}
-                            onNext={() => flow.nextStep()}
+                            onNext={flow.nextStep}
                         />
                     )}
 
-                    {isConfirmationStep && <SurveyConfirmation surveyId={surveyId}/>}
+                    {isConfirmationStep && (
+                        <SurveyConfirmation surveyId={surveyId} />
+                    )}
                 </div>
             </section>
         </main>

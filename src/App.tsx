@@ -15,41 +15,44 @@ import {LayoutSurvey} from "./Layout/LayoutSurvey.tsx";
 import {UserDashboard} from "./Pages/UserDashboard.tsx";
 import {PasswordResetRequest} from "./Pages/PasswordResetRequest.tsx";
 import {ResetPassword} from "./Pages/ResetPassword.tsx";
-import {ScrollToTop} from "./utils/scrollToTop.tsx";
+import {ScrollProvider} from "./Context/ScrollContext.tsx";
 import {UserEditProfile} from "./Pages/UserEditProfile.tsx";
 import {RoleProtected} from "./Components/Protected/RoleProtected.tsx";
 import {AdminDashboard} from "./Pages/AdminDashboard.tsx";
 import {PaymentSuccess} from "./Pages/Payments/PaymentSuccess.tsx";
 import {PaymentCancel} from "./Pages/Payments/PaymentCancel.tsx";
 import {PremiumPreCheckout} from "./Pages/PremiumPreCheckout.tsx";
-import {PremiumProvider} from "./utils/UserProvider.tsx";
+import {PremiumProvider} from "./Context/PremiumContext.tsx";
+import {ThemeProvider} from "./Context/ThemeContext.tsx";
 
 function App() {
     return (
         <div className='bg-black'>
-            <AuthProvider>
-                <PremiumProvider>
-                    <ScrollToTop />
-                    <Routes>
-                        <Route path="/" element={<LayoutHomepage><Home/></LayoutHomepage>}></Route>
-                        <Route path="/survey/start" element={<LayoutHomepage><SurveyStart /></LayoutHomepage>} />
-                        <Route path="/login" element={<LayoutHomepage><Login /></LayoutHomepage>} />
-                        <Route path="/verify-email/:_id" element={<VerifyEmailPage />}/>
-                        <Route path="/register" element={<LayoutHomepage><Register /></LayoutHomepage>} />
-                        <Route path="/survey" element={<Protected><LayoutSurvey><Survey /></LayoutSurvey></Protected>}/>
-                        <Route path="/survey/:survey_id/recap" element={<Protected><LayoutSurvey><SurveyDashboard/></LayoutSurvey></Protected>} />
-                        <Route path="/contact" element={<LayoutHomepage><ContactPage/></LayoutHomepage>} />
-                        <Route path="/user" element={<Protected><LayoutHomepage><UserDashboard/></LayoutHomepage></Protected>} />
-                        <Route path="/password-reset" element={<LayoutHomepage><PasswordResetRequest/></LayoutHomepage>} />
-                        <Route path="/password-reset/confirm/:token" element={<LayoutHomepage><ResetPassword/></LayoutHomepage>} />
-                        <Route path="/user/edit" element={<Protected><LayoutHomepage><UserEditProfile /></LayoutHomepage></Protected>} />
-                        <Route path="/dashboard" element={<RoleProtected role={`ADMIN`}><LayoutHomepage><AdminDashboard/></LayoutHomepage></RoleProtected>} />
-                        <Route path={"/premium"} element={<Protected><LayoutHomepage><PremiumPreCheckout/></LayoutHomepage></Protected>} />
-                        <Route path="/payment_success" element={<LayoutHomepage><PaymentSuccess /></LayoutHomepage>} />
-                        <Route path="/payment_cancel" element={<LayoutHomepage><PaymentCancel /></LayoutHomepage>} />
-                    </Routes>
-                </PremiumProvider>
-            </AuthProvider>
+            <ThemeProvider>
+                <AuthProvider>
+                    <PremiumProvider>
+                        <ScrollProvider />
+                        <Routes>
+                            <Route path="/" element={<LayoutHomepage><Home/></LayoutHomepage>}></Route>
+                            <Route path="/survey/start" element={<LayoutHomepage><SurveyStart /></LayoutHomepage>} />
+                            <Route path="/login" element={<LayoutHomepage><Login /></LayoutHomepage>} />
+                            <Route path="/verify-email/:_id" element={<VerifyEmailPage />}/>
+                            <Route path="/register" element={<LayoutHomepage><Register /></LayoutHomepage>} />
+                            <Route path="/survey" element={<Protected><LayoutSurvey><Survey /></LayoutSurvey></Protected>}/>
+                            <Route path="/survey/:survey_id/recap" element={<Protected><LayoutSurvey><SurveyDashboard/></LayoutSurvey></Protected>} />
+                            <Route path="/contact" element={<LayoutHomepage><ContactPage/></LayoutHomepage>} />
+                            <Route path="/user" element={<Protected><LayoutHomepage><UserDashboard/></LayoutHomepage></Protected>} />
+                            <Route path="/password-reset" element={<LayoutHomepage><PasswordResetRequest/></LayoutHomepage>} />
+                            <Route path="/password-reset/confirm/:token" element={<LayoutHomepage><ResetPassword/></LayoutHomepage>} />
+                            <Route path="/user/edit" element={<Protected><LayoutHomepage><UserEditProfile /></LayoutHomepage></Protected>} />
+                            <Route path="/dashboard" element={<RoleProtected role={`ADMIN`}><LayoutHomepage><AdminDashboard/></LayoutHomepage></RoleProtected>} />
+                            <Route path={"/premium"} element={<Protected><LayoutHomepage><PremiumPreCheckout/></LayoutHomepage></Protected>} />
+                            <Route path="/payment_success" element={<LayoutHomepage><PaymentSuccess /></LayoutHomepage>} />
+                            <Route path="/payment_cancel" element={<LayoutHomepage><PaymentCancel /></LayoutHomepage>} />
+                        </Routes>
+                    </PremiumProvider>
+                </AuthProvider>
+            </ThemeProvider>
         </div>
     );
 }

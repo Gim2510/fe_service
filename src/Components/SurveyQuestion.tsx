@@ -1,15 +1,11 @@
-import {MultipleChoiceQuestion} from "./SurveyQuestion/MultipleChoiceQuestion.tsx";
-import type {PropsSurveyQuestion} from "../props.ts";
-import {BooleanQuestion} from "./SurveyQuestion/BooleanQuestion.tsx";
-import {ScaleQuestion} from "./SurveyQuestion/ScaleQuestion.tsx";
-import {TextQuestion} from "./SurveyQuestion/TextQuestion.tsx";
+import type { PropsSurveyQuestion } from "../props"
 
-export function SurveyQuestion({
-                                   question,
-                                   lang,
-                                   answer,
-                                   setAnswer,
-                               }: PropsSurveyQuestion) {
+import { MultipleChoiceQuestion } from "./SurveyQuestion/MultipleChoiceQuestion"
+import { BooleanQuestion } from "./SurveyQuestion/BooleanQuestion"
+import { ScaleQuestion } from "./SurveyQuestion/ScaleQuestion"
+import { TextQuestion } from "./SurveyQuestion/TextQuestion"
+
+export function SurveyQuestion({question, lang, answer, setAnswer, theme}: PropsSurveyQuestion) {
     switch (question.type) {
         case "multipleChoice":
             return (
@@ -17,11 +13,17 @@ export function SurveyQuestion({
                     options={question.opt?.[lang] ?? []}
                     answer={answer}
                     onChange={setAnswer}
+                    variant={theme}
                 />
             )
 
         case "boolean":
-            return <BooleanQuestion answer={answer} onChange={setAnswer} />
+            return (
+                <BooleanQuestion
+                    answer={answer}
+                    onChange={setAnswer}
+                />
+            )
 
         case "scale":
             return (
@@ -34,7 +36,12 @@ export function SurveyQuestion({
             )
 
         case "text":
-            return <TextQuestion answer={answer} onChange={setAnswer} />
+            return (
+                <TextQuestion
+                    answer={answer}
+                    onChange={setAnswer}
+                />
+            )
 
         default:
             return null

@@ -1,8 +1,11 @@
-import type {PropsScaleQuestion} from "../../props.ts";
-import type {FC} from "react";
+import type { FC } from "react"
+import type { PropsScaleQuestion } from "../../props"
 
 export const ScaleQuestion: FC<PropsScaleQuestion> = ({min = 1, max = 5, answer, onChange,}) => {
-    const value = answer ?? Math.round((min + max) / 2)
+    const value =
+        typeof answer === "number"
+            ? answer
+            : Math.round((min + max) / 2)
 
     return (
         <div className="space-y-6 py-10">

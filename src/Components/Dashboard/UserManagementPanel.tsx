@@ -13,9 +13,10 @@ import {PromoteUserModal} from "./PromotoUserModal.tsx";
 type Props = {
     allUsers: UserType[];
     refreshUsers: () => Promise<void>;
+    theme: string
 };
 
-export function UserManagementPanel({ allUsers, refreshUsers }: Props) {
+export function UserManagementPanel({ allUsers, refreshUsers, theme }: Props) {
     const { token } = useAuth();
     const { doSetUserRoleToAdmin} = useSetUserAdmin();
     const { deleteUser, success } = useDeleteUser();
@@ -32,6 +33,11 @@ export function UserManagementPanel({ allUsers, refreshUsers }: Props) {
     const [showPromoteModal, setShowPromoteModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showVipModal, setShowVipModal] = useState(false);
+
+    const isDark = theme === "dark";
+    const glassBg = isDark
+        ? "bg-white/[0.04] border border-white/[0.08]"  // dark glass
+        : "bg-white/50 border border-gray-200";        // light glass premium
 
     async function handleConfirmSetAdmin(setLoading: (value: boolean) => void) {
         setLoading(true); // mostra spinner e disabilita pulsanti
@@ -73,46 +79,50 @@ export function UserManagementPanel({ allUsers, refreshUsers }: Props) {
     }
     return (
         <>
-            <AdminActionsSection
-                allUsers={allUsers}
-                selectedUserId={selectedUserId}
-                setSelectedUserId={setSelectedUserId}
-                setShowPromoteModal={setShowPromoteModal}
-                selectedUserToDelete={selectedUserToDelete}
-                setSelectedUserToDelete={setSelectedUserToDelete}
-                setShowDeleteModal={setShowDeleteModal}
-                deleteSuccess={success}
-                selectedUserToVip={selectedUserToVip}
-                setSelectedUserToVip={setSelectedUserToVip}
-                setShowVipModal={setShowVipModal}
-                vipSuccess={vipSuccess}
-                BulkEmailComponent={null}
-            />
-
-            {showPromoteModal && (
-                <PromoteUserModal
-                    userEmail={allUsers.find(u => u._id === selectedUserId)?.email}
-                    onConfirm={() => handleConfirmSetAdmin(setLoadingPromote)}
-                    loading={loadingPromote}
-                    onClose={() => setShowPromoteModal(false)}
+            <div
+                className={`relative rounded-[36px] p-12 space-y-12 backdrop-blur-3xl shadow-[0_0_80px_rgba(0,0,0,0.04)] ${glassBg}`}>
+                <AdminActionsSection
+                    allUsers={allUsers}
+                    selectedUserId={selectedUserId}
+                    setSelectedUserId={setSelectedUserId}
+                    setShowPromoteModal={setShowPromoteModal}
+                    selectedUserToDelete={selectedUserToDelete}
+                    setSelectedUserToDelete={setSelectedUserToDelete}
+                    setShowDeleteModal={setShowDeleteModal}
+                    deleteSuccess={success}
+                    selectedUserToVip={selectedUserToVip}
+                    setSelectedUserToVip={setSelectedUserToVip}
+                    setShowVipModal={setShowVipModal}
+                    vipSuccess={vipSuccess}
+                    BulkEmailComponent={null}
+                    theme={theme}  // <-- passiamo theme
                 />
-            )}
 
-            {showDeleteModal && (
-                <DeleteUserModal
-                    setShowDeleteUserModal={setShowDeleteModal}
-                    handleConfirmDeleteUser={() => handleConfirmDeleteUser(setLoadingDeleteState)}
-                    loadingDeleteUser={loadingDeleteState}
-                />
-            )}
+                {showPromoteModal && (
+                    <PromoteUserModal
+                        userEmail={allUsers.find(u => u._id === selectedUserId)?.email}
+                        onConfirm={() => handleConfirmSetAdmin(setLoadingPromote)}
+                        loading={loadingPromote}
+                        onClose={() => setShowPromoteModal(false)}
+                    />
+                )}
 
-            {showVipModal && (
-                <SetUserToVipModal
-                    setShowUpdateUserToVipModal={setShowVipModal}
-                    handleUpdateUserToVip={() => handleConfirmVip(setLoadingVipState)}
-                    loadingUpdateToVip={loadingVipState}
-                />
-            )}
+                {showDeleteModal && (
+                    <DeleteUserModal
+                        setShowDeleteUserModal={setShowDeleteModal}
+                        handleConfirmDeleteUser={() => handleConfirmDeleteUser(setLoadingDeleteState)}
+                        loadingDeleteUser={loadingDeleteState}
+                    />
+                )}
+
+                {showVipModal && (
+                    <SetUserToVipModal
+                        setShowUpdateUserToVipModal={setShowVipModal}
+                        handleUpdateUserToVip={() => handleConfirmVip(setLoadingVipState)}
+                        loadingUpdateToVip={loadingVipState}
+                    />
+                )}
+            </div>
         </>
     );
 }

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import {LiquidGlassButton} from "../../Components/Buttons/LiquidGlassButton.tsx";
-import {usePremium} from "../../utils/UserProvider.tsx";
+import {usePremium} from "../../Context/PremiumContext.tsx";
 import {useEffect} from "react";
 
 export function PaymentSuccess() {
@@ -24,7 +24,7 @@ export function PaymentSuccess() {
             <div className="absolute -bottom-60 -right-60 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-blue-400/20 via-indigo-400/20 to-purple-400/20 blur-3xl opacity-30" />
 
             {/* Content */}
-            <section className="relative z-10 max-w-3xl text-center px-8 sm:py-16 py-8 bg-white/5 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-xl space-y-10">
+            <section className="relative z-10 max-w-3xl text-center px-8 sm:px-16 sm:py-16 py-8 bg-white/5 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-xl space-y-10">
 
                 {/* Success Icon */}
                 <div className="mx-auto text-white w-24 h-24 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-lg ring-2 ring-emerald-400/40 text-6xl font-bold animate-pulse">
@@ -32,7 +32,7 @@ export function PaymentSuccess() {
                 </div>
 
                 <h2 className="text-4xl md:text-5xl font-semibold text-white leading-tight">
-                    Benvenuto in Premium 🚀
+                    Benvenuto in Premium
                 </h2>
 
                 <div className="space-y-4 text-neutral-300">

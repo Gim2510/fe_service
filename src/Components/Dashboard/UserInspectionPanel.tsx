@@ -2,11 +2,12 @@ import { useState } from "react";
 import type { UserType } from "../../types/userTypes";
 import {AdminShowSpecificUserSection} from "./AdminShowSpecificUserSection.tsx";
 
-export function UserInspectionPanel({ allUsers }: { allUsers: UserType[] }) {
+export function UserInspectionPanel({ allUsers, theme }: { allUsers: UserType[], theme: string }) {
     const [selectedUserIdToShow, setSelectedUserIdToShow] = useState("");
 
     return (
         <AdminShowSpecificUserSection
+            theme={theme}
             allUsers={allUsers}
             selectedUserIdToShow={selectedUserIdToShow}
             setSelectedUserIdToShow={setSelectedUserIdToShow}

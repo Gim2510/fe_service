@@ -1,5 +1,5 @@
 import {BulkNotificationSection} from "./BulkNotificationSection.tsx";
 
-export function MessagingPanel() {
-    return <BulkNotificationSection />;
+export function MessagingPanel({theme}: {theme: string}) {
+    return <BulkNotificationSection theme={theme} />;
 }

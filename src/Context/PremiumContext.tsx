@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { useAuth } from "../auth/AuthContext";
+import { useAuth } from "../auth/AuthContext.tsx";
 
 type PremiumContextType = {
     isPremium: boolean;
@@ -10,6 +10,7 @@ type PremiumContextType = {
 const PremiumContext = createContext<PremiumContextType>(null!);
 
 export function PremiumProvider({ children }: { children: React.ReactNode }) {
+    const {id} = useAuth()
     const { token } = useAuth();
 
     const [isPremium, setIsPremium] = useState(false);
@@ -26,7 +27,7 @@ export function PremiumProvider({ children }: { children: React.ReactNode }) {
 
         try {
             const res = await fetch(
-                `${user_base_url}/v1/user/me`,
+                `${user_base_url}/v1/user/me/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

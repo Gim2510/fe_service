@@ -16,11 +16,11 @@ interface Point {
     lng: number;
 }
 
-export function HeroGlobe() {
+export function HeroGlobeLight() {
     const globeRef = useRef<any | null>(null);
 
     const points: Point[] = [
-        
+
         // Europa
         { name: "Milano", lat: 45.46, lng: 9.19 },
         { name: "London", lat: 51.50, lng: -0.12 },
@@ -151,7 +151,7 @@ export function HeroGlobe() {
             <Globe
                 ref={globeRef}
                 backgroundColor="rgba(0,0,0,0)"
-                globeImageUrl="//unpkg.com/three-globe/example/img/earth-dark.jpg"
+                globeImageUrl="https://map-projections.net/img/jpg/rectang-0.jpg"
                 showAtmosphere
                 atmosphereColor="#999"
                 atmosphereAltitude={0.15}

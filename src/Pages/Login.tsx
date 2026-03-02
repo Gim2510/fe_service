@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom"
 import { useLogin } from "../hooks/useLogin"
 import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
 import {FallingLines} from "react-loader-spinner";
+import {useTheme} from "../Context/ThemeContext.tsx";
 
 export function Login() {
+    const {theme} = useTheme()
     const navigate = useNavigate()
     const { doLogin, loading, error } = useLogin()
 
@@ -23,30 +25,30 @@ export function Login() {
         <main className="relative min-h-screen flex items-center overflow-hidden bg-neutral-950 text-white">
 
             {/* Gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800" />
+            <div className={`${theme === "dark" ? "bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800" : "bg-white"} absolute inset-0 `} />
 
             {/* Grid texture */}
             <div
-                className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[size:32px_32px]"
+                className={`absolute inset-0 opacity-10 bg-[size:32px_32px]  ${theme === "dark" ? "bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)]" : "bg-[radial-gradient(circle_at_1px_1px,black_1px,transparent_0)]"}`}
             />
 
-            <div className="relative z-10 mx-auto w-full max-w-5xl px-8 py-24 grid lg:grid-cols-2 gap-20 items-center">
+            <div className={`relative z-10 mx-auto w-full max-w-5xl px-8 py-24 grid lg:grid-cols-2 gap-20 items-center ${theme === "dark" ? "text-white" : "text-black"}`}>
 
                 {/* LEFT COPY */}
                 <div className="hidden lg:flex flex-col gap-8">
-          <span className="text-sm uppercase tracking-widest text-neutral-400">
-            Bentornato
-          </span>
+                  <span className={`text-sm uppercase tracking-widest ${theme === "dark" ? "text-neutral-400" : "text-black"}`}>
+                    Bentornato
+                  </span>
 
                     <h1 className="text-5xl font-semibold leading-tight">
                         Accedi al tuo
                         <br />
-                        <span className="text-neutral-400">
-              spazio di controllo.
-            </span>
+                        <span className={`${theme === "dark" ? "text-neutral-400" : "text-black"}`}>
+                          spazio di controllo.
+                        </span>
                     </h1>
 
-                    <p className="text-lg text-neutral-300 max-w-lg">
+                    <p className={`text-lg ${theme === "dark" ? "text-neutral-300" : "text-black"} max-w-lg`}>
                         Visualizza dati, analisi e strumenti progettati per
                         rendere il tuo business più chiaro, misurabile e scalabile.
                     </p>
@@ -54,7 +56,7 @@ export function Login() {
 
                 {/* LOGIN CARD */}
                 <div className="relative">
-                    <div className="rounded-3xl border border-neutral-800 bg-neutral-900/70 backdrop-blur-xl p-10 shadow-2xl">
+                    <div className={`rounded-3xl ${theme === "dark" ? "bg-neutral-900/70 border border-neutral-800" : "bg-white/40 shadow-3xl"} backdrop-blur-xl p-10 shadow-2xl`}>
 
                         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
 
@@ -97,18 +99,18 @@ export function Login() {
                                 <button
                                     type="button"
                                     onClick={() => navigate("/password-reset")}
-                                    className="text-neutral-300 hover:text-white transition cursor-pointer"
+                                    className={`${theme === "dark" ? "text-neutral-300 hover:text-white" : "text-black hover:text-neutral-400"} transition cursor-pointer`}
                                 >
                                     Password dimenticata?
                                 </button>
                             </div>
 
-                            <div className="text-center text-sm text-neutral-500 mt-4">
+                            <div className={`text-center text-sm mt-4 ${theme === "dark" ? "text-neutral-500" : "text-black"}`}>
                                 Non hai un account?{" "}
                                 <button
                                     type="button"
                                     onClick={() => navigate("/register")}
-                                    className="text-neutral-300 hover:text-white transition cursor-pointer"
+                                    className={`${theme === "dark" ? "text-neutral-300 hover:text-white" : "text-black hover:text-neutral-400"}  transition cursor-pointer`}
                                 >
                                     Registrati
                                 </button>
