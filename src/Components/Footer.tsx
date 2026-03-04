@@ -22,7 +22,7 @@ export function Footer() {
                     </p>
 
                     <div className="text-sm text-neutral-500 mt-2">
-                        © {new Date().getFullYear()} MyApp
+                        © {new Date().getFullYear()} TechBridgeGroup
                         <br />
                         Tutti i diritti riservati.
                     </div>
