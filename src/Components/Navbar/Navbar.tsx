@@ -4,6 +4,7 @@ import MenuIcon from "@mui/icons-material/Menu"
 import CloseIcon from "@mui/icons-material/Close"
 import { useState, useEffect } from "react"
 import logo from "/logo1.png"
+import logodark from "/logo1-black.png"
 import { NavItem, NavItemPremium } from "./NavItem"
 import { MobileNavItem } from "./MobileNavItem"
 import { LogoutConfirmModal } from "./LogoutConfirmModal"
@@ -57,7 +58,7 @@ export function Navbar() {
 
                             {/* Logo */}
                             <Link to="/" className="flex items-center cursor-pointer">
-                                <img src={logo} alt="TechBridge" className="h-10 object-contain" />
+                                <img src={theme === "dark" ? logo : logodark} alt="TechBridge" className="h-10 object-contain" />
                             </Link>
 
                             {/* Desktop */}
