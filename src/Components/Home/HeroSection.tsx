@@ -30,7 +30,7 @@ export function HeroSection({theme}: {theme: string}) {
 
                 {/* LEFT */}
                 <div className="flex flex-col gap-10">
-                    <span className={`${isDark ? "text-neutral-400" : "text-neutral-600"} text-sm uppercase tracking-widest`}>
+                    <span className={`${isDark ? "text-neutral-400" : "text-white"} text-sm uppercase tracking-widest`}>
                         Consulenza digitale per PMI
                     </span>
 
