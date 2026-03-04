@@ -19,6 +19,7 @@ export function useLogin() {
             const res = await fetch(`${import.meta.env.VITE_USER_BASE_URL}/v1/user/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({ email, password }),
             });
 
