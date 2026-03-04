@@ -34,15 +34,16 @@ export function HeroSection({theme}: {theme: string}) {
                         Consulenza digitale per PMI
                     </span>
 
-                    <h1 className={`${isDark ? "text-white" : "text-neutral-900"} text-4xl sm:text-6xl font-semibold leading-tight`}>
+                    <h1 className={`${isDark ? "text-white" : "text-neutral-900 sm:text-neutral-900 text-white sm:text-neutral-900"} text-4xl sm:text-6xl font-semibold leading-tight`}>
                         Il tuo business
-                        <br />
-                        <span className={`${isDark ? "text-neutral-400" : "text-neutral-600"}`}>genera dati.</span>
-                        <br />
+                        <br/>
+                        <span
+                            className={`${isDark ? "text-neutral-400" : "text-neutral-600 sm:text-neutral-600 text-white sm:text-neutral-600"}`}>genera dati.</span>
+                        <br/>
                         <span className="text-3xl sm:text-5xl">sei in grado di gestirli?</span>
                     </h1>
 
-                    <p className={`${isDark ? "text-neutral-300" : "text-neutral-700"} text-lg max-w-xl`}>
+                    <p className={`${isDark ? "text-neutral-300" : "text-neutral-700 sm:text-neutral-700 text-white"} text-lg max-w-xl`}>
                         Aiutiamo le aziende a trasformare operazioni, vendite e relazioni con i clienti
                         in sistemi chiari, misurabili e automatizzati.
                         Meno caos. Più controllo.
@@ -52,7 +53,8 @@ export function HeroSection({theme}: {theme: string}) {
                         <LiquidGlassButton onClick={goToSurvey}>
                             Scopri cosa stai perdendo
                         </LiquidGlassButton>
-                        <span className={`${isDark ? "text-neutral-400" : "text-neutral-500"} text-sm text-center`}>
+                        <span
+                            className={`${isDark ? "text-neutral-400" : "text-neutral-500 sm:text-neutral-500 text-white"} text-sm text-center`}>
                             Analisi guidata • Nessun impegno
                         </span>
                     </div>

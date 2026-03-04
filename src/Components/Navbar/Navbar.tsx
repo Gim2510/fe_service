@@ -36,7 +36,7 @@ export function Navbar() {
         ? "bg-white/5 border-white/10 shadow-[0_8px_40px_rgba(0,0,0,0.4)]"
         : "bg-neutral-50/90 border-gray-200 shadow-[0_8px_40px_rgba(0,0,0,0.15)]"
 
-    const textColor = theme === "dark" ? "text-black" : "text-neutral-700"
+    const textColor = theme === "dark" ? "text-white" : "text-neutral-700"
     const hoverColor = theme === "dark" ? "hover:text-white" : "hover:text-black"
     const registerBtn = theme === "dark"
         ? "bg-white/10 hover:bg-white/20 border-white/20"
