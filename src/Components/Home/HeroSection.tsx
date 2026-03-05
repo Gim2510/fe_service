@@ -16,7 +16,7 @@ export function HeroSection({theme}: {theme: string}) {
     return (
         <section className="relative min-h-[100vh] flex items-center overflow-hidden sm:pt-0 pt-20">
             {/* Background */}
-            <div className={`absolute inset-0 ${isDark ? "bg-neutral-950" : "bg-gray-100"}`} />
+            <div className={`absolute inset-0 ${isDark ? "bg-neutral-950" : "bg-primary-white"}`} />
 
             {/* Globe */}
             <div className="absolute inset-0 pointer-events-none z-10">
@@ -29,8 +29,8 @@ export function HeroSection({theme}: {theme: string}) {
             <div className="relative mx-auto max-w-7xl px-8 pb-18 pt-8 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center z-10">
 
                 {/* LEFT */}
-                <div className="flex flex-col gap-10">
-                    <span className={`${isDark ? "text-neutral-400" : "text-white"} text-sm uppercase tracking-widest`}>
+                <div className="flex flex-col sm:gap-8 gap-10">
+                    <span className={`${isDark ? "text-neutral-400" : "text-black"} text-sm sm:text-base uppercase tracking-widest`}>
                         Consulenza digitale per PMI
                     </span>
 

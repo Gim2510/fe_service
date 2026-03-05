@@ -9,7 +9,7 @@ import {useTheme} from "../Context/ThemeContext.tsx";
 export function Home() {
     const {theme} = useTheme()
     return (
-        <main className="flex flex-col bg-white">
+        <main className="flex flex-col bg-primary-white">
             <HeroSection theme={theme} />
             <ProblemiSection theme={theme} />
             <DigitalMaturitySection theme={theme} />
