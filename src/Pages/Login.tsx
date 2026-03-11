@@ -90,7 +90,7 @@ export function Login() {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             <LiquidGlassButton type="submit" disabled={loading} className="mt-4">{loading ? <FallingLines
-                                color="#fff"
+                                color={theme === "dark" ? "white" : "black"}
                                 width="30"
                                 visible={true}
                                 ariaLabel="falling-circles-loading"

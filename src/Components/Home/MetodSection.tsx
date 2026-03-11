@@ -12,18 +12,18 @@ export function MetodSection({ theme }: { theme: string }) {
 
     return (
         <SectionBase theme={theme}>
-            <div className="max-w-3xl mb-24">
-                <span className={`text-sm uppercase tracking-widest ${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
+            <div className="max-w-3xl mb-24 text-center sm:text-start">
+                <span className={`text-sm uppercase tracking-widest ${isDark ? "text-neutral-400" : "text-neutral-600"} `}>
                     Metodo
                 </span>
-                <h2 className={`${isDark ? "text-white" : "text-neutral-900"} text-4xl font-semibold mt-4`}>
+                <h2 className={`${isDark ? "text-white" : "text-neutral-900"} text-4xl font-semibold mt-4 text-center sm:text-start`}>
                     Un approccio strutturato
                     <br />
                     <span className={`${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
                         orientato ai risultati concreti.
                     </span>
                 </h2>
-                <p className={`${isDark ? "text-neutral-400" : "text-neutral-700"} mt-6 text-lg`}>
+                <p className={`${isDark ? "text-neutral-400" : "text-neutral-700"} mt-6 text-lg text-center sm:text-start`}>
                     Ogni progetto segue...
                 </p>
             </div>
@@ -35,7 +35,7 @@ export function MetodSection({ theme }: { theme: string }) {
                         theme={theme}
                         className={`p-10 ${isDark ? "" : "bg-white/5 border-black/10"}`}
                     >
-                        <div className={`${isDark ? "text-white/10" : "text-black/10"} text-5xl font-semibold mb-6`}>
+                        <div className={`${isDark ? "text-white/10" : "text-black/30"} text-5xl font-semibold mb-6`}>
                             {item.step}
                         </div>
                         <h3 className={`${isDark ? "text-white" : "text-neutral-900"} text-xl font-medium mb-4`}>

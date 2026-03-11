@@ -1,6 +1,7 @@
 import { UserRoles } from "../../types/userRoles";
 import type { UserType } from "../../types/userTypes";
 import { ActionCard } from "./ActionCard";
+import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
 
 type Props = {
     allUsers: UserType[];
@@ -66,9 +67,9 @@ export function AdminActionsSection({
                             <option key={u._id} value={u._id}>{u.email}</option>
                         ))}
                     </select>
-                    <button disabled={!selectedUserId} onClick={() => setShowPromoteModal(true)} className={isDark ? "glass-button" : "bg-indigo-100 text-indigo-900 hover:bg-indigo-200"}>
+                    <LiquidGlassButton variant='navbar' disabled={!selectedUserId} onClick={() => setShowPromoteModal(true)} className={isDark ? "glass-button" : "bg-indigo-100 text-indigo-900 hover:bg-indigo-200"}>
                         Promote
-                    </button>
+                    </LiquidGlassButton>
                 </ActionCard>
 
                 <ActionCard title="Delete User" theme={theme}>
@@ -78,9 +79,9 @@ export function AdminActionsSection({
                             <option key={u._id} value={u._id}>{u.email}</option>
                         ))}
                     </select>
-                    <button disabled={!selectedUserToDelete} onClick={() => setShowDeleteModal(true)} className={isDark ? "glass-button-danger" : "bg-red-100 text-red-800 hover:bg-red-200"}>
+                    <LiquidGlassButton variant='navbar' disabled={!selectedUserToDelete} onClick={() => setShowDeleteModal(true)} className={isDark ? "glass-button-danger" : "bg-red-100 text-red-800 hover:bg-red-200"}>
                         Delete
-                    </button>
+                    </LiquidGlassButton>
                     {deleteSuccess && <p className="text-green-600 text-sm mt-2">User deleted successfully</p>}
                 </ActionCard>
 
@@ -91,9 +92,9 @@ export function AdminActionsSection({
                             <option key={u._id} value={u._id}>{u.email}</option>
                         ))}
                     </select>
-                    <button disabled={!selectedUserToVip} onClick={() => setShowVipModal(true)} className={isDark ? "glass-button-success" : "bg-green-100 text-green-900 hover:bg-green-200"}>
+                    <LiquidGlassButton variant='navbar' disabled={!selectedUserToVip} onClick={() => setShowVipModal(true)} className={isDark ? "glass-button-success" : "bg-green-100 text-green-900 hover:bg-green-200"}>
                         Upgrade
-                    </button>
+                    </LiquidGlassButton>
                     {vipSuccess && <p className="text-green-600 text-sm mt-2">User upgraded successfully</p>}
                 </ActionCard>
 

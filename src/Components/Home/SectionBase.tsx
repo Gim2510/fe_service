@@ -20,7 +20,7 @@ export function SectionBase({ children, theme }: { children: ReactNode; theme: s
                     backgroundSize: "32px 32px",
                 }}
             />
-            <div className="relative mx-auto max-w-7xl px-8 py-32">
+            <div className="relative mx-auto max-w-7xl px-8 py-12 sm:py-32">
                 {children}
             </div>
         </section>

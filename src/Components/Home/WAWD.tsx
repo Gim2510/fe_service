@@ -27,16 +27,16 @@ export function WAWD({ theme }: { theme: string }) {
                 </GlassCard>
 
                 <div className="flex flex-col gap-6">
-                    <h2 className={`${isDark ? "text-white" : "text-neutral-900"} text-3xl font-semibold leading-tight`}>
+                    <h2 className={`${isDark ? "text-white" : "text-neutral-900"} text-center sm:text-start text-3xl font-semibold leading-tight`}>
                         Soluzioni digitali progettate intorno
                         ai tuoi processi reali
                     </h2>
 
-                    <p className={`${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
+                    <p className={`${isDark ? "text-neutral-400" : "text-neutral-600"} text-center sm:text-start`}>
                         Ogni azienda ha flussi...
                     </p>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 sm:pl-0 pl-10">
                         {punti.map((item) => (
                             <div key={item} className={`flex items-start gap-3 text-sm ${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
                                 <span className="mt-1 h-1.5 w-1.5 rounded-full bg-indigo-400"></span>

@@ -7,15 +7,13 @@ export function useGenerateSurveyReport(surveyId: string) {
     const [success, setSuccess] = useState(false)
     const { token } = useAuth();
 
-    const to = import.meta.env.VITE_SURVEY_REPORT_TO_EMAIL
-
     const generateReport = async () => {
         setLoading(true)
         setError(null)
 
         try {
             const res = await fetch(
-                `${import.meta.env.VITE_REPORT_BASE_URL}/v1/report/generate_report/${surveyId}/${to}`,
+                `${import.meta.env.VITE_REPORT_BASE_URL}/v1/report/generate_report/${surveyId}`,
                 {
                     method: "GET",
                     headers: {

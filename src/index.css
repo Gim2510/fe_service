@@ -41,3 +41,40 @@ html, body {
     @apply px-6 py-3 rounded-xl bg-green-400 text-black font-medium
     transition hover:scale-105 active:scale-95 disabled:opacity-30;
 }
+
+/* Scrollbar per container orizzontale */
+.scrollbar-theme {
+    overflow-x: auto;
+    scrollbar-width: thin;           /* Firefox */
+    scrollbar-color: #c0c0c0 #f0f0f0; /* thumb track per Firefox */
+}
+
+/* Webkit (Chrome, Edge, Safari) */
+.scrollbar-theme::-webkit-scrollbar {
+    height: 6px;                     /* altezza scrollbar orizzontale */
+}
+
+.scrollbar-theme::-webkit-scrollbar-track {
+    background: #f0f0f0;             /* colore dello sfondo della track */
+    border-radius: 3px;
+}
+
+.scrollbar-theme::-webkit-scrollbar-thumb {
+    background-color: #c0c0c0;       /* colore del pollice */
+    border-radius: 3px;
+    border: 2px solid #f0f0f0;       /* bordo per dare effetto "sottile" */
+}
+
+/* Variante scura */
+.dark .scrollbar-theme {
+    scrollbar-color: #555 #2a2a2a;   /* Firefox */
+}
+
+.dark .scrollbar-theme::-webkit-scrollbar-track {
+    background: #2a2a2a;
+}
+
+.dark .scrollbar-theme::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border: 2px solid #2a2a2a;
+}

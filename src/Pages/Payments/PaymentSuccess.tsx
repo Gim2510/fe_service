@@ -2,10 +2,13 @@ import { useNavigate } from "react-router-dom";
 import {LiquidGlassButton} from "../../Components/Buttons/LiquidGlassButton.tsx";
 import {usePremium} from "../../Context/PremiumContext.tsx";
 import {useEffect} from "react";
+import {useTheme} from "../../Context/ThemeContext.tsx";
 
 export function PaymentSuccess() {
+    const {theme} = useTheme()
     const navigate = useNavigate();
     const { refreshPremium } = usePremium();
+    const isDark = theme === "dark";
 
     useEffect(() => {
         refreshPremium();
@@ -16,7 +19,7 @@ export function PaymentSuccess() {
     };
 
     return (
-        <main className="relative min-h-screen bg-neutral-950 flex items-center justify-center rounded-2xl overflow-hidden py-32">
+        <main className={`relative min-h-screen ${isDark ? "bg-neutral-950" : "bg-primary-white"} flex items-center justify-center rounded-2xl overflow-hidden py-32`}>
 
             {/* Background */}
             <div className="absolute inset-0 bg-white/5 backdrop-blur-[80px] pointer-events-none" />
@@ -24,18 +27,18 @@ export function PaymentSuccess() {
             <div className="absolute -bottom-60 -right-60 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-blue-400/20 via-indigo-400/20 to-purple-400/20 blur-3xl opacity-30" />
 
             {/* Content */}
-            <section className="relative z-10 max-w-3xl text-center px-8 sm:px-16 sm:py-16 py-8 bg-white/5 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-xl space-y-10">
+            <section className={`relative z-10 max-w-3xl text-center px-8 sm:px-16 sm:py-16 py-8 ${isDark ? "bg-white/5" : "bg-white"} backdrop-blur-2xl rounded-3xl border border-white/10 shadow-xl space-y-10`}>
 
                 {/* Success Icon */}
-                <div className="mx-auto text-white w-24 h-24 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-lg ring-2 ring-emerald-400/40 text-6xl font-bold animate-pulse">
+                <div className={`mx-auto ${isDark ? "text-white" : "text-black"} w-24 h-24 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-lg ring-2 ring-emerald-400/40 text-6xl font-bold animate-pulse`}>
                     ✓
                 </div>
 
-                <h2 className="text-4xl md:text-5xl font-semibold text-white leading-tight">
+                <h2 className={`text-4xl md:text-5xl font-semibold ${isDark ? "text-white" : "text-black"} leading-tight`}>
                     Benvenuto in Premium
                 </h2>
 
-                <div className="space-y-4 text-neutral-300">
+                <div className={`space-y-4 ${isDark ? "text-white" : "text-black"}`}>
                     <p>
                         Il pagamento è stato completato con successo.
                     </p>
@@ -46,7 +49,7 @@ export function PaymentSuccess() {
 
                 <div className="flex justify-center mt-6">
                     <LiquidGlassButton
-                        onClick={handleGoToDashboard}
+                        onClick={handleGoToDashboard} className='bg-white/60'
                     >
                         Vai alla Dashboard
                     </LiquidGlassButton>

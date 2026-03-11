@@ -40,28 +40,28 @@ export function CTASection({ theme }: { theme: string }) {
                 <div className={`mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6
                                 text-sm ${isDark ? "text-neutral-400" : "text-gray-500"} max-w-3xl`}>
                     <div className="flex justify-center gap-2">
-                        <span className={`font-medium ${isDark ? "text-white" : "text-gray-800"}`}>✓</span>
+                        <span className={`font-medium ${isDark ? "text-white" : "text-black"}`}>✓</span>
                         Analisi strutturata
                     </div>
                     <div className="flex justify-center gap-2">
-                        <span className={`font-medium ${isDark ? "text-white" : "text-gray-800"}`}>✓</span>
+                        <span className={`font-medium ${isDark ? "text-white" : "text-black"}`}>✓</span>
                         Nessun impegno
                     </div>
                     <div className="flex justify-center gap-2">
-                        <span className={`font-medium ${isDark ? "text-white" : "text-gray-800"}`}>✓</span>
+                        <span className={`font-medium ${isDark ? "text-white" : "text-black"}`}>✓</span>
                         Risultati immediati
                     </div>
                 </div>
 
                 {/* CTA */}
                 <div className="mt-14">
-                    <LiquidGlassButton onClick={goToSurvey}>
+                    <LiquidGlassButton onClick={goToSurvey} className={` ${!isDark ? `!bg-white/90 sm:bg-transparent !border-black/20 shadow-lg` : ``}`}>
                         Avvia l’analisi strategica
                     </LiquidGlassButton>
                 </div>
 
                 {/* Trust reinforcement */}
-                <p className={`${isDark ? "text-neutral-400" : "text-gray-400"} mt-6 text-xs`}>
+                <p className={`${isDark ? "text-neutral-400" : "text-black"} mt-6 text-xs`}>
                     Tempo stimato: 3–5 minuti • Nessuna registrazione richiesta
                 </p>
             </div>

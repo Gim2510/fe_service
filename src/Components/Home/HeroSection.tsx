@@ -14,13 +14,13 @@ export function HeroSection({theme}: {theme: string}) {
     const isDark = theme === "dark";
 
     return (
-        <section className="relative min-h-[100vh] flex items-center overflow-hidden sm:pt-0 pt-20">
+        <section className="relative min-h-[100vh] flex items-center overflow-hidden sm:pt-0 pt-20 overflow-auto">
             {/* Background */}
             <div className={`absolute inset-0 ${isDark ? "bg-neutral-950" : "bg-primary-white"}`} />
 
             {/* Globe */}
-            <div className="absolute inset-0 pointer-events-none z-10">
-               <HeroGlobeDark/>
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-10">
+                <HeroGlobeDark/>
             </div>
 
             {/* Grid Overlay */}
@@ -30,7 +30,8 @@ export function HeroSection({theme}: {theme: string}) {
 
                 {/* LEFT */}
                 <div className="flex flex-col sm:gap-8 gap-10">
-                    <span className={`${isDark ? "text-neutral-400" : "text-black"} text-sm sm:text-base uppercase tracking-widest`}>
+                    <span
+                        className={`${isDark ? "text-neutral-400" : "text-white sm:text-black"} text-sm sm:text-base uppercase tracking-widest`}>
                         Consulenza digitale per PMI
                     </span>
 
@@ -50,7 +51,8 @@ export function HeroSection({theme}: {theme: string}) {
                     </p>
 
                     <div className="flex items-center sm:gap-8 gap-4">
-                        <LiquidGlassButton onClick={goToSurvey}>
+                        <LiquidGlassButton onClick={goToSurvey}
+                                           className={` ${!isDark ? `!bg-white/90 sm:bg-transparent !border-black/20 shadow-lg` : ``}`}>
                             Scopri cosa stai perdendo
                         </LiquidGlassButton>
                         <span
@@ -68,7 +70,7 @@ export function HeroSection({theme}: {theme: string}) {
                         } sm:py-8 sm:px-10 shadow-2xl backdrop-blur opacity-100 sm:opacity-20 sm:hover:opacity-100
                             transition-all duration-700 ease-out cursor-pointer`}
                     >
-                        <HeroOperationalSnapshot theme={theme} />
+                        <HeroOperationalSnapshot theme={theme}/>
                     </div>
                 </div>
             </div>

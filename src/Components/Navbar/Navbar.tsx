@@ -41,7 +41,7 @@ export function Navbar() {
     const hoverColor = theme === "dark" ? "hover:text-white" : "hover:text-black"
     const registerBtn = theme === "dark"
         ? "bg-white/10 hover:bg-white/20 border-white/20"
-        : "bg-neutral-100 hover:bg-neutral-200 border-gray-200"
+        : "bg-white hover:bg-green-400/30 border-gray-200 hover:text-blacks shadow-2xl"
     const mobileDrawerBg = theme === "dark"
         ? "bg-neutral-950/90 border-white/10"
         : "bg-neutral-50/95 border-gray-200"
@@ -58,7 +58,7 @@ export function Navbar() {
 
                             {/* Logo */}
                             <Link to="/" className="flex items-center cursor-pointer">
-                                <img src={theme === "dark" ? logo : logodark} alt="TechBridge" className="h-10 object-contain" />
+                                <img src={theme === "dark" ? logo : logodark} alt="TechBridge" className="h-15 w-22 object-contain" />
                             </Link>
 
                             {/* Desktop */}
@@ -90,7 +90,7 @@ export function Navbar() {
                                         <NavItem theme={theme} to="/login" label="Login" />
                                         <Link
                                             to="/register"
-                                            className={`cursor-pointer px-5 py-2 rounded-xl border backdrop-blur-md transition ${registerBtn}`}
+                                            className={`cursor-pointer px-5 py-2 rounded-xl border backdrop-blur-md transition active:scale-90 ${registerBtn}`}
                                         >
                                             Inizia ora
                                         </Link>
@@ -220,6 +220,7 @@ export function Navbar() {
                 open={showLogoutModal}
                 onConfirm={handleLogout}
                 onCancel={() => setShowLogoutModal(false)}
+                theme={theme}
             />
         </>
     )

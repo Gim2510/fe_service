@@ -1,10 +1,13 @@
-import {type ChangeEvent, type ChangeEventHandler, type FormEvent, useEffect, useRef, useState} from "react"
+import {type ChangeEvent, type ChangeEventHandler, type SubmitEventHandler, useEffect, useRef, useState} from "react"
 import { useNavigate } from "react-router-dom"
 import { useRegister } from "../hooks/useRegister"
 import { LiquidGlassButton } from "../Components/Buttons/LiquidGlassButton.tsx"
 import { CompanyRoles } from "../types/CompanyRoles.ts"
 import { FallingLines } from "react-loader-spinner"
 import { useTheme } from "../Context/ThemeContext.tsx"
+import zxcvbn from "zxcvbn"
+import {getStrengthColor, getStrengthText} from "../utils/colorFunctions.ts";
+import { Check, X } from "lucide-react"
 
 export function Register() {
     const { theme } = useTheme()
@@ -26,11 +29,15 @@ export function Register() {
         family_name: "",
         email: "",
         password: "",
+        confirmPassword: "",
         fiscal_code: "",
         partita_iva: "",
         company_name: "",
         company_role: CompanyRoles.Employee,
     })
+
+    const passwordScore = zxcvbn(form.password).score
+    const passwordsMatch = form.password === form.confirmPassword
 
     useEffect(() => {
         if (success && successRef.current) {
@@ -45,13 +52,23 @@ export function Register() {
         setForm(prev => ({ ...prev, [name]: value }))
     }
 
-    const handleSubmit = async (e: FormEvent) => {
+    const handleSubmit: SubmitEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault()
+
+        if (!passwordsMatch) {
+            return
+        }
+
+        if (passwordScore < 2) {
+            return
+        }
+
         try {
             await register(form)
             setTimeout(() => navigate("/login"), 5000)
         } catch (_) {}
     }
+
 
     return (
         <main className="relative min-h-screen flex items-center overflow-hidden">
@@ -75,13 +92,13 @@ export function Register() {
             />
 
             <div
-                className={`relative z-10 mx-auto w-full max-w-6xl px-8 py-24 grid lg:grid-cols-2 gap-20 items-center ${
+                className={`relative z-10 mx-auto w-full max-w-6xl px-8 py-24 grid lg:grid-cols-2 gap-20 items-start ${
                     theme === "dark" ? "text-white" : "text-black"
                 }`}
             >
 
                 {/* LEFT COPY */}
-                <div className="flex flex-col gap-8">
+                <div className="flex flex-col gap-8 mt-5">
                     <span
                         className={`text-sm uppercase tracking-widest ${
                             theme === "dark" ? "text-neutral-400" : "text-black"
@@ -137,7 +154,8 @@ export function Register() {
                             </div>
 
                             {error && (
-                                <div className="text-sm px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400">
+                                <div
+                                    className="text-sm px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400">
                                     {error}
                                 </div>
                             )}
@@ -155,13 +173,86 @@ export function Register() {
                             )}
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                <Input theme={theme} label="Nome" name="given_name" value={form.given_name} onChange={handleChange} />
-                                <Input theme={theme} label="Cognome" name="family_name" value={form.family_name} onChange={handleChange} />
+                                <Input theme={theme} label="Nome" name="given_name" value={form.given_name}
+                                       onChange={handleChange}/>
+                                <Input theme={theme} label="Cognome" name="family_name" value={form.family_name}
+                                       onChange={handleChange}/>
                             </div>
 
-                            <Input theme={theme} label="Email" name="email" type="email" value={form.email} onChange={handleChange} />
-                            <Input theme={theme} label="Password" name="password" type="password" value={form.password} onChange={handleChange} />
-                            <Input theme={theme} label="Company name" name="company_name" value={form.company_name} onChange={handleChange} />
+                            <Input theme={theme} label="Email" name="email" type="email" value={form.email}
+                                   onChange={handleChange}/>
+                            <div className="flex flex-col gap-2">
+                                <Input
+                                    theme={theme}
+                                    label="Password"
+                                    name="password"
+                                    type="password"
+                                    value={form.password}
+                                    onChange={handleChange}
+                                />
+
+                                {form.password && (
+                                    <div className="flex flex-col gap-1">
+
+                                        <div className="w-full h-2 rounded-full bg-neutral-700/30 overflow-hidden">
+                                            <div
+                                                className={`h-full transition-all duration-300 ${getStrengthColor(passwordScore)}`}
+                                                style={{width: `${(passwordScore + 1) * 20}%`}}
+                                            />
+                                        </div>
+
+                                        <span className="text-xs text-neutral-400">
+                                            Sicurezza password: {getStrengthText(passwordScore)}
+                                        </span>
+
+                                    </div>
+                                )}
+                            </div>
+                            <div className="flex flex-col gap-2 relative">
+
+                                <label className="text-sm text-neutral-400">Conferma password</label>
+
+                                <div className="relative">
+
+                                    <input
+                                        name="confirmPassword"
+                                        type="password"
+                                        value={form.confirmPassword}
+                                        onChange={handleChange}
+                                        required
+                                        className={`w-full px-4 py-3 pr-10 rounded-xl border outline-none transition
+                ${
+                                            theme === "dark"
+                                                ? "bg-neutral-800 text-white"
+                                                : "bg-white text-black"
+                                        }
+                ${
+                                            form.confirmPassword
+                                                ? passwordsMatch
+                                                    ? "border-green-500"
+                                                    : "border-red-500"
+                                                : theme === "dark"
+                                                    ? "border-neutral-700"
+                                                    : "border-neutral-300"
+                                        }
+            `}
+                                    />
+
+                                    {form.confirmPassword && (
+                                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                                            {passwordsMatch ? (
+                                                <Check className="w-5 h-5 text-green-500"/>
+                                            ) : (
+                                                <X className="w-5 h-5 text-red-500"/>
+                                            )}
+                                        </div>
+                                    )}
+
+                                </div>
+
+                            </div>
+                            <Input theme={theme} label="Company name" name="company_name" value={form.company_name}
+                                   onChange={handleChange}/>
 
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm text-neutral-400">Company role</label>
@@ -183,12 +274,14 @@ export function Register() {
                                 </select>
                             </div>
 
-                            <Input theme={theme} label="Codice fiscale" name="fiscal_code" value={form.fiscal_code.toUpperCase()} onChange={handleChange} />
-                            <Input theme={theme} label="Partita IVA" name="partita_iva" value={form.partita_iva} onChange={handleChange} />
+                            <Input theme={theme} label="Codice fiscale" name="fiscal_code"
+                                   value={form.fiscal_code.toUpperCase()} onChange={handleChange}/>
+                            <Input theme={theme} label="Partita IVA" name="partita_iva" value={form.partita_iva}
+                                   onChange={handleChange}/>
 
-                            <LiquidGlassButton type="submit" disabled={loading}>
+                            <LiquidGlassButton type="submit" disabled={loading || !passwordsMatch || passwordScore < 2} className='mt-5'>
                                 {loading ? (
-                                    <FallingLines width="30" color="#fff" visible />
+                                    <FallingLines width="30" color="#fff" visible/>
                                 ) : (
                                     "Crea account"
                                 )}
@@ -219,7 +312,14 @@ export function Register() {
 }
 
 /* Input */
-function Input({label, name, type = "text", value, onChange, theme,}: { label: string, name: string, type?: string, value: string, onChange: ChangeEventHandler<HTMLInputElement>, theme: string }) {
+function Input({label, name, type = "text", value, onChange, theme,}: {
+    label: string,
+    name: string,
+    type?: string,
+    value: string,
+    onChange: ChangeEventHandler<HTMLInputElement>,
+    theme: string
+}) {
     return (
         <div className="flex flex-col gap-2">
             <label className="text-sm text-neutral-400">{label}</label>

@@ -4,12 +4,17 @@ import { useUser } from "../hooks/useUser";
 import { useAuth } from "../auth/AuthContext.tsx";
 import { FallingLines } from "react-loader-spinner";
 import { useTheme } from "../Context/ThemeContext"; // <- importiamo il tema
+import { useSetUserImage } from "../hooks/useSetUserImage";
+import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
 
 export function UserDashboard() {
+    const {setUserImage, loading: uploading} = useSetUserImage();
     const { theme } = useTheme(); // light / dark
     const { user, loading, error, refetch } = useUser();
-    const { logout } = useAuth();
+    const { id, logout, token } = useAuth();
     const navigate = useNavigate();
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const [showImageModal, setShowImageModal] = useState(false);
 
     const [activeTab, setActiveTab] = useState("account");
 
@@ -70,9 +75,71 @@ export function UserDashboard() {
                     <h1 className="text-4xl font-semibold mb-2">{textPrimary && "Area personale"}</h1>
                     <p className={`${textSecondary}`}>Panoramica completa del tuo account e delle attività collegate.</p>
                 </section>
+                {/* USER IMAGE */}
+                <section className={`${bgSection} border rounded-3xl p-10`}>
+                    <h2 className={`text-2xl font-medium mb-8 ${textPrimary}`}>Immagine profilo</h2>
+
+                    <div className="flex items-center gap-8">
+
+                        {/* preview */}
+                        <div className="w-28 h-28 rounded-full overflow-hidden border border-neutral-700 flex items-center justify-center bg-neutral-800">
+                            {selectedImage ? (
+                                <img alt='user_image' src={selectedImage} className="w-full h-full object-cover"/>
+                            ) : user.user_image ? (
+                                <img alt='user_image' src={user.user_image} className="w-full h-full object-cover"/>
+                            ) : (
+                                <span className="text-sm text-neutral-400">No image</span>
+                            )}
+                        </div>
+
+                        {/* upload */}
+                        <div className="space-y-3">
+                            <label
+                                className={`inline-flex items-center gap-3 px-5 py-3 rounded-xl border border-neutral-700 hover:border-neutral-500 transition cursor-pointer ${theme === "dark" ? "bg-neutral-900/60 hover:bg-neutral-900" : " bg-white/40 hover:bg-white hover:scale-105"} text-sm`}>
+
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="w-5 h-5 opacity-80"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                          d="M3 15a4 4 0 014-4h1m4-4l4 4m0 0l-4 4m4-4H7"
+                                    />
+                                </svg>
+
+                                <span>Carica immagine</span>
+
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    className="hidden"
+                                    onChange={(e) => {
+                                        const file = e.target.files?.[0];
+                                        if (!file) return;
+
+                                        const reader = new FileReader();
+                                        reader.onloadend = () => {
+                                            setSelectedImage(reader.result as string);
+                                            setShowImageModal(true);
+                                        };
+                                        reader.readAsDataURL(file);
+                                    }}
+                                />
+                            </label>
+
+                            <p className="text-xs text-neutral-500">
+                                PNG, JPG – max 2MB
+                            </p>
+                        </div>
+
+                    </div>
+                </section>
 
                 {/* TAB NAVIGATION */}
-                <div className={`flex space-x-4 overflow-x-auto border-b mb-6 ${theme === "dark" ? "border-neutral-800" : "border-gray-300"}`}>
+                <div
+                    className={`flex space-x-4 overflow-x-auto border-b mb-6 ${theme === "dark" ? "border-neutral-800" : "border-gray-300"}`}>
                     {tabs.map(tab => (
                         <button
                             key={tab.id}
@@ -88,9 +155,10 @@ export function UserDashboard() {
                 {/* TAB CONTENT */}
                 <div className="space-y-8">
                     {activeTab === "account" && (
-                        <Section title="Informazioni account" bgSection={bgSection} textSecondary={textSecondary} textPrimary={textPrimary}>
+                        <Section title="Informazioni account" bgSection={bgSection} textSecondary={textSecondary}
+                                 textPrimary={textPrimary}>
                             <div className="grid md:grid-cols-3 gap-8 text-sm">
-                                <InfoRow label="Nome" value={user.given_name} highlightColor={highlightColor} />
+                                <InfoRow label="Nome" value={user.given_name} highlightColor={highlightColor}/>
                                 <InfoRow label="Cognome" value={user.family_name} highlightColor={highlightColor} />
                                 <InfoRow label="Email" value={user.email} highlightColor={highlightColor} />
                                 <InfoRow label="Codice fiscale" value={user.fiscal_code} highlightColor={highlightColor} />
@@ -150,6 +218,62 @@ export function UserDashboard() {
                     )}
                 </div>
             </div>
+            {showImageModal && selectedImage && (
+                <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+
+                    <div className={`${bgSection} p-8 rounded-2xl w-full max-w-md space-y-6`}>
+
+                        <h2 className={`text-xl font-semibold ${textPrimary}`}>
+                            Conferma immagine profilo
+                        </h2>
+
+                        <img
+                            alt='user_'
+                            src={selectedImage}
+                            className="w-40 h-40 rounded-full object-cover mx-auto"
+                        />
+
+                        <p className={`text-sm text-center ${textSecondary}`}>
+                            Vuoi impostare questa immagine come foto profilo?
+                        </p>
+
+                        <div className="flex justify-end gap-4 pt-4">
+
+                            <LiquidGlassButton
+                                variant='navbar'
+                                className='!bg-white !text-black'
+                                onClick={() => {
+                                    setShowImageModal(false);
+                                    setSelectedImage(null);
+                                }}
+                            >
+                                Annulla
+                            </LiquidGlassButton>
+
+                            <LiquidGlassButton
+                                onClick={async () => {
+                                    await setUserImage(id, selectedImage, token);
+                                    setShowImageModal(false);
+                                    setSelectedImage(null);
+                                    refetch();
+                                }}
+                                disabled={uploading}
+                                variant='navbar'
+                                className='!bg-white !text-black min-w-30'
+                            >
+                                {uploading ? <FallingLines
+                                    color={theme === "dark" ? "#fff" : "#000"}
+                                    width="15"
+                                    visible={true}
+                                    ariaLabel="falling-circles-loading"
+                                /> : "Conferma"}
+                            </LiquidGlassButton>
+
+                        </div>
+                    </div>
+
+                </div>
+            )}
         </main>
     );
 }

@@ -8,7 +8,7 @@ import type { UserType } from "../../types/userTypes";
 import {AdminActionsSection} from "./AdminActionsSection.tsx";
 import {DeleteUserModal} from "./DeleteUserModal.tsx";
 import {SetUserToVipModal} from "./SetUserToVipModal.tsx";
-import {PromoteUserModal} from "./PromotoUserModal.tsx";
+import {PromoteUserModal} from "./PromoteUserModal.tsx";
 
 type Props = {
     allUsers: UserType[];
@@ -104,6 +104,7 @@ export function UserManagementPanel({ allUsers, refreshUsers, theme }: Props) {
                         onConfirm={() => handleConfirmSetAdmin(setLoadingPromote)}
                         loading={loadingPromote}
                         onClose={() => setShowPromoteModal(false)}
+                        theme={theme}
                     />
                 )}
 
@@ -112,6 +113,7 @@ export function UserManagementPanel({ allUsers, refreshUsers, theme }: Props) {
                         setShowDeleteUserModal={setShowDeleteModal}
                         handleConfirmDeleteUser={() => handleConfirmDeleteUser(setLoadingDeleteState)}
                         loadingDeleteUser={loadingDeleteState}
+                        theme={theme}
                     />
                 )}
 
@@ -120,6 +122,7 @@ export function UserManagementPanel({ allUsers, refreshUsers, theme }: Props) {
                         setShowUpdateUserToVipModal={setShowVipModal}
                         handleUpdateUserToVip={() => handleConfirmVip(setLoadingVipState)}
                         loadingUpdateToVip={loadingVipState}
+                        theme={theme}
                     />
                 )}
             </div>

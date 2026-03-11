@@ -120,11 +120,12 @@ export function SurveyStart() {
 
                 {emailVer ? (
                     <LiquidGlassButton
+                        className='min-w-60'
                         onClick={() => setShouldInit(true)}
                         disabled={initLoading}
                     >
                         {initLoading ? (
-                            <FallingLines width="50" color="#fff" visible />
+                            <FallingLines width="30" color="#fff" visible />
                         ) : (
                             "Vai al questionario"
                         )}
@@ -133,10 +134,6 @@ export function SurveyStart() {
                     <LiquidGlassButton disabled>
                         Verifica la tua email
                     </LiquidGlassButton>
-                )}
-
-                {initLoading && (
-                    <FallingLines width="100" color="#fff" visible />
                 )}
             </section>
         </main>

@@ -12,6 +12,7 @@ import { useTheme } from "../Context/ThemeContext.tsx"
 export function SurveyDashboard() {
     const { theme } = useTheme()
     const [openActionIndex, setOpenActionIndex] = useState<number | null>(null)
+    const [currentIndex, setCurrentIndex] = useState(0)
 
     const { survey_id } = useParams()
     const { survey, loading } = useSurvey(survey_id)
@@ -45,6 +46,15 @@ export function SurveyDashboard() {
     }
 
     const questionMap = new Map(questions.map(q => [q.id, q]))
+    const answerEntries = Object.entries(survey.answers)
+    const totalAnswers = answerEntries.length
+
+    const goNext = () => setCurrentIndex(prev => Math.min(prev + 1, totalAnswers - 1))
+    const goPrev = () => setCurrentIndex(prev => Math.max(prev - 1, 0))
+    const goTo = (index: number) => setCurrentIndex(index)
+
+    const [currentQuestionId, currentAnswer] = answerEntries[currentIndex]
+    const currentQuestion = questionMap.get(currentQuestionId)
 
     return (
         <main
@@ -52,9 +62,8 @@ export function SurveyDashboard() {
                 theme === "dark" ? "bg-neutral-950 text-white" : "bg-white text-black"
             }`}
         >
-
             {/* HERO */}
-            <section className="relative px-6 pt-24 pb-14">
+            <section className="relative px-6 pt-24 sm:pt-32 pb-14">
                 <div className="mx-auto max-w-6xl flex flex-col gap-12">
                     <span
                         className={`text-xs uppercase tracking-widest ${
@@ -86,9 +95,7 @@ export function SurveyDashboard() {
                                     : "bg-black/[0.03] border-black/10"
                             }`}
                         >
-                            <div className="text-6xl font-semibold">
-                                {survey.score}%
-                            </div>
+                            <div className="text-6xl font-semibold">{survey.score}%</div>
                             <div
                                 className={`text-sm mt-3 ${
                                     theme === "dark" ? "text-white/50" : "text-black/50"
@@ -108,9 +115,7 @@ export function SurveyDashboard() {
                 }`}
             >
                 <div className="mx-auto max-w-5xl">
-                    <h2 className="text-2xl font-semibold mb-12">
-                        Priorità operative
-                    </h2>
+                    <h2 className="text-2xl font-semibold mb-12">Priorità operative</h2>
 
                     <div className="space-y-8">
                         {Object.entries(actionDetails).map(([indexStr, detail]) => {
@@ -119,7 +124,6 @@ export function SurveyDashboard() {
 
                             return (
                                 <div key={index} className="space-y-4">
-
                                     {/* HEADER */}
                                     <div
                                         className={`rounded-3xl p-8 border ${
@@ -239,7 +243,6 @@ export function SurveyDashboard() {
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             )
                         })}
@@ -247,52 +250,68 @@ export function SurveyDashboard() {
                 </div>
             </section>
 
-            {/* RESPONSE DETAIL */}
+            {/* STEP-BY-STEP RESPONSES */}
             <section className="px-6 py-20">
-                <div className="mx-auto max-w-4xl space-y-8">
+                <div className="mx-auto max-w-4xl">
                     <h2
-                        className={`text-xl font-semibold ${
+                        className={`text-xl font-semibold mb-6 ${
                             theme === "dark" ? "text-white/60" : "text-black/60"
                         }`}
                     >
                         Dettaglio risposte
                     </h2>
 
-                    {Object.entries(survey.answers).map(([questionId, answer], index) => {
-                        const question = questionMap.get(questionId)
-
-                        return (
-                            <div
-                                key={questionId}
-                                className={`rounded-3xl p-8 border ${
-                                    theme === "dark"
-                                        ? "bg-white/[0.03] border-white/5"
-                                        : "bg-black/[0.02] border-black/5"
+                    {/* Tabs */}
+                    <div className="flex gap-2 overflow-auto mb-6 py-4 " style={{
+                        scrollbarWidth: "thin", // per Firefox
+                        scrollbarColor:
+                            theme === "dark" ? "#555 #2a2a2a" : "#c0c0c0 #f0f0f0", // thumb track
+                    }}>
+                        {answerEntries.map(([qid, _], idx) => (
+                            <LiquidGlassButton
+                                variant="navbar"
+                                key={qid}
+                                onClick={() => goTo(idx)}
+                                className={`${
+                                    currentIndex === idx ? "!bg-black text-white" : `bg-transparent text-black ${theme === "dark" ? "text-white" : "text-black"}`
                                 }`}
                             >
-                                <div className="flex gap-6 mb-4">
-                                    <span
-                                        className={`font-mono text-xs ${
-                                            theme === "dark"
-                                                ? "text-white/40"
-                                                : "text-black/40"
-                                        }`}
-                                    >
-                                        {String(index + 1).padStart(2, "0")}
-                                    </span>
-                                    <h3 className="text-lg">
-                                        {question?.text.it ?? "Domanda non disponibile"}
-                                    </h3>
-                                </div>
+                                {idx + 1}
+                            </LiquidGlassButton>
+                        ))}
+                    </div>
 
-                                <div
-                                    className={theme === "dark" ? "text-white/70" : "text-black/70"}
-                                >
-                                    {formatAnswer(answer)}
-                                </div>
-                            </div>
-                        )
-                    })}
+                    {/* Current Answer */}
+                    <div
+                        className={`rounded-3xl p-8 border ${
+                            theme === "dark" ? "bg-white/[0.03] border-white/5" : "bg-black/[0.02] border-black/5"
+                        }`}
+                    >
+                        <h3 className="text-lg mb-4">
+                            {currentQuestion?.text.it ?? "Domanda non disponibile"}
+                        </h3>
+                        <div className={theme === "dark" ? "text-white/70" : "text-black/70"}>
+                            {formatAnswer(currentAnswer)}
+                        </div>
+                    </div>
+
+                    {/* Navigation */}
+                    <div className="flex justify-between mt-6">
+                        <LiquidGlassButton
+                            onClick={goPrev}
+                            variant="navbar"
+                            disabled={currentIndex === 0}
+                        >
+                            ← Precedente
+                        </LiquidGlassButton>
+                        <LiquidGlassButton
+                            onClick={goNext}
+                            variant="navbar"
+                            disabled={currentIndex === totalAnswers - 1}
+                        >
+                            Successivo →
+                        </LiquidGlassButton>
+                    </div>
                 </div>
             </section>
 
@@ -300,22 +319,18 @@ export function SurveyDashboard() {
             <section className="px-6 py-32 text-center">
                 <div
                     className={`mx-auto max-w-4xl rounded-[40px] px-12 py-16 border ${
-                        theme === "dark"
-                            ? "bg-white/[0.05] border-white/10"
-                            : "bg-black/[0.03] border-black/10"
+                        theme === "dark" ? "bg-white/[0.05] border-white/10" : "bg-black/[0.03] border-black/10"
                     }`}
                 >
                     <h2 className="text-3xl font-semibold mb-4">
                         Vuoi migliorare questo punteggio?
                     </h2>
                     <p
-                        className={`mb-10 ${
-                            theme === "dark" ? "text-white/60" : "text-black/60"
-                        }`}
+                        className={`mb-10 ${theme === "dark" ? "text-white/60" : "text-black/60"}`}
                     >
                         Costruiamo una roadmap operativa personalizzata.
                     </p>
-                    <LiquidGlassButton onClick={handleBookAppointment}>
+                    <LiquidGlassButton onClick={handleBookAppointment} className={`${theme === "dark" ? "" : "!bg-white"}`}>
                         Richiedi consulenza strategica
                     </LiquidGlassButton>
                 </div>
@@ -340,7 +355,6 @@ export function SurveyDashboard() {
                     {resetting ? "Resetting..." : "Reset Survey"}
                 </button>
             </section>
-
         </main>
     )
 }
