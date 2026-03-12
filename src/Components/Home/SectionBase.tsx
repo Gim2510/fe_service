@@ -6,7 +6,7 @@ export function SectionBase({ children, theme }: { children: ReactNode; theme: s
     return (
         <section
             className={`relative overflow-hidden ${
-                isDark ? "bg-neutral-950 text-white" : "bg-white text-neutral-900"
+                isDark ? "bg-neutral-950 text-white" : "bg-primary-white text-neutral-900"
             }`}
         >
             <div

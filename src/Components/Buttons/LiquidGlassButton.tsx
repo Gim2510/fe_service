@@ -10,9 +10,10 @@ interface LiquidGlassButtonProps {
     className?: string;
     type?: 'submit' | 'button';
     disabled?: boolean;
+    scale?: boolean;
 }
 
-export function LiquidGlassButton({children, onClick, to, type = 'button', variant = "default", className = "", disabled = false}: LiquidGlassButtonProps) {
+export function LiquidGlassButton({children, onClick, to, type = 'button', variant = "default", className = "", disabled = false, scale = true}: LiquidGlassButtonProps) {
     const { theme } = useTheme();
     const isDark = theme === "dark";
 
@@ -21,17 +22,20 @@ export function LiquidGlassButton({children, onClick, to, type = 'button', varia
         relative ${disabled ? "cursor-not-allowed" : "cursor-pointer"} 
         rounded-2xl text-${isDark ? "white" : "black"} 
         backdrop-blur-xl bg-${isDark ? "white/10" : "white/30"} 
-        border border-${isDark ? "white/20" : "white/40"} 
+        border ${isDark ? "border-white/20" : "border-black/30"} 
         overflow-hidden transition-all duration-300 group
     `;
 
     const sizeStyle = variant === "navbar"
-        ? "px-5 py-2 text-sm font-medium hover:scale-105"
-        : `sm:px-10 px-2 py-4 text-sm sm:text-lg font-medium ${disabled ? "" : "hover:scale-105 active:scale-95"}`;
-
+        ? `px-5 py-2 text-sm font-medium ${scale ? "hover:scale-105" : ""}`
+        : `sm:px-10 px-2 py-4 text-sm sm:text-lg font-medium ${
+            disabled ? "" : scale ? "hover:scale-105 active:scale-95" : ""
+        }`
     const glowStyle = variant === "navbar"
         ? "shadow-md"
         : `shadow-[0_8px_32px_rgba(0,0,0,${isDark ? "0.37" : "0.15"})]`;
+
+    const scaleStyle = scale === true ? "!hover:scale-100" : "!hover:scale-none"
 
     const content = (
         <>
@@ -61,7 +65,7 @@ export function LiquidGlassButton({children, onClick, to, type = 'button', varia
 
     if (to) {
         return (
-            <NavLink to={to} className={`${baseStyle} ${sizeStyle} ${glowStyle} ${className}`}>
+            <NavLink to={to} className={`${baseStyle} ${sizeStyle} ${glowStyle} ${className} ${scaleStyle}`}>
                 {content}
             </NavLink>
         );
@@ -71,7 +75,7 @@ export function LiquidGlassButton({children, onClick, to, type = 'button', varia
         <button
             disabled={disabled}
             onClick={onClick}
-            className={`${baseStyle} ${sizeStyle} ${glowStyle} ${className}`}
+            className={`${baseStyle} ${sizeStyle} ${glowStyle} ${className} ${scaleStyle}`}
             type={type}
         >
             {content}

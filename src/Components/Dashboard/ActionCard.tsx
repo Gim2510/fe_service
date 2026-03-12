@@ -6,7 +6,7 @@ export function ActionCard({title, children, theme}: { title: string; children: 
     const hover = isDark ? "hover:border-white/[0.15]" : "hover:border-gray-300";
 
     return (
-        <div className={`group relative rounded-[28px] p-8 backdrop-blur-xl transition-all duration-500 ${bg} ${hover} hover:scale-[1.02]`}>
+        <div className={`group relative rounded-[28px] p-8 backdrop-blur-xl transition-all duration-500 ${bg} ${hover}`}>
             <div className="absolute inset-0 rounded-[28px] bg-gradient-to-br from-white/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition" />
 
             <h3 className={`${isDark ? "text-white" : "text-gray-900"} text-lg font-medium mb-6`}>{title}</h3>

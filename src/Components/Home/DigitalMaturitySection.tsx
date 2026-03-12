@@ -64,7 +64,7 @@ export function DigitalMaturitySection({ theme }: { theme: string }) {
                     <GlassCard
                         theme={theme}
                         key={lvl.level}
-                        className={`p-6 ${isDark ? "" : "bg-white/5 border-black/10"}`}
+                        className={`p-6 ${isDark ? "" : "bg-white border-black/10"}`}
                     >
                         <h3 className={`${isDark ? "text-white" : "text-neutral-900"} text-xl font-semibold mb-3`}>
                             {lvl.level}
@@ -84,7 +84,7 @@ export function DigitalMaturitySection({ theme }: { theme: string }) {
             </div>
 
             {/* PESI */}
-            <GlassCard theme={theme} className={`p-10 max-w-4xl mx-auto ${isDark ? "" : "bg-white/5 border-black/10"}`}>
+            <GlassCard theme={theme} className={`p-10 max-w-4xl mx-auto ${isDark ? "" : "bg-white border-black/10"}`}>
                 <h3 className={`${isDark ? "text-white" : "text-neutral-900"} text-2xl font-semibold mb-8 text-center`}>
                     Peso dei fattori nella valutazione
                 </h3>

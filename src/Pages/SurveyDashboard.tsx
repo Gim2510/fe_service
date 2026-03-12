@@ -9,32 +9,34 @@ import { useState } from "react"
 import { actionDetails } from "../utils/actionDetails"
 import { useTheme } from "../Context/ThemeContext.tsx"
 
+type DashboardTab =
+    | "overview"
+    | "actions"
+    | "answers"
+    | "cta"
+
 export function SurveyDashboard() {
+
     const { theme } = useTheme()
-    const [openActionIndex, setOpenActionIndex] = useState<number | null>(null)
-    const [currentIndex, setCurrentIndex] = useState(0)
+    const navigate = useNavigate()
 
     const { survey_id } = useParams()
     const { survey, loading } = useSurvey(survey_id)
 
     const survey_template_id = import.meta.env.VITE_SURVEY_TEMPLATE_ID
     const { questions } = useSurveyTemplate(survey_template_id)
-    const locale: "it" | "en" = "it"
 
     const { resetSurvey, loading: resetting } = useResetSurvey()
-    const navigate = useNavigate()
 
-    const toggleAction = (index: number) => {
-        setOpenActionIndex(prev => (prev === index ? null : index))
-    }
+    const [activeTab, setActiveTab] = useState<DashboardTab>("overview")
+    const [openActionIndex, setOpenActionIndex] = useState<number | null>(null)
+    const [currentIndex, setCurrentIndex] = useState(0)
+
+    const locale: "it" | "en" = "it"
 
     if (loading || !survey) {
         return (
-            <div
-                className={`min-h-screen flex items-center justify-center ${
-                    theme === "dark" ? "bg-neutral-950" : "bg-white"
-                }`}
-            >
+            <div className={`min-h-screen flex items-center justify-center ${theme === "dark" ? "bg-neutral-950" : "bg-white"}`}>
                 <FallingLines color={theme === "dark" ? "#fff" : "#000"} width="150" visible />
             </div>
         )
@@ -45,8 +47,13 @@ export function SurveyDashboard() {
         navigate("/survey")
     }
 
+    const toggleAction = (index: number) => {
+        setOpenActionIndex(prev => (prev === index ? null : index))
+    }
+
     const questionMap = new Map(questions.map(q => [q.id, q]))
     const answerEntries = Object.entries(survey.answers)
+
     const totalAnswers = answerEntries.length
 
     const goNext = () => setCurrentIndex(prev => Math.min(prev + 1, totalAnswers - 1))
@@ -56,305 +63,331 @@ export function SurveyDashboard() {
     const [currentQuestionId, currentAnswer] = answerEntries[currentIndex]
     const currentQuestion = questionMap.get(currentQuestionId)
 
+    const isDark = theme === "dark"
+
+    const glassCard = isDark
+        ? "bg-white/[0.04] border-white/10"
+        : "bg-black/[0.03] border-black/10"
+
     return (
-        <main
-            className={`flex flex-col ${
-                theme === "dark" ? "bg-neutral-950 text-white" : "bg-white text-black"
-            }`}
-        >
+        <main className={`min-h-screen ${isDark ? "bg-neutral-950 text-white" : "bg-white text-black"}`}>
+
             {/* HERO */}
-            <section className="relative px-6 pt-24 sm:pt-32 pb-14">
-                <div className="mx-auto max-w-6xl flex flex-col gap-12">
-                    <span
-                        className={`text-xs uppercase tracking-widest ${
-                            theme === "dark" ? "text-white/40" : "text-black/40"
-                        }`}
-                    >
-                        Digital Maturity Dashboard
-                    </span>
 
-                    <div className="flex flex-col lg:flex-row lg:justify-between gap-12">
-                        <div>
-                            <h1 className="text-4xl font-semibold">
-                                Stato digitale attuale
-                            </h1>
-                            <p
-                                className={`mt-4 max-w-xl ${
-                                    theme === "dark" ? "text-white/60" : "text-black/60"
-                                }`}
-                            >
-                                Analisi basata sulle risposte fornite. Il punteggio indica
-                                il livello di controllo e strutturazione dei processi digitali.
-                            </p>
+            <section className="px-6 pt-24 pb-12">
+                <div className="max-w-6xl mx-auto flex flex-col lg:flex-row justify-between gap-10">
+
+                    <div>
+                        <span className={`text-xs uppercase tracking-widest ${isDark ? "text-white/40" : "text-black/40"}`}>
+                            Digital Maturity Dashboard
+                        </span>
+
+                        <h1 className="text-4xl font-semibold mt-4">
+                            Stato digitale attuale
+                        </h1>
+
+                        <p className={`mt-4 max-w-xl ${isDark ? "text-white/60" : "text-black/60"}`}>
+                            Analisi basata sulle risposte fornite. Il punteggio indica il livello
+                            di controllo e strutturazione dei processi digitali.
+                        </p>
+                    </div>
+
+                    <div className={`rounded-3xl px-14 py-12 text-center border ${glassCard}`}>
+                        <div className="text-6xl font-semibold">
+                            {survey.score}%
                         </div>
-
-                        <div
-                            className={`rounded-3xl px-14 py-12 text-center border ${
-                                theme === "dark"
-                                    ? "bg-white/[0.05] border-white/10"
-                                    : "bg-black/[0.03] border-black/10"
-                            }`}
-                        >
-                            <div className="text-6xl font-semibold">{survey.score}%</div>
-                            <div
-                                className={`text-sm mt-3 ${
-                                    theme === "dark" ? "text-white/50" : "text-black/50"
-                                }`}
-                            >
-                                Digital Readiness Score
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* PRIORITY ACTIONS */}
-            <section
-                className={`px-6 py-20 ${
-                    theme === "dark" ? "bg-neutral-900/40" : "bg-neutral-100"
-                }`}
-            >
-                <div className="mx-auto max-w-5xl">
-                    <h2 className="text-2xl font-semibold mb-12">Priorità operative</h2>
-
-                    <div className="space-y-8">
-                        {Object.entries(actionDetails).map(([indexStr, detail]) => {
-                            const index = Number(indexStr)
-                            const isOpen = openActionIndex === index
-
-                            return (
-                                <div key={index} className="space-y-4">
-                                    {/* HEADER */}
-                                    <div
-                                        className={`rounded-3xl p-8 border ${
-                                            theme === "dark"
-                                                ? "bg-white/[0.04] border-white/10"
-                                                : "bg-black/[0.03] border-black/10"
-                                        }`}
-                                    >
-                                        <div className="flex justify-between items-center">
-                                            <div className="flex items-center gap-6">
-                                                <span
-                                                    className={`font-mono text-sm ${
-                                                        theme === "dark"
-                                                            ? "text-white/40"
-                                                            : "text-black/40"
-                                                    }`}
-                                                >
-                                                    {String(index + 1).padStart(2, "0")}
-                                                </span>
-                                                <span className="text-lg font-medium">
-                                                    {detail.title}
-                                                </span>
-                                            </div>
-
-                                            <button
-                                                onClick={() => toggleAction(index)}
-                                                className={`text-sm cursor-pointer transition ${
-                                                    theme === "dark"
-                                                        ? "text-white/40 hover:text-white"
-                                                        : "text-black/40 hover:text-black"
-                                                }`}
-                                            >
-                                                {isOpen ? "Chiudi ↑" : "Approfondisci →"}
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    {/* DETAIL */}
-                                    <div
-                                        className={`transition-all duration-700 overflow-hidden ${
-                                            isOpen
-                                                ? "max-h-[800px] opacity-100"
-                                                : "max-h-0 opacity-0"
-                                        }`}
-                                    >
-                                        <div
-                                            className={`rounded-3xl p-8 space-y-6 border ${
-                                                theme === "dark"
-                                                    ? "bg-white/[0.03] border-white/10"
-                                                    : "bg-black/[0.02] border-black/10"
-                                            }`}
-                                        >
-                                            <p
-                                                className={`leading-relaxed ${
-                                                    theme === "dark"
-                                                        ? "text-white/70"
-                                                        : "text-black/70"
-                                                }`}
-                                            >
-                                                {detail.context}
-                                            </p>
-
-                                            <div>
-                                                <h4
-                                                    className={`text-sm uppercase tracking-wider mb-2 ${
-                                                        theme === "dark"
-                                                            ? "text-white/40"
-                                                            : "text-black/40"
-                                                    }`}
-                                                >
-                                                    Rischi
-                                                </h4>
-                                                <ul
-                                                    className={`list-disc list-inside space-y-1 ${
-                                                        theme === "dark"
-                                                            ? "text-white/70"
-                                                            : "text-black/70"
-                                                    }`}
-                                                >
-                                                    {detail.risks.map((risk, i) => (
-                                                        <li key={i}>{risk}</li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-
-                                            <div>
-                                                <h4
-                                                    className={`text-sm uppercase tracking-wider mb-2 ${
-                                                        theme === "dark"
-                                                            ? "text-white/40"
-                                                            : "text-black/40"
-                                                    }`}
-                                                >
-                                                    Azioni consigliate
-                                                </h4>
-                                                <ul
-                                                    className={`list-disc list-inside space-y-1 ${
-                                                        theme === "dark"
-                                                            ? "text-white/70"
-                                                            : "text-black/70"
-                                                    }`}
-                                                >
-                                                    {detail.actions.map((action, i) => (
-                                                        <li key={i}>{action}</li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-
-                                            <div
-                                                className={`pt-4 border-t ${
-                                                    theme === "dark"
-                                                        ? "border-white/10 text-white/80"
-                                                        : "border-black/10 text-black/80"
-                                                }`}
-                                            >
-                                                {detail.outcome}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                        })}
-                    </div>
-                </div>
-            </section>
-
-            {/* STEP-BY-STEP RESPONSES */}
-            <section className="px-6 py-20">
-                <div className="mx-auto max-w-4xl">
-                    <h2
-                        className={`text-xl font-semibold mb-6 ${
-                            theme === "dark" ? "text-white/60" : "text-black/60"
-                        }`}
-                    >
-                        Dettaglio risposte
-                    </h2>
-
-                    {/* Tabs */}
-                    <div className="flex gap-2 overflow-auto mb-6 py-4 " style={{
-                        scrollbarWidth: "thin", // per Firefox
-                        scrollbarColor:
-                            theme === "dark" ? "#555 #2a2a2a" : "#c0c0c0 #f0f0f0", // thumb track
-                    }}>
-                        {answerEntries.map(([qid, _], idx) => (
-                            <LiquidGlassButton
-                                variant="navbar"
-                                key={qid}
-                                onClick={() => goTo(idx)}
-                                className={`${
-                                    currentIndex === idx ? "!bg-black text-white" : `bg-transparent text-black ${theme === "dark" ? "text-white" : "text-black"}`
-                                }`}
-                            >
-                                {idx + 1}
-                            </LiquidGlassButton>
-                        ))}
-                    </div>
-
-                    {/* Current Answer */}
-                    <div
-                        className={`rounded-3xl p-8 border ${
-                            theme === "dark" ? "bg-white/[0.03] border-white/5" : "bg-black/[0.02] border-black/5"
-                        }`}
-                    >
-                        <h3 className="text-lg mb-4">
-                            {currentQuestion?.text.it ?? "Domanda non disponibile"}
-                        </h3>
-                        <div className={theme === "dark" ? "text-white/70" : "text-black/70"}>
-                            {formatAnswer(currentAnswer)}
+                        <div className={`text-sm mt-3 ${isDark ? "text-white/50" : "text-black/50"}`}>
+                            Digital Readiness Score
                         </div>
                     </div>
 
-                    {/* Navigation */}
-                    <div className="flex justify-between mt-6">
-                        <LiquidGlassButton
-                            onClick={goPrev}
-                            variant="navbar"
-                            disabled={currentIndex === 0}
-                        >
-                            ← Precedente
-                        </LiquidGlassButton>
-                        <LiquidGlassButton
-                            onClick={goNext}
-                            variant="navbar"
-                            disabled={currentIndex === totalAnswers - 1}
-                        >
-                            Successivo →
-                        </LiquidGlassButton>
-                    </div>
                 </div>
             </section>
 
-            {/* CTA */}
-            <section className="px-6 py-32 text-center">
-                <div
-                    className={`mx-auto max-w-4xl rounded-[40px] px-12 py-16 border ${
-                        theme === "dark" ? "bg-white/[0.05] border-white/10" : "bg-black/[0.03] border-black/10"
-                    }`}
-                >
-                    <h2 className="text-3xl font-semibold mb-4">
-                        Vuoi migliorare questo punteggio?
-                    </h2>
-                    <p
-                        className={`mb-10 ${theme === "dark" ? "text-white/60" : "text-black/60"}`}
+            {/* TABS */}
+
+            <section className="px-6 pb-10 overflow-auto">
+                <div className="max-w-6xl mx-auto flex gap-3 overflow-auto">
+
+                    <LiquidGlassButton
+                        variant="navbar"
+                        scale={false}
+                        onClick={() => setActiveTab("overview")}
+                        className={`${activeTab === "overview" ? "!bg-black/30 text-black !border-black/10" : "!border-black/30"}`}
                     >
-                        Costruiamo una roadmap operativa personalizzata.
-                    </p>
-                    <LiquidGlassButton onClick={handleBookAppointment} className={`${theme === "dark" ? "" : "!bg-white"}`}>
-                        Richiedi consulenza strategica
+                        Overview
                     </LiquidGlassButton>
+
+                    <LiquidGlassButton
+                        variant="navbar"
+                        scale={false}
+                        onClick={() => setActiveTab("actions")}
+                        className={activeTab === "actions" ? "!bg-black/30 text-black !border-black/10" : "!border-black/30"}
+                    >
+                        Priorità
+                    </LiquidGlassButton>
+
+                    <LiquidGlassButton
+                        variant="navbar"
+                        scale={false}
+                        onClick={() => setActiveTab("answers")}
+                        className={activeTab === "answers" ? "!bg-black/30 text-black !border-black/10" : "!border-black/30"}
+                    >
+                        Risposte
+                    </LiquidGlassButton>
+
+                    <LiquidGlassButton
+                        variant="navbar"
+                        scale={false}
+                        onClick={() => setActiveTab("cta")}
+                        className={activeTab === "cta" ? "!bg-black/30 text-black !border-black/10" : "!border-black/30"}
+                    >
+                        Migliora punteggio
+                    </LiquidGlassButton>
+
+                </div>
+            </section>
+
+            {/* TAB CONTENT */}
+
+            <section className="px-6 pb-20">
+                <div className="max-w-5xl mx-auto">
+
+                    {/* OVERVIEW */}
+
+                    {activeTab === "overview" && (
+
+                        <div className="grid md:grid-cols-3 gap-6">
+
+                            <div className={`rounded-3xl border p-8 ${glassCard}`}>
+                                <div className="text-sm opacity-60">Score</div>
+                                <div className="text-4xl font-semibold mt-2">
+                                    {survey.score}%
+                                </div>
+                            </div>
+
+                            <div className={`rounded-3xl border p-8 ${glassCard}`}>
+                                <div className="text-sm opacity-60">Risposte</div>
+                                <div className="text-4xl font-semibold mt-2">
+                                    {answerEntries.length}
+                                </div>
+                            </div>
+
+                            <div className={`rounded-3xl border p-8 ${glassCard}`}>
+                                <div className="text-sm opacity-60">Survey ID</div>
+                                <div className="text-sm font-mono mt-2 break-all">
+                                    {survey._id}
+                                </div>
+                            </div>
+
+                        </div>
+                    )}
+
+                    {/* PRIORITY ACTIONS */}
+
+                    {activeTab === "actions" && (
+
+                        <div className="space-y-8">
+
+                            {Object.entries(actionDetails).map(([indexStr, detail]) => {
+
+                                const index = Number(indexStr)
+                                const isOpen = openActionIndex === index
+
+                                return (
+
+                                    <div key={index} className="space-y-4">
+
+                                        <div className={`rounded-3xl p-8 border ${glassCard}`}>
+
+                                            <div className="flex justify-between items-center">
+
+                                                <div className="flex items-center gap-6">
+
+                                                    <span className={`font-mono text-sm ${isDark ? "text-white/40" : "text-black/40"}`}>
+                                                        {String(index + 1).padStart(2, "0")}
+                                                    </span>
+
+                                                    <span className="text-lg font-medium">
+                                                        {detail.title}
+                                                    </span>
+
+                                                </div>
+
+                                                <button
+                                                    onClick={() => toggleAction(index)}
+                                                    className={`text-sm transition ${isDark ? "text-white/40 hover:text-white" : "text-black/40 hover:text-black"} cursor-pointer`}
+                                                >
+                                                    {isOpen ? "Chiudi ↑" : "Approfondisci →"}
+                                                </button>
+
+                                            </div>
+
+                                        </div>
+
+                                        {isOpen && (
+
+                                            <div className={`rounded-3xl p-8 border space-y-6 ${glassCard}`}>
+
+                                                <p className={isDark ? "text-white/70" : "text-black/70"}>
+                                                    {detail.context}
+                                                </p>
+
+                                                <div>
+                                                    <h4 className="text-sm uppercase tracking-wider mb-2 opacity-60">
+                                                        Rischi
+                                                    </h4>
+
+                                                    <ul className="list-disc list-inside space-y-1">
+                                                        {detail.risks.map((risk, i) => (
+                                                            <li key={i}>{risk}</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+
+                                                <div>
+                                                    <h4 className="text-sm uppercase tracking-wider mb-2 opacity-60">
+                                                        Azioni consigliate
+                                                    </h4>
+
+                                                    <ul className="list-disc list-inside space-y-1">
+                                                        {detail.actions.map((action, i) => (
+                                                            <li key={i}>{action}</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+
+                                                <div className="pt-4 border-t opacity-80">
+                                                    {detail.outcome}
+                                                </div>
+
+                                            </div>
+
+                                        )}
+
+                                    </div>
+
+                                )
+
+                            })}
+
+                        </div>
+
+                    )}
+
+                    {/* ANSWERS */}
+
+                    {activeTab === "answers" && (
+
+                        <div className="space-y-8">
+
+                            <div className="flex gap-2 overflow-auto py-4">
+
+                                {answerEntries.map(([qid], idx) => (
+
+                                    <LiquidGlassButton
+                                        variant="navbar"
+                                        key={qid}
+                                        onClick={() => goTo(idx)}
+                                        className={currentIndex === idx ? "!bg-black/40 text-black !border-black/30" : "!border-black/30"}
+                                    >
+                                        {idx + 1}
+                                    </LiquidGlassButton>
+
+                                ))}
+
+                            </div>
+
+                            <div className={`rounded-3xl p-8 border ${glassCard}`}>
+
+                                <h3 className="text-lg mb-4">
+                                    {currentQuestion?.text.it ?? "Domanda non disponibile"}
+                                </h3>
+
+                                <div className={isDark ? "text-white/70" : "text-black/70"}>
+                                    {formatAnswer(currentAnswer)}
+                                </div>
+
+                            </div>
+
+                            <div className="flex justify-between">
+
+                                <LiquidGlassButton
+                                    variant="navbar"
+                                    onClick={goPrev}
+                                    disabled={currentIndex === 0}
+                                >
+                                    ← Precedente
+                                </LiquidGlassButton>
+
+                                <LiquidGlassButton
+                                    variant="navbar"
+                                    onClick={goNext}
+                                    disabled={currentIndex === totalAnswers - 1}
+                                >
+                                    Successivo →
+                                </LiquidGlassButton>
+
+                            </div>
+
+                        </div>
+
+                    )}
+
+                    {/* CTA */}
+
+                    {activeTab === "cta" && (
+
+                        <div className="text-center">
+
+                            <div className={`mx-auto max-w-3xl rounded-[40px] px-12 py-16 border ${glassCard}`}>
+
+                                <h2 className="text-3xl font-semibold mb-4">
+                                    Vuoi migliorare questo punteggio?
+                                </h2>
+
+                                <p className={`mb-10 ${isDark ? "text-white/60" : "text-black/60"}`}>
+                                    Costruiamo una roadmap operativa personalizzata.
+                                </p>
+
+                                <LiquidGlassButton onClick={handleBookAppointment} className={`${isDark ? "" : "!bg-white"}`}>
+                                    Richiedi consulenza strategica
+                                </LiquidGlassButton>
+
+                            </div>
+
+                        </div>
+
+                    )}
+
                 </div>
             </section>
 
             {/* RESET */}
-            <section
-                className={`px-6 py-12 text-center ${
-                    theme === "dark" ? "text-white/40" : "text-black/40"
-                }`}
-            >
+
+            <section className={`px-6 pb-16 text-center ${isDark ? "text-white/40" : "text-black/40"}`}>
+
                 <button
-                    className="hover:text-current cursor-pointer transition-all"
+                    className="hover:text-current transition"
                     disabled={resetting}
                     onClick={async () => {
+
                         if (!survey_id) return
-                        if (!window.confirm("Sei sicuro di voler resettare il survey?")) return
+
+                        if (!window.confirm("Sei sicuro di voler resettare il survey?"))
+                            return
+
                         await resetSurvey(survey_id, survey_template_id, locale)
+
                         navigate("/survey")
+
                     }}
                 >
                     {resetting ? "Resetting..." : "Reset Survey"}
                 </button>
+
             </section>
+
         </main>
     )
 }

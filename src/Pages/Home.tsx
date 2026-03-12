@@ -11,7 +11,7 @@ import {logos} from "../staticData/logos.ts";
 export function Home() {
     const {theme} = useTheme()
     return (
-        <main className={`flex flex-col ${theme === "dark" ? "bg-black" : "bg-primary-white"}`}>
+        <main className={`flex flex-col ${theme === "dark" ? "bg-black" : "bg-secondary-white"}`}>
             <HeroSection theme={theme} />
             <LiquidTextBanner
                 theme={theme}

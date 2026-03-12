@@ -80,7 +80,7 @@ export function UserManagementPanel({ allUsers, refreshUsers, theme }: Props) {
     return (
         <>
             <div
-                className={`relative rounded-[36px] p-12 space-y-12 backdrop-blur-3xl shadow-[0_0_80px_rgba(0,0,0,0.04)] ${glassBg}`}>
+                className={`relative rounded-[36px] sm:p-12 space-y-12 backdrop-blur-3xl shadow-[0_0_80px_rgba(0,0,0,0.04)] ${glassBg}`}>
                 <AdminActionsSection
                     allUsers={allUsers}
                     selectedUserId={selectedUserId}

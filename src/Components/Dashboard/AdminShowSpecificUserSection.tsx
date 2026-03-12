@@ -30,7 +30,7 @@ export function AdminShowSpecificUserSection({allUsers, selectedUserIdToShow, se
     }
 
     return (
-        <div className={`relative rounded-[36px] p-8 sm:p-12 space-y-12 backdrop-blur-3xl shadow-[0_0_80px_rgba(0,0,0,0.04)] ${glassBg}`}>
+        <div className={`relative rounded-[36px] p-4 sm:p-12 space-y-12 backdrop-blur-3xl shadow-[0_0_80px_rgba(0,0,0,0.04)] ${glassBg}`}>
 
             {/* HEADER */}
             <div className='p-8 sm:p-0 gap-8 sm:flex flex-col'>
@@ -46,7 +46,7 @@ export function AdminShowSpecificUserSection({allUsers, selectedUserIdToShow, se
                 </div>
 
                 {/* SELECT USER */}
-                <div className="space-y-6">
+                <div className="space-y-6 sm:mt-0 mt-4">
                     <select
                         value={selectedUserIdToShow}
                         onChange={(e) => setSelectedUserIdToShow(e.target.value)}

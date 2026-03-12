@@ -33,7 +33,7 @@ export function MetodSection({ theme }: { theme: string }) {
                     <GlassCard
                         key={item.step}
                         theme={theme}
-                        className={`p-10 ${isDark ? "" : "bg-white/5 border-black/10"}`}
+                        className={`p-10 ${isDark ? "" : "bg-white border-black/10"}`}
                     >
                         <div className={`${isDark ? "text-white/10" : "text-black/30"} text-5xl font-semibold mb-6`}>
                             {item.step}

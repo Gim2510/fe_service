@@ -42,9 +42,9 @@ export function AdminActionsSection({
     const textSub = isDark ? "text-neutral-400" : "text-gray-600";
 
     return (
-        <div className={`relative rounded-[36px] p-12 space-y-12 backdrop-blur-3xl shadow-[0_0_80px_rgba(0,0,0,0.04)] ${cardBg}`}>
+        <div className={`relative rounded-[36px] p-4 sm:p-12 space-y-6 sm:space-y-12 backdrop-blur-3xl shadow-[0_0_80px_rgba(0,0,0,0.04)] ${cardBg}`}>
             {/* HEADER */}
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row justify-between items-center sm:gap-0 gap-3 sm:pt-0 pt-5">
                 <div>
                     <h2 className={`text-2xl font-semibold tracking-tight ${textHeader}`}>
                         Admin Control Center
@@ -67,7 +67,7 @@ export function AdminActionsSection({
                             <option key={u._id} value={u._id}>{u.email}</option>
                         ))}
                     </select>
-                    <LiquidGlassButton variant='navbar' disabled={!selectedUserId} onClick={() => setShowPromoteModal(true)} className={isDark ? "glass-button" : "bg-indigo-100 text-indigo-900 hover:bg-indigo-200"}>
+                    <LiquidGlassButton variant='navbar' disabled={!selectedUserId} onClick={() => setShowPromoteModal(true)} className={isDark ? "bg-indigo-100 text-indigo-900 hover:bg-indigo-200/50 hover:text-black" : "bg-indigo-100 text-indigo-900 hover:bg-indigo-200"}>
                         Promote
                     </LiquidGlassButton>
                 </ActionCard>
@@ -79,7 +79,7 @@ export function AdminActionsSection({
                             <option key={u._id} value={u._id}>{u.email}</option>
                         ))}
                     </select>
-                    <LiquidGlassButton variant='navbar' disabled={!selectedUserToDelete} onClick={() => setShowDeleteModal(true)} className={isDark ? "glass-button-danger" : "bg-red-100 text-red-800 hover:bg-red-200"}>
+                    <LiquidGlassButton variant='navbar' disabled={!selectedUserToDelete} onClick={() => setShowDeleteModal(true)} className={isDark ? "bg-red-100 text-red-800 hover:bg-red-600/50 hover:text-black" : "bg-red-100 text-red-800 hover:bg-red-200"}>
                         Delete
                     </LiquidGlassButton>
                     {deleteSuccess && <p className="text-green-600 text-sm mt-2">User deleted successfully</p>}
@@ -92,7 +92,7 @@ export function AdminActionsSection({
                             <option key={u._id} value={u._id}>{u.email}</option>
                         ))}
                     </select>
-                    <LiquidGlassButton variant='navbar' disabled={!selectedUserToVip} onClick={() => setShowVipModal(true)} className={isDark ? "glass-button-success" : "bg-green-100 text-green-900 hover:bg-green-200"}>
+                    <LiquidGlassButton variant='navbar' disabled={!selectedUserToVip} onClick={() => setShowVipModal(true)} className={isDark ? "bg-green-100 text-green-900 hover:bg-green-200/50 hover:text-black" : "bg-green-100 text-green-900 hover:bg-green-200"}>
                         Upgrade
                     </LiquidGlassButton>
                     {vipSuccess && <p className="text-green-600 text-sm mt-2">User upgraded successfully</p>}
