@@ -81,6 +81,7 @@ export function Login() {
                                 label="Email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
+                                theme={theme}
                             />
 
                             <Input
@@ -88,6 +89,7 @@ export function Login() {
                                 label="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                theme={theme}
                             />
                             <LiquidGlassButton type="submit" disabled={loading} className="mt-4">{loading ? <FallingLines
                                 color={theme === "dark" ? "white" : "black"}
@@ -125,17 +127,8 @@ export function Login() {
     )
 }
 
-function Input({
-                   label,
-                   type,
-                   value,
-                   onChange,
-               }: {
-    label: string
-    type: string
-    value: string
-    onChange: React.ChangeEventHandler<HTMLInputElement>
-}) {
+function Input({label, type, value, onChange, theme}: { label: string,type: string,value: string,onChange: React.ChangeEventHandler<HTMLInputElement>, theme: string }) {
+    const isDark = theme === "dark"
     return (
         <div className="flex flex-col gap-2">
             <label className="text-sm text-neutral-400">{label}</label>
@@ -144,8 +137,7 @@ function Input({
                 value={value}
                 onChange={onChange}
                 required
-                className="px-4 py-3 rounded-xl bg-neutral-800 border border-neutral-700 focus:border-white focus:ring-1 focus:ring-white outline-none transition text-white placeholder-neutral-500"
-            />
+                className={`w-full rounded-xl border px-4 py-3 active:ring-0 outline-none ${isDark ? "bg-neutral-900 text-white border-neutral-800" : "bg-indigo-50 text-black border-black/30"}`}            />
         </div>
     )
 }
