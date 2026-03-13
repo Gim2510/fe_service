@@ -23,7 +23,7 @@ export function Section({
     return (
         <section className={`${bg} border rounded-3xl p-10 space-y-6`}>
             <h2 className={`text-2xl font-medium ${titleColor}`}>{title}</h2>
-            <div className={`${textSecondary ?? ""}`}>{children}</div>
+            <div className={`${textSecondary ?? ""} sm:block flex flex-col gap-6`}>{children}</div>
         </section>
     );
 }

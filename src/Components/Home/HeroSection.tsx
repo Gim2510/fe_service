@@ -14,12 +14,12 @@ export function HeroSection({theme}: {theme: string}) {
     const isDark = theme === "dark";
 
     return (
-        <section className="relative min-h-[100vh] flex items-center overflow-hidden sm:pt-0 pt-20 overflow-auto">
+        <section className="relative min-h-[100vh] flex items-center overflow-hidden sm:mt-0 mt-20 overflow-auto">
             {/* Background */}
             <div className={`absolute inset-0 ${isDark ? "bg-neutral-950" : "bg-primary-white"}`} />
 
             {/* Globe */}
-            <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-10">
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-10 ">
                 <HeroGlobeDark/>
             </div>
 
@@ -51,7 +51,7 @@ export function HeroSection({theme}: {theme: string}) {
                     </p>
 
                     <div className="flex items-center sm:gap-8 gap-4">
-                        <LiquidGlassButton onClick={goToSurvey}
+                        <LiquidGlassButton onClick={goToSurvey} variant='navbar'
                                            className={` ${!isDark ? `!bg-white/90 sm:bg-transparent !border-black/20 shadow-lg` : ``}`}>
                             Scopri cosa stai perdendo
                         </LiquidGlassButton>
@@ -63,7 +63,7 @@ export function HeroSection({theme}: {theme: string}) {
                 </div>
 
                 {/* RIGHT */}
-                <div className="relative z-20">
+                <div className="relative z-20 sm:block hidden">
                     <div
                         className={`group relative mt-8 rounded-3xl border ${
                             isDark ? "border-neutral-700 bg-neutral-900/80" : "border-neutral-300 bg-white/80"

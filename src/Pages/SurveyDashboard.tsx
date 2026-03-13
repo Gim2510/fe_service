@@ -8,6 +8,8 @@ import { FallingLines } from "react-loader-spinner"
 import { useState } from "react"
 import { actionDetails } from "../utils/actionDetails"
 import { useTheme } from "../Context/ThemeContext.tsx"
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 type DashboardTab =
     | "overview"
@@ -67,15 +69,15 @@ export function SurveyDashboard() {
 
     const glassCard = isDark
         ? "bg-white/[0.04] border-white/10"
-        : "bg-black/[0.03] border-black/10"
+        : "bg-white border-black/10"
 
     return (
-        <main className={`min-h-screen ${isDark ? "bg-neutral-950 text-white" : "bg-white text-black"}`}>
+        <main className={`min-h-screen ${isDark ? "bg-neutral-950 text-white" : "bg-primary-white text-black"}`}>
 
             {/* HERO */}
 
-            <section className="px-6 pt-24 pb-12">
-                <div className="max-w-6xl mx-auto flex flex-col lg:flex-row justify-between gap-10">
+            <section className="px-6 pt-24 pb-4">
+                <div className="max-w-6xl mx-auto flex flex-col lg:flex-row justify-between gap-10 sm:pt-10">
 
                     <div>
                         <span className={`text-xs uppercase tracking-widest ${isDark ? "text-white/40" : "text-black/40"}`}>
@@ -113,7 +115,7 @@ export function SurveyDashboard() {
                         variant="navbar"
                         scale={false}
                         onClick={() => setActiveTab("overview")}
-                        className={`${activeTab === "overview" ? "!bg-black/30 text-black !border-black/10" : "!border-black/30"}`}
+                        className={`${activeTab === "overview" ? "!bg-black/30 text-black !border-black/10" : `!border-black/30 ${isDark ? "" : "!bg-white"}`} sm:text-base text-xs`}
                     >
                         Overview
                     </LiquidGlassButton>
@@ -122,7 +124,7 @@ export function SurveyDashboard() {
                         variant="navbar"
                         scale={false}
                         onClick={() => setActiveTab("actions")}
-                        className={activeTab === "actions" ? "!bg-black/30 text-black !border-black/10" : "!border-black/30"}
+                        className={`${activeTab === "actions" ? "!bg-black/30 text-black !border-black/10" : `!border-black/30 ${isDark ? "" : "!bg-white"}`} sm:text-base text-xs`}
                     >
                         Priorità
                     </LiquidGlassButton>
@@ -131,7 +133,7 @@ export function SurveyDashboard() {
                         variant="navbar"
                         scale={false}
                         onClick={() => setActiveTab("answers")}
-                        className={activeTab === "answers" ? "!bg-black/30 text-black !border-black/10" : "!border-black/30"}
+                        className={`${activeTab === "answers" ? "!bg-black/30 text-black !border-black/10" : `!border-black/30 ${isDark ? "" : "!bg-white"}`} sm:text-base text-xs`}
                     >
                         Risposte
                     </LiquidGlassButton>
@@ -140,7 +142,7 @@ export function SurveyDashboard() {
                         variant="navbar"
                         scale={false}
                         onClick={() => setActiveTab("cta")}
-                        className={activeTab === "cta" ? "!bg-black/30 text-black !border-black/10" : "!border-black/30"}
+                        className={`${activeTab === "cta" ? "!bg-black/30 text-black !border-black/10" : `!border-black/30 ${isDark ? "" : "!bg-white"}`} sm:text-base text-xs`}
                     >
                         Migliora punteggio
                     </LiquidGlassButton>
@@ -198,17 +200,17 @@ export function SurveyDashboard() {
 
                                     <div key={index} className="space-y-4">
 
-                                        <div className={`rounded-3xl p-8 border ${glassCard}`}>
+                                        <div className={`rounded-3xl p-4 sm:p-8 border ${glassCard}`}>
 
                                             <div className="flex justify-between items-center">
 
-                                                <div className="flex items-center gap-6">
+                                                <div className="flex items-center justify-start gap-6">
 
                                                     <span className={`font-mono text-sm ${isDark ? "text-white/40" : "text-black/40"}`}>
                                                         {String(index + 1).padStart(2, "0")}
                                                     </span>
 
-                                                    <span className="text-lg font-medium">
+                                                    <span className="text-xs sm:text-lg font-medium">
                                                         {detail.title}
                                                     </span>
 
@@ -216,9 +218,9 @@ export function SurveyDashboard() {
 
                                                 <button
                                                     onClick={() => toggleAction(index)}
-                                                    className={`text-sm transition ${isDark ? "text-white/40 hover:text-white" : "text-black/40 hover:text-black"} cursor-pointer`}
+                                                    className={`sm:text-sm transition ${isDark ? "text-white/40 hover:text-white" : "text-black hover:text-black"} cursor-pointer`}
                                                 >
-                                                    {isOpen ? "Chiudi ↑" : "Approfondisci →"}
+                                                    {isOpen ? <KeyboardArrowDownIcon className='!w-8 h-4'/> : <ArrowForwardIosIcon className='!w-4 h-4'/>}
                                                 </button>
 
                                             </div>
@@ -367,8 +369,9 @@ export function SurveyDashboard() {
 
             <section className={`px-6 pb-16 text-center ${isDark ? "text-white/40" : "text-black/40"}`}>
 
-                <button
-                    className="hover:text-current transition"
+                <LiquidGlassButton
+                    variant='navbar'
+                    className="hover:!bg-red-600/60"
                     disabled={resetting}
                     onClick={async () => {
 
@@ -384,7 +387,7 @@ export function SurveyDashboard() {
                     }}
                 >
                     {resetting ? "Resetting..." : "Reset Survey"}
-                </button>
+                </LiquidGlassButton>
 
             </section>
 

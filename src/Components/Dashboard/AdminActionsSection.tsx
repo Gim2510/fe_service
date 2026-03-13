@@ -37,13 +37,11 @@ export function AdminActionsSection({
                                         theme,
                                     }: Props) {
     const isDark = theme === "dark";
-    const cardBg = isDark ? "bg-white/[0.04] border border-white/[0.08]" : "bg-white/50 border border-gray-200";
     const textHeader = isDark ? "text-white" : "text-gray-900";
     const textSub = isDark ? "text-neutral-400" : "text-gray-600";
 
     return (
-        <div className={`relative rounded-[36px] p-4 sm:p-12 space-y-6 sm:space-y-12 backdrop-blur-3xl shadow-[0_0_80px_rgba(0,0,0,0.04)] ${cardBg}`}>
-            {/* HEADER */}
+        <>
             <div className="flex flex-col sm:flex-row justify-between items-center sm:gap-0 gap-3 sm:pt-0 pt-5">
                 <div>
                     <h2 className={`text-2xl font-semibold tracking-tight ${textHeader}`}>
@@ -58,7 +56,6 @@ export function AdminActionsSection({
                 </span>
             </div>
 
-            {/* GRID */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 <ActionCard title="Promote to Admin" theme={theme}>
                     <select value={selectedUserId} onChange={e => setSelectedUserId(e.target.value)} className="glass-input cursor-pointer">
@@ -100,6 +97,6 @@ export function AdminActionsSection({
 
                 <div className="col-span-1 lg:col-span-2">{BulkEmailComponent}</div>
             </div>
-        </div>
+        </>
     );
 }

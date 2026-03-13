@@ -132,19 +132,19 @@ export function UserEditProfile() {
                 >
                     {/* Informazioni personali */}
                     <Section title="Informazioni personali" bgSection={sectionBg} textPrimary={textPrimary} textSecondary={textSecondary}>
-                        <Input label="Nome" value={form.given_name} onChange={(v) => setForm((f) => ({ ...f, given_name: v }))} />
-                        <Input label="Cognome" value={form.family_name} onChange={(v) => setForm((f) => ({ ...f, family_name: v }))} />
+                        <Input theme={theme} label="Nome" value={form.given_name} onChange={(v) => setForm((f) => ({ ...f, given_name: v }))} />
+                        <Input theme={theme} label="Cognome" value={form.family_name} onChange={(v) => setForm((f) => ({ ...f, family_name: v }))} />
                     </Section>
 
                     {/* Dati fiscali */}
                     <Section title="Dati fiscali" bgSection={sectionBg} textPrimary={textPrimary} textSecondary={textSecondary}>
-                        <Input label="Codice fiscale" value={form.fiscal_code} onChange={(v) => setForm((f) => ({ ...f, fiscal_code: v }))} />
-                        <Input label="Partita IVA" value={form.partita_iva} onChange={(v) => setForm((f) => ({ ...f, partita_iva: v }))} />
+                        <Input theme={theme} label="Codice fiscale" value={form.fiscal_code} onChange={(v) => setForm((f) => ({ ...f, fiscal_code: v }))} />
+                        <Input theme={theme} label="Partita IVA" value={form.partita_iva} onChange={(v) => setForm((f) => ({ ...f, partita_iva: v }))} />
                     </Section>
 
                     {/* Email */}
                     <Section title="Email" bgSection={sectionBg} textPrimary={textPrimary} textSecondary={textSecondary}>
-                        <Input label="Email" value={form.email} onChange={(v) => setForm((f) => ({ ...f, email: v }))} />
+                        <Input theme={theme} label="Email" value={form.email} onChange={(v) => setForm((f) => ({ ...f, email: v }))} />
                         <p className={`text-sm ${textSecondary}`}>Cambiare email richiederà una nuova verifica.</p>
                     </Section>
 
@@ -156,19 +156,20 @@ export function UserEditProfile() {
                             </p>
                             <p className={`text-sm ${textSecondary}`}>
                                 Potrai riattivarlo effettuando nuovamente il login entro{" "}
-                                <span className="text-white font-medium">60 giorni</span>. Dopo questo periodo, i dati verranno eliminati definitivamente.
+                                <span className="text-red-500 font-medium">60 giorni</span>. Dopo questo periodo, i dati verranno eliminati definitivamente.
                             </p>
-                            <button
+                            <LiquidGlassButton
                                 type="button"
+                                variant='navbar'
+                                className='hover:bg-red-600/60'
                                 disabled={deleting}
                                 onClick={async () => {
                                     if (!window.confirm("Sei sicuro di voler eliminare il tuo profilo?")) return;
                                     await deleteUser(id, token);
                                 }}
-                                className="px-6 py-3 cursor-pointer rounded-full border border-red-600 text-red-400 hover:bg-red-600 hover:text-white transition disabled:opacity-50"
                             >
                                 {deleting ? "Eliminazione…" : "Elimina profilo"}
-                            </button>
+                            </LiquidGlassButton>
                             {deleteError && <p className="text-red-400 text-sm">{deleteError}</p>}
                             {deleteSuccess && <p className="text-green-400 text-sm">Profilo eliminato. Verrai disconnesso.</p>}
                         </div>

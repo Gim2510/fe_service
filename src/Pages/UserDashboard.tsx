@@ -58,7 +58,7 @@ export function UserDashboard() {
     ];
 
     // Color helper
-    const bgSection = theme === "dark" ? "bg-neutral-900/70 border-neutral-800" : "bg-white/70 border-gray-200";
+    const bgSection = theme === "dark" ? "bg-neutral-900/70 border-neutral-800" : "bg-white border-gray-200";
     const textSecondary = theme === "dark" ? "text-neutral-400" : "text-neutral-600";
     const textPrimary = theme === "dark" ? "text-white" : "text-neutral-900";
     const tabActiveBg = theme === "dark" ? "bg-neutral-900 text-white border-neutral-800" : "bg-neutral-100 text-neutral-900 border-gray-200";
@@ -67,7 +67,7 @@ export function UserDashboard() {
     const highlightColor = "text-yellow-400";
 
     return (
-        <main className={`${theme === "dark" ? "bg-neutral-950 text-white" : "bg-neutral-50 text-neutral-900"} min-h-screen px-8 pt-30 pb-40`}>
+        <main className={`${theme === "dark" ? "bg-neutral-950 text-white" : "bg-primary-white text-neutral-900"} min-h-screen px-8 pt-30 pb-40`}>
             <div className="max-w-6xl mx-auto space-y-8">
 
                 {/* HEADER */}

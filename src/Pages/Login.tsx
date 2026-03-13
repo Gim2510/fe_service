@@ -25,7 +25,7 @@ export function Login() {
         <main className="relative min-h-screen flex items-center overflow-hidden bg-neutral-950 text-white">
 
             {/* Gradient background */}
-            <div className={`${theme === "dark" ? "bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800" : "bg-white"} absolute inset-0 `} />
+            <div className={`${theme === "dark" ? "bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800" : "bg-primary-white"} absolute inset-0 `} />
 
             {/* Grid texture */}
             <div

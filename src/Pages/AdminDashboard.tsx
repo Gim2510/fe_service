@@ -37,7 +37,7 @@ export function AdminDashboard() {
     }
 
     return (
-        <section className={`min-h-screen py-16 ${theme === "dark" ? "bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800 text-white" : "bg-white text-gray-900"}`}>
+        <section className={`min-h-screen py-16 ${theme === "dark" ? "bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800 text-white" : "bg-primary-white text-gray-900"}`}>
             <div className="max-w-7xl mx-auto px-8 py-12">
 
                 <DashboardHeader users={users} surveys={surveys} theme={theme} />

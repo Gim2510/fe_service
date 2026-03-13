@@ -14,7 +14,7 @@ export function ContactPage() {
                 className={`absolute inset-0 ${
                     theme === "dark"
                         ? "bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800"
-                        : "bg-white"
+                        : "bg-primary-white"
                 }`}
             />
 
@@ -78,7 +78,7 @@ export function ContactPage() {
                         className={`rounded-3xl backdrop-blur-xl p-10 shadow-2xl flex flex-col gap-8 ${
                             theme === "dark"
                                 ? "bg-neutral-900/70 border border-neutral-800"
-                                : "bg-white/40 shadow-3xl"
+                                : "bg-white shadow-3xl"
                         }`}
                     >
                         <h2 className="text-2xl font-semibold mb-2">

@@ -55,7 +55,7 @@ export function SurveyStart() {
                     className={`absolute inset-0 ${
                         theme === "dark"
                             ? "bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800"
-                            : "bg-white"
+                            : " bg-primary-white"
                     }`}
                 />
 
@@ -68,7 +68,7 @@ export function SurveyStart() {
                     }`}
                 />
 
-                <LiquidGlassButton to="/register">
+                <LiquidGlassButton to="/register" className={`${theme === "dark" ? "" : "!bg-white"}`}>
                     Registrati per iniziare
                 </LiquidGlassButton>
             </main>
@@ -86,7 +86,7 @@ export function SurveyStart() {
                 className={`absolute inset-0 ${
                     theme === "dark"
                         ? "bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800"
-                        : "bg-white"
+                        : "bg-primary-white"
                 }`}
             />
 

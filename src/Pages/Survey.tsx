@@ -58,7 +58,7 @@ export function Survey() {
     const isConfirmationStep = flow.step > questions.length
 
     return (
-        <main className={`min-h-screen ${theme === "dark" ? "bg-black" : "bg-white"} bg-black text-slate-100 flex items-center justify-center px-6 py-10`}>
+        <main className={`min-h-screen ${theme === "dark" ? "bg-black" : "bg-primary-white"} bg-black text-slate-100 flex items-center justify-center px-6 py-10`}>
             <section className="w-full max-w-3xl py-20">
                 {/* Step indicator */}
                 <div className="mb-6 text-sm text-slate-500 flex justify-between">

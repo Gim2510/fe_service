@@ -78,7 +78,7 @@ export function Register() {
                 className={`absolute inset-0 ${
                     theme === "dark"
                         ? "bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800"
-                        : "bg-white"
+                        : "bg-primary-white"
                 }`}
             />
 
