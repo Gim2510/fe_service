@@ -1,5 +1,5 @@
 import { FallingLines } from "react-loader-spinner";
-import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
+import {LiquidGlassButton} from "../../Buttons/LiquidGlassButton.tsx";
 
 type DeleteUserModalProps = {
     setShowDeleteUserModal: (show: boolean) => void;

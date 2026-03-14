@@ -1,5 +1,5 @@
 import { FallingLines } from "react-loader-spinner";
-import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
+import {LiquidGlassButton} from "../../Buttons/LiquidGlassButton.tsx";
 
 type SetUserToVipModalProps = {
     setShowUpdateUserToVipModal: (show: boolean) => void;

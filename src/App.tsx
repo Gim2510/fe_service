@@ -24,6 +24,7 @@ import {PaymentCancel} from "./Pages/Payments/PaymentCancel.tsx";
 import {PremiumPreCheckout} from "./Pages/PremiumPreCheckout.tsx";
 import {PremiumProvider} from "./Context/PremiumContext.tsx";
 import {ThemeProvider} from "./Context/ThemeContext.tsx";
+import {CareersFlowPage} from "./Components/Careers/CareersFlowPage.tsx";
 
 function App() {
     return (
@@ -46,9 +47,10 @@ function App() {
                             <Route path="/password-reset/confirm/:token" element={<LayoutHomepage><ResetPassword/></LayoutHomepage>} />
                             <Route path="/user/edit" element={<Protected><LayoutHomepage><UserEditProfile /></LayoutHomepage></Protected>} />
                             <Route path="/dashboard" element={<RoleProtected role={`ADMIN`}><LayoutHomepage><AdminDashboard/></LayoutHomepage></RoleProtected>} />
-                            <Route path={"/premium"} element={<Protected><LayoutHomepage><PremiumPreCheckout/></LayoutHomepage></Protected>} />
+                            <Route path="/premium" element={<Protected><LayoutHomepage><PremiumPreCheckout/></LayoutHomepage></Protected>} />
                             <Route path="/payment_success" element={<LayoutHomepage><PaymentSuccess /></LayoutHomepage>} />
                             <Route path="/payment_cancel" element={<LayoutHomepage><PaymentCancel /></LayoutHomepage>} />
+                            <Route path='/careers' element={<LayoutHomepage><CareersFlowPage/></LayoutHomepage>} />
                         </Routes>
                     </PremiumProvider>
                 </AuthProvider>

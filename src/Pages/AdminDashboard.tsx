@@ -9,12 +9,14 @@ import { type AdminTab, SidebarNavigation } from "../Components/Dashboard/Sideba
 import { DashboardHeader } from "../Components/Dashboard/DashboardHeader.tsx";
 import { DashboardContent } from "../Components/Dashboard/DashboardContent.tsx";
 import {useTheme} from "../Context/ThemeContext.tsx";
+import {useAuth} from "../auth/AuthContext.tsx";
 
 export function AdminDashboard() {
     const { theme } = useTheme();
     const { data: users, loading: loadingUsers } = useUsersDashboard();
     const { data: surveys, loading: loadingSurveys } = useSurveyDashboard();
     const { getAllUsers } = useGetAllUsers();
+    const {token} = useAuth()
 
     const [activeTab, setActiveTab] = useState<AdminTab>("overview");
     const [allUsers, setAllUsers] = useState<UserType[]>([]);
@@ -52,6 +54,7 @@ export function AdminDashboard() {
                         allUsers={allUsers}
                         refreshUsers={refreshUsers}
                         theme={theme}
+                        token={token}
                     />
                 </div>
 

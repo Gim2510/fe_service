@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { useSetUserAdmin } from "../../hooks/useSetUserAdmin";
-import { useDeleteUser } from "../../hooks/useDeleteUser";
-import { useUpdateUserToVip } from "../../hooks/useSetVip";
-import { useAuth } from "../../auth/AuthContext";
+import { useSetUserAdmin } from "../../../hooks/useSetUserAdmin.ts";
+import { useDeleteUser } from "../../../hooks/useDeleteUser.ts";
+import { useUpdateUserToVip } from "../../../hooks/useSetVip.ts";
+import { useAuth } from "../../../auth/AuthContext.tsx";
 
-import type { UserType } from "../../types/userTypes";
-import {AdminActionsSection} from "./AdminActionsSection.tsx";
-import {DeleteUserModal} from "./DeleteUserModal.tsx";
-import {SetUserToVipModal} from "./SetUserToVipModal.tsx";
-import {PromoteUserModal} from "./PromoteUserModal.tsx";
+import type { UserType } from "../../../types/userTypes.ts";
+import {AdminActionsSection} from "../AdminActionsSection.tsx";
+import {DeleteUserModal} from "../DashboardModals/DeleteUserModal.tsx";
+import {SetUserToVipModal} from "../DashboardModals/SetUserToVipModal.tsx";
+import {PromoteUserModal} from "../DashboardModals/PromoteUserModal.tsx";
 
 type Props = {
     allUsers: UserType[];

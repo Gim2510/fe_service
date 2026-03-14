@@ -1,4 +1,4 @@
-import { DetailItem } from "./DetailItem.tsx";
+import { DetailItem } from "../DetailItem.tsx";
 
 export function OverviewPanel({ users, surveys, theme }: any) {
     const isDark = theme === "dark";

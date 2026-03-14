@@ -74,6 +74,7 @@ export function Navbar() {
 
                                 <NavItem theme={theme} to="/survey/start" label="Survey" />
                                 <NavItem theme={theme} to="/contact" label="Contacts" />
+                                <NavItem to='/careers' label='Careers' theme={theme} />
 
                                 {isAuthenticated ? (
                                     <>
@@ -172,6 +173,7 @@ export function Navbar() {
 
                                 <MobileNavItem to="/survey/start" label="Survey" closeMenu={closeMenu} />
                                 <MobileNavItem to="/contact" label="Contacts" closeMenu={closeMenu} />
+                                <MobileNavItem to="/careers" label="careers" closeMenu={closeMenu} />
                             </div>
 
                             <div className="h-px bg-gray-200" />

@@ -4,7 +4,8 @@ export type AdminTab =
     | "overview"
     | "users"
     | "inspect"
-    | "messaging";
+    | "messaging"
+    | "careers"
 
 export function SidebarNavigation({ setActiveTab, theme }: { activeTab: string; setActiveTab: any; theme: string }) {
     const isDark = theme === "dark";
@@ -14,6 +15,7 @@ export function SidebarNavigation({ setActiveTab, theme }: { activeTab: string; 
         { key: "users", label: "User Management" },
         { key: "inspect", label: "Inspect User" },
         { key: "messaging", label: "Messaging" },
+        { key: "careers", label: "Careers" },
     ];
 
     return (
