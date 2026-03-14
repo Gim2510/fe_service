@@ -1,5 +1,5 @@
 import type { FC } from "react"
-import type { PropsMultipleChoiceQuestion } from "../../props"
+import type { PropsMultipleChoiceQuestion } from "../../../props.ts"
 
 type MultipleChoiceQuestionProps = PropsMultipleChoiceQuestion & {
     variant?: string  // default = dark

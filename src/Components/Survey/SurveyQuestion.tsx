@@ -1,9 +1,9 @@
-import type { PropsSurveyQuestion } from "../props"
+import type { PropsSurveyQuestion } from "../../props.ts"
 
-import { MultipleChoiceQuestion } from "./SurveyQuestion/MultipleChoiceQuestion"
-import { BooleanQuestion } from "./SurveyQuestion/BooleanQuestion"
-import { ScaleQuestion } from "./SurveyQuestion/ScaleQuestion"
-import { TextQuestion } from "./SurveyQuestion/TextQuestion"
+import { MultipleChoiceQuestion } from "./SurveyQuestion/MultipleChoiceQuestion.tsx"
+import { BooleanQuestion } from "./SurveyQuestion/BooleanQuestion.tsx"
+import { ScaleQuestion } from "./SurveyQuestion/ScaleQuestion.tsx"
+import { TextQuestion } from "./SurveyQuestion/TextQuestion.tsx"
 
 export function SurveyQuestion({question, lang, answer, setAnswer, theme}: PropsSurveyQuestion) {
     switch (question.type) {

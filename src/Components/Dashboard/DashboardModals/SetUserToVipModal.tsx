@@ -36,7 +36,7 @@ export function SetUserToVipModal({setShowUpdateUserToVipModal, handleUpdateUser
                         disabled={loadingUpdateToVip}
                         variant='navbar'
                     >
-                        {loadingUpdateToVip ? <FallingLines color="#000" width="30" visible={true}
+                        {loadingUpdateToVip ? <FallingLines color={isDark ? "#fff" : "#000"} width="30" visible={true}
                                                             ariaLabel="falling-circles-loading"/> : "Confirm"}
                     </LiquidGlassButton>
                 </div>

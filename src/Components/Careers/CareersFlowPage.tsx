@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useTheme } from "../../Context/ThemeContext.tsx";
 import { LiquidGlassButton } from "../Buttons/LiquidGlassButton.tsx";
 import { useGetAllJobOffers } from "../../hooks/useGetJobOffers.ts";
+import {FallingLines} from "react-loader-spinner";
+import {ApplicationForm} from "./ApplicationForm.tsx";
 
 export type CreateJobPositionDTO = {
     _id: string;
@@ -134,7 +136,7 @@ export function CareersFlowPage() {
                     )}
 
                     {/* LOADING */}
-                    {loading && <p className="opacity-70">Caricamento posizioni...</p>}
+                    {loading && <div className='w-full h-full flex justify-center items-center'><FallingLines color="#fff" width={50} visible={true} ariaLabel="loading" /></div>}
 
                     {/* ERROR */}
                     {error && <p className="text-red-500">Errore nel caricamento delle posizioni.</p>}
@@ -252,17 +254,10 @@ export function CareersFlowPage() {
 
                     {/* STEP 3 — APPLY FORM */}
                     {step === "apply" && selectedJob && (
-                        <form className="space-y-6 max-w-xl">
-                            <h2 className="text-2xl font-semibold">Candidati — {selectedJob.title}</h2>
-
-                            <input placeholder="Nome completo" className="w-full p-4 rounded-xl border bg-transparent" />
-                            <input placeholder="Email" type="email" className="w-full p-4 rounded-xl border bg-transparent" />
-                            <input placeholder="LinkedIn / Portfolio" className="w-full p-4 rounded-xl border bg-transparent" />
-                            <textarea placeholder="Perché vuoi lavorare con noi?" rows={5} className="w-full p-4 rounded-xl border bg-transparent" />
-                            <input type="file" accept=".pdf,.doc,.docx" />
-
-                            <LiquidGlassButton>Invia candidatura</LiquidGlassButton>
-                        </form>
+                        <ApplicationForm
+                            jobId={selectedJob._id}
+                            jobTitle={selectedJob.title}
+                        />
                     )}
 
                 </section>

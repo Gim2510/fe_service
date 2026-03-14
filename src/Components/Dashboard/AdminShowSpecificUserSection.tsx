@@ -68,7 +68,7 @@ export function AdminShowSpecificUserSection({allUsers, selectedUserIdToShow, se
             {loading && (
                 <div className='w-full h-full flex justify-center items-center'>
                     <FallingLines
-                        color={isDark ? "#fff" : "#111"}
+                        color={isDark ? "#fff" : "#000"}
                         width="50"
                         visible={true}
                         ariaLabel="falling-circles-loading"

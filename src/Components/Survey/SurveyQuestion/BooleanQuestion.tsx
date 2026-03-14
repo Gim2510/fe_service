@@ -1,5 +1,5 @@
 import type { FC } from "react"
-import type { PropsBooleanQuestion } from "../../props"
+import type { PropsBooleanQuestion } from "../../../props.ts"
 
 const OPTIONS = [
     { label: "Sì", value: true },

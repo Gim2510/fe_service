@@ -281,7 +281,7 @@ export function Register() {
 
                             <LiquidGlassButton type="submit" disabled={loading || !passwordsMatch || passwordScore < 2} className='mt-5'>
                                 {loading ? (
-                                    <FallingLines width="30" color="#fff" visible/>
+                                    <FallingLines width="30" color={`${theme === 'dark' ? '#fff' : '#000'}`} visible/>
                                 ) : (
                                     "Crea account"
                                 )}

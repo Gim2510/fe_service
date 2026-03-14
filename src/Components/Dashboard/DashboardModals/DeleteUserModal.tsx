@@ -35,7 +35,7 @@ export function DeleteUserModal({setShowDeleteUserModal, handleConfirmDeleteUser
                         disabled={loadingDeleteUser}
                         variant='navbar'
                     >
-                        {loadingDeleteUser ? <FallingLines color="#000" width="15" visible={true}
+                        {loadingDeleteUser ? <FallingLines color={isDark ? "#fff" : "#000"} width="15" visible={true}
                                                            ariaLabel="falling-circles-loading"/> : "Confirm"}
                     </LiquidGlassButton>
                 </div>

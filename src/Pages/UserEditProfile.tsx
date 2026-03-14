@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "../hooks/useUser";
 import { Input } from "../Components/Input.tsx";
 import type { UserEditForm } from "../types/userEditForm.ts";
-import { Section } from "../Components/SurveyQuestion/Section.tsx";
+import { Section } from "../Components/Survey/SurveyQuestion/Section.tsx";
 import { useDeleteUser } from "../hooks/useDeleteUser.ts";
 import { useAuth } from "../auth/AuthContext.tsx";
 import { useUpdateUserInfo } from "../hooks/useUpdateUserInfo.ts";
@@ -203,7 +203,7 @@ export function UserEditProfile() {
                                 className="px-6 py-2 rounded-full bg-white text-black flex items-center justify-center"
                             >
                                 {loadingUpdate ? (
-                                    <FallingLines color="#000" width={30} visible={true} ariaLabel="loading" />
+                                    <FallingLines color={`${theme === 'dark' ? '#fff' : "#000"}`} width={30} visible={true} ariaLabel="loading" />
                                 ) : (
                                     "Conferma"
                                 )}

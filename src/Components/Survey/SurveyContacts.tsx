@@ -1,8 +1,9 @@
 import { useState } from "react"
 import { FallingLines } from "react-loader-spinner"
 
-import { useAuth } from "../auth/AuthContext"
-import { LiquidGlassButton } from "./Buttons/LiquidGlassButton"
+import { useAuth } from "../../auth/AuthContext.tsx"
+import { LiquidGlassButton } from "../Buttons/LiquidGlassButton.tsx"
+import {useTheme} from "../../Context/ThemeContext.tsx";
 
 type SurveyContactsProps = {
     surveyId: string
@@ -14,6 +15,7 @@ const PHONE_PREFIXES = ["+39", "+1", "+44", "+33", "+49"]
 export function SurveyContacts({ surveyId, onNext }: SurveyContactsProps) {
     const { token } = useAuth()
 
+    const {theme} = useTheme()
     const [prefix, setPrefix] = useState(PHONE_PREFIXES[0])
     const [number, setNumber] = useState("")
     const [loading, setLoading] = useState(false)
@@ -100,7 +102,7 @@ export function SurveyContacts({ surveyId, onNext }: SurveyContactsProps) {
 
             <LiquidGlassButton disabled={!canSubmit} onClick={handleSubmit}>
                 {loading ? (
-                    <FallingLines color="#fff" width="30" visible />
+                    <FallingLines color={`${theme === 'dark' ? '#fff' : '#000'}`} width="30" visible />
                 ) : (
                     "Invia"
                 )}

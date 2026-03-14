@@ -183,3 +183,11 @@ export type CreateJobPositionInput = {
         metaDescription?: string;
     };
 };
+
+export type JobApplicationInput = {
+    name: string;
+    email: string;
+    social: string;
+    description: string;
+    cv: File | null;
+}

@@ -7,9 +7,9 @@ import { useSurveyTemplate } from "../hooks/useSurveyTemplate"
 import { useSurveyFlow } from "../hooks/useSurveyFlow"
 import { useInitSurvey } from "../hooks/useInitSurvey"
 
-import { SurveyQuestion } from "../Components/SurveyQuestion"
-import { SurveyContacts } from "../Components/SurveyContacts"
-import { SurveyConfirmation } from "../Components/SurveyConfirmation"
+import { SurveyQuestion } from "../Components/Survey/SurveyQuestion.tsx"
+import { SurveyContacts } from "../Components/Survey/SurveyContacts.tsx"
+import { SurveyConfirmation } from "../Components/Survey/SurveyConfirmation.tsx"
 import { LiquidGlassButton } from "../Components/Buttons/LiquidGlassButton"
 import {useTheme} from "../Context/ThemeContext.tsx";
 

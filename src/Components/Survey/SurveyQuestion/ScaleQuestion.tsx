@@ -1,5 +1,5 @@
 import type { FC } from "react"
-import type { PropsScaleQuestion } from "../../props"
+import type { PropsScaleQuestion } from "../../../props.ts"
 
 export const ScaleQuestion: FC<PropsScaleQuestion> = ({min = 1, max = 5, answer, onChange,}) => {
     const value =

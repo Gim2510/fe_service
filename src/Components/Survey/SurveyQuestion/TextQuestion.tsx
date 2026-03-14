@@ -1,5 +1,5 @@
 import type { FC } from "react"
-import type { PropsTextQuestion } from "../../props"
+import type { PropsTextQuestion } from "../../../props.ts"
 
 export const TextQuestion: FC<PropsTextQuestion> = ({answer, onChange,}) => {
     const value = answer ?? ""

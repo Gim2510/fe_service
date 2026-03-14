@@ -1,8 +1,8 @@
-import { useGenerateSurveyReport } from "../hooks/useGenerateReport.ts";
+import { useGenerateSurveyReport } from "../../hooks/useGenerateReport.ts";
 import { useNavigate } from "react-router-dom";
-import { LiquidGlassButton } from "./Buttons/LiquidGlassButton.tsx";
+import { LiquidGlassButton } from "../Buttons/LiquidGlassButton.tsx";
 import {FallingLines} from "react-loader-spinner";
-import {useTheme} from "../Context/ThemeContext.tsx";
+import {useTheme} from "../../Context/ThemeContext.tsx";
 
 type Props = {
     surveyId: string;
@@ -65,7 +65,7 @@ export function SurveyConfirmation({ surveyId }: Props) {
                 <div className="flex flex-col sm:flex-row justify-center gap-6 mt-6 items-center">
                     <LiquidGlassButton
                         onClick={() => success ? window.location.reload() : handleGenerateSurveyReport()}
-                        disabled={loading || success}
+                        disabled={loading}
                         className={`flex-1 ${isDark ? "" : "bg-white"}`}
                     >
                         {loading

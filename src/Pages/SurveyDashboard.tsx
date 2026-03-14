@@ -371,7 +371,7 @@ export function SurveyDashboard() {
 
                 <LiquidGlassButton
                     variant='navbar'
-                    className="hover:!bg-red-600/60"
+                    className={`hover:!bg-red-600/60 ${isDark ? "" : "!bg-white"} min-w-40`}
                     disabled={resetting}
                     onClick={async () => {
 
@@ -386,7 +386,7 @@ export function SurveyDashboard() {
 
                     }}
                 >
-                    {resetting ? "Resetting..." : "Reset Survey"}
+                    {resetting ? <FallingLines color={`${isDark ? "#fff" : "#000"}`} width="15" visible ariaLabel="loading"/> : "Reset Survey"}
                 </LiquidGlassButton>
 
             </section>

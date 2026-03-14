@@ -63,7 +63,7 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                             </div>
                         ))}
 
-                        {loading && <div className="text-white/60 text-sm"><FallingLines color="#fff" width="30" visible={true} ariaLabel="falling-circles-loading"/></div>}
+                        {loading && <div className="text-white/60 text-sm"><FallingLines color={theme === "dark" ? "#fff" : "#000"} width="30" visible={true} ariaLabel="falling-circles-loading"/></div>}
                         {error && <div className="text-red-400 text-sm">{error}</div>}
                         <div ref={messagesEndRef} />
                     </div>

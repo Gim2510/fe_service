@@ -36,7 +36,7 @@ export function PromoteUserModal({ onConfirm, onClose, loading = false, userEmai
                         disabled={loading}
                         variant='navbar'
                     >
-                        {loading ? <FallingLines color="#000" width="15" visible={true} ariaLabel="falling-circles-loading" /> : "Confirm"}
+                        {loading ? <FallingLines color={isDark ? "#fff" : "#000"} width="15" visible={true} ariaLabel="falling-circles-loading" /> : "Confirm"}
                     </LiquidGlassButton>
                 </div>
             </div>

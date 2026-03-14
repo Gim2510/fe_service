@@ -49,7 +49,7 @@ export function CreateJobConfirmModal({setShowModal, handleConfirm, loading, the
                     >
                         {loading ? (
                             <FallingLines
-                                color="#000"
+                                color={isDark ? "#fff" : "#000"}
                                 width="15"
                                 visible
                                 ariaLabel="loading"
