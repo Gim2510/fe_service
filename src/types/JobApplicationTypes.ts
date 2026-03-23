@@ -191,3 +191,4 @@ export type JobApplicationInput = {
     description: string;
     cv: File | null;
 }
+

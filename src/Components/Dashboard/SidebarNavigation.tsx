@@ -6,6 +6,7 @@ export type AdminTab =
     | "inspect"
     | "messaging"
     | "careers"
+    | "update job offers"
 
 export function SidebarNavigation({ setActiveTab, theme }: { activeTab: string; setActiveTab: any; theme: string }) {
     const isDark = theme === "dark";
@@ -16,6 +17,7 @@ export function SidebarNavigation({ setActiveTab, theme }: { activeTab: string; 
         { key: "inspect", label: "Inspect User" },
         { key: "messaging", label: "Messaging" },
         { key: "careers", label: "Careers" },
+        { key: "update job", label: "Update Job Offers" },
     ];
 
     return (

@@ -173,7 +173,7 @@ export function Navbar() {
 
                                 <MobileNavItem to="/survey/start" label="Survey" closeMenu={closeMenu} />
                                 <MobileNavItem to="/contact" label="Contacts" closeMenu={closeMenu} />
-                                <MobileNavItem to="/careers" label="careers" closeMenu={closeMenu} />
+                                <MobileNavItem to="/careers" label="Careers" closeMenu={closeMenu} />
                             </div>
 
                             <div className="h-px bg-gray-200" />

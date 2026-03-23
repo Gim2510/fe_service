@@ -18,7 +18,7 @@ export function useUser() {
             setError(null);
 
             const response = await fetch(
-                `${import.meta.env.VITE_USER_BASE_URL}/v1/user/user/${id}`,
+                `${import.meta.env.VITE_USER_BASE_URL}/v1/user/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
