@@ -5,7 +5,7 @@ import {OverviewPanel} from "./Panels/OverviewPanel.tsx";
 import {UserInspectionPanel} from "./Panels/UserInspectionPanel.tsx";
 import {MessagingPanel} from "./Panels/MessagingPanel.tsx";
 import {CreateJobApplicationPanel} from "./Panels/JobApplicationPanel.tsx";
-import {UpdateJobApplicationPanel} from "./Panels/UpdateJobApplicationPanel.tsx";
+// import {UpdateJobApplicationPanel} from "./Panels/UpdateJobApplicationPanel.tsx";
 
 type Props = {
     activeTab: AdminTab;
@@ -25,7 +25,7 @@ export function DashboardContent({activeTab, users, surveys, allUsers, refreshUs
             {activeTab === "inspect" && <UserInspectionPanel allUsers={allUsers} theme={theme} />}
             {activeTab === "messaging" && <MessagingPanel theme={theme} />}
             {activeTab === "careers" && <CreateJobApplicationPanel theme={theme} token={token} />}
-            {activeTab === "update job offers" && <UpdateJobApplicationPanel theme={theme} />}
+            {/*{activeTab === "update job offers" && <UpdateJobApplicationPanel theme={theme} />}*/}
         </div>
     );
 }
