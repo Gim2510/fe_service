@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../auth/AuthContext";
 import { ThemeToggle } from "./ThemeToggle";
 import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
+import {useTheme} from "../../Context/ThemeContext.tsx";
 
 interface NavbarActionsProps {
     closeMenu?: () => void;
@@ -9,6 +10,7 @@ interface NavbarActionsProps {
 
 export function NavbarActions({ closeMenu }: NavbarActionsProps) {
     const { isAuthenticated, logout } = useAuth();
+    const {theme} = useTheme()
 
     const handleLogout = () => {
         logout();
@@ -28,12 +30,13 @@ export function NavbarActions({ closeMenu }: NavbarActionsProps) {
                 </>
             ) : (
                 <>
-                    <Link to="/user" onClick={closeMenu} className="hover:text-white text-neutral-400 transition cursor-pointer">
+                    <Link to="/user" onClick={closeMenu} className={`${theme === 'dark' ? 'hover:text-white' : 'hover:text-black'} text-neutral-400 transition cursor-pointer transition-all ease-in-out`}>
                         Account
                     </Link>
                     <LiquidGlassButton
                         onClick={handleLogout}
                         variant='navbar'
+                        scale={false}
                     >
                         Logout
                     </LiquidGlassButton>
