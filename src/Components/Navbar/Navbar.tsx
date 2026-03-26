@@ -25,9 +25,9 @@ export function Navbar() {
                     <div className={`mt-4 rounded-2xl border backdrop-blur-xl transition-all duration-500 ${headerBg}`}>
                         <div className="flex items-center justify-between h-16 px-6">
                             <NavbarLogo/>
-                            <div className='flex gap-10 lg:block hidden'>
+                            <div className="hidden lg:flex items-center gap-10 w-fit">
                                 <NavbarDesktopMenu theme={theme}/>
-                                <p className='text-3xl text-gray-400 sm:block hidden'>|</p>
+                                <div className="h-6 w-px bg-gray-400/50"/>
                                 <NavbarActions/>
                             </div>
                             <button onClick={() => setOpen(true)} className="lg:hidden justify-self-end text-white">
