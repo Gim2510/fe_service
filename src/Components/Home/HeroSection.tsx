@@ -1,20 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { HeroGlobeDark } from "./HeroGlobeDark.tsx";
 import { LiquidGlassButton } from "../Buttons/LiquidGlassButton.tsx";
-import { useInitSurvey } from "../../hooks/useInitSurvey.ts";
 import { HeroOperationalSnapshot } from "./HeroOperationalSnapshot.tsx";
 
 export function HeroSection({theme}: {theme: string}) {
     const navigate = useNavigate();
-    const template_id = import.meta.env.VITE_SURVEY_TEMPLATE_ID;
-    useInitSurvey(template_id, 'it', true);
 
     const goToSurvey = () => navigate("/survey/start");
 
     const isDark = theme === "dark";
 
     return (
-        <section className="relative min-h-[100vh] flex items-center overflow-hidden sm:mt-0 mt-20 overflow-auto">
+        <section className="relative min-h-[100vh] flex items-center overflow-hidden overflow-auto">
             {/* Background */}
             <div className={`absolute inset-0 ${isDark ? "bg-neutral-950" : "bg-primary-white"}`} />
 
@@ -29,7 +26,7 @@ export function HeroSection({theme}: {theme: string}) {
             <div className="relative mx-auto max-w-7xl px-8 pb-18 pt-8 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center z-10">
 
                 {/* LEFT */}
-                <div className="flex flex-col sm:gap-8 gap-10">
+                <div className="flex flex-col sm:gap-8 gap-10 sm:pt-0 pt-20">
                     <span
                         className={`${isDark ? "text-neutral-400" : "text-white sm:text-black"} text-sm sm:text-base uppercase tracking-widest`}>
                         Consulenza digitale per PMI

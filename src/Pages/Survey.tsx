@@ -5,7 +5,6 @@ import { useSurvey } from "../hooks/useSurvey"
 import { useUserSurvey } from "../hooks/useUserSurvey"
 import { useSurveyTemplate } from "../hooks/useSurveyTemplate"
 import { useSurveyFlow } from "../hooks/useSurveyFlow"
-import { useInitSurvey } from "../hooks/useInitSurvey"
 
 import { SurveyQuestion } from "../Components/Survey/SurveyQuestion.tsx"
 import { SurveyContacts } from "../Components/Survey/SurveyContacts.tsx"
@@ -23,11 +22,6 @@ export function Survey() {
 
     const { survey, loading: loadingSurvey, error: errorSurvey } =
         useSurvey(surveyId)
-
-    const shouldInitSurvey =
-        !loadingSurveyId && !loadingSurvey && !!surveyId && !survey
-
-    useInitSurvey(surveyTemplateId, lang, shouldInitSurvey)
 
     const { questions, loading: loadingTemplate, error: errorTemplate } =
         useSurveyTemplate(surveyTemplateId)

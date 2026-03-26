@@ -1,57 +1,67 @@
-import { useNavigate } from "react-router-dom"
-import { useState, useEffect } from "react"
-import { useAuth } from "../auth/AuthContext"
-import { useUserSurvey } from "../hooks/useUserSurvey"
-import { useSurvey } from "../hooks/useSurvey"
-import { useInitSurvey } from "../hooks/useInitSurvey"
-import { LiquidGlassButton } from "../Components/Buttons/LiquidGlassButton.tsx"
-import { FallingLines } from "react-loader-spinner"
-import { useTheme } from "../Context/ThemeContext.tsx"
-import {SurveyIntro} from "../Components/Survey/SurveyIntro.tsx";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext.tsx";
+import { useUserSurvey } from "../hooks/useUserSurvey";
+import { useSurvey } from "../hooks/useSurvey";
+import { useInitSurvey } from "../hooks/useInitSurvey";
+import { LiquidGlassButton } from "../Components/Buttons/LiquidGlassButton.tsx";
+import { FallingLines } from "react-loader-spinner";
+import { useTheme } from "../Context/ThemeContext.tsx";
+import { SurveyIntro } from "../Components/Survey/SurveyIntro.tsx";
 
 export function SurveyStart() {
-    const navigate = useNavigate()
-    const { theme } = useTheme()
-    const isDark = theme === "dark"
-    const { isAuthenticated, emailVer } = useAuth()
+    const navigate = useNavigate();
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
+    const { isAuthenticated, emailVer } = useAuth();
 
-    const templateId = import.meta.env.VITE_SURVEY_TEMPLATE_ID
-    const locale: "it" = "it"
+    const templateId = import.meta.env.VITE_SURVEY_TEMPLATE_ID;
+    const locale: "it" = "it";
 
-    const { surveyId, loading: loadingSurveyId } = useUserSurvey()
-    const { survey, loading: loadingSurvey } = useSurvey(surveyId)
-    const [shouldInit, setShouldInit] = useState(false)
+    const { surveyId, loading: loadingSurveyId } = useUserSurvey();
+    const { survey, loading: loadingSurvey } = useSurvey(surveyId);
+    const { initSurvey, loading: initLoading } = useInitSurvey();
 
-    const { surveyId: newSurveyId, loading: initLoading } =
-        useInitSurvey(templateId, locale, shouldInit)
+    const handleStart = async () => {
+        try {
+            // Survey già esistente → vai al recap
+            if (survey?._id) {
+                navigate(`/survey/${survey._id}/recap`);
+                return;
+            }
 
-    // ---------------------------------------
-    // Redirect logico SOLO DOPO conferma utente
-    // ---------------------------------------
-    useEffect(() => {
-        if (!shouldInit) return
-        if (loadingSurvey || loadingSurveyId) return
+            // Survey nuovo → inizializza e vai alle domande
+            const newSurveyId = await initSurvey(templateId, locale);
 
-        const targetSurveyId = survey?._id || newSurveyId
-        if (targetSurveyId) {
-            navigate(`/survey/${targetSurveyId}/recap`)
-        } else {
-            navigate("/survey")
+            if (newSurveyId) {
+                navigate(`/survey`);
+            } else {
+                // fallback generico
+                navigate("/survey");
+            }
+        } catch (e) {
+            console.error("Errore avvio survey:", e);
         }
-    }, [shouldInit, survey, newSurveyId, loadingSurvey, loadingSurveyId, navigate])
+    };
 
-    // ---------------------------------------
+    // ---------------------------
     // UNAUTHENTICATED VIEW
-    // ---------------------------------------
+    // ---------------------------
     if (!isAuthenticated) {
-        return <SurveyIntro />
+        return <SurveyIntro />;
     }
 
-    // ---------------------------------------
-    // AUTHENTICATED VIEW - sempre visibile
-    // ---------------------------------------
+    // ---------------------------
+    // AUTHENTICATED VIEW
+    // ---------------------------
     return (
         <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-neutral-950" : "bg-primary-white"} px-6 py-32`}>
+
+            {/* Loader full-screen durante init */}
+            {initLoading && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+                    <FallingLines width="60" color="#fff" visible />
+                </div>
+            )}
 
             {/* Background grid */}
             <div
@@ -77,13 +87,13 @@ export function SurveyStart() {
                 {emailVer ? (
                     <LiquidGlassButton
                         className={`min-w-60 ${isDark ? "" : "!bg-white"}`}
-                        onClick={() => setShouldInit(true)}
-                        disabled={initLoading}
+                        onClick={handleStart}
+                        disabled={initLoading || loadingSurvey || loadingSurveyId}
                     >
                         {initLoading ? (
                             <FallingLines width="30" color={isDark ? "#fff" : "000"} visible />
                         ) : (
-                            survey ? "Continua il questionario" : "Vai al questionario"
+                            survey ? "Riprendi" : "Avvia il questionario"
                         )}
                     </LiquidGlassButton>
                 ) : (
@@ -121,5 +131,5 @@ export function SurveyStart() {
                 </div>
             </section>
         </main>
-    )
+    );
 }
