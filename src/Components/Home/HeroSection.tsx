@@ -11,9 +11,9 @@ export function HeroSection({theme}: {theme: string}) {
     const isDark = theme === "dark";
 
     return (
-        <section className="relative min-h-[100vh] flex items-center overflow-hidden overflow-auto">
+        <section className="relative min-h-[100dvh] flex items-center overflow-hidden">
             {/* Background */}
-            <div className={`absolute inset-0 ${isDark ? "bg-neutral-950" : "bg-primary-white"}`} />
+            <div className={`absolute inset-0 ${isDark ? "bg-neutral-950" : "bg-primary-white"}`}/>
 
             {/* Globe */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-10 ">
@@ -21,9 +21,11 @@ export function HeroSection({theme}: {theme: string}) {
             </div>
 
             {/* Grid Overlay */}
-            <div className={`absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,${isDark ? "white" : "black"}_1px,transparent_0)] bg-[size:32px_32px]`} />
+            <div
+                className={`absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,${isDark ? "white" : "black"}_1px,transparent_0)] bg-[size:32px_32px]`}/>
 
-            <div className="relative mx-auto max-w-7xl px-8 pb-18 pt-8 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center z-10">
+            <div
+                className="relative mx-auto max-w-7xl px-8 pb-18 pt-8 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-45 items-center z-10">
 
                 {/* LEFT */}
                 <div className="flex flex-col sm:gap-8 gap-10 sm:pt-0 pt-20">

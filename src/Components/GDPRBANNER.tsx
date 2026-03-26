@@ -49,13 +49,18 @@ export function GDPRBanner() {
         : "bg-white text-neutral-900 border-neutral-200";
 
     return (
-        <div className={`fixed bottom-0 left-0 w-full z-50 border-t shadow-2xl ${bg}`}>
+        <div
+            className={`fixed bottom-0 left-0 w-full z-50 border-t shadow-2xl ${bg}`}
+            style={{paddingBottom: "env(safe-area-inset-bottom)"}}
+        >
             {!openSettings ? (
-                <div className="max-w-6xl mx-auto p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+                <div
+                    className="max-w-6xl mx-auto p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
 
                     {/* TEXT */}
                     <p className="text-xs sm:text-sm opacity-80">
-                        Utilizziamo cookie per migliorare l’esperienza, analizzare il traffico e personalizzare i contenuti.
+                        Utilizziamo cookie per migliorare l’esperienza, analizzare il traffico e personalizzare i
+                        contenuti.
                     </p>
 
                     {/* BUTTONS */}

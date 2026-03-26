@@ -145,19 +145,19 @@ export function HeroGlobeDark() {
         controls.autoRotateSpeed = 0.4;
 
         setTimeout(() => {
-            globeRef.current.pointOfView({ lat: 20, lng: 0, altitude: 1.0 });
+            globeRef.current.pointOfView({ lat: 40, lng: 40, altitude: 1.0 });
         }, 100);
     }, []);
 
     return (
-        <div className="absolute inset-0 w-full h-full pointer-events-none top-0 left-0 lg:left-100">
+        <div className="absolute inset-0 w-full h-full pointer-events-none top-0 left-0 lg:left-140">
             <Globe
                 ref={globeRef}
                 backgroundColor="rgba(0,0,0,0)"
                 // texture universale neutra
                 globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
                 showAtmosphere
-                atmosphereColor={isDark ? "#999" : "#555"} // più visibile su light
+                atmosphereColor={isDark ? "#999" : "#555"}
                 atmosphereAltitude={0.15}
 
                 pointsData={points}
