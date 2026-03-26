@@ -52,7 +52,7 @@ export function ProblemiSection({ theme }: { theme: string }) {
                     <h2 className={`text-4xl font-semibold leading-12 sm:leading-tight ${isDark ? "text-white" : "text-neutral-900"}`}>
                         I problemi non sono isolati.
                         <br/>
-                        <span className="text-[#9e0e05]">
+                        <span className="text-[#BD1E1E]">
                             C'è sempre un filo conduttore.
                         </span>
                     </h2>

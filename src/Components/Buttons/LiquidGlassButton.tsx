@@ -11,17 +11,20 @@ interface LiquidGlassButtonProps {
     type?: 'submit' | 'button';
     disabled?: boolean;
     scale?: boolean;
+    fillBackground?: boolean; // nuovo parametro
 }
 
-export function LiquidGlassButton({children, onClick, to, type = 'button', variant = "default", className = "", disabled = false, scale = true}: LiquidGlassButtonProps) {
+export function LiquidGlassButton({children, onClick, to, type = 'button', variant = "default", className = "", disabled = false, scale = true, fillBackground = false}: LiquidGlassButtonProps) {
     const { theme } = useTheme();
     const isDark = theme === "dark";
 
     // Base style con tema automatico
     const baseStyle = `
         relative ${disabled ? "cursor-not-allowed" : "cursor-pointer"} 
-        rounded-2xl text-${isDark ? "white" : "black"} 
-        backdrop-blur-xl bg-${isDark ? "white/10" : "white/30"} 
+        rounded-2xl 
+        ${isDark ? "text-white" : "text-black"} 
+        ${!isDark && fillBackground ? "group-hover:text-white" : ""} 
+        backdrop-blur-xl bg-${isDark ? "white/10" : "white/70"} 
         border ${isDark ? "border-white/20" : "border-black/30"} 
         overflow-hidden transition-all duration-300 group
     `;
@@ -30,15 +33,25 @@ export function LiquidGlassButton({children, onClick, to, type = 'button', varia
         ? `px-5 py-2 text-sm font-medium ${scale ? "hover:scale-105" : ""}`
         : `sm:px-10 px-2 py-4 text-sm sm:text-lg font-medium ${
             disabled ? "" : scale ? "hover:scale-105 active:scale-95" : ""
-        }`
+        }`;
+
     const glowStyle = variant === "navbar"
         ? "shadow-md"
         : `shadow-[0_8px_32px_rgba(0,0,0,${isDark ? "0.37" : "0.15"})]`;
 
-    const scaleStyle = scale === true ? "!hover:scale-100" : "!hover:scale-none"
+    const scaleStyle = scale === true ? "!hover:scale-100" : "!hover:scale-none";
 
     const content = (
         <>
+            {/* Sfondo animato rosso su hover */}
+            {fillBackground && (
+                <span className={`
+                    absolute inset-0 rounded-2xl
+                    bg-gradient-to-br from-[#9e0e05] via-[#b71c1c] to-[#f44336] 
+                    opacity-0 group-hover:opacity-100 transition-opacity duration-500
+                `} />
+            )}
+
             <span className={`
                 absolute inset-0 bg-gradient-to-br 
                 from-white/${isDark ? "30" : "50"} 
@@ -47,6 +60,7 @@ export function LiquidGlassButton({children, onClick, to, type = 'button', varia
                 ${disabled ? "" : "group-hover:opacity-70"} 
                 transition-opacity
             `} />
+
             <span className={`
                 absolute -inset-[2px] rounded-full 
                 bg-gradient-to-r 
@@ -57,7 +71,10 @@ export function LiquidGlassButton({children, onClick, to, type = 'button', varia
                 ${disabled ? "" : "group-hover:opacity-50"} 
                 transition-opacity duration-500
             `} />
-            <span className="relative z-10 tracking-wide flex justify-center items-center">
+
+            <span className={`relative z-10 tracking-wide flex justify-center items-center
+                              ${!isDark && fillBackground && variant === "navbar" ? "group-hover:text-white text-black" : ""}
+                              ${isDark ? "text-white" : ""}`}>
                 {children}
             </span>
         </>

@@ -33,7 +33,7 @@ export function HeroSection({ theme }: { theme: string }) {
 
                     <h1 className={`${isDark ? "text-white" : "text-neutral-900"} text-4xl sm:text-6xl font-semibold leading-tight`}>
                         Il tuo business <br/>
-                        <span className={`${isDark ? "text-[#9e0e05]" : "text-[#9e0e05]"} font-bold`}> genera dati. </span>
+                        <span className={`${isDark ? "text-[#BD1E1E]" : "text-[#BD1E1E]"} font-bold`}> genera dati. </span>
                         <br/>
                         <span className="text-3xl sm:text-5xl"> sei in grado di gestirli? </span>
                     </h1>
@@ -45,7 +45,7 @@ export function HeroSection({ theme }: { theme: string }) {
                     </p>
 
                     <div className="flex items-center gap-4">
-                        <LiquidGlassButton onClick={goToSurvey} variant="navbar">
+                        <LiquidGlassButton onClick={goToSurvey} variant="navbar" fillBackground>
                             Scopri cosa stai perdendo
                         </LiquidGlassButton>
 

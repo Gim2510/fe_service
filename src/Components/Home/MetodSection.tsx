@@ -26,7 +26,7 @@ export function MetodSection({ theme }: { theme: string }) {
                 <h2 className={`${isDark ? "text-white" : "text-neutral-900"} text-4xl font-semibold mt-4 text-center sm:text-start sm:leading-12 leading-12`}>
                     Un approccio strutturato
                     <br />
-                    <span className={`${isDark ? "text-[#9e0e05]" : "text-[#9e0e05]"}`}>
+                    <span className={`${isDark ? "text-[#BD1E1E]" : "text-[#BD1E1E]"}`}>
                         orientato ai risultati concreti.
                     </span>
                 </h2>
