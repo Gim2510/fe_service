@@ -22,7 +22,7 @@ export function HeroSection({ theme }: { theme: string }) {
             </div>
 
             {/* CONTENT */}
-            <div className="relative z-10 mx-auto max-w-7xl sm:px-8 px-4 pb-20 pt-20 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="relative z-10 mx-auto max-w-7xl sm:px-8 px-4 pb-20 sm:pt-20 pt-28 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
                 {/* LEFT */}
                 <div className={` flex flex-col gap-10 p-6 sm:p-0 rounded-2xl ${theme === 'dark' ? 'bg-white/10' : 'bg-white/30'} backdrop-blur-lg border border-white/20 shadow-xl`}>
