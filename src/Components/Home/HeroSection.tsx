@@ -25,7 +25,7 @@ export function HeroSection({ theme }: { theme: string }) {
             <div className="relative z-10 mx-auto max-w-7xl sm:px-8 px-4 pb-20 sm:pt-20 pt-28 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
                 {/* LEFT */}
-                <div className={` flex flex-col gap-10 p-6 sm:p-0 rounded-2xl sm:bg-transparent ${theme === 'dark' ? 'bg-white/10' : 'bg-white/30'} sm:backdrop-blur-none backdrop-blur-lg border sm:border-none border-white/20 shadow-xl sm:shadow-none`}>
+                <div className={` flex flex-col gap-10 p-6 sm:p-0 rounded-2xl sm:bg-transparent ${theme === 'dark' ? 'bg-white/10' : 'bg-white/20'} sm:backdrop-blur-none backdrop-blur-sm border sm:border-none border-white/20 shadow-xl sm:shadow-none`}>
                     <span
                         className={`${isDark ? "text-neutral-400" : "text-black"} font-semibold text-sm uppercase tracking-widest`}>
                         Consulenza digitale per PMI
@@ -49,7 +49,7 @@ export function HeroSection({ theme }: { theme: string }) {
                             Scopri cosa stai perdendo
                         </LiquidGlassButton>
 
-                        <span className="text-sm text-neutral-400">
+                        <span className="text-sm text-black">
                             Analisi guidata • Nessun impegno
                         </span>
                     </div>
