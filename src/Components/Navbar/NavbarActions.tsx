@@ -19,7 +19,7 @@ export function NavbarActions({ closeMenu }: NavbarActionsProps) {
         <div className="flex items-center gap-6 text-sm">
             {!isAuthenticated ? (
                 <>
-                    <Link to="/login" onClick={closeMenu} className="hover:text-white transition text-neutral-400">
+                    <Link to="/login" onClick={closeMenu} className="hover:text-white transition text-neutral-400 cursor-pointer">
                         Login
                     </Link>
                     <LiquidGlassButton variant='navbar' to="/register" onClick={closeMenu} className="!text-xs" scale={false}>
@@ -28,15 +28,15 @@ export function NavbarActions({ closeMenu }: NavbarActionsProps) {
                 </>
             ) : (
                 <>
-                    <Link to="/user" onClick={closeMenu} className="hover:opacity-70 transition">
+                    <Link to="/user" onClick={closeMenu} className="hover:text-white text-neutral-400 transition cursor-pointer">
                         Account
                     </Link>
-                    <button
+                    <LiquidGlassButton
                         onClick={handleLogout}
-                        className="text-red-500 hover:text-red-600 transition"
+                        variant='navbar'
                     >
                         Logout
-                    </button>
+                    </LiquidGlassButton>
                 </>
             )}
 
