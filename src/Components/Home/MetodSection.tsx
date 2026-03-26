@@ -16,10 +16,10 @@ export function MetodSection({ theme }: { theme: string }) {
                 <span className={`text-sm uppercase tracking-widest ${isDark ? "text-neutral-400" : "text-neutral-600"} `}>
                     Metodo
                 </span>
-                <h2 className={`${isDark ? "text-white" : "text-neutral-900"} text-4xl font-semibold mt-4 text-center sm:text-start`}>
+                <h2 className={`${isDark ? "text-white" : "text-neutral-900"} text-4xl font-semibold mt-4 text-center sm:text-start sm:leading-12 leading-12`}>
                     Un approccio strutturato
                     <br />
-                    <span className={`${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
+                    <span className={`${isDark ? "text-[#9e0e05]" : "text-[#9e0e05]"}`}>
                         orientato ai risultati concreti.
                     </span>
                 </h2>

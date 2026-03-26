@@ -16,10 +16,10 @@ export function ProblemiSection({theme}: {theme: string}) {
     return (
         <SectionBase theme={theme}>
             <div className="max-w-3xl mb-24">
-                <h2 className={`text-4xl font-semibold leading-tight ${isDark ? "text-white" : "text-neutral-900"}`}>
+                <h2 className={`text-4xl font-semibold leading-12 sm:leading-tight ${isDark ? "text-white" : "text-neutral-900"}`}>
                     I problemi non sono isolati.
                     <br />
-                    <span className={`${isDark ? "text-neutral-400" : "text-neutral-500"}`}>C'è sempre un filo conduttore.</span>
+                    <span className={`${isDark ? "text-[#9e0e05]" : "text-[#9e0e05]"}`}>C'è sempre un filo conduttore.</span>
                 </h2>
                 <p className={`mt-6 text-lg ${isDark ? "text-neutral-300" : "text-neutral-600"}`}>
                     Nella maggior parte delle PMI...

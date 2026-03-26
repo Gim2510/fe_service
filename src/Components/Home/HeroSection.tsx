@@ -25,7 +25,7 @@ export function HeroSection({ theme }: { theme: string }) {
             <div className="relative z-10 mx-auto max-w-7xl sm:px-8 px-4 pb-20 sm:pt-20 pt-28 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
                 {/* LEFT */}
-                <div className={` flex flex-col gap-10 p-6 sm:p-0 rounded-2xl ${theme === 'dark' ? 'bg-white/10' : 'bg-white/30'} backdrop-blur-lg border border-white/20 shadow-xl`}>
+                <div className={` flex flex-col gap-10 p-6 sm:p-0 rounded-2xl sm:bg-transparent ${theme === 'dark' ? 'bg-white/10' : 'bg-white/30'} sm:backdrop-blur-none backdrop-blur-lg border sm:border-none border-white/20 shadow-xl sm:shadow-none`}>
                     <span
                         className={`${isDark ? "text-neutral-400" : "text-black"} font-semibold text-sm uppercase tracking-widest`}>
                         Consulenza digitale per PMI
@@ -33,7 +33,7 @@ export function HeroSection({ theme }: { theme: string }) {
 
                     <h1 className={`${isDark ? "text-white" : "text-neutral-900"} text-4xl sm:text-6xl font-semibold leading-tight`}>
                         Il tuo business <br/>
-                        <span className={`${isDark ? "text-neutral-400" : "text-[#9e0e05]"} font-bold`}> genera dati. </span>
+                        <span className={`${isDark ? "text-[#9e0e05]" : "text-[#9e0e05]"} font-bold`}> genera dati. </span>
                         <br/>
                         <span className="text-3xl sm:text-5xl"> sei in grado di gestirli? </span>
                     </h1>

@@ -24,7 +24,7 @@ export function CTASection({ theme }: { theme: string }) {
                 {/* Headline */}
                 <h2 className={`${isDark ? "text-white" : "text-gray-900"} text-4xl md:text-5xl font-semibold leading-tight max-w-4xl`}>
                     Trasforma i tuoi processi in un
-                    <span className={`${isDark ? "text-neutral-400" : "text-gray-500"} block`}>
+                    <span className={`${isDark ? "text-[#9e0e05]" : "text-[#9e0e05]"} block`}>
                         vantaggio competitivo misurabile.
                     </span>
                 </h2>
