@@ -10,7 +10,7 @@ export function HeroOperationalSnapshot({ theme }: { theme: string }) {
     const isDark = theme === "dark";
 
     return (
-        <div className={`group relative rounded-3xl border p-8 space-y-6 backdrop-blur-sm opacity-100 sm:opacity-20 sm:hover:opacity-100 transition-all duration-700 ease-out
+        <div className={`group relative rounded-3xl border p-8 space-y-6 backdrop-blur-sm opacity-100 transition-all duration-700 ease-out
                          shadow-[0_30px_80px_rgba(0,0,0,0.6)]
                          ${isDark ? "bg-neutral-900/70 border-white/10" : "bg-white/70 border-neutral-300"}`}>
             <div className="flex justify-between items-baseline">

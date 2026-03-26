@@ -30,7 +30,7 @@ export function Navbar() {
                                 <div className="h-6 w-px bg-gray-400/50"/>
                                 <NavbarActions/>
                             </div>
-                            <button onClick={() => setOpen(true)} className="lg:hidden justify-self-end text-white">
+                            <button onClick={() => setOpen(true)} className={`lg:hidden justify-self-end ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
                                 <MenuIcon/>
                             </button>
                         </div>
