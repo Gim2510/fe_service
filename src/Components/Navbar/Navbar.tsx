@@ -16,7 +16,7 @@ export function Navbar() {
 
     const headerBg = theme === "dark"
         ? "bg-white/5 border-white/10 shadow-[0_8px_40px_rgba(0,0,0,0.4)]"
-        : "bg-neutral-50/90 border-gray-200 shadow-[0_8px_40px_rgba(0,0,0,0.15)]";
+        : "bg-neutral-50/40 border-gray-200 shadow-[0_8px_40px_rgba(0,0,0,0.15)]";
 
     return (
         <>

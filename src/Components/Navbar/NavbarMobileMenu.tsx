@@ -21,7 +21,7 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
     };
 
     const mobileDrawerBg = theme === "dark" ? "bg-neutral-950/90 border-white/10" : "bg-neutral-50/95 border-gray-200";
-    const mobileToggleBg = theme === "dark" ? "bg-white/5 border-white/10" : "bg-neutral-100 border-gray-200";
+    const mobileToggleBg = theme === "dark" ? "bg-white/5 border-white/10 text-white" : "shadow-[inset_0_2px_6px_rgba(0,0,0,0.2)] border-gray-200 text-black";
 
     return (
         <div className={`fixed inset-0 z-60 transition ${open ? "visible opacity-100" : "invisible opacity-0"}`}>
@@ -34,7 +34,7 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
                     </div>
 
                     <div className="flex flex-col gap-8 text-base text-neutral-700">
-                        {isAuthenticated && <MobileNavItemPremium to="/premium" label={isPremium ? "Premium Attivo" : "Premium"} isPremium={isPremium} closeMenu={closeMenu} />}
+                        {isAuthenticated && <MobileNavItemPremium theme={theme} to="/premium" label={isPremium ? "Premium Attivo" : "Premium"} isPremium={isPremium} closeMenu={closeMenu} />}
                         {isAuthenticated && role === "ADMIN" && <MobileNavItem to="/dashboard" label="Dashboard" closeMenu={closeMenu} />}
                         <MobileNavItem to="/survey/start" label="Survey" closeMenu={closeMenu} />
                         <MobileNavItem to="/contact" label="Contacts" closeMenu={closeMenu} />
