@@ -47,7 +47,7 @@ export function LiquidGlassButton({children, onClick, to, type = 'button', varia
             {fillBackground && (
                 <span className={`
                     absolute inset-0 rounded-2xl
-                    bg-gradient-to-br from-[#118AB2] via-[#1499C5] to-[#16B0E3] 
+                    bg-gradient-to-br from-[#7C1616] via-[#BD1E1E] to-[#E32525] 
                     opacity-0 group-hover:opacity-100 transition-opacity duration-500
                 `} />
             )}
