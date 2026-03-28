@@ -25,7 +25,7 @@ export function SurveyIntro() {
             {/* Hero Section */}
             <section className="relative max-w-4xl mx-auto space-y-8 z-10 text-center flex flex-col">
                 <h1 className={`text-4xl sm:text-6xl font-semibold leading-tight ${cardTextClass}`}>
-                    Inizia il tuo assessment digitale
+                    Inizia il tuo <span className='text-main-red'>assessment</span> digitale
                 </h1>
 
                 <p className={`text-md sm:text-xl max-w-3xl mx-auto leading-relaxed ${textMainClass}`}>
@@ -35,7 +35,7 @@ export function SurveyIntro() {
                     strategiche operative.
                 </p>
 
-                <LiquidGlassButton to="/register" className={`${isDark ? "" : "!bg-white"}`}>
+                <LiquidGlassButton to="/register" className={`${isDark ? "" : "!bg-white"} !rounded-4xl`}>
                     Registrati per iniziare
                 </LiquidGlassButton>
             </section>

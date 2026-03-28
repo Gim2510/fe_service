@@ -80,3 +80,44 @@ html, body {
     background-color: #555;
     border: 2px solid #2a2a2a;
 }
+
+/* stato iniziale */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+    filter: blur(6px);
+    will-change: transform, opacity, filter;
+}
+
+.hero-line:nth-child(2) {
+    text-shadow: 0 0 20px rgba(189,30,30,0.25);
+}
+
+/* animazione */
+.reveal {
+    animation: heroReveal 1.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* delays */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.3s; }
+.delay-3 { animation-delay: 0.5s; }
+
+/* keyframes */
+@keyframes heroReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.96);
+        filter: blur(8px);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(-2px) scale(1.01);
+        filter: blur(2px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}

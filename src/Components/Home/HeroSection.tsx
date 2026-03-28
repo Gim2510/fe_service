@@ -30,12 +30,18 @@ export function HeroSection({ theme }: { theme: string }) {
                         className={`${isDark ? "text-neutral-400" : "text-black"} font-semibold text-sm uppercase tracking-widest`}>
                         Consulenza digitale per PMI
                     </span>
-
                     <h1 className={`${isDark ? "text-white" : "text-neutral-900"} text-4xl sm:text-6xl font-semibold leading-tight`}>
-                        Il tuo business <br/>
-                        <span className={`${isDark ? "text-[#BD1E1E]" : "text-[#BD1E1E]"} font-bold`}> genera dati. </span>
+                        <span className="hero-line reveal delay-1">
+                            Il tuo business <br/>
+                        </span>
+                        <span
+                            className={`hero-line reveal delay-2 ${isDark ? "text-[#BD1E1E]" : "text-[#BD1E1E]"} font-bold`}>
+                            genera dati.
+                        </span>
                         <br/>
-                        <span className="text-3xl sm:text-5xl"> sei in grado di gestirli? </span>
+                        <span className="hero-line reveal delay-3 text-3xl sm:text-5xl">
+                            sei in grado di gestirli?
+                        </span>
                     </h1>
 
                     <p className={`${isDark ? "text-neutral-300" : "text-black"} text-lg max-w-xl`}>

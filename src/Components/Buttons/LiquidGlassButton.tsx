@@ -25,7 +25,7 @@ export function LiquidGlassButton({children, onClick, to, type = 'button', varia
         ${isDark ? "text-white" : "text-black"} 
         ${!isDark && fillBackground ? "group-hover:text-white" : ""} 
         backdrop-blur-xl bg-${isDark ? "white/10" : "white/70"} 
-        border ${isDark ? "border-white/20" : "border-black/30"} 
+        border ${isDark ? "border-white/20" : "border-black/10 shadow-sm"} 
         overflow-hidden transition-all duration-300 group
     `;
 
@@ -47,7 +47,7 @@ export function LiquidGlassButton({children, onClick, to, type = 'button', varia
             {fillBackground && (
                 <span className={`
                     absolute inset-0 rounded-2xl
-                    bg-gradient-to-br from-[#9e0e05] via-[#b71c1c] to-[#f44336] 
+                    bg-gradient-to-br from-[#118AB2] via-[#1499C5] to-[#16B0E3] 
                     opacity-0 group-hover:opacity-100 transition-opacity duration-500
                 `} />
             )}
