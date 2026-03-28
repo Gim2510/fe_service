@@ -14,15 +14,24 @@ export function NavItem({ to, label, theme }: { to: string; label: string; theme
     const inactiveText = theme === "dark" ? "text-neutral-400 hover:text-white" : "text-neutral-500 hover:text-black";
 
     return (
-        <NavLink
-            to={to}
-            className={({ isActive }) =>
-                `transition ${isActive ? activeText : inactiveText}`
-            }
-        >
-            {label}
+        <NavLink to={to}>
+            {({ isActive }) => (
+                <span className={`relative px-1 py-1 transition ${isActive ? activeText : inactiveText}`}>
+                    {label}
+
+                    <span
+                        className={`
+                            absolute left-0 -bottom-1 h-[1px] w-full
+                            origin-left scale-x-0
+                            transition-transform duration-300
+                            ${isActive ? "scale-x-100" : "group-hover:scale-x-100"}
+                            ${theme === "dark" ? "bg-white" : "bg-black"}
+                        `}
+                    />
+                </span>
+            )}
         </NavLink>
-    )
+    );
 }
 
 // NavItemPremium con tema

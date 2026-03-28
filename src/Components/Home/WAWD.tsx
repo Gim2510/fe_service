@@ -19,10 +19,9 @@ export function WAWD({ theme }: { theme: string }) {
 
                 <GlassCard
                     theme={theme}
-                    className={`p-12 ${isDark ? "" : "bg-white/5 border-black/10"}`}
+                    className={` ${isDark ? "" : "bg-white/5 border-black/10"}`}
                 >
-                    <div className={`aspect-[4/3] flex items-center justify-center ${isDark ? "text-neutral-500" : "text-neutral-700"} text-sm`}>
-                        Placeholder visual
+                    <div className={`aspect-[4/3] rounded-3xl bg-center bg-cover bg-[url(/bgContainer.png)] flex items-center justify-center ${isDark ? "text-neutral-500" : "text-neutral-700"} text-sm`}>
                     </div>
                 </GlassCard>
 

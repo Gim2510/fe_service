@@ -47,7 +47,7 @@ export function ContactPage() {
                         Parliamo del tuo
                         <br />
                         <span
-                            className={theme === "dark" ? "text-neutral-400" : "text-black"}
+                            className="text-main-red"
                         >
                             prossimo passo digitale.
                         </span>

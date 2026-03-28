@@ -75,7 +75,7 @@ export function SurveyStart() {
             {/* Hero / conferma */}
             <section className="relative z-10 max-w-4xl mx-auto text-center space-y-10">
                 <h1 className={`text-5xl font-light leading-tight ${isDark ? "text-white" : "text-black"}`}>
-                    Inizia la tua analisi
+                    Inizia la tua <span className="text-main-red font-semibold">analisi</span>
                 </h1>
 
                 <p className={`text-xl max-w-3xl mx-auto leading-relaxed ${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
@@ -86,7 +86,7 @@ export function SurveyStart() {
 
                 {emailVer ? (
                     <LiquidGlassButton
-                        className={`min-w-60 ${isDark ? "" : "!bg-white"}`}
+                        className={`min-w-60 ${isDark ? "" : "!bg-white"} !rounded-4xl`}
                         onClick={handleStart}
                         disabled={initLoading || loadingSurvey || loadingSurveyId}
                     >

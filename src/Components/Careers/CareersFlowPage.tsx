@@ -112,7 +112,7 @@ export function CareersFlowPage() {
 
                 {/* HERO */}
                 <section className="max-w-3xl space-y-6">
-                    <h1 className="text-5xl font-semibold">Lavora con noi</h1>
+                    <h1 className="text-5xl font-semibold">Lavora <span className='text-main-red'>con noi</span></h1>
                     <p className={`text-lg ${textClass}`}>
                         Stiamo costruendo strumenti che trasformano i dati delle
                         survey in insight operativi per le aziende.
