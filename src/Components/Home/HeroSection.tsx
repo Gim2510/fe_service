@@ -49,7 +49,7 @@ export function HeroSection({ theme }: { theme: string }) {
                             Scopri cosa stai perdendo
                         </LiquidGlassButton>
 
-                        <span className="text-sm text-black">
+                        <span className={`text-sm ${isDark ? "text-white" : "text-black"}`}>
                             Analisi guidata • Nessun impegno
                         </span>
                     </div>

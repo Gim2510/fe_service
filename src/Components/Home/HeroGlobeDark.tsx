@@ -150,7 +150,7 @@ export function HeroGlobeDark() {
     }, []);
 
     return (
-        <div className="absolute inset-0 w-full h-full pointer-events-none top-0 left-0 lg:left-140">
+        <div className="absolute inset-0 w-full h-full pointer-events-none top-0 left-0 lg:left-140 z-20">
             <Globe
                 ref={globeRef}
                 backgroundColor="rgba(0,0,0,0)"
