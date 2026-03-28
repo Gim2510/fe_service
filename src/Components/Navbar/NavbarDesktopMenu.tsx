@@ -17,6 +17,7 @@ export function NavbarDesktopMenu({ theme }: NavbarDesktopMenuProps) {
             <NavItem theme={theme} to="/survey/start" label="Survey" />
             <NavItem theme={theme} to="/contact" label="Contacts" />
             <NavItem theme={theme} to="/careers" label="Careers" />
+            {isAuthenticated && <NavItem theme={theme} to="/user" label="Account"/>}
         </div>
     );
 }

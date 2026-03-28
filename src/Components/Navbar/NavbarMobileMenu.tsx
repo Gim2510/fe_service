@@ -39,6 +39,7 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
                         <MobileNavItem to="/survey/start" label="Survey" closeMenu={closeMenu} />
                         <MobileNavItem to="/contact" label="Contacts" closeMenu={closeMenu} />
                         <MobileNavItem to="/careers" label="Careers" closeMenu={closeMenu} />
+                        {isAuthenticated && <MobileNavItem to="/user" label="Account" closeMenu={closeMenu}/>}
 
                         <button onClick={toggleTheme} className={`cursor-pointer w-full flex items-center justify-between px-4 py-3 rounded-xl transition ${mobileToggleBg}`}>
                             <span>Tema</span>
