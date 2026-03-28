@@ -4,6 +4,7 @@ import { useLogin } from "../hooks/useLogin"
 import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
 import {FallingLines} from "react-loader-spinner";
 import {useTheme} from "../Context/ThemeContext.tsx";
+import {Input} from "../Components/Inputs/Input.tsx";
 
 export function Login() {
     const {theme} = useTheme()
@@ -43,7 +44,7 @@ export function Login() {
                     <h1 className="text-5xl font-semibold leading-tight">
                         Accedi al tuo
                         <br />
-                        <span className={`${theme === "dark" ? "text-neutral-400" : "text-black"}`}>
+                        <span className={`text-main-red`}>
                           spazio di controllo.
                         </span>
                     </h1>
@@ -77,6 +78,7 @@ export function Login() {
                             )}
 
                             <Input
+                                name="email"
                                 type="email"
                                 label="Email"
                                 value={email}
@@ -85,13 +87,14 @@ export function Login() {
                             />
 
                             <Input
+                                name="password"
                                 type="password"
                                 label="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 theme={theme}
                             />
-                            <LiquidGlassButton type="submit" disabled={loading} className="mt-4">{loading ? <FallingLines
+                            <LiquidGlassButton type="submit" disabled={loading} variant="navbar" scale={false} fillBackground={true} className="mt-4">{loading ? <FallingLines
                                 color={theme === "dark" ? "white" : "black"}
                                 width="30"
                                 visible={true}
@@ -124,20 +127,5 @@ export function Login() {
 
             </div>
         </main>
-    )
-}
-
-function Input({label, type, value, onChange, theme}: { label: string,type: string,value: string,onChange: React.ChangeEventHandler<HTMLInputElement>, theme: string }) {
-    const isDark = theme === "dark"
-    return (
-        <div className="flex flex-col gap-2">
-            <label className="text-sm text-neutral-400">{label}</label>
-            <input
-                type={type}
-                value={value}
-                onChange={onChange}
-                required
-                className={`w-full rounded-xl border px-4 py-3 active:ring-0 outline-none ${isDark ? "bg-neutral-900 text-white border-neutral-800" : "bg-indigo-50 text-black border-black/30"}`}            />
-        </div>
     )
 }

@@ -27,7 +27,7 @@ export function WAWD({ theme }: { theme: string }) {
                 </GlassCard>
 
                 <div className="flex flex-col gap-6">
-                    <h2 className={`${isDark ? "text-white" : "text-neutral-900"} text-center sm:text-start text-3xl font-semibold leading-tight`}>
+                    <h2 className={`${isDark ? "text-white" : "text-neutral-900"} text-center sm:text-start text-3xl sm:text-3xl font-semibold leading-tight`}>
                         Soluzioni digitali progettate intorno
                         ai tuoi processi reali
                     </h2>

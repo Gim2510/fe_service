@@ -100,7 +100,7 @@ export function CareersFlowPage() {
         return `${minStr}${min && max ? " - " : ""}${maxStr} ${currency || ""} / ${period || ""}`;
     };
 
-    const bgClass = isDark ? "bg-neutral-950 text-white" : "bg-white text-black";
+    const bgClass = isDark ? "bg-neutral-950 text-white" : "bg-primary-white text-black";
     const cardBgClass = isDark
         ? "bg-neutral-900/70 border border-neutral-800"
         : "bg-white/90 border border-neutral-300";

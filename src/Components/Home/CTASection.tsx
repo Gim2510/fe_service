@@ -55,7 +55,7 @@ export function CTASection({ theme }: { theme: string }) {
 
                 {/* CTA */}
                 <div className="mt-14">
-                    <LiquidGlassButton onClick={goToSurvey} className={` ${!isDark ? `!bg-white/90 sm:bg-transparent !border-black/20 shadow-lg` : ``}`}>
+                    <LiquidGlassButton onClick={goToSurvey} fillBackground className={`${!isDark ? `!bg-white/90 sm:bg-transparent !border-black/20 shadow-lg hover:!text-white` : ``}`}>
                         Avvia l’analisi strategica
                     </LiquidGlassButton>
                 </div>

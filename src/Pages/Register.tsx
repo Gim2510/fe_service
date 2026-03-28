@@ -1,4 +1,4 @@
-import {type ChangeEvent, type ChangeEventHandler, type SubmitEventHandler, useEffect, useRef, useState} from "react"
+import {type ChangeEvent, type SubmitEventHandler, useEffect, useRef, useState} from "react"
 import { useNavigate } from "react-router-dom"
 import { useRegister } from "../hooks/useRegister"
 import { LiquidGlassButton } from "../Components/Buttons/LiquidGlassButton.tsx"
@@ -7,7 +7,8 @@ import { FallingLines } from "react-loader-spinner"
 import { useTheme } from "../Context/ThemeContext.tsx"
 import zxcvbn from "zxcvbn"
 import {getStrengthColor, getStrengthText} from "../utils/colorFunctions.ts";
-import { Check, X } from "lucide-react"
+import {Input} from "../Components/Inputs/Input.tsx"
+import {InputConfirm} from "../Components/Inputs/InputConfirm.tsx"
 
 export function Register() {
     const { theme } = useTheme()
@@ -111,7 +112,7 @@ export function Register() {
                         Inizia a costruire
                         <br />
                         <span
-                            className={theme === "dark" ? "text-neutral-400" : "text-black"}
+                            className='text-main-red'
                         >
                             un sistema sotto controllo.
                         </span>
@@ -144,7 +145,7 @@ export function Register() {
                                 : "bg-white/40 shadow-3xl"
                         }`}
                     >
-                        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
                             <div className="text-center mb-2">
                                 <h2 className="text-2xl font-semibold">Crea account</h2>
@@ -212,43 +213,7 @@ export function Register() {
 
                                 <label className="text-sm text-neutral-400">Conferma password</label>
 
-                                <div className="relative">
-
-                                    <input
-                                        name="confirmPassword"
-                                        type="password"
-                                        value={form.confirmPassword}
-                                        onChange={handleChange}
-                                        required
-                                        className={`w-full px-4 py-3 pr-10 rounded-xl border outline-none transition
-                ${
-                                            theme === "dark"
-                                                ? "bg-neutral-800 text-white"
-                                                : "bg-white text-black"
-                                        }
-                ${
-                                            form.confirmPassword
-                                                ? passwordsMatch
-                                                    ? "border-green-500"
-                                                    : "border-red-500"
-                                                : theme === "dark"
-                                                    ? "border-neutral-700"
-                                                    : "border-neutral-300"
-                                        }
-            `}
-                                    />
-
-                                    {form.confirmPassword && (
-                                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                                            {passwordsMatch ? (
-                                                <Check className="w-5 h-5 text-green-500"/>
-                                            ) : (
-                                                <X className="w-5 h-5 text-red-500"/>
-                                            )}
-                                        </div>
-                                    )}
-
-                                </div>
+                                <InputConfirm form={form} handleChange={handleChange} theme={theme} passwordsMatch={passwordsMatch} />
 
                             </div>
                             <Input theme={theme} label="Company name" name="company_name" value={form.company_name}
@@ -260,7 +225,7 @@ export function Register() {
                                     name="company_role"
                                     value={form.company_role}
                                     onChange={handleChange}
-                                    className={`px-4 py-3 rounded-xl border outline-none transition ${
+                                    className={`px-4 py-1 rounded-xl border outline-none transition ${
                                         theme === "dark"
                                             ? "bg-neutral-800 border-neutral-700 text-white focus:border-white focus:ring-white"
                                             : "bg-white border-neutral-300 text-black focus:border-black focus:ring-black"
@@ -279,7 +244,7 @@ export function Register() {
                             <Input theme={theme} label="Partita IVA" name="partita_iva" value={form.partita_iva}
                                    onChange={handleChange}/>
 
-                            <LiquidGlassButton type="submit" disabled={loading || !passwordsMatch || passwordScore < 2} className='mt-5'>
+                            <LiquidGlassButton type="submit" disabled={loading || !passwordsMatch || passwordScore < 2} className='mt-5' variant='navbar' scale={false} fillBackground={true}>
                                 {loading ? (
                                     <FallingLines width="30" color={`${theme === 'dark' ? '#fff' : '#000'}`} visible/>
                                 ) : (
@@ -311,30 +276,3 @@ export function Register() {
     )
 }
 
-/* Input */
-function Input({label, name, type = "text", value, onChange, theme,}: {
-    label: string,
-    name: string,
-    type?: string,
-    value: string,
-    onChange: ChangeEventHandler<HTMLInputElement>,
-    theme: string
-}) {
-    return (
-        <div className="flex flex-col gap-2">
-            <label className="text-sm text-neutral-400">{label}</label>
-            <input
-                name={name}
-                type={type}
-                value={value}
-                onChange={onChange}
-                required
-                className={`px-4 py-3 rounded-xl border outline-none transition ${
-                    theme === "dark"
-                        ? "bg-neutral-800 border-neutral-700 text-white focus:border-white focus:ring-white"
-                        : "bg-white border-neutral-300 text-black focus:border-black focus:ring-black"
-                } focus:ring-1`}
-            />
-        </div>
-    )
-}

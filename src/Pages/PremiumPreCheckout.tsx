@@ -20,12 +20,12 @@ export function PremiumPreCheckout() {
     };
 
     // Condizioni per classi di background/testo
-    const bgClass = isDark ? "bg-neutral-950 text-white" : "bg-white text-black";
+    const bgClass = isDark ? "bg-neutral-950 text-white" : "bg-primary-white text-black";
     const textMainClass = isDark ? "text-neutral-300" : "text-neutral-700";
     const cardBgClass = isDark
         ? "bg-neutral-900/70 border border-neutral-800"
         : "bg-white/90 border border-neutral-300";
-    const cardTextClass = isDark ? "text-neutral-400" : "text-neutral-800";
+    const cardTextClass = isDark ? "white" : "text-neutral-800";
 
     return (
         <main className={`relative min-h-screen overflow-hidden ${bgClass}`}>
@@ -54,7 +54,7 @@ export function PremiumPreCheckout() {
                     <h1 className={`text-5xl md:text-6xl font-semibold leading-tight ${cardTextClass}`}>
                         Trasforma un semplice questionario
                         <br />
-                        in un <span className={isDark ? "text-neutral-400" : "text-neutral-500"}>report strategico operativo.</span>
+                        <span className='text-main-red'> in un report strategico operativo.</span>
                     </h1>
 
                     <p className={`text-xl max-w-3xl ${textMainClass}`}>
@@ -64,7 +64,7 @@ export function PremiumPreCheckout() {
                     </p>
 
                     <div className="flex items-center gap-8 pt-6">
-                        <LiquidGlassButton onClick={() => setShowModal(true)}>
+                        <LiquidGlassButton onClick={() => setShowModal(true)} fillBackground={true} variant='navbar'>
                             Attiva Premium — 15€/mese
                         </LiquidGlassButton>
                         <span className={`text-sm ${cardTextClass}`}>
@@ -141,7 +141,7 @@ export function PremiumPreCheckout() {
                         <h2 className={`text-4xl font-semibold ${cardTextClass}`}>Premium</h2>
 
                         <div className={`text-6xl font-semibold ${cardTextClass}`}>
-                            15€ <span className={isDark ? "text-neutral-400" : "text-neutral-500"}>/ mese</span>
+                            15€ <span className='text-main-red'>/ mese</span>
                         </div>
 
                         <p className={cardTextClass}>
@@ -149,7 +149,7 @@ export function PremiumPreCheckout() {
                             dopo ogni compilazione del survey.
                         </p>
 
-                        <LiquidGlassButton onClick={() => setShowModal(true)}>
+                        <LiquidGlassButton onClick={() => setShowModal(true)} fillBackground={true} className="!rounded-4xl !py-2">
                             Attiva ora
                         </LiquidGlassButton>
 

@@ -32,7 +32,7 @@ export function DigitalMaturitySection({ theme }: { theme: string }) {
                 <span className={`text-sm uppercase tracking-widest ${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
                     Maturità digitale
                 </span>
-                <h2 className={`${isDark ? "text-white" : "text-neutral-900"} text-4xl font-semibold mt-2`}>
+                <h2 className={`${isDark ? "text-white" : "text-neutral-900"} text-4xl sm:text-5xl font-semibold mt-2`}>
                     Comprendere il tuo livello di maturità digitale
                 </h2>
                 <p className={`${isDark ? "text-neutral-400" : "text-neutral-700"} mt-4 text-lg max-w-2xl mx-auto`}>

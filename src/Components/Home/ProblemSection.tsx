@@ -49,7 +49,7 @@ export function ProblemiSection({ theme }: { theme: string }) {
 
                 {/* CONTENUTO */}
                 <div className="max-w-3xl relative z-10">
-                    <h2 className={`text-4xl font-semibold leading-12 sm:leading-tight ${isDark ? "text-white" : "text-neutral-900"}`}>
+                    <h2 className={`text-4xl sm:text-5xl font-semibold leading-12 sm:leading-tight ${isDark ? "text-white" : "text-neutral-900"}`}>
                         I problemi non sono isolati.
                         <br/>
                         <span className="text-[#BD1E1E]">
