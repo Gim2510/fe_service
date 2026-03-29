@@ -96,7 +96,7 @@ export function Login() {
                             />
                             <LiquidGlassButton type="submit" disabled={loading} variant="navbar" scale={false} fillBackground={true} className="mt-4">{loading ? <FallingLines
                                 color={theme === "dark" ? "white" : "black"}
-                                width="30"
+                                width="20"
                                 visible={true}
                                 ariaLabel="falling-circles-loading"
                             /> : "Accedi"}</LiquidGlassButton>
