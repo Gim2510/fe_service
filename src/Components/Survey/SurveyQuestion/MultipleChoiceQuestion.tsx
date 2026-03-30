@@ -23,8 +23,8 @@ export const MultipleChoiceQuestion: FC<MultipleChoiceQuestionProps> = ({options
                     : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:border-white/20"
 
                 const lightClasses = isSelected
-                    ? "bg-neutral-200/30 border-neutral-300 text-black backdrop-blur-md"
-                    : "bg-neutral-100/20 border-neutral-200 text-black/70 hover:bg-neutral-200/20 hover:border-neutral-300"
+                    ? "bg-white shadow-[inset_0_4px_10px_rgba(0,0,0,0.3)] border-neutral-300 text-black backdrop-blur-md"
+                    : "bg-white border-neutral-200 text-black/70 hover:bg-gray-100 hover:border-neutral-300"
 
                 return (
                     <button

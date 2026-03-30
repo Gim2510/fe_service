@@ -33,7 +33,7 @@ export function DigitalMaturitySection({ theme }: { theme: string }) {
                     Maturità digitale
                 </span>
                 <h2 className={`${isDark ? "text-white" : "text-neutral-900"} text-4xl sm:text-5xl font-semibold mt-2`}>
-                    Comprendere il tuo livello di maturità digitale
+                    Comprendere il tuo livello di <span className='text-main-red'>maturità digitale</span>
                 </h2>
                 <p className={`${isDark ? "text-neutral-400" : "text-neutral-700"} mt-4 text-lg max-w-2xl mx-auto`}>
                     Valutiamo i tuoi processi, tecnologia e dati secondo standard strutturati, generando un punteggio chiaro e operativo.
