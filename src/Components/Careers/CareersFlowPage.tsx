@@ -136,7 +136,7 @@ export function CareersFlowPage() {
                     )}
 
                     {/* LOADING */}
-                    {loading && <div className='w-full h-full flex justify-center items-center'><FallingLines color="#fff" width={50} visible={true} ariaLabel="loading" /></div>}
+                    {loading && <div className='w-full h-full flex justify-center items-center'><FallingLines color={isDark ? "#fff" : "#000"} width={50} visible={true} ariaLabel="loading" /></div>}
 
                     {/* ERROR */}
                     {error && <p className="text-red-500">Errore nel caricamento delle posizioni.</p>}

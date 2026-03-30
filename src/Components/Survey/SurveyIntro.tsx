@@ -35,7 +35,7 @@ export function SurveyIntro() {
                     strategiche operative.
                 </p>
 
-                <LiquidGlassButton to="/register" className={`${isDark ? "" : "!bg-white"} !rounded-4xl`}>
+                <LiquidGlassButton to="/register" className={`${isDark ? "" : "!bg-white hover:!text-white"} !rounded-4xl`} scale={false} fillBackground>
                     Registrati per iniziare
                 </LiquidGlassButton>
             </section>

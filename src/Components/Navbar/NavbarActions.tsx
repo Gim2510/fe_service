@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../auth/AuthContext";
 import { ThemeToggle } from "./ThemeToggle";
-import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
-import {useTheme} from "../../Context/ThemeContext.tsx";
+import { LiquidGlassButton } from "../Buttons/LiquidGlassButton";
+import { useTheme } from "../../Context/ThemeContext";
+import { LogoutConfirmModal } from "./LogoutConfirmModal";
 
 interface NavbarActionsProps {
     closeMenu?: () => void;
@@ -10,33 +12,63 @@ interface NavbarActionsProps {
 
 export function NavbarActions({ closeMenu }: NavbarActionsProps) {
     const { isAuthenticated, logout } = useAuth();
-    const {theme} = useTheme()
+    const { theme } = useTheme();
 
-    const handleLogout = () => {
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const handleLogoutClick = () => {
+        setModalOpen(true);
+    };
+
+    const handleConfirmLogout = () => {
         logout();
+        setModalOpen(false);
         closeMenu?.();
+    };
+
+    const handleCancelLogout = () => {
+        setModalOpen(false);
     };
 
     return (
         <div className="flex items-center gap-6 text-sm">
             {!isAuthenticated ? (
                 <>
-                    <Link to="/login" onClick={closeMenu} className="hover:text-white transition text-neutral-400 cursor-pointer">
+                    <LiquidGlassButton
+                        to="/login"
+                        variant="navbar"
+                        onClick={closeMenu}
+                        className="!text-xs !min-w-23 active:!shadow-inner"
+                        scale={false}
+                    >
                         Login
-                    </Link>
-                    <LiquidGlassButton variant='navbar' to="/register" onClick={closeMenu} className="!text-xs" scale={false}>
+                    </LiquidGlassButton>
+                    <LiquidGlassButton
+                        to="/register"
+                        variant="navbar"
+                        onClick={closeMenu}
+                        className="!text-xs !min-w-23 active:!shadow-inner"
+                        scale={false}
+                    >
                         Registrati
                     </LiquidGlassButton>
                 </>
             ) : (
                 <>
-                    <Link to="/user" onClick={closeMenu} className={`${theme === 'dark' ? 'hover:text-white' : 'hover:text-black'} text-neutral-400 transition cursor-pointer transition-all ease-in-out`}>
+                    <Link
+                        to="/user"
+                        onClick={closeMenu}
+                        className={`${
+                            theme === "dark" ? "hover:text-white" : "hover:text-black"
+                        } text-neutral-400 transition cursor-pointer transition-all ease-in-out`}
+                    >
                         Account
                     </Link>
                     <LiquidGlassButton
-                        onClick={handleLogout}
-                        variant='navbar'
+                        onClick={handleLogoutClick}
+                        variant="navbar"
                         scale={false}
+                        className="!text-xs !min-w-23 active:!shadow-inner"
                     >
                         Logout
                     </LiquidGlassButton>
@@ -44,6 +76,14 @@ export function NavbarActions({ closeMenu }: NavbarActionsProps) {
             )}
 
             <ThemeToggle />
+
+            {/* Modale di conferma logout */}
+            <LogoutConfirmModal
+                open={modalOpen}
+                onConfirm={handleConfirmLogout}
+                onCancel={handleCancelLogout}
+                theme={theme}
+            />
         </div>
     );
 }

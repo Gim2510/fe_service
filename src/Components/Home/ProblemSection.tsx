@@ -76,7 +76,7 @@ export function ProblemiSection({ theme }: { theme: string }) {
                     >
                         <GlassCard
                             theme={theme}
-                            className={`p-8 ${isDark
+                            className={`p-8 sm:min-h-52 ${isDark
                                 ? "bg-white/10 border-white/20 text-white"
                                 : "bg-white/80 border-neutral-300 text-neutral-900"
                             }`}
