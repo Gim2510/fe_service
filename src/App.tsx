@@ -25,6 +25,9 @@ import {PremiumPreCheckout} from "./Pages/PremiumPreCheckout.tsx";
 import {PremiumProvider} from "./Context/PremiumContext.tsx";
 import {ThemeProvider} from "./Context/ThemeContext.tsx";
 import {CareersFlowPage} from "./Components/Careers/CareersFlowPage.tsx";
+import {PrivacyPolicy} from "./Pages/PrivacyPolicy.tsx";
+import {TermsOfService} from "./Pages/TermOfService.tsx";
+import {CookiePolicy} from "./Pages/CookiePolicy.tsx";
 
 function App() {
     return (
@@ -50,7 +53,10 @@ function App() {
                             <Route path="/premium" element={<Protected><LayoutHomepage><PremiumPreCheckout/></LayoutHomepage></Protected>} />
                             <Route path="/payment_success" element={<LayoutHomepage><PaymentSuccess /></LayoutHomepage>} />
                             <Route path="/payment_cancel" element={<LayoutHomepage><PaymentCancel /></LayoutHomepage>} />
-                            <Route path='/careers' element={<LayoutHomepage><CareersFlowPage/></LayoutHomepage>} />
+                            <Route path="/careers" element={<LayoutHomepage><CareersFlowPage/></LayoutHomepage>} />
+                            <Route path="/privacy" element={<LayoutHomepage><PrivacyPolicy /></LayoutHomepage>} />
+                            <Route path="/terms" element={<LayoutHomepage><TermsOfService /></LayoutHomepage>} />
+                            <Route path="/cookies" element={<LayoutHomepage><CookiePolicy /></LayoutHomepage>} />
                         </Routes>
                     </PremiumProvider>
                 </AuthProvider>
