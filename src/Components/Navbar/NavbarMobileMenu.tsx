@@ -1,9 +1,7 @@
 import { MobileNavItem } from "./MobileNavItem";
 import { useAuth } from "../../auth/AuthContext";
-import { usePremium } from "../../Context/PremiumContext";
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "../../Context/ThemeContext";
-import {MobileNavItemPremium} from "./MobileNavItemPremium.tsx";
 
 interface NavbarMobileMenuProps {
     open: boolean;
@@ -12,7 +10,7 @@ interface NavbarMobileMenuProps {
 
 export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
     const { isAuthenticated, role, logout } = useAuth();
-    const { isPremium } = usePremium();
+    // const { isPremium } = usePremium();
     const { theme, toggleTheme } = useTheme();
 
     const handleLogout = () => {
@@ -34,7 +32,7 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
                     </div>
 
                     <div className="flex flex-col gap-8 text-base text-neutral-700">
-                        {isAuthenticated && <MobileNavItemPremium theme={theme} to="/premium" label={isPremium ? "Premium Attivo" : "Premium"} isPremium={isPremium} closeMenu={closeMenu} />}
+                        {/*{isAuthenticated && <MobileNavItemPremium theme={theme} to="/premium" label={isPremium ? "Premium Attivo" : "Premium"} isPremium={isPremium} closeMenu={closeMenu} />}*/}
                         {isAuthenticated && role === "ADMIN" && <MobileNavItem to="/dashboard" label="Dashboard" closeMenu={closeMenu} />}
                         <MobileNavItem to="/survey/start" label="Survey" closeMenu={closeMenu} />
                         <MobileNavItem to="/contact" label="Contacts" closeMenu={closeMenu} />

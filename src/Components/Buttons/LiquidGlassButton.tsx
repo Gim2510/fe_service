@@ -1,20 +1,9 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
 import { useTheme } from "../../Context/ThemeContext";
+import type {LiquidGlassButtonProps} from "../../types/ButtonTypes.ts";
+import {getFillBackground} from "../../utils/getFillBackground.ts";
 
-interface LiquidGlassButtonProps {
-    children: React.ReactNode;
-    onClick?: () => void;
-    to?: string;
-    variant?: "default" | "navbar";
-    className?: string;
-    type?: 'submit' | 'button';
-    disabled?: boolean;
-    scale?: boolean;
-    fillBackground?: boolean; // nuovo parametro
-}
-
-export function LiquidGlassButton({children, onClick, to, type = 'button', variant = "default", className = "", disabled = false, scale = true, fillBackground = false}: LiquidGlassButtonProps) {
+export function LiquidGlassButton({children, onClick, to, type = 'button', variant = "default", className = "", disabled = false, scale = true, fillBackground}: LiquidGlassButtonProps) {
     const { theme } = useTheme();
     const isDark = theme === "dark";
 
@@ -44,12 +33,14 @@ export function LiquidGlassButton({children, onClick, to, type = 'button', varia
     const content = (
         <>
             {/* Sfondo animato rosso su hover */}
-            {fillBackground && (
-                <span className={`
-                    absolute inset-0 rounded-2xl
-                    bg-gradient-to-br from-[#7C1616] via-[#BD1E1E] to-[#E32525] 
-                    opacity-0 group-hover:opacity-100 transition-opacity duration-500
-                `} />
+            {fillBackground && fillBackground !== "none" && (
+                <span
+                    className={`
+                absolute inset-0 rounded-2xl
+                ${getFillBackground(fillBackground)}
+                opacity-0 group-hover:opacity-100 transition-opacity duration-500
+            `}
+                />
             )}
 
             <span className={`

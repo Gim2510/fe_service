@@ -51,7 +51,7 @@ export function HeroSection({ theme }: { theme: string }) {
                     </p>
 
                     <div className="flex items-center gap-4">
-                        <LiquidGlassButton onClick={goToSurvey} variant="navbar" fillBackground>
+                        <LiquidGlassButton onClick={goToSurvey} variant="navbar" fillBackground='secondary' className='!py-3 !rounded-4xl !text-base'>
                             Scopri cosa stai perdendo
                         </LiquidGlassButton>
 

@@ -127,7 +127,7 @@ export function Survey() {
                     )}
 
                     {isConfirmationStep && (
-                        <SurveyConfirmation surveyId={surveyId} />
+                        <SurveyConfirmation survey_id={surveyId}/>
                     )}
                 </div>
             </section>

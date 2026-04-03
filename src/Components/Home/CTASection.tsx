@@ -31,7 +31,7 @@ export function CTASection({ theme }: { theme: string }) {
 
                 {/* Subheadline */}
                 <p className={`${isDark ? "text-neutral-400" : "text-gray-600"} mt-6 text-lg max-w-2xl leading-relaxed`}>
-                    In pochi minuti ottieni una valutazione strutturata
+                    In poche ore ottieni una valutazione strutturata
                     del livello di maturità digitale della tua azienda,
                     con indicazioni concrete sulle priorità di intervento.
                 </p>
@@ -55,14 +55,14 @@ export function CTASection({ theme }: { theme: string }) {
 
                 {/* CTA */}
                 <div className="mt-14">
-                    <LiquidGlassButton onClick={goToSurvey} fillBackground className={`${!isDark ? `!bg-white/90 sm:bg-transparent !border-black/20 shadow-lg hover:!text-white` : ``} !rounded-4xl`}>
+                    <LiquidGlassButton onClick={goToSurvey} fillBackground='secondary' className={`${!isDark ? `!bg-white/90 sm:bg-transparent !border-black/20 shadow-lg hover:!text-white` : ``} !rounded-4xl`}>
                         Avvia l’analisi strategica
                     </LiquidGlassButton>
                 </div>
 
                 {/* Trust reinforcement */}
                 <p className={`${isDark ? "text-neutral-400" : "text-black"} mt-6 text-xs`}>
-                    Tempo stimato: 3–5 minuti • Nessuna registrazione richiesta
+                    Tempo stimato: 3–5 minuti • registrazione richiesta
                 </p>
             </div>
         </section>

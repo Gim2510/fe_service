@@ -59,8 +59,8 @@ export function NavbarActions({ closeMenu }: NavbarActionsProps) {
                         to="/user"
                         onClick={closeMenu}
                         className={`${
-                            theme === "dark" ? "hover:text-white" : "hover:text-black"
-                        } text-neutral-400 transition cursor-pointer transition-all ease-in-out`}
+                            theme === "dark" ? "text-neutral-400 hover:text-white" : "text-neutral-500 hover:text-black"
+                        } cursor-pointer transition-all ease-in-out`}
                     >
                         Account
                     </Link>

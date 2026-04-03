@@ -86,9 +86,11 @@ export function SurveyStart() {
 
                 {emailVer ? (
                     <LiquidGlassButton
-                        className={`min-w-60 ${isDark ? "" : "!bg-white"} !rounded-4xl`}
+                        className={`min-w-60 !py-3 ${isDark ? "" : "!bg-white"} !rounded-4xl`}
                         onClick={handleStart}
                         disabled={initLoading || loadingSurvey || loadingSurveyId}
+                        variant='navbar'
+                        fillBackground
                     >
                         {initLoading ? (
                             <FallingLines width="30" color={isDark ? "#fff" : "000"} visible />

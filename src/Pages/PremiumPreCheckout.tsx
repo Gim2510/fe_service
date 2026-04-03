@@ -24,7 +24,7 @@ export function PremiumPreCheckout() {
     const textMainClass = isDark ? "text-neutral-300" : "text-neutral-700";
     const cardBgClass = isDark
         ? "bg-neutral-900/70 border border-neutral-800"
-        : "bg-white/90 border border-neutral-300";
+        : "bg-white/90 border border-neutral-300/20";
     const cardTextClass = isDark ? "white" : "text-neutral-800";
 
     return (
@@ -38,39 +38,115 @@ export function PremiumPreCheckout() {
             {/* Liquid gradients */}
             {isDark && (
                 <>
-                    <div className="absolute -top-60 -left-60 w-[700px] h-[700px] bg-gradient-to-br from-indigo-500/20 via-cyan-400/20 to-blue-500/20 rounded-full blur-3xl opacity-30" />
-                    <div className="absolute bottom-[-300px] right-[-200px] w-[600px] h-[600px] bg-gradient-to-tr from-purple-500/20 via-fuchsia-400/20 to-indigo-500/20 rounded-full blur-3xl opacity-30" />
+                    <div className="absolute -top-60 -left-60 w-[700px] h-[700px] bg-gradient-to-br from-indigo-500/20 via-indigo-400/20 to-indigo-500/20 rounded-full blur-3xl opacity-30" />
+                    <div className="absolute bottom-[-300px] right-[-200px] w-[600px] h-[600px] bg-gradient-to-tr from-red-500/20 via-red-400/20 to-red-500/20 rounded-full blur-3xl opacity-30" />
                 </>
             )}
 
             <div className="relative max-w-7xl mx-auto px-8 py-32 space-y-32">
 
                 {/* HERO */}
-                <section className="max-w-4xl space-y-8">
-                    <span className={`text-sm uppercase tracking-widest ${cardTextClass}`}>
-                        Abbonamento Premium
-                    </span>
+                <section className="grid grid-cols-1 lg:grid-cols-3 gap-16 items-center">
 
-                    <h1 className={`text-5xl md:text-6xl font-semibold leading-tight ${cardTextClass}`}>
-                        Trasforma un semplice questionario
-                        <br />
-                        <span className='text-main-red'> in un report strategico operativo.</span>
-                    </h1>
-
-                    <p className={`text-xl max-w-3xl ${textMainClass}`}>
-                        Con l’abbonamento Premium ricevi analisi approfondite,
-                        insight strutturati e raccomandazioni operative personalizzate
-                        dopo ogni survey compilato.
-                    </p>
-
-                    <div className="flex items-center gap-8 pt-6">
-                        <LiquidGlassButton onClick={() => setShowModal(true)} fillBackground={true} variant='navbar'>
-                            Attiva Premium — 15€/mese
-                        </LiquidGlassButton>
-                        <span className={`text-sm ${cardTextClass}`}>
-                            Disdici in qualsiasi momento
+                    {/* LEFT TEXT */}
+                    <div className="max-w-2xl space-y-8 lg:col-span-2">
+                        <span className={`text-sm uppercase tracking-widest ${cardTextClass}`}>
+                            Abbonamento Premium
                         </span>
+
+                        <h1 className={`text-5xl md:text-6xl font-semibold leading-tight ${cardTextClass}`}>
+                            Trasforma un semplice questionario
+                            <br/>
+                            <span className="text-main-red">
+                                in un report strategico operativo.
+                            </span>
+                        </h1>
+
+                        <p className={`text-xl max-w-3xl ${textMainClass}`}>
+                            Con l’abbonamento Premium ricevi analisi approfondite,
+                            insight strutturati e raccomandazioni operative personalizzate
+                            dopo ogni survey compilato.
+                        </p>
+
+                        <div className="flex items-center gap-8 pt-6">
+                            <LiquidGlassButton
+                                onClick={() => setShowModal(true)}
+                                fillBackground='main'
+                                variant="navbar"
+                                className='!py-4'
+                            >
+                                Attiva Premium — 15€/mese
+                            </LiquidGlassButton>
+
+                            <span className={`text-sm ${cardTextClass}`}>
+                                Disdici in qualsiasi momento
+                            </span>
+                        </div>
                     </div>
+
+                    {/* RIGHT VISUAL CORE */}
+                    <div className="relative flex items-center justify-center">
+
+                        {/* background glow */}
+                        <div className="absolute inset-0">
+                            <div
+                                className="absolute top-0 right-0 w-[400px] h-[400px] bg-red-500/20 rounded-full blur-3xl"/>
+                            <div
+                                className="absolute bottom-0 left-0 w-[350px] h-[350px] bg-red-400/20 rounded-full blur-3xl"/>
+                        </div>
+
+                        {/* main glass object */}
+                        <div
+                            className={`relative w-[420px] h-[420px] rounded-[2.5rem] ${cardBgClass} backdrop-blur-2xl shadow-sm overflow-hidden`}>
+
+                            {/* SVG “data flow” background */}
+                            <svg
+                                className="absolute inset-0 w-full h-full opacity-20"
+                                viewBox="0 0 400 400"
+                                fill="none"
+                            >
+                                <path
+                                    d="M0 300 C100 200, 200 400, 400 150"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                />
+                                <path
+                                    d="M0 250 C120 100, 220 350, 400 200"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                />
+                                <path
+                                    d="M0 200 C150 300, 250 50, 400 250"
+                                    stroke="currentColor"
+                                    strokeWidth="1"
+                                />
+                            </svg>
+
+                            {/* center content */}
+                            <div
+                                className="relative h-full flex flex-col justify-center items-center text-center p-10 space-y-6">
+
+                                <div className="text-sm uppercase tracking-widest opacity-70">
+                                    AI Processing
+                                </div>
+
+                                <div className={`text-2xl font-semibold ${cardTextClass}`}>
+                                    Generating insights
+                                </div>
+
+                                <div className={`text-sm ${textMainClass}`}>
+                                    Structuring responses into operational intelligence
+                                </div>
+
+                                {/* fake status indicator */}
+                                <div className="flex items-center gap-2 mt-6">
+                                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"/>
+                                    <span className="text-xs opacity-70">Live analysis engine</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </section>
 
                 {/* WHAT YOU GET */}
@@ -122,7 +198,7 @@ export function PremiumPreCheckout() {
                     </p>
 
                     <div className="grid md:grid-cols-3 gap-10">
-                        {["Chiarezza","Priorità","Velocità"].map(title => (
+                        {["Chiarezza", "Priorità", "Velocità"].map(title => (
                             <div key={title} className={`p-8 rounded-3xl ${cardBgClass} backdrop-blur`}>
                                 <h3 className="text-xl font-medium mb-4">{title}</h3>
                                 <p className={`${cardTextClass} text-sm`}>
@@ -137,7 +213,8 @@ export function PremiumPreCheckout() {
 
                 {/* PRICING BLOCK */}
                 <section className="relative flex justify-center">
-                    <div className={`w-full max-w-2xl p-12 rounded-3xl ${cardBgClass} backdrop-blur-2xl shadow-2xl text-center space-y-8`}>
+                    <div
+                        className={`w-full max-w-2xl p-12 rounded-3xl ${cardBgClass} backdrop-blur-2xl shadow-2xl text-center space-y-8`}>
                         <h2 className={`text-4xl font-semibold ${cardTextClass}`}>Premium</h2>
 
                         <div className={`text-6xl font-semibold ${cardTextClass}`}>
@@ -149,7 +226,8 @@ export function PremiumPreCheckout() {
                             dopo ogni compilazione del survey.
                         </p>
 
-                        <LiquidGlassButton onClick={() => setShowModal(true)} fillBackground={true} className="!rounded-4xl !py-2">
+                        <LiquidGlassButton onClick={() => setShowModal(true)} fillBackground='main'
+                                           className="!rounded-4xl !py-2">
                             Attiva ora
                         </LiquidGlassButton>
 
