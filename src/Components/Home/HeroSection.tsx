@@ -1,7 +1,7 @@
 import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
 import {HeroGlobeDark} from "./HeroGlobeDark.tsx";
 import {useNavigate} from "react-router-dom";
-import {HeroOperationalSnapshot} from "./HeroOperationalSnapshot.tsx";
+// import {HeroSystemPreview} from "./HeroSystemPreview.tsx";
 
 export function HeroSection({ theme }: { theme: string }) {
     const navigate = useNavigate();
@@ -62,13 +62,13 @@ export function HeroSection({ theme }: { theme: string }) {
                 </div>
 
                 {/* RIGHT */}
-                <div className="relative z-10 hidden lg:block">
-                    <div className={`rounded-3xl border ${
-                        isDark ? "border-neutral-700 bg-neutral-900/80" : "border-neutral-300 bg-white/80"
-                    } p-8 shadow-2xl backdrop-blur`}>
-                        <HeroOperationalSnapshot theme={theme} />
-                    </div>
-                </div>
+                {/*<div className="relative z-10 hidden lg:block">*/}
+                {/*    <div className={`rounded-3xl border ${*/}
+                {/*        isDark ? "border-neutral-700 bg-neutral-900/80" : "border-neutral-300 bg-white/80"*/}
+                {/*    } p-8 shadow-2xl backdrop-blur`}>*/}
+                {/*        <HeroSystemPreview theme={theme} />*/}
+                {/*    </div>*/}
+                {/*</div>*/}
             </div>
         </section>
     );
