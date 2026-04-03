@@ -244,7 +244,7 @@ export function Register() {
                             <Input theme={theme} label="Partita IVA" name="partita_iva" value={form.partita_iva}
                                    onChange={handleChange}/>
 
-                            <LiquidGlassButton type="submit" disabled={loading || !passwordsMatch || passwordScore < 2} className='mt-5' variant='navbar' scale={false} fillBackground={true}>
+                            <LiquidGlassButton type="submit" disabled={loading || !passwordsMatch || passwordScore < 2} className='mt-5' variant='navbar' scale={false} fillBackground='main'>
                                 {loading ? (
                                     <FallingLines width="20" color={`${theme === 'dark' ? '#fff' : '#000'}`} visible/>
                                 ) : (

@@ -90,7 +90,7 @@ export function SurveyStart() {
                         onClick={handleStart}
                         disabled={initLoading || loadingSurvey || loadingSurveyId}
                         variant='navbar'
-                        fillBackground
+                        fillBackground='main'
                     >
                         {initLoading ? (
                             <FallingLines width="30" color={isDark ? "#fff" : "000"} visible />

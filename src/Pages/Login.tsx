@@ -180,7 +180,7 @@ export function Login() {
                                 disabled={loading}
                                 variant="navbar"
                                 scale={false}
-                                fillBackground={true}
+                                fillBackground='main'
                                 className="mt-4"
                             >
                                 {loading ? (
