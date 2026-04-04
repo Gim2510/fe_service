@@ -1,7 +1,6 @@
 import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
 import {HeroGlobeDark} from "./HeroGlobeDark.tsx";
 import {useNavigate} from "react-router-dom";
-// import {HeroSystemPreview} from "./HeroSystemPreview.tsx";
 
 export function HeroSection({ theme }: { theme: string }) {
     const navigate = useNavigate();

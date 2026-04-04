@@ -1,33 +1,40 @@
-import { DashboardStatsTable } from "./DashboardStatsTable";
+import { KPISection } from "./KPISection";
+import { GrowthSection } from "./GrowthSection";
+import { SurveySection } from "./SurveySection";
+import { InsightsSection } from "./InsightsSection";
+import { AdvancedStats } from "./AdvancedStats";
 
-type Props = {
-    users: any;
-    surveys: any;
-    theme: string;
-};
-
-export function DashboardHeader({ users, surveys, theme }: Props) {
-
+export function DashboardHeader({ users, surveys, theme }: any) {
     const isDark = theme === "dark";
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-10">
 
+            {/* TITLE */}
             <div>
                 <h1 className={`text-3xl font-semibold ${isDark ? "text-white" : "text-gray-900"}`}>
-                    Admin Dashboard
+                    Admin <span className='text-main-red'>Dashboard</span>
                 </h1>
 
                 <p className={`${isDark ? "text-neutral-400" : "text-gray-600"} mt-2`}>
-                    System monitoring & user control center
+                    Monitor growth, engagement and system health
                 </p>
             </div>
 
-            <DashboardStatsTable
-                users={users}
-                surveys={surveys}
-                theme={theme}
-            />
+            {/* HERO KPI */}
+            <KPISection users={users} surveys={surveys} theme={theme} />
+
+            {/* GROWTH */}
+            <GrowthSection users={users} theme={theme} />
+
+            {/* SURVEY CORE */}
+            <SurveySection surveys={surveys} theme={theme} />
+
+            {/* INSIGHTS */}
+            <InsightsSection users={users} surveys={surveys} theme={theme} />
+
+            {/* DETAILS */}
+            <AdvancedStats data={users} theme={theme} />
 
         </div>
     );
