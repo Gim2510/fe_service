@@ -1,216 +1,170 @@
-import {useTheme} from "../../Context/ThemeContext.tsx";
-import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
+import { useTheme } from "../../Context/ThemeContext.tsx";
+import { LiquidGlassButton } from "../Buttons/LiquidGlassButton.tsx";
 import SecurityItem from "./SecurityItem.tsx";
 
 export function SurveyIntro() {
-    const {theme} = useTheme();
+    const { theme } = useTheme();
     const isDark = theme === "dark";
 
+    // 🎨 THEME TOKENS (identici a SurveyStart)
     const bgClass = isDark ? "bg-neutral-950 text-white" : "bg-primary-white text-black";
     const textMainClass = isDark ? "text-neutral-300" : "text-neutral-700";
+    const textSoftClass = isDark ? "text-neutral-400" : "text-neutral-600";
+    const textStrongClass = isDark ? "text-white" : "text-neutral-900";
+
     const cardBgClass = isDark
         ? "bg-neutral-900/70 border border-neutral-800"
-        : "bg-white/90 border border-neutral-300";
-    const cardTextClass = isDark ? "text-white" : "text-neutral-800";
+        : "bg-white border border-neutral-300";
 
     return (
         <main className={`relative min-h-screen overflow-hidden ${bgClass} px-6 py-32`}>
 
-            {isDark && (
-                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[size:32px_32px]"/>
-            )}
+            {/* Background */}
+            <div
+                className={`absolute inset-0 opacity-10 bg-[size:32px_32px] ${
+                    isDark
+                        ? "bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)]"
+                        : "bg-[radial-gradient(circle_at_1px_1px,black_1px,transparent_0)]"
+                }`}
+            />
 
             {/* HERO */}
-            <section className="relative max-w-4xl mx-auto space-y-8 z-10 text-center flex flex-col">
-                <h1 className={`text-4xl sm:text-6xl font-semibold leading-tight ${cardTextClass}`}>
-                    Inizia il tuo <span className='text-main-red'>assessment</span> digitale
+            <section className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
+                <h1 className={`text-4xl sm:text-5xl font-light leading-tight ${textStrongClass}`}>
+                    Struttura la tua <span className="text-main-red font-semibold">crescita digitale</span>
                 </h1>
 
-                <p className={`text-md sm:text-xl max-w-3xl mx-auto leading-relaxed ${textMainClass}`}>
+                <p className={`text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed ${textSoftClass}`}>
                     Compila il questionario per analizzare processi, strumenti e criticità della tua azienda.
-                    Riceverai una valutazione preliminare utile per individuare opportunità concrete di crescita e ottimizzazione.
+                    Le informazioni raccolte verranno utilizzate per preparare un confronto consulenziale
+                    mirato e orientato agli obiettivi di crescita.
                 </p>
 
-                <LiquidGlassButton to="/register" className={`${isDark ? "" : "!bg-white hover:!text-white"} !rounded-4xl`} scale={false} fillBackground='main'>
+                <div className={`text-sm ${textSoftClass}`}>
+                    ⏱️ Tempo richiesto: 8–12 minuti · Nessuna condivisione con terze parti
+                </div>
+
+                <LiquidGlassButton
+                    to="/register"
+                    className={`min-w-60 !py-3 ${isDark ? "" : "!bg-white"} !rounded-4xl`}
+                    fillBackground="main"
+                >
                     Registrati per iniziare
                 </LiquidGlassButton>
+
+                <p className={`text-xs ${textSoftClass}`}>
+                    I dati inseriti sono accessibili solo internamente e utilizzati esclusivamente per l’analisi consulenziale.
+                </p>
             </section>
 
             {/* COME FUNZIONA */}
-            <section className="max-w-5xl mx-auto mt-20 grid backdrop-blur-sm md:grid-cols-3 gap-8 text-center">
-                {[
-                    {
-                        title: "1. Compila il survey",
-                        desc: "Rispondi a domande mirate su azienda, processi e strumenti"
-                    },
-                    {
-                        title: "2. Analisi",
-                        desc: "I dati vengono analizzati per individuare inefficienze e opportunità"
-                    },
-                    {
-                        title: "3. Consulenza",
-                        desc: "Puoi prenotare una call per approfondire e definire una roadmap"
-                    }
-                ].map((item, i) => (
-                    <div key={i} className={`p-6 rounded-2xl ${cardBgClass}`}>
-                        <h3 className={`font-semibold mb-2 ${cardTextClass}`}>{item.title}</h3>
-                        <p className={`text-sm ${textMainClass}`}>{item.desc}</p>
-                    </div>
-                ))}
+            <section className="relative max-w-4xl mx-auto mt-20 grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+                <div>
+                    <h3 className={`font-semibold ${textStrongClass}`}>1. Raccolta informazioni</h3>
+                    <p className={`text-sm ${textSoftClass}`}>
+                        Inserisci dati su processi, strumenti e organizzazione aziendale.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 className={`font-semibold ${textStrongClass}`}>2. Analisi</h3>
+                    <p className={`text-sm ${textSoftClass}`}>
+                        Le informazioni vengono strutturate per individuare inefficienze e opportunità.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 className={`font-semibold ${textStrongClass}`}>3. Confronto</h3>
+                    <p className={`text-sm ${textSoftClass}`}>
+                        Possibilità di fissare un incontro per definire le prossime azioni operative.
+                    </p>
+                </div>
             </section>
 
-            {/* INFO */}
-            <section className="relative max-w-5xl mx-auto mt-16 grid grid-cols-1 md:grid-cols-2 gap-16 z-10">
+            {/* OBIETTIVO + OUTPUT */}
+            <section className="relative max-w-5xl mx-auto mt-20 grid grid-cols-1 md:grid-cols-2 gap-16">
 
-                <div className={`space-y-6 ${cardTextClass}`}>
-                    <h2 className="text-3xl font-semibold">Cosa otterrai</h2>
-                    <ul className="space-y-2">
-                        <li>• Analisi del livello di digitalizzazione</li>
-                        <li>• Identificazione dei colli di bottiglia operativi</li>
-                        <li>• Valutazione dei software e integrazioni</li>
-                        <li>• Indicazioni concrete per migliorare processi e performance</li>
-                        <li>• Base per una consulenza strategica personalizzata</li>
+                <div className="space-y-6">
+                    <h2 className={`text-3xl font-semibold ${textStrongClass}`}>
+                        Obiettivo del survey
+                    </h2>
+
+                    <p className={textMainClass}>
+                        Il questionario raccoglie informazioni su CRM, ERP ed E-commerce
+                        per comprendere il livello di digitalizzazione e individuare le aree di miglioramento.
+                    </p>
+
+                    <ul className={`space-y-2 text-sm ${textMainClass}`}>
+                        <li>• Analisi dei processi aziendali</li>
+                        <li>• Identificazione delle inefficienze operative</li>
+                        <li>• Prioritizzazione delle esigenze software</li>
+                        <li>• Preparazione di un confronto consulenziale mirato</li>
                     </ul>
-
-                    <div className="pt-4">
-                        <h3 className="font-semibold mb-2">⏱️ Tempo richiesto</h3>
-                        <p className={textMainClass}>
-                            Circa 5–8 minuti. Le domande sono rapide ma progettate per raccogliere informazioni ad alto valore.
-                        </p>
-                    </div>
                 </div>
 
-                <div className={`relative p-10 rounded-3xl ${cardBgClass} backdrop-blur-sm shadow-2xl`}>
-                    <h3 className={`text-2xl font-medium mb-6 ${cardTextClass}`}>A chi è rivolto</h3>
-                    <div className={`space-y-4 text-sm ${cardTextClass}`}>
-                        <p>✔ Aziende che vogliono migliorare processi e organizzazione</p>
-                        <p>✔ Realtà che utilizzano (o vogliono introdurre) CRM, ERP o e-commerce</p>
-                        <p>✔ Team che stanno crescendo e incontrano inefficienze operative</p>
+                <div className={`p-10 rounded-3xl ${cardBgClass}`}>
+                    <h3 className={`text-2xl font-medium mb-6 ${textStrongClass}`}>
+                        Cosa otterrai
+                    </h3>
 
-                        <p className="pt-4 opacity-70">
-                            Non è pensato per uso personale o progetti non strutturati.
-                        </p>
+                    <div className={`space-y-4 text-sm ${textMainClass}`}>
+                        <p>→ Visione chiara dello stato attuale</p>
+                        <p>→ Identificazione delle criticità principali</p>
+                        <p>→ Linee guida per evoluzione digitale</p>
+                        <p>→ Base concreta per confronto consulenziale</p>
+                    </div>
+
+                    <div className={`pt-6 text-xs ${textSoftClass}`}>
+                        Nessun contatto commerciale viene avviato automaticamente.
+                        Potrai decidere tu se prenotare un incontro.
                     </div>
                 </div>
             </section>
 
-            {/* DOPO IL SURVEY */}
-            <section className="max-w-4xl mx-auto mt-20 text-center space-y-6">
-                <h2 className={`text-3xl font-semibold ${cardTextClass}`}>Cosa succede dopo</h2>
-                <p className={textMainClass}>
-                    Le risposte vengono analizzate per preparare una valutazione preliminare.
-                    Se lo desideri, potrai prenotare una call con un consulente per approfondire i risultati
-                    e definire possibili interventi.
-                </p>
-                <p className={`text-sm ${textMainClass}`}>
-                    La consulenza è gratuita e finalizzata a comprendere obiettivi, priorità e possibili sviluppi progettuali.
-                </p>
-            </section>
-
-            {/* SICUREZZA */}
-            <section className={`max-w-4xl mx-auto mt-20 p-8 rounded-3xl ${cardBgClass}`}>
-                <h2 className={`text-2xl font-semibold mb-6 ${cardTextClass}`}>
-                    Gestione e protezione dei dati
+            {/* SICUREZZA (COMPLETA, NON BASIC) */}
+            <section className={`max-w-4xl mx-auto mt-24 p-8 rounded-3xl ${cardBgClass}`}>
+                <h2 className={`text-2xl font-semibold mb-6 ${textStrongClass}`}>
+                    Protezione dei dati
                 </h2>
 
                 <p className={`text-sm mb-6 ${textMainClass}`}>
-                    Le informazioni inserite vengono gestite con un approccio strutturato alla sicurezza.
-                    L’accesso è controllato, le richieste sono validate e sono attivi sistemi di protezione contro
-                    utilizzi impropri o accessi non autorizzati.
+                    I dati vengono gestiti con accesso controllato, validazione delle richieste e sistemi di protezione attivi.
                 </p>
 
                 <div className={`space-y-6 text-sm ${textMainClass}`}>
 
-                    <SecurityItem title="Accesso ai dati e controllo interno">
-                        <p>
-                            L’accesso ai dati è limitato esclusivamente ai membri autorizzati dell’organizzazione.
-                            Non esistono accessi pubblici o condivisi.
-                        </p>
-                        <p>
-                            I permessi non sono gestiti in modo statico ma applicati dinamicamente tramite controlli
-                            lato backend,
-                            basati sulle informazioni contenute nei token di autenticazione.
-                        </p>
-                        <p>
-                            Ogni accesso rilevante viene registrato tramite sistemi di logging e audit.
-                        </p>
+                    <SecurityItem title="Accesso e controllo interno">
+                        Accesso limitato ai membri autorizzati con logging e audit delle attività.
+                        I controlli vengono applicati lato backend in base ai ruoli contenuti nei token.
                     </SecurityItem>
 
-                    <SecurityItem title="Autenticazione e gestione delle sessioni">
-                        <p>
-                            L’accesso ai sistemi avviene tramite autenticazione basata su token (JWT),
-                            con gestione delle sessioni tramite refresh token.
-                        </p>
-                        <p>
-                            Questo approccio permette di mantenere sessioni sicure nel tempo,
-                            riducendo il rischio di accessi non autorizzati o session hijacking.
-                        </p>
-                        <p>
-                            Tutte le richieste vengono validate lato server prima di accedere a qualsiasi dato.
-                        </p>
+                    <SecurityItem title="Autenticazione e sessioni">
+                        Sistema basato su JWT e refresh token con validazione server-side.
+                        Le sessioni vengono gestite in modo sicuro per prevenire accessi non autorizzati.
                     </SecurityItem>
 
-                    <SecurityItem title="Protezione da accessi non autorizzati">
-                        <p>
-                            Sono implementati meccanismi di protezione contro tentativi di accesso forzato (brute
-                            force),
-                            con controlli automatici sul comportamento delle richieste.
-                        </p>
-                        <p>
-                            In caso di attività sospette, il sistema limita o blocca temporaneamente le richieste.
-                        </p>
-                        <p>
-                            Questo riduce drasticamente il rischio di compromissione degli account.
-                        </p>
+                    <SecurityItem title="Protezione attiva">
+                        Protezione da brute force, controllo automatico dei pattern anomali e blocco temporaneo delle richieste sospette.
                     </SecurityItem>
 
-                    <SecurityItem title="Controllo del traffico e prevenzione abusi">
-                        <p>
-                            Sono attivi sistemi di rate limiting e controllo del traffico per evitare utilizzi impropri
-                            delle API e del form.
-                        </p>
-                        <p>
-                            Questo include protezione contro richieste massive, automazioni non autorizzate e tentativi
-                            di spam.
-                        </p>
-                        <p>
-                            I pattern anomali vengono intercettati e gestiti automaticamente.
-                        </p>
+                    <SecurityItem title="Controllo traffico e abusi">
+                        Rate limiting e sistemi anti-spam per prevenire richieste massive, automazioni non autorizzate e abusi delle API.
                     </SecurityItem>
 
                     <SecurityItem title="Monitoraggio e audit">
-                        <p>
-                            L’infrastruttura è monitorata tramite sistemi di logging e osservabilità,
-                            con analisi continua delle richieste e degli accessi.
-                        </p>
-                        <p>
-                            Sono disponibili audit log per tracciare le attività rilevanti e garantire visibilità su
-                            eventuali anomalie.
-                        </p>
-                        <p>
-                            Il monitoraggio è gestito tramite piattaforme cloud come Railway e Vercel.
-                        </p>
+                        Logging continuo e audit log per tracciare accessi e attività.
+                        Monitoraggio tramite infrastruttura cloud (Railway, Vercel).
                     </SecurityItem>
 
-                    <SecurityItem title="Gestione e ciclo di vita dei dati">
-                        <p>
-                            I dati raccolti vengono utilizzati esclusivamente per finalità consulenziali
-                            e non vengono condivisi o venduti a terze parti.
-                        </p>
-                        <p>
-                            L’utente può aggiornare o sovrascrivere i dati in qualsiasi momento tramite il questionario.
-                        </p>
-                        <p>
-                            In caso di cancellazione, i dati vengono rimossi definitivamente dai sistemi entro 60
-                            giorni.
-                        </p>
+                    <SecurityItem title="Gestione dei dati">
+                        Nessuna condivisione con terze parti.
+                        I dati possono essere sovrascritti dall’utente e vengono eliminati entro 60 giorni in caso di cancellazione.
                     </SecurityItem>
 
                 </div>
 
-                <p className={`text-xs opacity-60 mt-8 ${textMainClass}`}>
-                    Infrastruttura basata su servizi cloud moderni con controlli di accesso, validazione delle richieste
-                    e monitoraggio continuo.
+                <p className={`text-xs mt-8 ${textSoftClass}`}>
+                    Infrastruttura basata su servizi cloud moderni con controlli di accesso avanzati e monitoraggio continuo.
                 </p>
             </section>
 

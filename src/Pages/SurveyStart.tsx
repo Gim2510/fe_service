@@ -7,6 +7,7 @@ import { LiquidGlassButton } from "../Components/Buttons/LiquidGlassButton.tsx";
 import { FallingLines } from "react-loader-spinner";
 import { useTheme } from "../Context/ThemeContext.tsx";
 import SecurityItem from "../Components/Survey/SecurityItem.tsx";
+import {SurveyIntro} from "../Components/Survey/SurveyIntro.tsx";
 
 export function SurveyStart() {
     const navigate = useNavigate();
@@ -40,7 +41,9 @@ export function SurveyStart() {
         }
     };
 
-    if (!isAuthenticated) return null;
+    if (!isAuthenticated) {
+        return <SurveyIntro />;
+    }
 
     return (
         <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-neutral-950" : "bg-primary-white"} px-6 py-32`}>
