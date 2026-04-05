@@ -6,7 +6,7 @@ import { useInitSurvey } from "../hooks/useInitSurvey";
 import { LiquidGlassButton } from "../Components/Buttons/LiquidGlassButton.tsx";
 import { FallingLines } from "react-loader-spinner";
 import { useTheme } from "../Context/ThemeContext.tsx";
-import { SurveyIntro } from "../Components/Survey/SurveyIntro.tsx";
+import SecurityItem from "../Components/Survey/SecurityItem.tsx";
 
 export function SurveyStart() {
     const navigate = useNavigate();
@@ -23,19 +23,16 @@ export function SurveyStart() {
 
     const handleStart = async () => {
         try {
-            // Survey già esistente → vai al recap
             if (survey?._id) {
                 navigate(`/survey/${survey._id}/recap`);
                 return;
             }
 
-            // Survey nuovo → inizializza e vai alle domande
             const newSurveyId = await initSurvey(templateId, locale);
 
             if (newSurveyId) {
                 navigate(`/survey`);
             } else {
-                // fallback generico
                 navigate("/survey");
             }
         } catch (e) {
@@ -43,27 +40,19 @@ export function SurveyStart() {
         }
     };
 
-    // ---------------------------
-    // UNAUTHENTICATED VIEW
-    // ---------------------------
-    if (!isAuthenticated) {
-        return <SurveyIntro />;
-    }
+    if (!isAuthenticated) return null;
 
-    // ---------------------------
-    // AUTHENTICATED VIEW
-    // ---------------------------
     return (
         <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-neutral-950" : "bg-primary-white"} px-6 py-32`}>
 
-            {/* Loader full-screen durante init */}
+            {/* Loader */}
             {initLoading && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
                     <FallingLines width="60" color="#fff" visible />
                 </div>
             )}
 
-            {/* Background grid */}
+            {/* Background */}
             <div
                 className={`absolute inset-0 opacity-10 bg-[size:32px_32px] ${
                     isDark
@@ -72,17 +61,21 @@ export function SurveyStart() {
                 }`}
             />
 
-            {/* Hero / conferma */}
-            <section className="relative z-10 max-w-4xl mx-auto text-center space-y-10">
+            {/* HERO */}
+            <section className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
                 <h1 className={`text-5xl font-light leading-tight ${isDark ? "text-white" : "text-black"}`}>
-                    Inizia la tua <span className="text-main-red font-semibold">analisi</span>
+                    Struttura la tua <span className="text-main-red font-semibold">crescita digitale</span>
                 </h1>
 
                 <p className={`text-xl max-w-3xl mx-auto leading-relaxed ${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
-                    Raccogli informazioni strutturate e avvia un processo di analisi mirato.
-                    Ottieni subito una panoramica chiara del livello di maturità digitale
-                    della tua azienda.
+                    Compila il questionario per analizzare processi, strumenti e criticità della tua azienda.
+                    Le informazioni raccolte verranno utilizzate per preparare un confronto consulenziale
+                    mirato e orientato agli obiettivi di crescita.
                 </p>
+
+                <div className={`text-sm ${isDark ? "text-neutral-500" : "text-neutral-600"}`}>
+                    ⏱️ Tempo richiesto: 8–12 minuti · Nessuna condivisione con terze parti
+                </div>
 
                 {emailVer ? (
                     <LiquidGlassButton
@@ -93,9 +86,9 @@ export function SurveyStart() {
                         fillBackground='main'
                     >
                         {initLoading ? (
-                            <FallingLines width="30" color={isDark ? "#fff" : "000"} visible />
+                            <FallingLines width="30" color={isDark ? "#fff" : "#000"} visible />
                         ) : (
-                            survey ? "Riprendi" : "Avvia il questionario"
+                            survey ? "Riprendi la compilazione" : "Inizia il questionario"
                         )}
                     </LiquidGlassButton>
                 ) : (
@@ -103,35 +96,100 @@ export function SurveyStart() {
                         Verifica la tua email
                     </LiquidGlassButton>
                 )}
+
+                <p className={`text-xs ${isDark ? "text-neutral-500" : "text-neutral-600"}`}>
+                    I dati inseriti sono accessibili solo internamente e utilizzati esclusivamente per l’analisi consulenziale.
+                </p>
             </section>
 
-            {/* Info aggiuntiva sul survey */}
-            <section className={`relative max-w-5xl mx-auto mt-16 grid grid-cols-1 md:grid-cols-2 gap-16`}>
-                <div className={`space-y-6 ${isDark ? "text-white" : "text-black"}`}>
-                    <h2 className="text-3xl font-semibold">Obiettivo del survey</h2>
-                    <p className={isDark ? "text-neutral-300" : "text-neutral-700"}>
-                        Questo questionario raccoglie informazioni strutturate sulle tue esigenze aziendali in ambito CRM, ERP ed E-commerce.
-                        Serve a comprendere il livello di digitalizzazione e le aree di miglioramento.
+            {/* COME FUNZIONA */}
+            <section className="relative max-w-4xl mx-auto mt-20 grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+                <div>
+                    <h3 className="font-semibold">1. Raccolta informazioni</h3>
+                    <p className="text-sm opacity-70">
+                        Inserisci dati su processi, strumenti e organizzazione aziendale.
                     </p>
-                    <ul className="space-y-2">
+                </div>
+                <div>
+                    <h3 className="font-semibold">2. Analisi</h3>
+                    <p className="text-sm opacity-70">
+                        Le informazioni vengono strutturate per individuare inefficienze e opportunità.
+                    </p>
+                </div>
+                <div>
+                    <h3 className="font-semibold">3. Confronto</h3>
+                    <p className="text-sm opacity-70">
+                        Possibilità di fissare un incontro per definire le prossime azioni operative.
+                    </p>
+                </div>
+            </section>
+
+            {/* OBIETTIVO + OUTPUT */}
+            <section className="relative max-w-5xl mx-auto mt-20 grid grid-cols-1 md:grid-cols-2 gap-16">
+
+                <div className="space-y-6">
+                    <h2 className="text-3xl font-semibold">Obiettivo del survey</h2>
+                    <p className="opacity-80">
+                        Il questionario permette di raccogliere informazioni strutturate su CRM, ERP ed E-commerce
+                        per comprendere il livello di digitalizzazione e identificare le principali aree di miglioramento.
+                    </p>
+                    <ul className="space-y-2 text-sm opacity-80">
                         <li>• Analisi dei processi aziendali</li>
                         <li>• Identificazione delle inefficienze operative</li>
-                        <li>• Prioritizzazione delle funzionalità e integrazioni software</li>
-                        <li>• Generazione di un report preliminare tramite AI</li>
-                        <li>• Successivo approfondimento da un consulente</li>
+                        <li>• Prioritizzazione delle esigenze software</li>
+                        <li>• Preparazione di un confronto consulenziale mirato</li>
                     </ul>
                 </div>
 
-                <div className={`relative p-10 rounded-3xl ${isDark ? "bg-neutral-900/70 border border-neutral-800 text-neutral-400" : "bg-white/90 border border-neutral-300 text-neutral-800"} backdrop-blur-xl shadow-2xl`}>
+                <div className={`p-10 rounded-3xl ${isDark ? "bg-neutral-900/70 border border-neutral-800" : "bg-white border border-neutral-300"}`}>
                     <h3 className="text-2xl font-medium mb-6">Cosa otterrai</h3>
-                    <div className="space-y-4 text-sm leading-relaxed">
-                        <p>→ Panoramica chiara del livello di maturità digitale della tua azienda</p>
-                        <p>→ Identificazione dei punti di forza e delle aree critiche</p>
-                        <p>→ Suggerimenti operativi basati sui dati raccolti</p>
-                        <p>→ Report preliminare pronto per l’analisi approfondita del consulente</p>
+                    <div className="space-y-4 text-sm">
+                        <p>→ Visione chiara dello stato attuale</p>
+                        <p>→ Identificazione delle criticità principali</p>
+                        <p>→ Linee guida per evoluzione digitale</p>
+                        <p>→ Base concreta per confronto consulenziale</p>
+                    </div>
+
+                    <div className="pt-6 text-xs opacity-60">
+                        Nessun contatto commerciale viene avviato automaticamente.
+                        Potrai decidere tu se prenotare un incontro.
                     </div>
                 </div>
             </section>
+
+            {/* SICUREZZA (RIDOTTA + ACCORDION) */}
+            <section className={`max-w-4xl mx-auto mt-24 p-8 rounded-3xl ${isDark ? "bg-neutral-900/70 border border-neutral-800" : "bg-white border border-neutral-300"}`}>
+                <h2 className="text-2xl font-semibold mb-6">Protezione dei dati</h2>
+
+                <div className="space-y-4 text-sm opacity-80">
+                    <p>
+                        I dati vengono gestiti con accesso controllato, validazione delle richieste e sistemi di protezione attivi contro utilizzi impropri.
+                    </p>
+                </div>
+
+                <div className="mt-6 space-y-4">
+                    <SecurityItem title="Accesso e controllo">
+                        Accesso limitato ai membri autorizzati con logging e audit delle attività.
+                    </SecurityItem>
+
+                    <SecurityItem title="Autenticazione">
+                        Sistema basato su JWT e refresh token con validazione lato server.
+                    </SecurityItem>
+
+                    <SecurityItem title="Protezione attiva">
+                        Rate limiting, protezione brute force e controllo traffico.
+                    </SecurityItem>
+
+                    <SecurityItem title="Monitoraggio">
+                        Log e osservabilità gestiti su infrastruttura cloud (Railway, Vercel).
+                    </SecurityItem>
+
+                    <SecurityItem title="Gestione dati">
+                        Nessuna condivisione con terze parti. Cancellazione entro 60 giorni su richiesta.
+                    </SecurityItem>
+                </div>
+            </section>
+
         </main>
     );
 }
