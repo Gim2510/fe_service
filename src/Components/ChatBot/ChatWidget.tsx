@@ -47,7 +47,7 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                 >
                     {/* Header */}
                     <div className={`px-6 py-4  border-b border-white/10 ${theme === 'dark' ? 'text-white' : 'text-white'} font-semibold backdrop-blur-md bg-black/30`}>
-                        <div className="flex items-center gap-3 flex justify-between items-center">
+                        <div className="gap-3 flex justify-between items-center">
                             Consulente AI
                             {/* Avatar AI */}
                             <div className="w-9 h-9">
