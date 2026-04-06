@@ -5,7 +5,7 @@ import { BooleanQuestion } from "./SurveyQuestion/BooleanQuestion.tsx"
 import { ScaleQuestion } from "./SurveyQuestion/ScaleQuestion.tsx"
 import { TextQuestion } from "./SurveyQuestion/TextQuestion.tsx"
 
-export function SurveyQuestion({question, lang, answer, setAnswer, theme}: PropsSurveyQuestion) {
+export function SurveyQuestion({question, lang, answer, setAnswer}: PropsSurveyQuestion) {
     switch (question.type) {
         case "multipleChoice":
             return (
@@ -13,7 +13,6 @@ export function SurveyQuestion({question, lang, answer, setAnswer, theme}: Props
                     options={question.opt?.[lang] ?? []}
                     answer={answer}
                     onChange={setAnswer}
-                    variant={theme}
                 />
             )
 

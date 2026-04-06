@@ -44,16 +44,18 @@ export function SurveyIntro() {
                     ⏱️ Tempo richiesto: 8–12 minuti · Nessuna condivisione con terze parti
                 </div>
 
-                <LiquidGlassButton
-                    to="/register"
-                    className={`min-w-60 !py-3 ${isDark ? "" : "!bg-white"} !rounded-4xl`}
-                    fillBackground="main"
-                >
-                    Registrati per iniziare
-                </LiquidGlassButton>
-
+                <div className="flex justify-center">
+                    <LiquidGlassButton
+                        to="/register"
+                        className={`min-w-60 !py-3 ${isDark ? "" : "!bg-white"} !rounded-4xl`}
+                        fillBackground="main"
+                    >
+                        Registrati per iniziare
+                    </LiquidGlassButton>
+                </div>
                 <p className={`text-xs ${textSoftClass}`}>
-                    I dati inseriti sono accessibili solo internamente e utilizzati esclusivamente per l’analisi consulenziale.
+                    I dati inseriti sono accessibili solo internamente e utilizzati esclusivamente per l’analisi
+                    consulenziale.
                 </p>
             </section>
 
@@ -122,7 +124,7 @@ export function SurveyIntro() {
             </section>
 
             {/* SICUREZZA (COMPLETA, NON BASIC) */}
-            <section className={`max-w-4xl mx-auto mt-24 p-8 rounded-3xl ${cardBgClass}`}>
+            <section className={`max-w-4xl mx-auto mt-24 p-8 backdrop-blur-sm rounded-3xl ${cardBgClass}`}>
                 <h2 className={`text-2xl font-semibold mb-6 ${textStrongClass}`}>
                     Protezione dei dati
                 </h2>

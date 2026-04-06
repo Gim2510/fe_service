@@ -11,10 +11,9 @@ export type PropsSurveyQuestion = {
 
 export type PropsMultipleChoiceQuestion = {
     options: string[]
-    answer: string | null
-    onChange: (value: string) => void
+    answer: string | string[] | null
+    onChange: (value: string | string[]) => void
 }
-
 
 export type PropsBooleanQuestion = {
     answer: boolean | null

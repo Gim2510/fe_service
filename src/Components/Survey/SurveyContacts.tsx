@@ -3,7 +3,7 @@ import { FallingLines } from "react-loader-spinner"
 
 import { useAuth } from "../../auth/AuthContext.tsx"
 import { LiquidGlassButton } from "../Buttons/LiquidGlassButton.tsx"
-import {useTheme} from "../../Context/ThemeContext.tsx";
+import { useTheme } from "../../Context/ThemeContext.tsx"
 
 type SurveyContactsProps = {
     surveyId: string
@@ -14,8 +14,9 @@ const PHONE_PREFIXES = ["+39", "+1", "+44", "+33", "+49"]
 
 export function SurveyContacts({ surveyId, onNext }: SurveyContactsProps) {
     const { token } = useAuth()
+    const { theme } = useTheme()
+    const isDark = theme === "dark"
 
-    const {theme} = useTheme()
     const [prefix, setPrefix] = useState(PHONE_PREFIXES[0])
     const [number, setNumber] = useState("")
     const [loading, setLoading] = useState(false)
@@ -25,7 +26,6 @@ export function SurveyContacts({ surveyId, onNext }: SurveyContactsProps) {
 
     async function handleSubmit() {
         if (!canSubmit) return
-
         setLoading(true)
         setError(null)
 
@@ -47,10 +47,7 @@ export function SurveyContacts({ surveyId, onNext }: SurveyContactsProps) {
                 }
             )
 
-            if (!res.ok) {
-                throw new Error("Errore nell'invio del numero")
-            }
-
+            if (!res.ok) throw new Error("Errore nell'invio del numero")
             onNext()
         } catch (err: any) {
             setError(err.message ?? "Errore imprevisto")
@@ -59,23 +56,24 @@ export function SurveyContacts({ surveyId, onNext }: SurveyContactsProps) {
         }
     }
 
+    const inputClass = `
+        rounded-xl border px-3 py-2 placeholder:text-neutral-500
+        ${isDark ? "bg-black/40 border-white/10 text-white" : "bg-white/50 border-neutral-300 text-black"}
+    `
+
     return (
         <div className="flex flex-col items-center gap-8 text-center">
             <header className="space-y-2">
-                <h2 className="text-2xl font-light">
+                <h2 className={`${isDark ? "text-white" : "text-black"} text-2xl font-light`}>
                     Inserisci il tuo contatto telefonico
                 </h2>
-                <p className="text-neutral-400 text-sm">
+                <p className="text-sm text-neutral-400">
                     Ti contatteremo solo se necessario
                 </p>
             </header>
 
             <div className="flex gap-3">
-                <select
-                    value={prefix}
-                    onChange={e => setPrefix(e.target.value)}
-                    className="rounded-xl bg-black/40 border border-white/10 px-3 py-2 text-white"
-                >
+                <select value={prefix} onChange={e => setPrefix(e.target.value)} className={inputClass}>
                     {PHONE_PREFIXES.map(p => (
                         <option key={p} value={p}>
                             {p}
@@ -90,19 +88,15 @@ export function SurveyContacts({ surveyId, onNext }: SurveyContactsProps) {
                     value={number}
                     onChange={e => setNumber(e.target.value)}
                     placeholder="Numero di telefono"
-                    className="w-56 rounded-xl bg-black/40 border border-white/10 px-4 py-2 text-white placeholder:text-neutral-500"
+                    className={inputClass + " w-56"}
                 />
             </div>
 
-            {error && (
-                <div className="text-sm text-red-500">
-                    {error}
-                </div>
-            )}
+            {error && <div className="text-sm text-red-500">{error}</div>}
 
             <LiquidGlassButton disabled={!canSubmit} onClick={handleSubmit}>
                 {loading ? (
-                    <FallingLines color={`${theme === 'dark' ? '#fff' : '#000'}`} width="30" visible />
+                    <FallingLines color={isDark ? "#fff" : "#000"} width="30" visible />
                 ) : (
                     "Invia"
                 )}
