@@ -40,8 +40,8 @@ export function SurveyIntro() {
                     mirato e orientato agli obiettivi di crescita.
                 </p>
 
-                <div className={`text-sm ${textSoftClass}`}>
-                    ⏱️ Tempo richiesto: 8–12 minuti · Nessuna condivisione con terze parti
+                <div className={`flex flex-col justify-center items-center gap-4 text-sm ${textSoftClass}`}>
+                    <p>Tempo richiesto: 8–12 minuti · Nessuna condivisione con terze parti</p>
                 </div>
 
                 <div className="flex justify-center">

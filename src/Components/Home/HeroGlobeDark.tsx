@@ -145,7 +145,7 @@ export function HeroGlobeDark() {
         controls.autoRotateSpeed = 0.4;
 
         setTimeout(() => {
-            globeRef.current.pointOfView({ lat: 40, lng: 40, altitude: 1.0 });
+            globeRef.current.pointOfView({ lat: 40, lng: 40, altitude: 1.3 });
         }, 100);
     }, []);
 

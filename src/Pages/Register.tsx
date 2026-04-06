@@ -93,7 +93,7 @@ export function Register() {
             />
 
             <div
-                className={`relative z-10 mx-auto w-full max-w-6xl px-8 py-24 grid lg:grid-cols-2 gap-20 items-start ${
+                className={`relative z-10 mx-auto w-full max-w-6xl px-8 py-24 grid lg:grid-cols-2 gap-20 items-center ${
                     theme === "dark" ? "text-white" : "text-black"
                 }`}
             >
