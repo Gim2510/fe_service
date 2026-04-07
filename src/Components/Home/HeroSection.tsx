@@ -34,7 +34,7 @@ export function HeroSection({ theme }: { theme: string }) {
                             Il tuo business <br/>
                         </span>
                         <span
-                            className={`hero-line reveal delay-2 ${isDark ? "text-[#BD1E1E]" : "text-[#BD1E1E]"} font-bold`}>
+                            className={`hero-line reveal delay-2 ${isDark ? "text-main-red" : "text-main-red"} font-bold`}>
                             genera dati.
                         </span>
                         <br/>

@@ -47,7 +47,7 @@ export function SurveyIntro() {
                 <div className="flex justify-center">
                     <LiquidGlassButton
                         to="/register"
-                        className={`min-w-60 !py-3 ${isDark ? "" : "!bg-white"} !rounded-4xl`}
+                        className={`min-w-60 !py-3 ${isDark ? "" : "!bg-white"} !rounded-4xl hover:text-white`}
                         fillBackground="main"
                     >
                         Registrati per iniziare
