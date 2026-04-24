@@ -1,111 +1,168 @@
 import { SectionBase } from "./SectionBase.tsx";
 import { GlassCard } from "./GlassCard.tsx";
-import { motion } from "framer-motion"; // <-- import motion
+import { motion } from "framer-motion";
+
+const livelli = [
+    {
+        level: "Base",
+        score: "0–30%",
+        description: "Processi ancora manuali o parzialmente digitalizzati. Dati sparsi e decisioni basate su intuizione.",
+        accent: "#EF4444",
+        barBg: "bg-red-500/70",
+    },
+    {
+        level: "Intermedio",
+        score: "31–60%",
+        description: "Parte dei processi digitalizzata e integrata. KPI iniziali monitorati.",
+        accent: "#F59E0B",
+        barBg: "bg-amber-500/70",
+    },
+    {
+        level: "Avanzato",
+        score: "61–85%",
+        description: "Processi digitali consolidati, dati centralizzati e dashboard operative.",
+        accent: "#22C55E",
+        barBg: "bg-green-500/70",
+    },
+    {
+        level: "Eccellente",
+        score: "86–100%",
+        description: "Processi completamente digitalizzati, KPI predittivi e automazione intelligente.",
+        accent: "#3B82F6",
+        barBg: "bg-blue-500",
+    },
+];
+
+const pesi = [
+    { label: "Processi", weight: 0.4 },
+    { label: "Tecnologia", weight: 0.3 },
+    { label: "Dati & KPI", weight: 0.2 },
+    { label: "Automazione & AI", weight: 0.1 },
+];
 
 export function DigitalMaturitySection({ theme }: { theme: string }) {
     const isDark = theme === "dark";
 
-    const livelli = [
-        { level: "Base", score: "0-30%", description: "Processi ancora manuali o parzialmente digitalizzati. Dati sparsi e decisioni basate su intuizione.", color: "#A5010480" },
-        { level: "Intermedio", score: "31-60%", description: "Parte dei processi digitalizzata e integrata. KPI iniziali monitorati.", color: "#F7B32B80" },
-        { level: "Avanzato", score: "61-85%", description: "Processi digitali consolidati, dati centralizzati e dashboard operative.", color: "#A9E5BB80" },
-        { level: "Eccellente", score: "86-100%", description: "Processi completamente digitalizzati, KPI predittivi e automazione intelligente.", color: "#7AE58280" }
-    ];
-
-    const pesi = [
-        { label: "Processi", weight: 0.4 },
-        { label: "Tecnologia", weight: 0.3 },
-        { label: "Dati & KPI", weight: 0.2 },
-        { label: "Automazione & AI", weight: 0.1 }
-    ];
-
-    // Variants per animazione
-    const cardVariants = {
-        hidden: { opacity: 0, y: 50 },
-        visible: { opacity: 1, y: 0 }
-    };
-
     return (
-        <SectionBase theme={theme}>
-            {/* HEADER */}
-            <div className="text-center mb-24">
-                <span className={`text-sm uppercase tracking-widest ${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
+        <SectionBase theme={theme} className={isDark ? "" : "!bg-white"}>
+            {/* Header */}
+            <motion.div
+                className="text-center mb-16"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
+                <span className={`text-xs font-semibold uppercase tracking-widest ${
+                    isDark ? "text-blue-400" : "text-blue-600"
+                }`}>
                     Maturità digitale
                 </span>
-                <h2 className={`${isDark ? "text-white" : "text-neutral-900"} text-4xl sm:text-5xl font-semibold mt-2`}>
-                    Comprendere il tuo livello di <span className='text-main-red'>maturità digitale</span>
+                <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold mt-3 ${
+                    isDark ? "text-slate-100" : "text-slate-900"
+                }`}>
+                    Il tuo livello di{" "}
+                    <span className={isDark ? "text-blue-400" : "text-blue-600"}>
+                        maturità digitale
+                    </span>
                 </h2>
-                <p className={`${isDark ? "text-neutral-400" : "text-neutral-700"} mt-4 text-lg max-w-2xl mx-auto`}>
-                    Valutiamo i tuoi processi, tecnologia e dati secondo standard strutturati, generando un punteggio chiaro e operativo.
+                <p className={`mt-5 text-lg max-w-2xl mx-auto ${
+                    isDark ? "text-slate-400" : "text-slate-600"
+                }`}>
+                    Valutiamo i tuoi processi, tecnologia e dati secondo standard strutturati,
+                    generando un punteggio chiaro e operativo.
                 </p>
-            </div>
+            </motion.div>
 
-            {/* LIVELLI */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+            {/* Level cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
                 {livelli.map((lvl, index) => (
                     <motion.div
                         key={lvl.level}
-                        initial="hidden"
-                        whileInView="visible"
+                        initial={{ opacity: 0, y: 36 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.2 }}
-                        variants={cardVariants}
-                        transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.15 }} // cascade
+                        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: index * 0.1 }}
                     >
-                        <GlassCard
-                            theme={theme}
-                            className={`p-6 ${isDark ? "" : "bg-white border-black/10"}`}
-                        >
-                            <h3 className={`${isDark ? "text-white" : "text-neutral-900"} text-xl font-semibold mb-3`}>
-                                {lvl.level}
-                            </h3>
+                        <GlassCard theme={theme} className="p-6 h-full flex flex-col gap-3">
+                            {/* Accent dot + title */}
+                            <div className="flex items-center gap-2">
+                                <span
+                                    className="w-2 h-2 rounded-full shrink-0"
+                                    style={{ backgroundColor: lvl.accent }}
+                                />
+                                <h3 className={`text-base font-semibold ${
+                                    isDark ? "text-slate-100" : "text-slate-900"
+                                }`}>
+                                    {lvl.level}
+                                </h3>
+                            </div>
 
-                            <div className={`h-2 rounded-full mb-4`} style={{ backgroundColor: lvl.color }} />
+                            {/* Bar */}
+                            <div className={`h-1 rounded-full ${isDark ? "bg-white/5" : "bg-slate-100"}`}>
+                                <div className={`h-full rounded-full ${lvl.barBg}`} />
+                            </div>
 
-                            <p className={`${isDark ? "text-neutral-400" : "text-neutral-700"} text-sm mb-4`}>
+                            <p className={`text-sm leading-relaxed flex-1 ${
+                                isDark ? "text-slate-500" : "text-slate-500"
+                            }`}>
                                 {lvl.description}
                             </p>
 
-                            <div className={`${isDark ? "text-neutral-300" : "text-neutral-600"} text-sm`}>
+                            <span className={`text-xs font-mono font-medium ${
+                                isDark ? "text-slate-600" : "text-slate-400"
+                            }`}>
                                 Score: {lvl.score}
-                            </div>
+                            </span>
                         </GlassCard>
                     </motion.div>
                 ))}
             </div>
 
-            {/* PESI */}
+            {/* Weight factors */}
             <motion.div
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
             >
-                <GlassCard theme={theme} className={`p-10 max-w-4xl mx-auto ${isDark ? "" : "bg-white border-black/10"}`}>
-                    <h3 className={`${isDark ? "text-white" : "text-neutral-900"} text-2xl font-semibold mb-8 text-center`}>
+                <GlassCard theme={theme} hover={false} className="p-8 sm:p-10 max-w-3xl mx-auto">
+                    <h3 className={`text-xl font-semibold mb-8 text-center ${
+                        isDark ? "text-slate-100" : "text-slate-900"
+                    }`}>
                         Peso dei fattori nella valutazione
                     </h3>
 
-                    <div className="space-y-6">
+                    <div className="space-y-5">
                         {pesi.map((p) => (
                             <div key={p.label}>
-                                <div className={`flex justify-between mb-2 text-sm ${isDark ? "text-neutral-300" : "text-neutral-700"}`}>
+                                <div className={`flex justify-between mb-2 text-sm font-medium ${
+                                    isDark ? "text-slate-300" : "text-slate-700"
+                                }`}>
                                     <span>{p.label}</span>
-                                    <span>{Math.round(p.weight * 100)}%</span>
+                                    <span className={isDark ? "text-slate-500" : "text-slate-400"}>
+                                        {Math.round(p.weight * 100)}%
+                                    </span>
                                 </div>
-
-                                <div className="w-full h-3 bg-white/10 rounded-full overflow-hidden">
-                                    <div
-                                        className="h-full bg-gradient-to-r from-cyan-400 to-indigo-500"
-                                        style={{ width: `${p.weight * 100}%` }}
+                                <div className={`w-full h-2 rounded-full ${
+                                    isDark ? "bg-white/5" : "bg-slate-100"
+                                }`}>
+                                    <motion.div
+                                        className="h-full rounded-full bg-gradient-to-r from-blue-600 to-blue-400"
+                                        initial={{ width: 0 }}
+                                        whileInView={{ width: `${p.weight * 100}%` }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
                                     />
                                 </div>
                             </div>
                         ))}
                     </div>
 
-                    <p className={`${isDark ? "text-neutral-400" : "text-neutral-600"} mt-8 text-sm text-center`}>
-                        I pesi riflettono l'importanza relativa di ogni dimensione
-                        nella determinazione del livello di maturità digitale.
+                    <p className={`mt-8 text-xs text-center ${
+                        isDark ? "text-slate-600" : "text-slate-400"
+                    }`}>
+                        I pesi riflettono l'importanza relativa di ogni dimensione nel determinare il livello di maturità digitale.
                     </p>
                 </GlassCard>
             </motion.div>

@@ -1,6 +1,14 @@
-import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
-import {HeroGlobeDark} from "./HeroGlobeDark.tsx";
-import {useNavigate} from "react-router-dom";
+import { motion } from "framer-motion";
+import { ArrowRight, CheckCircle } from "lucide-react";
+import { LiquidGlassButton } from "../Buttons/LiquidGlassButton.tsx";
+import { HeroGlobeDark } from "./HeroGlobeDark.tsx";
+import { useNavigate } from "react-router-dom";
+
+const fadeUp = (delay = 0) => ({
+    initial: { opacity: 0, y: 28 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.65, ease: "easeOut" as const, delay },
+});
 
 export function HeroSection({ theme }: { theme: string }) {
     const navigate = useNavigate();
@@ -8,66 +16,115 @@ export function HeroSection({ theme }: { theme: string }) {
     const isDark = theme === "dark";
 
     return (
-        <section className="relative min-h-[100dvh] flex items-center">
+        <section className="relative min-h-[100dvh] flex items-center overflow-hidden">
 
-            {/* BACKGROUND FIXED */}
+            {/* ── Background ── */}
             <div className="fixed inset-0 pointer-events-none z-0">
-                <div className={`${isDark ? "bg-neutral-950" : "bg-primary-white"} absolute inset-0`} />
+                <div className={`absolute inset-0 ${isDark ? "bg-[#060D1B]" : "bg-[#F8FAFC]"}`} />
                 <HeroGlobeDark />
-                <div className={`absolute inset-0 opacity-10 
-                    bg-[radial-gradient(circle_at_1px_1px,${isDark ? "white" : "black"}_1px,transparent_0)] 
-                    bg-[size:32px_32px]`}
+
+                {/* Grid texture */}
+                <div
+                    className="absolute inset-0 opacity-[0.04]"
+                    style={{
+                        backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`,
+                        backgroundSize: "28px 28px",
+                    }}
                 />
+
+                {/* Corporate blue glow */}
+                {isDark && (
+                    <>
+                        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] opacity-[0.06] bg-blue-600 pointer-events-none" />
+                        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full blur-[120px] opacity-[0.04] bg-blue-400 pointer-events-none" />
+                    </>
+                )}
             </div>
 
-            {/* CONTENT */}
-            <div className="relative z-10 mx-auto max-w-7xl sm:px-8 px-4 pb-20 sm:pt-20 pt-28 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* ── Content ── */}
+            <div className="relative z-10 mx-auto max-w-7xl px-6 sm:px-8 pb-20 pt-32 sm:pt-24 w-full">
 
-                {/* LEFT */}
-                <div className={` flex flex-col gap-10 p-6 sm:p-0 rounded-2xl sm:bg-transparent ${theme === 'dark' ? 'bg-black/40' : 'bg-white/40'} sm:backdrop-blur-none backdrop-blur-xs border sm:border-none border-white/20 shadow-xl sm:shadow-none`}>
-                    <span
-                        className={`${isDark ? "text-neutral-400" : "text-black"} font-semibold text-sm uppercase tracking-widest`}>
+                {/* Tag line */}
+                <motion.div {...fadeUp(0.05)} className="mb-6">
+                    <span className={`
+                        inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest
+                        px-3 py-1.5 rounded-full border
+                        ${isDark
+                            ? "text-blue-400 border-blue-800/40 bg-blue-900/20"
+                            : "text-blue-600 border-blue-200 bg-blue-50"
+                        }
+                    `}>
+                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
                         Consulenza digitale per PMI
                     </span>
-                    <h1 className={`${isDark ? "text-white" : "text-neutral-900"} text-4xl sm:text-6xl font-semibold leading-tight`}>
-                        <span className="hero-line reveal delay-1">
-                            Il tuo business <br/>
-                        </span>
+                </motion.div>
+
+                {/* Headline */}
+                <motion.h1
+                    {...fadeUp(0.15)}
+                    className={`font-fjalla text-5xl sm:text-7xl font-semibold leading-tight max-w-2xl ${
+                        isDark ? "text-slate-100" : "text-slate-900"
+                    }`}
+                >
+                    <span className="hero-line reveal delay-1 block">
+                        Il tuo business
+                    </span>
+                    <span className="hero-line reveal delay-2 block text-blue-500">
+                        genera dati.
+                    </span>
+                    <span className="hero-line reveal delay-3 block text-4xl sm:text-5xl mt-2">
+                        Sei in grado di gestirli?
+                    </span>
+                </motion.h1>
+
+                {/* Subheadline */}
+                <motion.p
+                    {...fadeUp(0.28)}
+                    className={`mt-8 text-lg leading-relaxed max-w-xl ${
+                        isDark ? "text-slate-400" : "text-slate-600"
+                    }`}
+                >
+                    Aiutiamo le aziende a trasformare operazioni, vendite e relazioni
+                    con i clienti in sistemi chiari, misurabili e automatizzati.
+                </motion.p>
+
+                {/* Trust signals */}
+                <motion.div {...fadeUp(0.35)} className="mt-6 flex flex-wrap gap-4">
+                    {["Analisi guidata", "Nessun impegno", "Risultati immediati"].map((item) => (
                         <span
-                            className={`hero-line reveal delay-2 ${isDark ? "text-main-red" : "text-main-red"} font-bold`}>
-                            genera dati.
+                            key={item}
+                            className={`flex items-center gap-1.5 text-sm ${
+                                isDark ? "text-slate-500" : "text-slate-500"
+                            }`}
+                        >
+                            <CheckCircle size={14} className="text-blue-500 shrink-0" />
+                            {item}
                         </span>
-                        <br/>
-                        <span className="hero-line reveal delay-3 text-3xl sm:text-5xl">
-                            sei in grado di gestirli?
-                        </span>
-                    </h1>
+                    ))}
+                </motion.div>
 
-                    <p className={`${isDark ? "text-neutral-300" : "text-black"} text-lg max-w-xl`}>
-                        Aiutiamo le aziende a trasformare operazioni, vendite e relazioni con i clienti
-                        in sistemi chiari, misurabili e automatizzati.
-                        Meno caos. Più controllo.
-                    </p>
+                {/* CTA */}
+                <motion.div {...fadeUp(0.42)} className="mt-10 flex flex-wrap items-center gap-4">
+                    <button
+                        onClick={goToSurvey}
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl
+                            bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold
+                            transition-all duration-200 shadow-lg shadow-blue-600/25
+                            hover:shadow-blue-500/35 hover:-translate-y-0.5"
+                    >
+                        Scopri cosa stai perdendo
+                        <ArrowRight size={16} />
+                    </button>
 
-                    <div className="flex items-center gap-4">
-                        <LiquidGlassButton onClick={goToSurvey} variant="navbar" fillBackground='secondary' className='!py-3 !rounded-4xl !text-base'>
-                            Scopri cosa stai perdendo
-                        </LiquidGlassButton>
-
-                        <span className={`text-sm ${isDark ? "text-white" : "text-black"}`}>
-                            Analisi guidata • Nessun impegno
-                        </span>
-                    </div>
-                </div>
-
-                {/* RIGHT */}
-                {/*<div className="relative z-10 hidden lg:block">*/}
-                {/*    <div className={`rounded-3xl border ${*/}
-                {/*        isDark ? "border-neutral-700 bg-neutral-900/80" : "border-neutral-300 bg-white/80"*/}
-                {/*    } p-8 shadow-2xl backdrop-blur`}>*/}
-                {/*        <HeroSystemPreview theme={theme} />*/}
-                {/*    </div>*/}
-                {/*</div>*/}
+                    <LiquidGlassButton
+                        onClick={goToSurvey}
+                        variant="navbar"
+                        className="!text-sm !px-5 !py-2.5"
+                        scale={false}
+                    >
+                        Avvia l'analisi
+                    </LiquidGlassButton>
+                </motion.div>
             </div>
         </section>
     );

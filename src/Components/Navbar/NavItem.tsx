@@ -5,27 +5,34 @@ type Props = {
     to: string;
     label: string;
     isPremium?: boolean | null;
-    theme: string // nuovo prop
+    theme: string;
 };
 
-// NavItem semplice
 export function NavItem({ to, label, theme }: { to: string; label: string; theme: string }) {
-    const activeText = theme === "dark" ? "text-white" : "text-black";
-    const inactiveText = theme === "dark" ? "text-neutral-400 hover:text-white" : "text-neutral-500 hover:text-black";
+    const isDark = theme === "dark";
 
     return (
         <NavLink to={to}>
             {({ isActive }) => (
-                <span className={`relative px-1 py-1 transition ${isActive ? activeText : inactiveText}`}>
+                <span
+                    className={`
+                        relative px-1 py-1 text-sm font-medium tracking-wide
+                        transition-colors duration-200
+                        ${isActive
+                            ? isDark ? "text-blue-400" : "text-blue-600"
+                            : isDark
+                                ? "text-slate-400 hover:text-slate-100"
+                                : "text-slate-500 hover:text-slate-800"
+                        }
+                    `}
+                >
                     {label}
-
                     <span
                         className={`
-                            absolute left-0 -bottom-1 h-[1px] w-full
-                            origin-left scale-x-0
-                            transition-transform duration-300
-                            ${isActive ? "scale-x-100" : "group-hover:scale-x-100"}
-                            ${theme === "dark" ? "bg-white" : "bg-black"}
+                            absolute left-0 -bottom-0.5 h-[2px] w-full origin-left rounded-full
+                            transition-transform duration-300 ease-out
+                            bg-blue-500
+                            ${isActive ? "scale-x-100" : "scale-x-0"}
                         `}
                     />
                 </span>
@@ -34,7 +41,6 @@ export function NavItem({ to, label, theme }: { to: string; label: string; theme
     );
 }
 
-// NavItemPremium con tema
 export function NavItemPremium({ to, label, isPremium = false, theme }: Props) {
     const activeBg = theme === "dark"
         ? "bg-gradient-to-r from-indigo-400 via-cyan-400 to-blue-500 text-black border-transparent shadow-lg shadow-indigo-500/40"
@@ -61,10 +67,7 @@ export function NavItemPremium({ to, label, isPremium = false, theme }: Props) {
             {isPremium && (
                 <WorkspacePremiumIcon className="text-red-300" fontSize="small" />
             )}
-
             <span className="relative z-10">{label}</span>
-
-            {/* Glow layer */}
             <span
                 className={`absolute inset-0 rounded-full blur-xl opacity-60 pointer-events-none ${
                     isPremium ? premiumGlow : normalGlow

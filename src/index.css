@@ -1,17 +1,74 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Recursive:wght@300..1000&display=swap');
 
 @theme {
+    --font-fjalla: 'Recursive', sans-serif;
+
+    /* Legacy colors (kept for compatibility) */
     --color-main-white: #f0efeb;
     --color-green-buttons: #40916c;
     --color-green-buttons-hover: #52b788;
     --color-abstract-grey: #EAEAEA;
-    --color-primary-white: #E9ECF5;
-    --color-secondary-white: #CCD6EB;
-    --color-main-red: #2563EB
+    --color-primary-white: #F1F5F9;
+    --color-secondary-white: #E2E8F0;
+    --color-primary: #2563EB;
+    --color-secondary: #14B8A6;
+    --color-main-red: #2563EB;
+
+    /* Corporate design system */
+    --color-corp-navy:    #060D1B;
+    --color-corp-surface: #0D1A30;
+    --color-corp-blue:    #2563EB;
+    --color-corp-blue-dim: rgba(37, 99, 235, 0.15);
+    --color-corp-blue-glow: rgba(37, 99, 235, 0.25);
+    --color-corp-slate:   #94A3B8;
+    --color-corp-light-bg: #F8FAFC;
+    --color-corp-light-surface: #FFFFFF;
+    --color-corp-light-border: #E2E8F0;
 }
 
 html, body {
-    background-color: #000;
+    background-color: #060D1B;
+}
+
+/* ── Corporate animation utilities ── */
+@keyframes corporateFadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes borderGlow {
+    0%, 100% { border-color: rgba(37, 99, 235, 0.15); }
+    50%       { border-color: rgba(37, 99, 235, 0.40); }
+}
+
+@keyframes shimmer {
+    0%   { transform: translateX(-100%) skewX(-12deg); }
+    100% { transform: translateX(250%)  skewX(-12deg); }
+}
+
+.corp-fade-up {
+    animation: corporateFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.shimmer-once::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+    animation: shimmer 1.6s ease-in-out 0.4s both;
+}
+
+/* Footer hover link effect */
+.corp-link {
+    @apply relative transition-colors duration-200;
+}
+.corp-link::after {
+    content: '';
+    @apply absolute left-0 -bottom-px h-px w-0 bg-blue-500 transition-all duration-300;
+}
+.corp-link:hover::after {
+    @apply w-full;
 }
 
 @keyframes floatSlow {

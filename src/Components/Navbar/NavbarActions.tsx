@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { User } from "lucide-react";
 import { useAuth } from "../../auth/AuthContext";
 import { ThemeToggle } from "./ThemeToggle";
-import { LiquidGlassButton } from "../Buttons/LiquidGlassButton";
 import { useTheme } from "../../Context/ThemeContext";
 import { LogoutConfirmModal } from "./LogoutConfirmModal";
 
@@ -13,71 +13,72 @@ interface NavbarActionsProps {
 export function NavbarActions({ closeMenu }: NavbarActionsProps) {
     const { isAuthenticated, logout } = useAuth();
     const { theme } = useTheme();
-
+    const isDark = theme === "dark";
     const [modalOpen, setModalOpen] = useState(false);
 
-    const handleLogoutClick = () => {
-        setModalOpen(true);
-    };
-
+    const handleLogoutClick = () => setModalOpen(true);
     const handleConfirmLogout = () => {
         logout();
         setModalOpen(false);
         closeMenu?.();
     };
-
-    const handleCancelLogout = () => {
-        setModalOpen(false);
-    };
+    const handleCancelLogout = () => setModalOpen(false);
 
     return (
-        <div className="flex items-center gap-6 text-sm">
+        <div className="flex items-center gap-3">
             {!isAuthenticated ? (
                 <>
-                    <LiquidGlassButton
+                    <Link
                         to="/login"
-                        variant="navbar"
                         onClick={closeMenu}
-                        className="!text-xs !min-w-23 active:!shadow-inner"
-                        scale={false}
+                        className={`text-sm font-medium px-3 py-1.5 rounded-lg transition-colors duration-200 ${
+                            isDark
+                                ? "text-slate-300 hover:text-white hover:bg-white/5"
+                                : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                        }`}
                     >
                         Login
-                    </LiquidGlassButton>
-                    <LiquidGlassButton
+                    </Link>
+                    <Link
                         to="/register"
-                        variant="navbar"
                         onClick={closeMenu}
-                        className="!text-xs !min-w-23 active:!shadow-inner"
-                        scale={false}
+                        className="text-sm font-medium px-4 py-1.5 rounded-lg
+                            bg-blue-600 hover:bg-blue-500 text-white
+                            transition-colors duration-200 shadow-sm
+                            shadow-blue-600/30 hover:shadow-blue-500/40"
                     >
                         Registrati
-                    </LiquidGlassButton>
+                    </Link>
                 </>
             ) : (
                 <>
                     <Link
                         to="/user"
                         onClick={closeMenu}
-                        className={`${
-                            theme === "dark" ? "text-neutral-400 hover:text-white" : "text-neutral-500 hover:text-black"
-                        } cursor-pointer transition-all ease-in-out`}
+                        className={`flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-lg transition-colors duration-200 ${
+                            isDark
+                                ? "text-slate-400 hover:text-white hover:bg-white/5"
+                                : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+                        }`}
                     >
+                        <User size={14} />
                         Account
                     </Link>
-                    <LiquidGlassButton
+                    <button
                         onClick={handleLogoutClick}
-                        variant="navbar"
-                        scale={false}
-                        className="!text-xs !min-w-23 active:!shadow-inner"
+                        className={`text-sm font-medium px-3 py-1.5 rounded-lg border transition-all duration-200 ${
+                            isDark
+                                ? "text-slate-400 border-blue-900/30 hover:text-red-400 hover:border-red-900/40 hover:bg-red-900/10"
+                                : "text-slate-500 border-slate-200 hover:text-red-500 hover:border-red-200 hover:bg-red-50"
+                        }`}
                     >
                         Logout
-                    </LiquidGlassButton>
+                    </button>
                 </>
             )}
 
             <ThemeToggle />
 
-            {/* Modale di conferma logout */}
             <LogoutConfirmModal
                 open={modalOpen}
                 onConfirm={handleConfirmLogout}

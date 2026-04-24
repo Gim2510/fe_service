@@ -1,6 +1,6 @@
-// CTASection.tsx
+import { motion } from "framer-motion";
+import { ArrowRight, Clock, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { LiquidGlassButton } from "../Buttons/LiquidGlassButton.tsx";
 
 export function CTASection({ theme }: { theme: string }) {
     const isDark = theme === "dark";
@@ -8,62 +8,158 @@ export function CTASection({ theme }: { theme: string }) {
     const goToSurvey = () => navigate("/survey/start");
 
     return (
-        <section className={`relative overflow-hidden ${isDark ? "bg-neutral-900" : "bg-gray-100"}`}>
-            {/* Subtle technical grid texture */}
-            <div className="absolute inset-0 opacity-[0.04]
-                bg-[linear-gradient(to_right,#000_1px,transparent_1px),
-                linear-gradient(to_bottom,#000_1px,transparent_1px)]
-                bg-[size:60px_60px]" />
+        <section className="relative overflow-hidden">
+            {/* Corporate gradient background */}
+            <div className={`absolute inset-0 ${
+                isDark
+                    ? "bg-gradient-to-br from-[#060D1B] via-[#0A1628] to-[#060D1B]"
+                    : "bg-gradient-to-br from-blue-700 via-blue-600 to-blue-800"
+            }`} />
 
-            {/* Soft radial light diffusion */}
-            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                w-[800px] h-[800px] rounded-full blur-3xl opacity-30 ${isDark ? "bg-white/5" : "bg-black/5"}`} />
+            {/* Decorative elements */}
+            <div className="absolute inset-0 pointer-events-none">
+                {isDark && (
+                    <>
+                        {/* Blue gradient accent */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-transparent to-blue-900/10" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full blur-[100px] opacity-10 bg-blue-500" />
+                        {/* Grid */}
+                        <div
+                            className="absolute inset-0 opacity-[0.03]"
+                            style={{
+                                backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+                                backgroundSize: "28px 28px",
+                            }}
+                        />
+                        {/* Top border glow */}
+                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-700/60 to-transparent" />
+                    </>
+                )}
+                {!isDark && (
+                    <>
+                        {/* Subtle grid on light */}
+                        <div
+                            className="absolute inset-0 opacity-[0.08]"
+                            style={{
+                                backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+                                backgroundSize: "28px 28px",
+                            }}
+                        />
+                        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-20 bg-blue-400" />
+                    </>
+                )}
+            </div>
 
-            <div className="relative mx-auto max-w-5xl px-8 py-32 text-center flex flex-col items-center">
+            <div className="relative mx-auto max-w-4xl px-6 sm:px-8 py-28 sm:py-36 text-center flex flex-col items-center">
+
+                {/* Badge */}
+                <motion.span
+                    className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border mb-8 ${
+                        isDark
+                            ? "text-blue-400 border-blue-800/40 bg-blue-900/20"
+                            : "text-blue-100 border-white/20 bg-white/10"
+                    }`}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+                    Inizia oggi
+                </motion.span>
 
                 {/* Headline */}
-                <h2 className={`${isDark ? "text-white" : "text-gray-900"} text-4xl md:text-5xl font-semibold leading-tight max-w-4xl`}>
-                    Trasforma i tuoi processi in un
-                    <span className={`${isDark ? "text-main-red" : "text-main-red"} block`}>
+                <motion.h2
+                    className={`font-fjalla text-4xl md:text-5xl font-semibold leading-tight max-w-3xl ${
+                        isDark ? "text-slate-100" : "text-white"
+                    }`}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+                >
+                    Trasforma i tuoi processi in un{" "}
+                    <span className={isDark ? "text-blue-400" : "text-blue-200"}>
                         vantaggio competitivo misurabile.
                     </span>
-                </h2>
+                </motion.h2>
 
-                {/* Subheadline */}
-                <p className={`${isDark ? "text-neutral-400" : "text-gray-600"} mt-6 text-lg max-w-2xl leading-relaxed`}>
-                    In poche ore ottieni una valutazione strutturata
-                    del livello di maturità digitale della tua azienda,
-                    con indicazioni concrete sulle priorità di intervento.
-                </p>
+                {/* Sub */}
+                <motion.p
+                    className={`mt-6 text-lg leading-relaxed max-w-xl ${
+                        isDark ? "text-slate-400" : "text-blue-100"
+                    }`}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.15 }}
+                >
+                    In poche ore ottieni una valutazione strutturata del livello
+                    di maturità digitale della tua azienda, con indicazioni concrete
+                    sulle priorità di intervento.
+                </motion.p>
 
                 {/* Micro-benefits */}
-                <div className={`mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6
-                                text-sm ${isDark ? "text-neutral-400" : "text-gray-500"} max-w-3xl`}>
-                    <div className="flex justify-center gap-2">
-                        <span className={`font-medium ${isDark ? "text-white" : "text-black"}`}>✓</span>
-                        Analisi strutturata
-                    </div>
-                    <div className="flex justify-center gap-2">
-                        <span className={`font-medium ${isDark ? "text-white" : "text-black"}`}>✓</span>
-                        Nessun impegno
-                    </div>
-                    <div className="flex justify-center gap-2">
-                        <span className={`font-medium ${isDark ? "text-white" : "text-black"}`}>✓</span>
-                        Risultati immediati
-                    </div>
-                </div>
+                <motion.div
+                    className="mt-8 flex flex-wrap justify-center gap-x-8 gap-y-2"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.22 }}
+                >
+                    {["Analisi strutturata", "Nessun impegno", "Risultati immediati"].map((item) => (
+                        <span
+                            key={item}
+                            className={`flex items-center gap-1.5 text-sm ${
+                                isDark ? "text-slate-500" : "text-blue-200"
+                            }`}
+                        >
+                            <CheckCircle size={13} className={isDark ? "text-blue-600" : "text-blue-300"} />
+                            {item}
+                        </span>
+                    ))}
+                </motion.div>
 
-                {/* CTA */}
-                <div className="mt-14">
-                    <LiquidGlassButton onClick={goToSurvey} fillBackground='secondary' className={`${!isDark ? `!bg-white/90 sm:bg-transparent !border-black/20 shadow-lg hover:!text-white` : ``} !rounded-4xl`}>
-                        Avvia l’analisi strategica
-                    </LiquidGlassButton>
-                </div>
+                {/* CTA button */}
+                <motion.div
+                    className="mt-12"
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.55, delay: 0.28 }}
+                >
+                    <button
+                        onClick={goToSurvey}
+                        className={`group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl
+                            text-sm font-semibold transition-all duration-200
+                            shadow-xl hover:-translate-y-0.5
+                            ${isDark
+                                ? "bg-blue-600 hover:bg-blue-500 text-white shadow-blue-900/40 hover:shadow-blue-900/60"
+                                : "bg-white hover:bg-blue-50 text-blue-700 shadow-blue-900/20 hover:shadow-blue-900/30"
+                            }
+                        `}
+                    >
+                        Avvia l'analisi strategica
+                        <ArrowRight
+                            size={16}
+                            className="transition-transform duration-200 group-hover:translate-x-1"
+                        />
+                    </button>
+                </motion.div>
 
-                {/* Trust reinforcement */}
-                <p className={`${isDark ? "text-neutral-400" : "text-black"} mt-6 text-xs`}>
+                {/* Trust note */}
+                <motion.p
+                    className={`mt-5 flex items-center gap-1.5 text-xs ${
+                        isDark ? "text-slate-600" : "text-blue-300"
+                    }`}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.35 }}
+                >
+                    <Clock size={11} />
                     Tempo stimato: 3–5 minuti • registrazione richiesta
-                </p>
+                </motion.p>
             </div>
         </section>
     );

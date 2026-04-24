@@ -1,55 +1,81 @@
-import {LiquidGlassButton} from "../Buttons/LiquidGlassButton";
+import { createPortal } from "react-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { LogOut } from "lucide-react";
 
 type Props = {
     open: boolean;
     onConfirm: () => void;
     onCancel: () => void;
-    theme: string
+    theme: string;
 };
 
-export function LogoutConfirmModal({open, onConfirm, onCancel, theme}: Props) {
-    if (!open) return null;
+export function LogoutConfirmModal({ open, onConfirm, onCancel, theme }: Props) {
+    const isDark = theme === "dark";
 
-    return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center w-full h-screen">
-
-            {/* Overlay */}
-            <div
-                onClick={onCancel}
-                className={`absolute inset-0 ${theme === 'dark' ? 'bg-black/80' : 'bg-white/50'} backdrop-blur-xl`}
-            />
-
-            {/* Modal */}
-            <div
-                className={`relative z-10 w-full max-w-md p-10 rounded-3xl border ${theme === 'dark' ? 'bg-neutral-900/80 shadow-[0_20px_80px_rgba(0,0,0,0.6)] text-white border-white/10' : 'bg-white shadow-lg text-black border-black/10'}  backdrop-blur-2xl space-y-8`}>
-
-                <div className="space-y-4 text-center">
-                    <h2 className="text-2xl font-semibold">
-                        Confermare il logout?
-                    </h2>
-
-                    <p className={`${theme === 'dark' ? 'text-neutral-400' : 'text-black'} text-sm leading-relaxed`}>
-                        Verrai disconnesso dalla piattaforma e dovrai
-                        effettuare nuovamente l’accesso per continuare.
-                    </p>
-                </div>
-
-                <div className="flex gap-4 justify-around">
-                    <LiquidGlassButton
+    return createPortal(
+        <AnimatePresence>
+            {open && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center">
+                    {/* Overlay */}
+                    <motion.div
+                        className={`absolute inset-0 ${isDark ? "bg-black/75" : "bg-slate-900/40"} backdrop-blur-md`}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
                         onClick={onCancel}
-                        variant='navbar'
+                    />
+
+                    {/* Modal */}
+                    <motion.div
+                        className={`relative z-10 w-full max-w-sm mx-4 p-8 rounded-2xl border ${
+                            isDark
+                                ? "bg-[#0D1A30] border-blue-900/30 shadow-[0_24px_80px_rgba(0,0,0,0.7)]"
+                                : "bg-white border-slate-200 shadow-[0_24px_80px_rgba(0,0,0,0.12)]"
+                        }`}
+                        initial={{ opacity: 0, scale: 0.94, y: 12 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.94, y: 12 }}
+                        transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        Annulla
-                    </LiquidGlassButton>
-                    <LiquidGlassButton
-                        onClick={onConfirm}
-                        className=""
-                        variant='navbar'
-                    >
-                        Conferma
-                    </LiquidGlassButton>
+                        {/* Icon */}
+                        <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-6 ${
+                            isDark ? "bg-red-500/10 border border-red-500/20" : "bg-red-50 border border-red-100"
+                        }`}>
+                            <LogOut size={18} className="text-red-500" />
+                        </div>
+
+                        <h2 className={`text-lg font-semibold mb-2 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                            Conferma logout
+                        </h2>
+                        <p className={`text-sm leading-relaxed mb-8 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+                            Verrai disconnesso dalla piattaforma e dovrai effettuare nuovamente l'accesso.
+                        </p>
+
+                        <div className="flex gap-3">
+                            <button
+                                onClick={onCancel}
+                                className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-medium border transition-all duration-200 ${
+                                    isDark
+                                        ? "border-blue-900/30 text-slate-300 hover:bg-white/5 hover:border-blue-800/40"
+                                        : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                                }`}
+                            >
+                                Annulla
+                            </button>
+                            <button
+                                onClick={onConfirm}
+                                className="flex-1 px-4 py-2.5 rounded-lg text-sm font-medium
+                                    bg-red-600 hover:bg-red-500 text-white
+                                    transition-colors duration-200"
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    </motion.div>
                 </div>
-            </div>
-        </div>
+            )}
+        </AnimatePresence>,
+        document.body
     );
 }

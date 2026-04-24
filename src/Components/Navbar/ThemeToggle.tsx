@@ -1,31 +1,35 @@
 import { Sun, Moon } from "lucide-react";
+import { motion } from "framer-motion";
 import { useTheme } from "../../Context/ThemeContext";
 
 export function ThemeToggle() {
     const { theme, toggleTheme } = useTheme();
+    const isDark = theme === "dark";
 
     return (
         <button
             onClick={toggleTheme}
-            className="relative w-16 h-9 rounded-full p-1 backdrop-blur-xl bg-white/40 border border-white/30 shadow-inner transition-all duration-500 cursor-pointer"
+            aria-label="Cambia tema"
+            className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium
+                border transition-all duration-300 cursor-pointer
+                ${isDark
+                    ? "bg-white/5 border-blue-900/30 text-slate-400 hover:text-slate-200 hover:border-blue-700/40"
+                    : "bg-slate-100 border-slate-200 text-slate-500 hover:text-slate-700 hover:bg-slate-200"
+                }
+            `}
         >
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/40 to-transparent opacity-30 pointer-events-none" />
-            <div
-                className={`absolute top-1 w-7 h-7 rounded-full flex items-center justify-center backdrop-blur-xl shadow-lg transition-all duration-500 ${
-                    theme === "dark"
-                        ? "translate-x-7 shadow-[0_0_18px_rgba(255,255,255,0.25)] bg-neutral-900"
-                        : "translate-x-0 shadow-[0_0_18px_rgba(0,0,0,0.15)] bg-neutral-50"
-                }`}
+            <motion.span
+                key={theme}
+                initial={{ opacity: 0, scale: 0.6, rotate: -30 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                transition={{ duration: 0.25 }}
             >
-                <Sun
-                    size={14}
-                    className={`absolute transition-all duration-300 ${theme === "light" ? "opacity-100 scale-100 text-yellow-500" : "opacity-0 scale-75"}`}
-                />
-                <Moon
-                    size={14}
-                    className={`absolute transition-all duration-300 ${theme === "dark" ? "opacity-100 scale-100 text-white" : "opacity-0 scale-75"}`}
-                />
-            </div>
+                {isDark
+                    ? <Moon size={13} className="text-blue-400" />
+                    : <Sun size={13} className="text-amber-500" />
+                }
+            </motion.span>
+            <span>{isDark ? "Dark" : "Light"}</span>
         </button>
     );
 }
