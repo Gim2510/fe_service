@@ -7,6 +7,9 @@ export default {
     ],
     theme: {
         extend: {
+            fontFamily: {
+                fjalla: ['"Fjalla One"', 'sans-serif'],
+            },
             keyframes: {
                 wave: {
                     '0%, 100%': { transform: 'rotate(0deg)' },

@@ -1,33 +1,32 @@
-import { useState } from "react"
-import { FallingLines } from "react-loader-spinner"
-
-import { useAuth } from "../../auth/AuthContext.tsx"
-import { LiquidGlassButton } from "../Buttons/LiquidGlassButton.tsx"
-import { useTheme } from "../../Context/ThemeContext.tsx"
+import { useState } from "react";
+import { FallingLines } from "react-loader-spinner";
+import { Phone, ArrowRight } from "lucide-react";
+import { useAuth } from "../../auth/AuthContext.tsx";
+import { useTheme } from "../../Context/ThemeContext.tsx";
 
 type SurveyContactsProps = {
-    surveyId: string
-    onNext: () => void
-}
+    surveyId: string;
+    onNext: () => void;
+};
 
-const PHONE_PREFIXES = ["+39", "+1", "+44", "+33", "+49"]
+const PHONE_PREFIXES = ["+39", "+1", "+44", "+33", "+49"];
 
 export function SurveyContacts({ surveyId, onNext }: SurveyContactsProps) {
-    const { token } = useAuth()
-    const { theme } = useTheme()
-    const isDark = theme === "dark"
+    const { token } = useAuth();
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
 
-    const [prefix, setPrefix] = useState(PHONE_PREFIXES[0])
-    const [number, setNumber] = useState("")
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState<string | null>(null)
+    const [prefix, setPrefix] = useState(PHONE_PREFIXES[0]);
+    const [number, setNumber] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-    const canSubmit = number.trim().length > 4 && !loading
+    const canSubmit = number.trim().length > 4 && !loading;
 
     async function handleSubmit() {
-        if (!canSubmit) return
-        setLoading(true)
-        setError(null)
+        if (!canSubmit) return;
+        setLoading(true);
+        setError(null);
 
         try {
             const res = await fetch(
@@ -38,46 +37,55 @@ export function SurveyContacts({ surveyId, onNext }: SurveyContactsProps) {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
                     },
-                    body: JSON.stringify({
-                        phone: {
-                            prefix,
-                            number: number.trim(),
-                        },
-                    }),
+                    body: JSON.stringify({ phone: { prefix, number: number.trim() } }),
                 }
-            )
-
-            if (!res.ok) throw new Error("Errore nell'invio del numero")
-            onNext()
+            );
+            if (!res.ok) throw new Error("Errore nell'invio del numero");
+            onNext();
         } catch (err: any) {
-            setError(err.message ?? "Errore imprevisto")
+            setError(err.message ?? "Errore imprevisto");
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     }
 
-    const inputClass = `
-        rounded-xl border px-3 py-2 placeholder:text-neutral-500
-        ${isDark ? "bg-black/40 border-white/10 text-white" : "bg-white/50 border-neutral-300 text-black"}
-    `
+    const selectClass = `h-11 px-3 rounded-xl border text-sm font-medium appearance-none cursor-pointer
+        transition-colors focus:outline-none focus:ring-2
+        ${isDark
+            ? "bg-[#060D1B] border-blue-900/30 text-slate-200 focus:border-blue-600 focus:ring-blue-500/20"
+            : "bg-white border-slate-200 text-slate-900 focus:border-blue-500 focus:ring-blue-500/10"
+        }`;
+
+    const inputClass = `h-11 flex-1 px-4 rounded-xl border text-sm
+        transition-colors focus:outline-none focus:ring-2 placeholder:text-slate-500
+        ${isDark
+            ? "bg-[#060D1B] border-blue-900/30 text-slate-200 focus:border-blue-600 focus:ring-blue-500/20"
+            : "bg-white border-slate-200 text-slate-900 focus:border-blue-500 focus:ring-blue-500/10"
+        }`;
 
     return (
         <div className="flex flex-col items-center gap-8 text-center">
-            <header className="space-y-2">
-                <h2 className={`${isDark ? "text-white" : "text-black"} text-2xl font-light`}>
-                    Inserisci il tuo contatto telefonico
+            <header className="space-y-3">
+                <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl
+                    ${isDark ? "bg-blue-600/15 border border-blue-600/20" : "bg-blue-50 border border-blue-200"}`}>
+                    <Phone size={20} className="text-blue-500" />
+                </div>
+                <h2 className={`text-2xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                    Inserisci il tuo contatto
                 </h2>
-                <p className="text-sm text-neutral-400">
-                    Ti contatteremo solo se necessario
+                <p className={`text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>
+                    Ti contatteremo solo se necessario per chiarimenti sul questionario.
                 </p>
             </header>
 
-            <div className="flex gap-3">
-                <select value={prefix} onChange={e => setPrefix(e.target.value)} className={inputClass}>
+            <div className="flex gap-3 w-full max-w-sm">
+                <select
+                    value={prefix}
+                    onChange={e => setPrefix(e.target.value)}
+                    className={selectClass + " w-24"}
+                >
                     {PHONE_PREFIXES.map(p => (
-                        <option key={p} value={p}>
-                            {p}
-                        </option>
+                        <option key={p} value={p}>{p}</option>
                     ))}
                 </select>
 
@@ -88,19 +96,27 @@ export function SurveyContacts({ surveyId, onNext }: SurveyContactsProps) {
                     value={number}
                     onChange={e => setNumber(e.target.value)}
                     placeholder="Numero di telefono"
-                    className={inputClass + " w-56"}
+                    className={inputClass}
                 />
             </div>
 
-            {error && <div className="text-sm text-red-500">{error}</div>}
+            {error && (
+                <p className="text-sm text-red-400">{error}</p>
+            )}
 
-            <LiquidGlassButton disabled={!canSubmit} onClick={handleSubmit}>
-                {loading ? (
-                    <FallingLines color={isDark ? "#fff" : "#000"} width="30" visible />
-                ) : (
-                    "Invia"
-                )}
-            </LiquidGlassButton>
+            <button
+                disabled={!canSubmit}
+                onClick={handleSubmit}
+                className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
+                    bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed
+                    text-white text-sm font-semibold transition-colors
+                    shadow-lg shadow-blue-600/25 hover:-translate-y-0.5 duration-200"
+            >
+                {loading
+                    ? <FallingLines color="#fff" width="20" visible />
+                    : <>Invia <ArrowRight size={15} /></>
+                }
+            </button>
         </div>
-    )
+    );
 }

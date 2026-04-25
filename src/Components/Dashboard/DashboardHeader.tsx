@@ -9,33 +9,23 @@ export function DashboardHeader({ users, surveys, theme }: any) {
 
     return (
         <div className="space-y-10">
-
-            {/* TITLE */}
             <div>
-                <h1 className={`text-3xl font-semibold ${isDark ? "text-white" : "text-gray-900"}`}>
-                    Admin <span className='text-main-red'>Dashboard</span>
+                <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                    Pannello amministrativo
+                </span>
+                <h1 className={`text-3xl font-semibold mt-2 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                    Admin <span className="text-blue-500">Dashboard</span>
                 </h1>
-
-                <p className={`${isDark ? "text-neutral-400" : "text-gray-600"} mt-2`}>
+                <p className={`mt-1.5 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                     Monitor growth, engagement and system health
                 </p>
             </div>
 
-            {/* HERO KPI */}
             <KPISection users={users} surveys={surveys} theme={theme} />
-
-            {/* GROWTH */}
             <GrowthSection users={users} theme={theme} />
-
-            {/* SURVEY CORE */}
             <SurveySection surveys={surveys} theme={theme} />
-
-            {/* INSIGHTS */}
             <InsightsSection users={users} surveys={surveys} theme={theme} />
-
-            {/* DETAILS */}
             <AdvancedStats data={users} theme={theme} />
-
         </div>
     );
 }

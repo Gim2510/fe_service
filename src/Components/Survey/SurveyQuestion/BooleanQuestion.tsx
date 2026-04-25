@@ -1,40 +1,41 @@
-import type { FC } from "react"
-import type { PropsBooleanQuestion } from "../../../props.ts"
-import { useTheme } from "../../../Context/ThemeContext.tsx"
+import type { FC } from "react";
+import type { PropsBooleanQuestion } from "../../../props.ts";
+import { useTheme } from "../../../Context/ThemeContext.tsx";
 
 const OPTIONS = [
     { label: "Sì", value: true },
     { label: "No", value: false },
-]
+];
 
 export const BooleanQuestion: FC<PropsBooleanQuestion> = ({ answer, onChange }) => {
-    const { theme } = useTheme()
-    const isDark = theme === "dark"
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
 
     return (
-        <div className="grid grid-cols-2 gap-6 py-10">
+        <div className="grid grid-cols-2 gap-4 py-8">
             {OPTIONS.map(({ label, value }) => {
-                const isSelected = answer === value
-                const selectedClasses = isDark
-                    ? "bg-white/10 border-white/20 text-white backdrop-blur-md"
-                    : "bg-white shadow-[inset_0_4px_10px_rgba(0,0,0,0.15)] border-neutral-300 text-black backdrop-blur-md"
-                const unselectedClasses = isDark
-                    ? "bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:border-white/20"
-                    : "bg-white border-neutral-200 text-black/70 hover:bg-gray-100 hover:border-neutral-300"
+                const isSelected = answer === value;
 
                 return (
                     <button
                         key={label}
                         type="button"
                         onClick={() => onChange(value)}
-                        className={`px-8 py-6 rounded-2xl border text-lg font-medium transition-all duration-300 cursor-pointer ${
-                            isSelected ? selectedClasses : unselectedClasses
-                        }`}
+                        className={`px-8 py-6 rounded-xl border text-base font-semibold
+                            transition-all duration-200 cursor-pointer
+                            ${isSelected
+                                ? isDark
+                                    ? "bg-blue-600/15 border-blue-500/40 text-blue-300"
+                                    : "bg-blue-50 border-blue-400 text-blue-700"
+                                : isDark
+                                    ? "bg-[#0D1A30]/60 border-blue-900/20 text-slate-400 hover:border-blue-700/30 hover:text-slate-200"
+                                    : "bg-white border-slate-200 text-slate-600 hover:border-blue-300 hover:bg-blue-50/50"
+                            }`}
                     >
                         {label}
                     </button>
-                )
+                );
             })}
         </div>
-    )
-}
+    );
+};

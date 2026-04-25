@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "../Context/ThemeContext";
-import {LiquidGlassButton} from "./Buttons/LiquidGlassButton.tsx";
 
 type Consent = {
     necessary: true;
@@ -10,10 +9,7 @@ type Consent = {
 };
 
 const defaultConsent: Consent = {
-    necessary: true,
-    preferences: false,
-    analytics: false,
-    marketing: false,
+    necessary: true, preferences: false, analytics: false, marketing: false,
 };
 
 export function GDPRBanner() {
@@ -36,141 +32,88 @@ export function GDPRBanner() {
     const saveConsent = (consent: Consent) => {
         localStorage.setItem("gdprConsent", JSON.stringify(consent));
         setSavedConsent(consent);
-
-        if (consent.analytics) {
-            console.log("Analytics enabled");
-        }
     };
 
     if (savedConsent) return null;
 
-    const bg = isDark
-        ? "bg-neutral-900 text-white border-neutral-700"
-        : "bg-white text-neutral-900 border-neutral-200";
+    const consentItems = [
+        { key: "necessary", label: "Necessari", desc: "Essenziali per il funzionamento del sito", disabled: true },
+        { key: "preferences", label: "Preferenze", desc: "Salvano impostazioni come tema" },
+        { key: "analytics", label: "Analytics", desc: "Misurano traffico e utilizzo" },
+        { key: "marketing", label: "Marketing", desc: "Personalizzazione contenuti" },
+    ];
 
     return (
-        <div
-            className={`fixed bottom-0 left-0 w-full z-50 border-t shadow-2xl ${bg}`}
-            style={{paddingBottom: "env(safe-area-inset-bottom)"}}
-        >
+        <div className={`fixed bottom-0 left-0 w-full z-50 border-t ${
+            isDark
+                ? "bg-[#060D1B]/95 border-blue-900/30 backdrop-blur-xl"
+                : "bg-white/95 border-slate-200 backdrop-blur-xl"
+        } shadow-2xl`} style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
+
             {!openSettings ? (
-                <div
-                    className="max-w-6xl mx-auto p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
-
-                    {/* TEXT */}
-                    <p className="text-xs sm:text-sm opacity-80">
-                        Utilizziamo cookie per migliorare l’esperienza, analizzare il traffico e personalizzare i
-                        contenuti.
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+                    <p className={`text-xs sm:text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                        Utilizziamo cookie per migliorare l'esperienza, analizzare il traffico e personalizzare i contenuti.
                     </p>
-
-                    {/* BUTTONS */}
-                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
-
-                        <LiquidGlassButton
-                            onClick={() => saveConsent(defaultConsent)}
-                            variant='navbar'
-                        >
-                            Rifiuta
-                        </LiquidGlassButton>
-
-                        <LiquidGlassButton
-                            onClick={() => setOpenSettings(true)}
-                            variant='navbar'
-                        >
-                            Personalizza
-                        </LiquidGlassButton>
-
-                        <LiquidGlassButton
-                            variant='navbar'
-                            onClick={() =>
-                                saveConsent({
-                                    necessary: true,
-                                    preferences: true,
-                                    analytics: true,
-                                    marketing: true,
-                                })
-                            }
-                        >
-                            Accetta tutto
-                        </LiquidGlassButton>
+                    <div className="flex flex-wrap gap-2 shrink-0">
+                        {[
+                            { label: "Rifiuta", action: () => saveConsent(defaultConsent), secondary: true },
+                            { label: "Personalizza", action: () => setOpenSettings(true), secondary: true },
+                            { label: "Accetta tutto", action: () => saveConsent({ necessary: true, preferences: true, analytics: true, marketing: true }), secondary: false },
+                        ].map(({ label, action, secondary }) => (
+                            <button
+                                key={label}
+                                onClick={action}
+                                className={`px-4 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+                                    secondary
+                                        ? isDark
+                                            ? "border-blue-900/30 text-slate-400 hover:text-slate-200 hover:border-blue-800/40"
+                                            : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                                        : "bg-blue-600 hover:bg-blue-500 text-white border-transparent shadow-sm"
+                                }`}
+                            >
+                                {label}
+                            </button>
+                        ))}
                     </div>
                 </div>
             ) : (
-                <div className="max-w-3xl mx-auto p-4 sm:p-6">
-
-                    <h2 className="text-base sm:text-lg font-semibold mb-4">
+                <div className="max-w-xl mx-auto px-4 sm:px-6 py-5">
+                    <h2 className={`text-sm font-semibold mb-4 ${isDark ? "text-slate-200" : "text-slate-800"}`}>
                         Preferenze Cookie
                     </h2>
-
-                    <div className="flex flex-col divide-y divide-neutral-700">
-                        {[
-                            {
-                                key: "necessary",
-                                label: "Necessari",
-                                desc: "Essenziali per il funzionamento del sito",
-                                disabled: true,
-                            },
-                            {
-                                key: "preferences",
-                                label: "Preferenze",
-                                desc: "Salvano impostazioni come tema",
-                            },
-                            {
-                                key: "analytics",
-                                label: "Analytics",
-                                desc: "Misurano traffico e utilizzo",
-                            },
-                            {
-                                key: "marketing",
-                                label: "Marketing",
-                                desc: "Personalizzazione pubblicità",
-                            },
-                        ].map((item: any) => (
-                            <div key={item.key} className="flex justify-between items-center py-4">
-                                <div className="pr-4">
-                                    <p className="font-medium text-sm sm:text-base">
-                                        {item.label}
-                                    </p>
-                                    <p className="text-xs opacity-70">
-                                        {item.desc}
-                                    </p>
+                    <div className={`flex flex-col divide-y ${isDark ? "divide-blue-900/20" : "divide-slate-100"}`}>
+                        {consentItems.map((item: any) => (
+                            <div key={item.key} className="flex justify-between items-center py-3">
+                                <div>
+                                    <p className={`text-sm font-medium ${isDark ? "text-slate-300" : "text-slate-700"}`}>{item.label}</p>
+                                    <p className={`text-xs ${isDark ? "text-slate-500" : "text-slate-400"}`}>{item.desc}</p>
                                 </div>
-
                                 <input
                                     type="checkbox"
-                                    className="scale-110"
-                                    checked={
-                                        item.key === "necessary"
-                                            ? true
-                                            : tempConsent[item.key as keyof Consent]
-                                    }
+                                    className="accent-blue-600 scale-110"
+                                    checked={item.key === "necessary" ? true : tempConsent[item.key as keyof Consent]}
                                     disabled={item.disabled}
-                                    onChange={(e) =>
-                                        setTempConsent((prev) => ({
-                                            ...prev,
-                                            [item.key]: e.target.checked,
-                                        }))
-                                    }
+                                    onChange={(e) => setTempConsent(prev => ({ ...prev, [item.key]: e.target.checked }))}
                                 />
                             </div>
                         ))}
                     </div>
-
-                    {/* ACTIONS */}
-                    <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 mt-6">
-                        <LiquidGlassButton
+                    <div className="flex justify-end gap-2 mt-4">
+                        <button
                             onClick={() => setOpenSettings(false)}
-                            variant='navbar'
+                            className={`px-4 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+                                isDark ? "border-blue-900/30 text-slate-400 hover:text-slate-200" : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                            }`}
                         >
                             Indietro
-                        </LiquidGlassButton>
-
-                        <LiquidGlassButton
+                        </button>
+                        <button
                             onClick={() => saveConsent(tempConsent)}
-                            variant='navbar'
+                            className="px-4 py-1.5 rounded-lg text-xs font-medium bg-blue-600 hover:bg-blue-500 text-white transition-colors"
                         >
                             Salva preferenze
-                        </LiquidGlassButton>
+                        </button>
                     </div>
                 </div>
             )}

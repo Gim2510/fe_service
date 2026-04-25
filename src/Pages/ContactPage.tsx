@@ -1,172 +1,115 @@
-import { Mail, Phone, MapPin } from "lucide-react"
-import { LiquidGlassButton } from "../Components/Buttons/LiquidGlassButton.tsx"
-import { useTheme } from "../Context/ThemeContext.tsx"
-import type {ReactNode} from "react";
+import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { useTheme } from "../Context/ThemeContext.tsx";
+import type { ReactNode } from "react";
 
 export function ContactPage() {
-    const { theme } = useTheme()
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
 
     return (
-        <main className="relative min-h-screen flex items-center overflow-hidden">
-
+        <main className={`relative min-h-screen flex items-center overflow-hidden ${
+            isDark ? "bg-[#060D1B]" : "bg-[#F8FAFC]"
+        }`}>
             {/* Background */}
-            <div
-                className={`absolute inset-0 ${
-                    theme === "dark"
-                        ? "bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800"
-                        : "bg-primary-white"
-                }`}
-            />
+            <div className="absolute inset-0 pointer-events-none">
+                <div
+                    className="absolute inset-0 opacity-[0.035]"
+                    style={{
+                        backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`,
+                        backgroundSize: "28px 28px",
+                    }}
+                />
+                {isDark && (
+                    <div className="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.05] bg-blue-600" />
+                )}
+            </div>
 
-            {/* Grid texture */}
-            <div
-                className={`absolute inset-0 opacity-10 bg-[size:32px_32px] ${
-                    theme === "dark"
-                        ? "bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)]"
-                        : "bg-[radial-gradient(circle_at_1px_1px,black_1px,transparent_0)]"
-                }`}
-            />
+            <div className={`relative z-10 mx-auto w-full max-w-6xl px-6 sm:px-8 py-24 grid lg:grid-cols-2 gap-16 items-center ${
+                isDark ? "text-white" : "text-slate-900"
+            }`}>
 
-            <div
-                className={`relative z-10 mx-auto w-full max-w-6xl px-8 py-24 grid lg:grid-cols-2 gap-20 items-center ${
-                    theme === "dark" ? "text-white" : "text-black"
-                }`}
-            >
-
-                {/* LEFT COPY */}
-                <div className="flex flex-col gap-8">
-                    <span
-                        className={`text-sm uppercase tracking-widest ${
-                            theme === "dark" ? "text-neutral-400" : "text-black"
-                        }`}
-                    >
+                {/* Left copy */}
+                <motion.div
+                    className="flex flex-col gap-6"
+                    initial={{ opacity: 0, x: -24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                >
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-blue-400" : "text-blue-600"}`}>
                         Contatti
                     </span>
-
-                    <h1 className="text-5xl font-semibold leading-tight">
+                    <h1 className={`font-fjalla text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         Parliamo del tuo
-                        <br />
-                        <span
-                            className="text-main-red"
-                        >
-                            prossimo passo digitale.
-                        </span>
+                        <span className="block text-blue-500 mt-1">prossimo passo digitale.</span>
                     </h1>
-
-                    <p
-                        className={`text-lg max-w-lg ${
-                            theme === "dark" ? "text-neutral-300" : "text-black"
-                        }`}
-                    >
+                    <p className={`text-lg leading-relaxed max-w-md ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                         Se hai domande, vuoi approfondire una soluzione o capire
-                        come possiamo aiutarti, scrivici.
-                        Ti risponderemo il prima possibile.
+                        come possiamo aiutarti, scrivici. Ti risponderemo il prima possibile.
                     </p>
-
-                    <div
-                        className={`text-sm ${
-                            theme === "dark" ? "text-neutral-500" : "text-black"
-                        }`}
-                    >
+                    <p className={`text-sm ${isDark ? "text-slate-600" : "text-slate-400"}`}>
                         Risposta media: entro 24 ore
-                    </div>
-                </div>
+                    </p>
+                </motion.div>
 
-                {/* CONTACT CARD */}
-                <div>
-                    <div
-                        className={`rounded-3xl backdrop-blur-xl p-10 shadow-2xl flex flex-col gap-8 ${
-                            theme === "dark"
-                                ? "bg-neutral-900/70 border border-neutral-800"
-                                : "bg-white shadow-3xl"
-                        }`}
-                    >
-                        <h2 className="text-2xl font-semibold mb-2">
+                {/* Contact card */}
+                <motion.div
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.55, ease: "easeOut", delay: 0.08 }}
+                >
+                    <div className={`rounded-2xl border p-8 sm:p-10 flex flex-col gap-5 ${
+                        isDark
+                            ? "bg-[#0D1A30]/80 border-blue-900/20 shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
+                            : "bg-white border-slate-200 shadow-[0_8px_40px_rgba(0,0,0,0.06)]"
+                    }`}>
+                        <h2 className={`text-xl font-semibold mb-2 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                             I nostri riferimenti
                         </h2>
 
-                        <ContactItem
-                            theme={theme}
-                            icon={<Mail size={20} />}
-                            label="Email"
-                            value="support@myapp.com"
-                            href="mailto:support@myapp.com"
-                        />
+                        <ContactItem isDark={isDark} icon={<Mail size={16} />} label="Email" value="service@techbridgegroup.it"
+                            href="mailto:service@techbridgegroup.it" />
+                        <ContactItem isDark={isDark} icon={<Phone size={16} />} label="Telefono" value="+39 331 5338917" />
+                        <ContactItem isDark={isDark} icon={<MapPin size={16} />} label="Sede" value="Milano, Italia" />
 
-                        <ContactItem
-                            theme={theme}
-                            icon={<Phone size={20} />}
-                            label="Telefono"
-                            value="+39 012 345 6789"
-                        />
-
-                        <ContactItem
-                            theme={theme}
-                            icon={<MapPin size={20} />}
-                            label="Sede"
-                            value="Via Roma 123, Milano, Italy"
-                        />
-
-                        <LiquidGlassButton
-                            onClick={() =>
-                                (window.location.href = "mailto:support@myapp.com")
-                            }
+                        <a
+                            href="mailto:service@techbridgegroup.it"
+                            className="mt-2 inline-flex items-center gap-2 px-6 py-2.5 rounded-xl
+                                bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold
+                                transition-colors duration-200 shadow-lg shadow-blue-600/20 self-start"
                         >
                             Scrivici ora
-                        </LiquidGlassButton>
+                            <ArrowRight size={14} />
+                        </a>
                     </div>
-                </div>
-
+                </motion.div>
             </div>
         </main>
-    )
+    );
 }
 
-function ContactItem({icon, label, value, href, theme,}: { icon: ReactNode, label: string, value: string, href?: string, theme: string }) {
+function ContactItem({ icon, label, value, href, isDark }: {
+    icon: ReactNode; label: string; value: string; href?: string; isDark: boolean;
+}) {
     return (
-        <div
-            className={`flex items-start gap-4 p-4 rounded-xl border transition ${
-                theme === "dark"
-                    ? "bg-neutral-800/60 border-neutral-700 hover:border-neutral-500"
-                    : "bg-white/60 border-neutral-300 hover:border-neutral-400"
-            }`}
-        >
-            <div
-                className={`mt-1 ${
-                    theme === "dark" ? "text-neutral-400" : "text-neutral-600"
-                }`}
-            >
-                {icon}
-            </div>
-
-            <div className="flex flex-col">
-                <span
-                    className={`text-sm ${
-                        theme === "dark" ? "text-neutral-400" : "text-neutral-600"
-                    }`}
-                >
+        <div className={`flex items-start gap-4 p-4 rounded-xl border transition-colors duration-200 ${
+            isDark
+                ? "bg-white/3 border-blue-900/20 hover:border-blue-800/30"
+                : "bg-slate-50 border-slate-200 hover:border-blue-200"
+        }`}>
+            <div className={`mt-0.5 ${isDark ? "text-blue-400" : "text-blue-500"}`}>{icon}</div>
+            <div className="flex flex-col gap-0.5">
+                <span className={`text-xs font-medium uppercase tracking-wide ${isDark ? "text-slate-500" : "text-slate-400"}`}>
                     {label}
                 </span>
-
                 {href ? (
-                    <a
-                        href={href}
-                        className={`transition ${
-                            theme === "dark"
-                                ? "text-white hover:text-neutral-300"
-                                : "text-black hover:text-neutral-500"
-                        }`}
-                    >
-                        {value}
-                    </a>
+                    <a href={href} className={`text-sm font-medium transition-colors ${
+                        isDark ? "text-slate-200 hover:text-blue-400" : "text-slate-800 hover:text-blue-600"
+                    }`}>{value}</a>
                 ) : (
-                    <span
-                        className={theme === "dark" ? "text-white" : "text-black"}
-                    >
-                        {value}
-                    </span>
+                    <span className={`text-sm font-medium ${isDark ? "text-slate-200" : "text-slate-800"}`}>{value}</span>
                 )}
             </div>
         </div>
-    )
+    );
 }

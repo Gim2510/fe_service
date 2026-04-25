@@ -1,76 +1,103 @@
+import { motion, AnimatePresence } from "framer-motion";
 import { FallingLines } from "react-loader-spinner";
-import { LiquidGlassButton } from "../Buttons/LiquidGlassButton";
+import { X, CreditCard, ShieldCheck } from "lucide-react";
 
 type Props = {
     open: boolean;
     onConfirm: () => void;
     onCancel: () => void;
     loading: boolean;
-    variant?: string // default = dark
+    variant?: string;
 };
 
-export function CheckoutConfirmModal({open, onConfirm, onCancel, loading, variant}: Props) {
-    if (!open) return null;
+export function CheckoutConfirmModal({ open, onConfirm, onCancel, loading, variant }: Props) {
+    const isDark = variant !== "light";
 
-    const isDark = variant === "dark";
-
-    const overlayClass = isDark
-        ? "absolute inset-0 bg-black/70 backdrop-blur-md"
-        : "absolute inset-0 bg-white/40 backdrop-blur-sm";
-
-    const modalClass = isDark
-        ? "relative z-10 w-full max-w-2xl p-12 rounded-3xl border border-white/10 bg-neutral-900/80 backdrop-blur-2xl shadow-[0_20px_80px_rgba(0,0,0,0.6)] text-white space-y-8"
-        : "relative z-10 w-full max-w-2xl p-12 rounded-3xl border border-neutral-300 bg-white/90 backdrop-blur-md shadow-lg text-black space-y-8";
-
-    const cancelBtnClass = isDark
-        ? "flex-1 px-6 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition text-neutral-300"
-        : "flex-1 px-6 py-2 rounded-xl border border-neutral-400 bg-neutral-100 hover:bg-neutral-200 transition text-black/70";
+    const card = isDark
+        ? "bg-[#0D1A30] border-blue-900/30"
+        : "bg-white border-slate-200";
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center">
+        <AnimatePresence>
+            {open && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+                    <motion.div
+                        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={loading ? undefined : onCancel}
+                    />
 
-            {/* Overlay */}
-            <div
-                onClick={loading ? undefined : onCancel}
-                className={overlayClass}
-            />
-
-            {/* Modal */}
-            <div className={modalClass}>
-                <div className="space-y-4 text-center">
-                    <h2 className={isDark ? "text-3xl font-semibold" : "text-3xl font-semibold text-black"}>
-                        Conferma attivazione Premium
-                    </h2>
-
-                    <p className={isDark ? "text-neutral-400 text-sm leading-relaxed" : "text-neutral-700 text-sm leading-relaxed"}>
-                        Verrai reindirizzato alla pagina di pagamento sicura
-                        gestita da Stripe per completare l’abbonamento mensile
-                        da 15€.
-                    </p>
-                </div>
-
-                <div className="flex gap-4">
-                    <LiquidGlassButton
-                        onClick={onConfirm}
-                        disabled={loading}
-                        className="flex-1"
+                    <motion.div
+                        className={`relative z-10 w-full max-w-md rounded-2xl border p-8 space-y-6 ${card}`}
+                        initial={{ scale: 0.95, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.95, opacity: 0 }}
+                        transition={{ duration: 0.2, ease: "easeOut" as const }}
                     >
-                        {loading ? <FallingLines color={isDark ? "#fff" : "#000"} width="40" visible /> : "Procedi al pagamento"}
-                    </LiquidGlassButton>
+                        {/* Close */}
+                        <button
+                            onClick={loading ? undefined : onCancel}
+                            className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors
+                                ${isDark ? "text-slate-500 hover:text-slate-300 hover:bg-white/5" : "text-slate-400 hover:text-slate-700 hover:bg-slate-100"}`}
+                        >
+                            <X size={16} />
+                        </button>
 
-                    <LiquidGlassButton
-                        onClick={onCancel}
-                        disabled={loading}
-                        className={cancelBtnClass}
-                    >
-                        Annulla
-                    </LiquidGlassButton>
+                        {/* Icon */}
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center
+                            ${isDark ? "bg-blue-600/15 border border-blue-600/20" : "bg-blue-50 border border-blue-200"}`}>
+                            <CreditCard size={20} className="text-blue-500" />
+                        </div>
+
+                        {/* Content */}
+                        <div className="space-y-2">
+                            <h2 className={`text-xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                                Conferma attivazione Premium
+                            </h2>
+                            <p className={`text-sm leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                                Verrai reindirizzato alla pagina di pagamento sicura gestita da Stripe
+                                per completare l'abbonamento mensile da <strong className={isDark ? "text-slate-200" : "text-slate-800"}>15€</strong>.
+                            </p>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="flex gap-3">
+                            <button
+                                onClick={onCancel}
+                                disabled={loading}
+                                className={`flex-1 px-4 py-2.5 rounded-xl border text-sm font-medium transition-colors
+                                    disabled:opacity-40
+                                    ${isDark
+                                        ? "border-blue-900/30 text-slate-400 hover:text-slate-200"
+                                        : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                                    }`}
+                            >
+                                Annulla
+                            </button>
+                            <button
+                                onClick={onConfirm}
+                                disabled={loading}
+                                className="flex-1 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500
+                                    disabled:opacity-40 text-white text-sm font-semibold transition-colors
+                                    shadow-lg shadow-blue-600/25"
+                            >
+                                {loading
+                                    ? <span className="flex justify-center"><FallingLines color="#fff" width="20" visible /></span>
+                                    : "Procedi al pagamento"
+                                }
+                            </button>
+                        </div>
+
+                        {/* Trust */}
+                        <p className={`flex items-center justify-center gap-1.5 text-xs ${isDark ? "text-slate-600" : "text-slate-400"}`}>
+                            <ShieldCheck size={12} className="text-blue-500" />
+                            Pagamento sicuro · Nessun vincolo annuale · Disattiva quando vuoi
+                        </p>
+                    </motion.div>
                 </div>
-
-                <p className={isDark ? "text-xs text-neutral-500 text-center" : "text-xs text-neutral-600 text-center"}>
-                    Pagamento sicuro • Nessun vincolo annuale • Disattiva quando vuoi
-                </p>
-            </div>
-        </div>
+            )}
+        </AnimatePresence>
     );
 }

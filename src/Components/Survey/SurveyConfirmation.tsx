@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LiquidGlassButton } from "../Buttons/LiquidGlassButton.tsx";
+import { motion, AnimatePresence } from "framer-motion";
+import { CheckCircle, Calendar, ArrowRight, AlertCircle, X } from "lucide-react";
 import { useTheme } from "../../Context/ThemeContext.tsx";
 
 export function SurveyConfirmation({ survey_id }: { survey_id: string }) {
@@ -26,105 +27,144 @@ export function SurveyConfirmation({ survey_id }: { survey_id: string }) {
         navigate(`/survey/${survey_id}/recap`);
     };
 
-    const handleCancelModal = () => setShowLeavePageModal(false);
+    const card = isDark ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200";
 
     return (
-        <main className="relative overflow-hidden">
-
-            {/* BACKGROUND */}
-            <div className="absolute inset-0 bg-white/5 backdrop-blur-[80px] pointer-events-none" />
-            <div className="absolute -top-40 -left-40 sm:-top-60 sm:-left-60 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] rounded-full bg-gradient-to-br from-cyan-400/20 via-blue-400/20 to-indigo-500/20 blur-3xl opacity-30" />
-            <div className="absolute -bottom-40 -right-40 sm:-bottom-60 sm:-right-60 w-[250px] sm:w-[500px] h-[250px] sm:h-[500px] rounded-full bg-gradient-to-tr from-purple-400/20 via-pink-400/20 to-red-400/20 blur-3xl opacity-30" />
-
-            {/* CONTENT */}
-            <section
-                className={`relative z-10 mx-auto max-w-full sm:max-w-3xl px-4 sm:px-8 py-16 sm:py-32 text-center ${
-                    isDark ? "bg-white/5" : "bg-primary-white"
-                } backdrop-blur-2xl rounded-3xl border border-white/10 shadow-xl space-y-10`}
-            >
-
-                {/* ICON */}
-                <div
-                    className={`mx-auto w-24 h-24 flex items-center justify-center rounded-full backdrop-blur-lg ring-2 text-6xl font-bold animate-pulse ${
-                        consultationBooked
-                            ? "text-green-500 bg-white/10 ring-white/20"
-                            : "text-amber-500 bg-white/10 ring-white/20"
+        <div className="flex flex-col items-center gap-8 text-center">
+            {/* Status icon */}
+            <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.4, ease: "easeOut" as const }}
+                className={`w-16 h-16 rounded-2xl flex items-center justify-center
+                    ${consultationBooked
+                        ? isDark ? "bg-green-500/15 border border-green-500/30" : "bg-green-50 border border-green-200"
+                        : isDark ? "bg-blue-600/15 border border-blue-600/20" : "bg-blue-50 border border-blue-200"
                     }`}
-                >
-                    {consultationBooked ? "✓" : "!"}
-                </div>
+            >
+                <CheckCircle size={28} className={consultationBooked ? "text-green-400" : "text-blue-500"} />
+            </motion.div>
 
-                {/* 2-STEP FLOW */}
-                <div className="flex flex-wrap lg:flex-nowrap items-center justify-center gap-3 text-sm">
-                    <div className="px-3 py-1 rounded-full bg-green-500/20 text-green-400 border border-green-500/30">
-                        1. Questionario
-                    </div>
-                    <div className="w-6 h-px bg-white/20" />
-                    <div
-                        className={`px-3 py-1 rounded-full border transition ${
-                            consultationBooked
-                                ? "bg-green-500/20 text-green-400 border-green-500/30"
-                                : "bg-white/5 text-white/40 border-white/10"
-                        }`}
-                    >
-                        2. Consulenza
-                    </div>
-                </div>
+            {/* Step badges */}
+            <div className="flex items-center gap-3 text-xs font-medium">
+                <span className={`px-3 py-1.5 rounded-full
+                    ${isDark ? "bg-green-500/15 text-green-400 border border-green-500/30" : "bg-green-50 text-green-600 border border-green-200"}`}>
+                    1. Questionario
+                </span>
+                <span className={`w-6 h-px ${isDark ? "bg-blue-900/40" : "bg-slate-200"}`} />
+                <span className={`px-3 py-1.5 rounded-full transition-colors duration-300
+                    ${consultationBooked
+                        ? isDark ? "bg-green-500/15 text-green-400 border border-green-500/30" : "bg-green-50 text-green-600 border border-green-200"
+                        : isDark ? "bg-[#0D1A30] text-slate-500 border border-blue-900/20" : "bg-slate-50 text-slate-400 border border-slate-200"
+                    }`}>
+                    2. Consulenza
+                </span>
+            </div>
 
-                {/* TITLE */}
-                <h2 className={`text-4xl md:text-5xl font-semibold leading-tight ${isDark ? "text-white" : "text-black"}`}>
+            {/* Title */}
+            <div className="space-y-3 max-w-lg">
+                <h2 className={`text-3xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                     Grazie per aver completato il questionario
                 </h2>
+                <p className={`text-sm leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                    Le tue risposte sono state registrate. Il prossimo step è una{" "}
+                    <strong className={isDark ? "text-slate-200" : "text-slate-800"}>consulenza gratuita 1:1</strong>{" "}
+                    per analizzare insieme i risultati e preparare, se necessario, un preventivo personalizzato.
+                </p>
+            </div>
 
-                {/* DESCRIPTION */}
-                <div className={`space-y-4 ${isDark ? "text-neutral-300" : "text-neutral-700"}`}>
-                    <p>
-                        Le tue risposte sono state registrate con successo. Il prossimo step è una{" "}
-                        <strong>consulenza gratuita 1:1</strong> per analizzare insieme il tuo questionario.
-                    </p>
-                    <p>
-                        Durante la call verrà effettuata una valutazione mirata delle tue esigenze e, se necessario,
-                        potrà essere elaborato un <strong>preventivo personalizzato</strong> sulle soluzioni più adatte.
-                    </p>
-                </div>
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm">
+                <button
+                    onClick={handleViewNextStep}
+                    className={`flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl
+                        border text-sm font-medium transition-colors
+                        ${isDark
+                            ? "border-blue-900/30 text-slate-300 hover:border-blue-700/40 hover:text-slate-100"
+                            : "border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50"
+                        }`}
+                >
+                    Vai allo step successivo
+                    <ArrowRight size={14} />
+                </button>
 
-                {/* CTA */}
-                <div className="flex flex-col sm:flex-row justify-center gap-6 mt-6 items-center">
-                    <LiquidGlassButton onClick={handleViewNextStep} variant="navbar" className="flex-1">
-                        Vai allo step successivo
-                    </LiquidGlassButton>
+                {!consultationBooked && (
+                    <button
+                        onClick={handleBookAppointment}
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl
+                            bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold
+                            transition-colors shadow-lg shadow-blue-600/25 hover:-translate-y-0.5 duration-200"
+                    >
+                        <Calendar size={14} />
+                        Prenota consulenza
+                    </button>
+                )}
+            </div>
 
-                    {!consultationBooked && (
-                        <LiquidGlassButton onClick={handleBookAppointment} variant="navbar" fillBackground="main" className="flex-1">
-                            Prenota consulenza gratuita
-                        </LiquidGlassButton>
-                    )}
-                </div>
-
-                {/* MODAL */}
+            {/* Leave page modal */}
+            <AnimatePresence>
                 {showLeavePageModal && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4">
-                        <div className={`rounded-xl p-6 sm:p-8 max-w-full w-full sm:max-w-lg space-y-6 ${isDark ? "bg-black/40" : "bg-white/70"}`}>
-                            <h3 className="text-2xl font-semibold text-black dark:text-white">
-                                Consulenza non ancora prenotata
-                            </h3>
-                            <p className="text-black/80 dark:text-white/80">
-                                Ti consigliamo di prenotare una consulenza gratuita 1:1 prima di procedere.
-                                Questo ci permette di analizzare correttamente il tuo questionario
-                                e preparare, se necessario, un preventivo su misura.
-                            </p>
-                            <div className="flex flex-col sm:flex-row justify-end gap-4">
-                                <LiquidGlassButton variant="navbar" scale={false} onClick={handleCancelModal}>
-                                    Annulla
-                                </LiquidGlassButton>
-                                <LiquidGlassButton variant="navbar" fillBackground="main" scale={false} onClick={handleProceedAnyway}>
-                                    Procedi comunque
-                                </LiquidGlassButton>
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                        <motion.div
+                            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setShowLeavePageModal(false)}
+                        />
+                        <motion.div
+                            className={`relative z-10 w-full max-w-md rounded-2xl border p-8 space-y-5 ${card}`}
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.95, opacity: 0 }}
+                            transition={{ duration: 0.2, ease: "easeOut" as const }}
+                        >
+                            <button
+                                onClick={() => setShowLeavePageModal(false)}
+                                className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors
+                                    ${isDark ? "text-slate-500 hover:text-slate-300 hover:bg-white/5" : "text-slate-400 hover:text-slate-700 hover:bg-slate-100"}`}
+                            >
+                                <X size={16} />
+                            </button>
+
+                            <div className={`flex items-center justify-center w-12 h-12 rounded-xl
+                                ${isDark ? "bg-amber-500/15 border border-amber-500/30" : "bg-amber-50 border border-amber-200"}`}>
+                                <AlertCircle size={22} className="text-amber-400" />
                             </div>
-                        </div>
+
+                            <div className="space-y-2">
+                                <h3 className={`text-lg font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                                    Consulenza non ancora prenotata
+                                </h3>
+                                <p className={`text-sm leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                                    Ti consigliamo di prenotare una consulenza gratuita 1:1 prima di procedere,
+                                    per analizzare il questionario e preparare un preventivo su misura.
+                                </p>
+                            </div>
+
+                            <div className="flex gap-3 pt-1">
+                                <button
+                                    onClick={() => setShowLeavePageModal(false)}
+                                    className={`flex-1 px-4 py-2.5 rounded-xl border text-sm font-medium transition-colors
+                                        ${isDark
+                                            ? "border-blue-900/30 text-slate-400 hover:text-slate-200"
+                                            : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                                        }`}
+                                >
+                                    Annulla
+                                </button>
+                                <button
+                                    onClick={handleProceedAnyway}
+                                    className="flex-1 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500
+                                        text-white text-sm font-semibold transition-colors"
+                                >
+                                    Procedi comunque
+                                </button>
+                            </div>
+                        </motion.div>
                     </div>
                 )}
-            </section>
-        </main>
+            </AnimatePresence>
+        </div>
     );
 }

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { FallingLines } from "react-loader-spinner";
+import { ArrowLeft, MapPin, Clock, Briefcase, DollarSign, ChevronRight } from "lucide-react";
 import { useTheme } from "../../Context/ThemeContext.tsx";
-import { LiquidGlassButton } from "../Buttons/LiquidGlassButton.tsx";
 import { useGetAllJobOffers } from "../../hooks/useGetJobOffers.ts";
-import {FallingLines} from "react-loader-spinner";
-import {ApplicationForm} from "./ApplicationForm.tsx";
+import { ApplicationForm } from "./ApplicationForm.tsx";
 
 export type CreateJobPositionDTO = {
     _id: string;
@@ -67,13 +68,12 @@ export function CareersFlowPage() {
         fetchJobs();
     }, []);
 
-    // Helpers per mostrare location e tipo contratto
     const displayLocation = (location: CreateJobPositionDTO["location"]) => {
         if (location.remote) {
             const policy = location.remotePolicy === "full-remote"
                 ? "Remote"
                 : location.remotePolicy === "hybrid"
-                    ? "Remote/Hybrid"
+                    ? "Remote / Hybrid"
                     : "Remote";
             return `${policy} · ${location.country}${location.city ? ", " + location.city : ""}`;
         }
@@ -97,170 +97,250 @@ export function CareersFlowPage() {
         if (!min && !max) return null;
         const minStr = min ? min.toLocaleString() : "";
         const maxStr = max ? max.toLocaleString() : "";
-        return `${minStr}${min && max ? " - " : ""}${maxStr} ${currency || ""} / ${period || ""}`;
+        return `${minStr}${min && max ? " – " : ""}${maxStr} ${currency || ""} / ${period || ""}`;
     };
 
-    const bgClass = isDark ? "bg-neutral-950 text-white" : "bg-primary-white text-black";
-    const cardBgClass = isDark
-        ? "bg-neutral-900/70 border border-neutral-800"
-        : "bg-white/90 border border-neutral-300";
-    const textClass = isDark ? "text-neutral-300" : "text-neutral-700";
+    const card = isDark ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200";
 
     return (
-        <main className={`min-h-screen ${bgClass}`}>
-            <div className="max-w-6xl mx-auto px-8 py-32 space-y-16">
+        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#060D1B] text-white" : "bg-[#F8FAFC] text-slate-900"}`}>
+            {/* Grid bg */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                style={{ backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`, backgroundSize: "28px 28px" }} />
 
-                {/* HERO */}
-                <section className="max-w-3xl space-y-6">
-                    <h1 className="text-5xl font-semibold">Lavora <span className='text-main-red'>con noi</span></h1>
-                    <p className={`text-lg ${textClass}`}>
-                        Stiamo costruendo strumenti che trasformano i dati delle
-                        survey in insight operativi per le aziende.
+            <div className="relative max-w-5xl mx-auto px-6 py-32 space-y-12">
+
+                {/* Hero */}
+                <motion.section
+                    className="max-w-2xl space-y-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: "easeOut" as const }}
+                >
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                        Carriere
+                    </span>
+                    <h1 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                        Lavora{" "}
+                        <span className="text-blue-500">con noi</span>
+                    </h1>
+                    <p className={`text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                        Stiamo costruendo strumenti che trasformano i dati delle survey
+                        in insight operativi per le aziende.
                     </p>
-                </section>
+                </motion.section>
 
-                {/* MAIN CARD */}
-                <section className={`p-12 rounded-3xl backdrop-blur-xl shadow-2xl ${cardBgClass}`}>
-
-                    {/* BACK NAV */}
+                {/* Main card */}
+                <div className={`rounded-2xl border ${card}`}>
+                    {/* Back nav */}
                     {step !== "list" && (
-                        <button
-                            onClick={() => {
-                                if (step === "details") setStep("list");
-                                if (step === "apply") setStep("details");
-                            }}
-                            className="mb-10 text-sm opacity-70 hover:opacity-100"
-                        >
-                            ← Torna indietro
-                        </button>
-                    )}
-
-                    {/* LOADING */}
-                    {loading && <div className='w-full h-full flex justify-center items-center'><FallingLines color={isDark ? "#fff" : "#000"} width={50} visible={true} ariaLabel="loading" /></div>}
-
-                    {/* ERROR */}
-                    {error && <p className="text-red-500">Errore nel caricamento delle posizioni.</p>}
-
-                    {/* STEP 1 — JOB LIST */}
-                    {step === "list" && !loading && (
-                        <div className="space-y-10">
-                            {jobs.length === 0 && <p className="opacity-70">Nessuna posizione aperta al momento.</p>}
-
-                            {jobs.map(job => (
-                                <div key={job.id} className="flex flex-col md:flex-row md:justify-between md:items-center gap-6 border-b border-neutral-800 pb-8">
-
-                                    <div className="space-y-2">
-                                        <h2 className="text-xl font-medium">{job.title}</h2>
-                                        <p className="text-sm opacity-70">
-                                            {displayLocation(job.location)} · {displayEmploymentType(job.employment)}
-                                        </p>
-                                        {displaySalary(job.employment) && (
-                                            <p className="text-sm opacity-70">{displaySalary(job.employment)}</p>
-                                        )}
-                                        <p className={`text-sm ${textClass}`}>{job.summary}</p>
-                                    </div>
-
-                                    <LiquidGlassButton
-                                        onClick={() => {
-                                            setSelectedJob(job);
-                                            setStep("details");
-                                        }}
-                                    >
-                                        Dettagli
-                                    </LiquidGlassButton>
-
-                                </div>
-                            ))}
+                        <div className={`px-8 py-4 border-b ${isDark ? "border-blue-900/20" : "border-slate-100"}`}>
+                            <button
+                                onClick={() => {
+                                    if (step === "details") setStep("list");
+                                    if (step === "apply") setStep("details");
+                                }}
+                                className={`inline-flex items-center gap-2 text-xs font-medium transition-colors
+                                    ${isDark ? "text-slate-500 hover:text-slate-300" : "text-slate-400 hover:text-slate-700"}`}
+                            >
+                                <ArrowLeft size={13} /> Torna indietro
+                            </button>
                         </div>
                     )}
 
-                    {/* STEP 2 — JOB DETAILS */}
-                    {step === "details" && selectedJob && (
-                        <div className="space-y-10">
-                            <div className="space-y-3">
-                                <h2 className="text-3xl font-semibold">{selectedJob.title}</h2>
-                                <p className="text-sm opacity-70">
-                                    {displayLocation(selectedJob.location)} · {displayEmploymentType(selectedJob.employment)}
-                                </p>
-                                {displaySalary(selectedJob.employment) && (
-                                    <p className="text-sm opacity-70">{displaySalary(selectedJob.employment)}</p>
+                    <div className="p-8">
+                        {/* Loading */}
+                        {loading && (
+                            <div className="flex justify-center py-12">
+                                <FallingLines color={isDark ? "#fff" : "#3B82F6"} width="50" visible ariaLabel="loading" />
+                            </div>
+                        )}
+
+                        {/* Error */}
+                        {error && <p className="text-sm text-red-400">Errore nel caricamento delle posizioni.</p>}
+
+                        {/* STEP 1 — Job list */}
+                        {step === "list" && !loading && (
+                            <div className="divide-y">
+                                {jobs.length === 0 && (
+                                    <p className={`text-sm py-8 text-center ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                                        Nessuna posizione aperta al momento.
+                                    </p>
                                 )}
-                                <p className={`text-lg ${textClass}`}>{selectedJob.description}</p>
+                                {jobs.map(job => (
+                                    <div
+                                        key={job.id}
+                                        className={`py-7 first:pt-0 last:pb-0 flex flex-col md:flex-row md:items-center justify-between gap-5
+                                            ${isDark ? "divide-blue-900/20" : "divide-slate-100"}`}
+                                    >
+                                        <div className="space-y-2">
+                                            <h2 className={`text-base font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                                                {job.title}
+                                            </h2>
+                                            <div className={`flex flex-wrap gap-x-4 gap-y-1 text-xs ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                                                <span className="flex items-center gap-1">
+                                                    <MapPin size={11} /> {displayLocation(job.location)}
+                                                </span>
+                                                <span className="flex items-center gap-1">
+                                                    <Clock size={11} /> {displayEmploymentType(job.employment)}
+                                                </span>
+                                                {displaySalary(job.employment) && (
+                                                    <span className="flex items-center gap-1">
+                                                        <DollarSign size={11} /> {displaySalary(job.employment)}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <p className={`text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                                                {job.summary}
+                                            </p>
+                                        </div>
+
+                                        <button
+                                            onClick={() => { setSelectedJob(job); setStep("details"); }}
+                                            className={`shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border text-xs font-medium transition-colors
+                                                ${isDark
+                                                    ? "border-blue-900/30 text-slate-300 hover:border-blue-700/40 hover:text-slate-100"
+                                                    : "border-slate-200 text-slate-700 hover:border-blue-300 hover:bg-blue-50/50"
+                                                }`}
+                                        >
+                                            Dettagli <ChevronRight size={12} />
+                                        </button>
+                                    </div>
+                                ))}
                             </div>
+                        )}
 
-                            <div className="grid md:grid-cols-2 gap-10">
-
-                                {/* RESPONSIBILITIES */}
-                                <div>
-                                    <h3 className="font-medium mb-4">Responsabilità</h3>
-                                    <ul className="space-y-2 text-sm opacity-80">
-                                        {selectedJob.responsibilities.map(r => <li key={r}>• {r}</li>)}
-                                    </ul>
+                        {/* STEP 2 — Job details */}
+                        {step === "details" && selectedJob && (
+                            <div className="space-y-8">
+                                <div className="space-y-3">
+                                    <h2 className={`text-2xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                                        {selectedJob.title}
+                                    </h2>
+                                    <div className={`flex flex-wrap gap-x-4 gap-y-1 text-xs ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                                        <span className="flex items-center gap-1">
+                                            <MapPin size={11} /> {displayLocation(selectedJob.location)}
+                                        </span>
+                                        <span className="flex items-center gap-1">
+                                            <Briefcase size={11} /> {displayEmploymentType(selectedJob.employment)}
+                                        </span>
+                                        {displaySalary(selectedJob.employment) && (
+                                            <span className="flex items-center gap-1">
+                                                <DollarSign size={11} /> {displaySalary(selectedJob.employment)}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <p className={`text-sm leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                                        {selectedJob.description}
+                                    </p>
                                 </div>
 
-                                {/* REQUIREMENTS */}
-                                <div>
-                                    <h3 className="font-medium mb-4">Requisiti</h3>
-                                    <ul className="space-y-2 text-sm opacity-80">
-                                        {selectedJob.requirements.map(r => <li key={r}>• {r}</li>)}
-                                        {selectedJob.niceToHave?.map(r => <li key={r} className="opacity-60">• {r} (Nice to have)</li>)}
-                                    </ul>
+                                <div className="grid md:grid-cols-2 gap-8">
+                                    <div>
+                                        <h3 className={`text-xs font-semibold uppercase tracking-widest mb-3 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                                            Responsabilità
+                                        </h3>
+                                        <ul className="space-y-1.5">
+                                            {selectedJob.responsibilities.map(r => (
+                                                <li key={r} className={`flex items-start gap-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                                                    <span className="text-blue-400 mt-0.5">•</span>{r}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h3 className={`text-xs font-semibold uppercase tracking-widest mb-3 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                                            Requisiti
+                                        </h3>
+                                        <ul className="space-y-1.5">
+                                            {selectedJob.requirements.map(r => (
+                                                <li key={r} className={`flex items-start gap-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                                                    <span className="text-blue-400 mt-0.5">•</span>{r}
+                                                </li>
+                                            ))}
+                                            {selectedJob.niceToHave?.map(r => (
+                                                <li key={r} className={`flex items-start gap-2 text-sm ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                                                    <span className="mt-0.5">◦</span>{r}{" "}
+                                                    <span className="opacity-60">(Nice to have)</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
                                 </div>
 
+                                {selectedJob.benefits && selectedJob.benefits.length > 0 && (
+                                    <div>
+                                        <h3 className={`text-xs font-semibold uppercase tracking-widest mb-3 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                                            Benefit
+                                        </h3>
+                                        <ul className="flex flex-wrap gap-2">
+                                            {selectedJob.benefits.map(b => (
+                                                <li key={b} className={`px-3 py-1.5 rounded-lg text-xs font-medium border
+                                                    ${isDark ? "border-blue-900/20 bg-blue-600/10 text-blue-300" : "border-blue-200 bg-blue-50 text-blue-700"}`}>
+                                                    {b}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+
+                                {selectedJob.techStack && selectedJob.techStack.length > 0 && (
+                                    <div>
+                                        <h3 className={`text-xs font-semibold uppercase tracking-widest mb-3 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                                            Tech Stack
+                                        </h3>
+                                        <ul className="flex flex-wrap gap-2">
+                                            {selectedJob.techStack.map(t => (
+                                                <li key={t} className={`px-3 py-1.5 rounded-lg text-xs font-medium border
+                                                    ${isDark ? "border-blue-900/20 text-slate-300" : "border-slate-200 text-slate-700"}`}>
+                                                    {t}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
+
+                                {selectedJob.hiringProcess && (
+                                    <div>
+                                        <h3 className={`text-xs font-semibold uppercase tracking-widest mb-3 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                                            Processo di selezione
+                                        </h3>
+                                        <ol className="space-y-1.5">
+                                            {selectedJob.hiringProcess.steps.map((s, i) => (
+                                                <li key={i} className={`flex items-start gap-3 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                                                    <span className={`font-mono text-xs mt-0.5 ${isDark ? "text-blue-600" : "text-blue-400"}`}>
+                                                        {String(i + 1).padStart(2, "0")}
+                                                    </span>
+                                                    {s}
+                                                </li>
+                                            ))}
+                                        </ol>
+                                        {selectedJob.hiringProcess.estimatedDuration && (
+                                            <p className={`text-xs mt-3 ${isDark ? "text-slate-600" : "text-slate-400"}`}>
+                                                Durata stimata: {selectedJob.hiringProcess.estimatedDuration}
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
+
+                                <button
+                                    onClick={() => setStep("apply")}
+                                    className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
+                                        bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold
+                                        transition-colors shadow-lg shadow-blue-600/25 hover:-translate-y-0.5 duration-200"
+                                >
+                                    Candidati per questa posizione
+                                    <ChevronRight size={14} />
+                                </button>
                             </div>
+                        )}
 
-                            {/* BENEFITS */}
-                            {selectedJob.benefits && selectedJob.benefits.length > 0 && (
-                                <div>
-                                    <h3 className="font-medium mb-4">Benefit</h3>
-                                    <ul className="space-y-2 text-sm opacity-80">
-                                        {selectedJob.benefits.map(b => <li key={b}>• {b}</li>)}
-                                    </ul>
-                                </div>
-                            )}
-
-                            {/* TECH STACK */}
-                            {selectedJob.techStack && selectedJob.techStack.length > 0 && (
-                                <div>
-                                    <h3 className="font-medium mb-4">Tech Stack</h3>
-                                    <ul className="flex flex-wrap gap-2 text-sm opacity-80">
-                                        {selectedJob.techStack.map(t => (
-                                            <li key={t} className="px-2 py-1 bg-blue-600/20 rounded">{t}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
-
-                            {/* HIRING PROCESS */}
-                            {selectedJob.hiringProcess && (
-                                <div>
-                                    <h3 className="font-medium mb-4">Processo di selezione</h3>
-                                    <ul className="space-y-2 text-sm opacity-80">
-                                        {selectedJob.hiringProcess.steps.map((s, i) => <li key={i}>• {s}</li>)}
-                                    </ul>
-                                    {selectedJob.hiringProcess.estimatedDuration && (
-                                        <p className="text-sm opacity-70 mt-2">
-                                            Durata stimata: {selectedJob.hiringProcess.estimatedDuration}
-                                        </p>
-                                    )}
-                                </div>
-                            )}
-
-                            <LiquidGlassButton onClick={() => setStep("apply")}>
-                                Candidati per questa posizione
-                            </LiquidGlassButton>
-                        </div>
-                    )}
-
-                    {/* STEP 3 — APPLY FORM */}
-                    {step === "apply" && selectedJob && (
-                        <ApplicationForm
-                            jobId={selectedJob._id}
-                            jobTitle={selectedJob.title}
-                        />
-                    )}
-
-                </section>
+                        {/* STEP 3 — Apply */}
+                        {step === "apply" && selectedJob && (
+                            <ApplicationForm jobId={selectedJob._id} jobTitle={selectedJob.title} />
+                        )}
+                    </div>
+                </div>
             </div>
         </main>
     );

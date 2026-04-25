@@ -1,26 +1,16 @@
 export function DashboardCard({ title, value, theme }: { title: string; value?: number | string; theme: string }) {
     const isDark = theme === "dark";
 
-    const bgClass = isDark
-        ? "bg-white/[0.04] border border-white/[0.08] hover:border-white/[0.15]"
-        : "bg-white/50 border border-gray-200 hover:border-gray-300";
-
-    const textClass = isDark ? "text-neutral-400" : "text-gray-700";
-
     return (
-        <div className={`group relative overflow-hidden rounded-[28px] backdrop-blur-2xl p-8 transition-all duration-500 hover:scale-[1.03] cursor-pointer ${bgClass}`}>
-
-            <div className={`absolute inset-0 rounded-[28px] bg-gradient-to-br from-white/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity`} />
-
-            <p className={`text-sm tracking-wide uppercase ${textClass}`}>
-                {title}
-            </p>
-
-            <p className={`text-4xl font-semibold mt-4 tracking-tight ${textClass}`}>
-                {value ?? "-"}
-            </p>
-
-            <div className={`absolute bottom-0 left-0 h-[2px] w-0 ${isDark ? "bg-white/40" : "bg-gray-400/40"} group-hover:w-full transition-all duration-700`} />
+        <div className={`group relative overflow-hidden rounded-2xl border p-7 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer
+            ${isDark
+                ? "bg-[#0D1A30]/80 border-blue-900/20 hover:border-blue-700/30"
+                : "bg-white border-slate-200 hover:border-blue-200 shadow-sm"
+            }`}
+        >
+            <p className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-slate-500" : "text-slate-400"}`}>{title}</p>
+            <p className={`text-4xl font-semibold mt-4 tabular-nums ${isDark ? "text-slate-100" : "text-slate-900"}`}>{value ?? "-"}</p>
+            <div className={`absolute bottom-0 left-0 h-[1px] w-0 group-hover:w-full transition-all duration-500 ${isDark ? "bg-blue-500/30" : "bg-blue-400/30"}`} />
         </div>
     );
 }

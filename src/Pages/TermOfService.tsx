@@ -1,21 +1,24 @@
 import { useTheme } from "../Context/ThemeContext.tsx";
-import {type ReactNode, useState} from "react";
+import { type ReactNode, useState } from "react";
+import { ChevronDown } from "lucide-react";
 
-function Section({ title, children }: {title?: string; children?: ReactNode }) {
+function PolicySection({ title, children, isDark }: { title?: string; children?: ReactNode; isDark: boolean }) {
     const [open, setOpen] = useState(false);
 
     return (
-        <div className="border-b border-neutral-700/30 pb-4 cursor-pointer">
+        <div className={`border-b ${isDark ? "border-blue-900/20" : "border-slate-100"}`}>
             <button
                 onClick={() => setOpen(!open)}
-                className="w-full text-left flex justify-between items-center py-4"
+                className="w-full text-left flex justify-between items-center py-4 gap-4"
             >
-                <h2 className="text-xl font-semibold cursor-pointer">{title}</h2>
-                <span className="text-sm opacity-60">{open ? "−" : "+"}</span>
+                <h2 className={`text-sm font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>{title}</h2>
+                <ChevronDown
+                    size={15}
+                    className={`shrink-0 text-slate-500 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+                />
             </button>
-
             {open && (
-                <div className="pt-2 space-y-4 text-sm leading-relaxed opacity-90">
+                <div className={`pb-5 space-y-3 text-sm leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                     {children}
                 </div>
             )}
@@ -27,136 +30,86 @@ export function TermsOfService() {
     const { theme } = useTheme();
     const isDark = theme === "dark";
 
-    const bgClass = isDark ? "bg-neutral-950 text-white" : "bg-primary-white text-black";
-    const textMainClass = isDark ? "text-neutral-300" : "text-neutral-700";
-    const cardBgClass = isDark
-        ? "bg-neutral-900/70 border border-neutral-800"
-        : "bg-white/90 border border-neutral-300";
+    const card = isDark ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200";
 
     return (
-        <main className={`relative min-h-screen overflow-hidden ${bgClass}`}>
+        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#060D1B] text-white" : "bg-[#F8FAFC] text-slate-900"}`}>
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                style={{ backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`, backgroundSize: "28px 28px" }} />
 
-            {isDark && (
-                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[size:32px_32px]" />
-            )}
-
-            <div className="relative max-w-4xl mx-auto px-6 py-32">
-
-                <div className="mb-12 space-y-4">
-                    <h1 className="text-4xl md:text-5xl font-semibold">
+            <div className="relative max-w-3xl mx-auto px-6 py-32">
+                <div className="mb-10 space-y-3">
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                        Legale
+                    </span>
+                    <h1 className={`text-3xl sm:text-4xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         Termini di Servizio
                     </h1>
-                    <p className={`${textMainClass} max-w-2xl`}>
-                        I presenti Termini disciplinano l’accesso e l’utilizzo della piattaforma
+                    <p className={`text-sm leading-relaxed max-w-xl ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                        I presenti Termini disciplinano l'accesso e l'utilizzo della piattaforma
                         offerta da TechBridgeGroup SRL.
                     </p>
                 </div>
 
-                <div className={`p-6 rounded-3xl ${cardBgClass} backdrop-blur-xl space-y-2`}>
+                <div className={`rounded-2xl border p-7 ${card} space-y-0`}>
+                    <PolicySection isDark={isDark} title="1. Accettazione dei termini">
+                        <p>Utilizzando la piattaforma, l'utente accetta integralmente i presenti Termini. Se non si accettano, non è possibile utilizzare il servizio.</p>
+                    </PolicySection>
 
-                    <Section title="1. Accettazione dei termini">
-                        <p>
-                            Utilizzando la piattaforma, l’utente accetta integralmente i presenti Termini.
-                            Se non si accettano, non è possibile utilizzare il servizio.
-                        </p>
-                    </Section>
+                    <PolicySection isDark={isDark} title="2. Descrizione del servizio">
+                        <p>La piattaforma fornisce strumenti digitali per la raccolta di dati tramite questionari e la generazione di report analitici avanzati.</p>
+                        <p>Il servizio può evolversi nel tempo e includere funzionalità basate su intelligenza artificiale.</p>
+                    </PolicySection>
 
-                    <Section title="2. Descrizione del servizio">
-                        <p>
-                            La piattaforma fornisce strumenti digitali per la raccolta di dati tramite
-                            questionari e la generazione di report analitici avanzati.
-                        </p>
-                        <p>
-                            Il servizio può evolversi nel tempo e includere funzionalità basate su
-                            intelligenza artificiale.
-                        </p>
-                    </Section>
+                    <PolicySection isDark={isDark} title="3. Creazione account">
+                        <p>Per accedere al servizio è necessario creare un account fornendo informazioni veritiere e aggiornate.</p>
+                        <p>L'utente è responsabile della sicurezza delle proprie credenziali.</p>
+                    </PolicySection>
 
-                    <Section title="3. Creazione account">
-                        <p>
-                            Per accedere al servizio è necessario creare un account fornendo informazioni
-                            veritiere e aggiornate.
-                        </p>
-                        <p>
-                            L’utente è responsabile della sicurezza delle proprie credenziali.
-                        </p>
-                    </Section>
-
-                    <Section title="4. Utilizzo consentito">
+                    <PolicySection isDark={isDark} title="4. Utilizzo consentito">
                         <ul className="space-y-1">
-                            <li>• Utilizzare il servizio solo per scopi leciti</li>
-                            <li>• Non violare diritti di terzi</li>
-                            <li>• Non introdurre dati illegali o non autorizzati</li>
+                            {["Utilizzare il servizio solo per scopi leciti", "Non violare diritti di terzi", "Non introdurre dati illegali o non autorizzati"].map(item => (
+                                <li key={item} className="flex items-start gap-2"><span className="text-blue-400 mt-0.5">•</span>{item}</li>
+                            ))}
                         </ul>
-                    </Section>
+                    </PolicySection>
 
-                    <Section title="5. Dati inseriti dall’utente">
-                        <p>
-                            L’utente è l’unico responsabile dei dati inseriti nella piattaforma,
-                            inclusi dati relativi a terzi (es. clienti).
-                        </p>
-                        <p>
-                            L’utente garantisce di avere le basi legali per trattare tali dati.
-                        </p>
-                    </Section>
+                    <PolicySection isDark={isDark} title="5. Dati inseriti dall'utente">
+                        <p>L'utente è l'unico responsabile dei dati inseriti nella piattaforma, inclusi dati relativi a terzi (es. clienti).</p>
+                        <p>L'utente garantisce di avere le basi legali per trattare tali dati.</p>
+                    </PolicySection>
 
-                    <Section title="6. Pagamenti e abbonamenti">
-                        <p>
-                            Alcune funzionalità sono accessibili tramite abbonamento a pagamento.
-                        </p>
-                        <p>
-                            I pagamenti sono gestiti tramite Stripe e sono soggetti alle relative condizioni.
-                        </p>
-                        <p>
-                            L’abbonamento è mensile e può essere cancellato in qualsiasi momento.
-                        </p>
-                    </Section>
+                    <PolicySection isDark={isDark} title="6. Pagamenti e abbonamenti">
+                        <p>Alcune funzionalità sono accessibili tramite abbonamento a pagamento.</p>
+                        <p>I pagamenti sono gestiti tramite Stripe e sono soggetti alle relative condizioni.</p>
+                        <p>L'abbonamento è mensile e può essere cancellato in qualsiasi momento.</p>
+                    </PolicySection>
 
-                    <Section title="7. Proprietà intellettuale">
-                        <p>
-                            Tutti i diritti relativi alla piattaforma sono di proprietà di TechBridgeGroup SRL.
-                        </p>
-                        <p>
-                            È vietata la copia, distribuzione o modifica non autorizzata.
-                        </p>
-                    </Section>
+                    <PolicySection isDark={isDark} title="7. Proprietà intellettuale">
+                        <p>Tutti i diritti relativi alla piattaforma sono di proprietà di TechBridgeGroup SRL.</p>
+                        <p>È vietata la copia, distribuzione o modifica non autorizzata.</p>
+                    </PolicySection>
 
-                    <Section title="8. Limitazione di responsabilità">
-                        <p>
-                            Il servizio è fornito "così com’è" senza garanzie di risultati specifici.
-                        </p>
-                        <p>
-                            I report generati tramite AI rappresentano supporto decisionale e non
-                            costituiscono consulenza professionale vincolante.
-                        </p>
-                    </Section>
+                    <PolicySection isDark={isDark} title="8. Limitazione di responsabilità">
+                        <p>Il servizio è fornito "così com'è" senza garanzie di risultati specifici.</p>
+                        <p>I report generati tramite AI rappresentano supporto decisionale e non costituiscono consulenza professionale vincolante.</p>
+                    </PolicySection>
 
-                    <Section title="9. Disponibilità del servizio">
-                        <p>
-                            Non garantiamo disponibilità continua o priva di errori del servizio.
-                            Potrebbero verificarsi interruzioni per manutenzione o aggiornamenti.
-                        </p>
-                    </Section>
+                    <PolicySection isDark={isDark} title="9. Disponibilità del servizio">
+                        <p>Non garantiamo disponibilità continua o priva di errori del servizio. Potrebbero verificarsi interruzioni per manutenzione o aggiornamenti.</p>
+                    </PolicySection>
 
-                    <Section title="10. Risoluzione e sospensione">
-                        <p>
-                            Possiamo sospendere o terminare l’accesso in caso di violazione dei Termini.
-                        </p>
-                    </Section>
+                    <PolicySection isDark={isDark} title="10. Risoluzione e sospensione">
+                        <p>Possiamo sospendere o terminare l'accesso in caso di violazione dei Termini.</p>
+                    </PolicySection>
 
-                    <Section title="11. Legge applicabile">
-                        <p>
-                            I presenti Termini sono regolati dalla legge italiana.
-                        </p>
-                    </Section>
+                    <PolicySection isDark={isDark} title="11. Legge applicabile">
+                        <p>I presenti Termini sono regolati dalla legge italiana.</p>
+                    </PolicySection>
 
-                    <Section title="12. Modifiche">
-                        <p>
-                            I Termini possono essere aggiornati nel tempo. L’uso continuato del servizio
-                            implica l’accettazione delle modifiche.
-                        </p>
-                    </Section>
-
+                    <PolicySection isDark={isDark} title="12. Modifiche">
+                        <p>I Termini possono essere aggiornati nel tempo. L'uso continuato del servizio implica l'accettazione delle modifiche.</p>
+                    </PolicySection>
                 </div>
             </div>
         </main>

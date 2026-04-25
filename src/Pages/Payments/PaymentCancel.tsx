@@ -1,51 +1,42 @@
-import {useNavigate} from "react-router-dom";
-import {LiquidGlassButton} from "../../Components/Buttons/LiquidGlassButton.tsx";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { XCircle, ArrowLeft } from "lucide-react";
 
 export function PaymentCancel() {
     const navigate = useNavigate();
 
     return (
-        <main
-            className="relative min-h-screen bg-neutral-950 flex items-center justify-center rounded-2xl overflow-hidden py-32">
+        <main className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#060D1B] px-6">
+            <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "28px 28px" }} />
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[400px] rounded-full blur-[140px] opacity-[0.05] bg-red-500 pointer-events-none" />
 
-            {/* Background */}
-            <div className="absolute inset-0 bg-white/5 backdrop-blur-[80px] pointer-events-none"/>
-            <div
-                className="absolute -top-60 -left-60 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-red-400/20 via-orange-400/20 to-pink-500/20 blur-3xl opacity-30"/>
-            <div
-                className="absolute -bottom-60 -right-60 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-purple-400/20 via-rose-400/20 to-red-400/20 blur-3xl opacity-30"/>
+            <motion.div
+                className="relative z-10 w-full max-w-md text-center"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+                <div className="rounded-2xl border border-blue-900/20 bg-[#0D1A30]/80 backdrop-blur-xl p-10 flex flex-col items-center gap-6 shadow-[0_24px_80px_rgba(0,0,0,0.5)]">
+                    <div className="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                        <XCircle size={32} className="text-red-400" />
+                    </div>
 
-            {/* Content */}
-            <section
-                className="relative z-10 max-w-3xl text-center px-8 sm:py-16 py-8 bg-white/5 backdrop-blur-2xl rounded-3xl border border-white/10 shadow-xl space-y-10">
+                    <div>
+                        <h2 className="text-2xl font-semibold text-slate-100">Pagamento annullato</h2>
+                        <p className="mt-2 text-sm text-slate-400">
+                            Il pagamento non è stato completato. Nessun importo è stato addebitato.
+                        </p>
+                    </div>
 
-                {/* Cancel Icon */}
-                <div
-                    className="mx-auto text-white w-24 h-24 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-lg ring-2 ring-red-400/40 text-6xl font-bold">
-                    ✕
-                </div>
-
-                <h2 className="text-4xl md:text-5xl font-semibold text-white leading-tight">
-                    Pagamento annullato
-                </h2>
-
-                <div className="space-y-4 text-neutral-300">
-                    <p>
-                        Il pagamento non è stato completato.
-                    </p>
-                    <p>
-                        Nessun importo è stato addebitato.
-                    </p>
-                </div>
-
-                <div className="flex justify-center mt-6">
-                    <LiquidGlassButton
+                    <button
                         onClick={() => navigate("/")}
+                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-blue-900/30 text-slate-300 hover:text-white hover:border-blue-700/40 text-sm font-medium transition-colors"
                     >
+                        <ArrowLeft size={14} />
                         Torna alla Home
-                    </LiquidGlassButton>
+                    </button>
                 </div>
-            </section>
+            </motion.div>
         </main>
     );
 }

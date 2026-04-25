@@ -2,17 +2,18 @@ export function GlassCard({ title, children, theme }: any) {
     const isDark = theme === "dark";
 
     return (
-        <div
-            className={`rounded-2xl p-5 backdrop-blur-xl border transition-all
+        <div className={`rounded-2xl p-6 border transition-all
             ${isDark
-                ? "bg-white/[0.04] border-white/[0.08]"
-                : "bg-white/70 border-gray-200 shadow-md"
+                ? "bg-[#0D1A30]/80 border-blue-900/20"
+                : "bg-white border-slate-200 shadow-sm"
             }`}
         >
-            <h3 className={`text-sm mb-4 font-medium ${isDark ? "text-white/80" : "text-gray-700"}`}>
-                {title}
-            </h3>
-
+            {title && (
+                <h3 className={`text-xs font-semibold uppercase tracking-widest mb-5
+                    ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                    {title}
+                </h3>
+            )}
             {children}
         </div>
     );

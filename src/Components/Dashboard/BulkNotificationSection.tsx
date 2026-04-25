@@ -1,25 +1,15 @@
 import { useState } from "react";
+import { Send } from "lucide-react";
+import { FallingLines } from "react-loader-spinner";
 import { useSendBulkNotification } from "../../hooks/useSendBulkNotification";
 import { useAuth } from "../../auth/AuthContext";
 
-const TEMPLATE_HTML = `
-<h1 style="color:#111">Important update</h1>
-<p>
-  This is a system communication from the platform.<br/>
-  Please read carefully.
-</p>
-<p>
-  — The Team
-</p>
-`;
+const TEMPLATE_HTML = `<h1 style="color:#111">Important update</h1>
+<p>This is a system communication from the platform.<br/>Please read carefully.</p>
+<p>— The Team</p>`;
 
-type Props = {
-    theme: string;
-};
-
-export function BulkNotificationSection({ theme }: Props) {
+export function BulkNotificationSection({ theme }: { theme: string }) {
     const isDark = theme === "dark";
-
     const { token } = useAuth();
     const { sendBulkNotification, loading, success, error } = useSendBulkNotification();
 
@@ -27,85 +17,42 @@ export function BulkNotificationSection({ theme }: Props) {
     const [subject, setSubject] = useState("");
     const [html, setHtml] = useState(TEMPLATE_HTML);
 
-    async function handleSend() {
-        if (!token) return;
-        await sendBulkNotification(type as any, subject, html, token);
-    }
-
-    // glass background for theme
-    const glassBg = isDark
-        ? "bg-white/[0.04] border border-white/[0.08]"
-        : "bg-white/50 border border-gray-200";
-
-    const textPrimary = isDark ? "text-white" : "text-gray-900";
-    const textSecondary = isDark ? "text-neutral-500" : "text-gray-500";
-    const inputBg = isDark ? "bg-white/[0.05] text-white border-white/[0.1]" : "bg-white/60 text-gray-900 border-gray-300";
+    const card = isDark ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200";
+    const inputClass = `w-full px-4 py-2.5 rounded-xl border text-sm focus:outline-none focus:ring-2 transition-colors
+        ${isDark
+            ? "bg-[#060D1B] border-blue-900/30 text-slate-200 focus:border-blue-600 focus:ring-blue-500/20"
+            : "bg-white border-slate-200 text-slate-900 focus:border-blue-500 focus:ring-blue-500/10"
+        }`;
 
     return (
-        <div className={`relative rounded-[32px] p-10 backdrop-blur-2xl shadow-[0_0_80px_rgba(0,0,0,0.04)] ${glassBg}`}>
-
-            {/* HEADER */}
-            <div className="flex items-center justify-between mb-8">
-                <h2 className={`text-xl sm:text-2xl font-semibold tracking-tight ${textPrimary}`}>
-                    Bulk Email Notification
-                </h2>
-                <span className={`text-xs uppercase tracking-widest ${textSecondary}`}>
-                    Messaging
-                </span>
+        <div className={`rounded-2xl border p-8 ${card}`}>
+            <div className="flex items-center justify-between mb-7">
+                <h2 className={`text-lg font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>Bulk Email Notification</h2>
+                <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-slate-500" : "text-slate-400"}`}>Messaging</span>
             </div>
 
-            {/* FORM */}
-            <div className="flex flex-col gap-6 max-w-3xl">
-
-                {/* USER TYPE */}
-                <select
-                    value={type}
-                    onChange={(e) => setType(e.target.value)}
-                    className={`rounded-lg px-5 py-3 border ${inputBg} cursor-pointer`}
-                >
+            <div className="flex flex-col gap-4 max-w-2xl">
+                <select value={type} onChange={e => setType(e.target.value)} className={inputClass + " appearance-none cursor-pointer"}>
                     <option value="ALL">All Users</option>
                     <option value="ADMIN">Admins</option>
                     <option value="VIP">VIP Users</option>
                     <option value="INACTIVE">Inactive Users</option>
                 </select>
 
-                {/* SUBJECT */}
-                <input
-                    value={subject}
-                    onChange={(e) => setSubject(e.target.value)}
-                    placeholder="Email subject"
-                    className={`rounded-lg px-5 py-3 border ${inputBg}`}
-                />
+                <input value={subject} onChange={e => setSubject(e.target.value)} placeholder="Email subject" className={inputClass} />
 
-                {/* HTML BODY */}
-                <textarea
-                    value={html}
-                    onChange={(e) => setHtml(e.target.value)}
-                    rows={10}
-                    className={`rounded-lg px-5 py-4 border ${inputBg} font-mono text-sm`}
-                />
+                <textarea value={html} onChange={e => setHtml(e.target.value)} rows={8} className={inputClass + " font-mono resize-none"} />
 
-                {/* ACTION */}
                 <div className="flex items-center gap-4">
                     <button
                         disabled={loading || !subject || !html}
-                        onClick={handleSend}
-                        className={`px-8 py-3 rounded-lg cursor-pointer font-medium transition hover:scale-105 disabled:opacity-30 ${isDark ? "bg-white text-black" : "bg-gray-900 text-white"}`}
+                        onClick={async () => { if (token) await sendBulkNotification(type as any, subject, html, token); }}
+                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white text-sm font-semibold transition-colors"
                     >
-                        {loading ? "Sending..." : "Send Email"}
+                        {loading ? <FallingLines color="#fff" width="20" visible ariaLabel="loading" /> : <><Send size={13} /> Send Email</>}
                     </button>
-
-                    {success && (
-                        <span className="text-green-400 text-sm">
-                            Emails sent successfully
-                        </span>
-                    )}
-
-                    {error && (
-                        <span className="text-red-400 text-sm">
-                            {error}
-                        </span>
-                    )}
+                    {success && <span className="text-sm text-green-400">Emails sent successfully</span>}
+                    {error && <span className="text-sm text-red-400">{error}</span>}
                 </div>
             </div>
         </div>

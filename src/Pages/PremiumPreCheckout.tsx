@@ -1,12 +1,32 @@
-import { LiquidGlassButton } from "../Components/Buttons/LiquidGlassButton";
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { ArrowRight, CheckCircle, Zap, BarChart2, FileText, Clock } from "lucide-react";
 import { useCreateCheckoutSession } from "../hooks/useCreateCheckoutSession.ts";
 import { CheckoutConfirmModal } from "../Components/Payments/CheckoutConfirmModal.tsx";
-import {useTheme} from "../Context/ThemeContext.tsx";
+import { useTheme } from "../Context/ThemeContext.tsx";
 
+const fadeUp = (delay = 0) => ({
+    initial: { opacity: 0, y: 24 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.55, ease: "easeOut" as const, delay },
+});
+
+const FEATURES = [
+    { icon: <BarChart2 size={16} />, text: "Analisi strutturata delle risposte" },
+    { icon: <Zap size={16} />, text: "Identificazione delle inefficienze operative" },
+    { icon: <FileText size={16} />, text: "Raccomandazioni strategiche personalizzate" },
+    { icon: <CheckCircle size={16} />, text: "Sintesi executive pronta per condivisione" },
+    { icon: <Clock size={16} />, text: "Insight immediati senza settimane di attesa" },
+];
+
+const VALUE_CARDS = [
+    { title: "Chiarezza", desc: "Decisioni basate su dati organizzati e leggibili." },
+    { title: "Priorità", desc: "Focus su ciò che genera reale impatto operativo." },
+    { title: "Velocità", desc: "Insight immediati senza settimane di attesa." },
+];
 
 export function PremiumPreCheckout() {
-    const {theme} = useTheme()
+    const { theme } = useTheme();
     const isDark = theme === "dark";
 
     const [showModal, setShowModal] = useState(false);
@@ -15,242 +35,182 @@ export function PremiumPreCheckout() {
     const handleConfirmCheckout = async () => {
         const data = await createCheckoutSession();
         if (data?.url) {
-            window.location.href = data.url; // redirect immediato a Stripe
+            window.location.href = data.url;
         }
     };
 
-    // Condizioni per classi di background/testo
-    const bgClass = isDark ? "bg-neutral-950 text-white" : "bg-primary-white text-black";
-    const textMainClass = isDark ? "text-neutral-300" : "text-neutral-700";
-    const cardBgClass = isDark
-        ? "bg-neutral-900/70 border border-neutral-800"
-        : "bg-white/90 border border-neutral-300/20";
-    const cardTextClass = isDark ? "white" : "text-neutral-800";
+    const card = isDark ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200";
 
     return (
-        <main className={`relative min-h-screen overflow-hidden ${bgClass}`}>
-
-            {/* Background grid */}
-            {isDark && (
-                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[size:32px_32px]" />
-            )}
-
-            {/* Liquid gradients */}
+        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#060D1B] text-white" : "bg-[#F8FAFC] text-slate-900"}`}>
+            {/* Grid bg */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                style={{ backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`, backgroundSize: "28px 28px" }} />
             {isDark && (
                 <>
-                    <div className="absolute -top-60 -left-60 w-[700px] h-[700px] bg-gradient-to-br from-indigo-500/20 via-indigo-400/20 to-indigo-500/20 rounded-full blur-3xl opacity-30" />
-                    <div className="absolute bottom-[-300px] right-[-200px] w-[600px] h-[600px] bg-gradient-to-tr from-red-500/20 via-red-400/20 to-red-500/20 rounded-full blur-3xl opacity-30" />
+                    <div className="absolute -top-60 -left-60 w-[600px] h-[600px] rounded-full blur-[140px] opacity-[0.06] bg-blue-600 pointer-events-none" />
+                    <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.04] bg-indigo-600 pointer-events-none" />
                 </>
             )}
 
-            <div className="relative max-w-7xl mx-auto px-8 py-32 space-y-32">
+            <div className="relative max-w-5xl mx-auto px-6 py-32 space-y-24">
 
                 {/* HERO */}
-                <section className="grid grid-cols-1 lg:grid-cols-3 gap-16 items-center">
-
-                    {/* LEFT TEXT */}
-                    <div className="max-w-2xl space-y-8 lg:col-span-2">
-                        <span className={`text-sm uppercase tracking-widest ${cardTextClass}`}>
+                <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div className="space-y-7">
+                        <motion.span
+                            {...fadeUp(0)}
+                            className={`block text-xs font-semibold uppercase tracking-widest ${isDark ? "text-blue-400" : "text-blue-600"}`}
+                        >
                             Abbonamento Premium
-                        </span>
+                        </motion.span>
 
-                        <h1 className={`text-5xl md:text-6xl font-semibold leading-tight ${cardTextClass}`}>
-                            Trasforma un semplice questionario
-                            <br/>
-                            <span className="text-main-red">
-                                in un report strategico operativo.
-                            </span>
-                        </h1>
+                        <motion.h1
+                            {...fadeUp(0.08)}
+                            className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}
+                        >
+                            Trasforma il tuo questionario in un{" "}
+                            <span className="text-blue-500">report strategico.</span>
+                        </motion.h1>
 
-                        <p className={`text-xl max-w-3xl ${textMainClass}`}>
-                            Con l’abbonamento Premium ricevi analisi approfondite,
-                            insight strutturati e raccomandazioni operative personalizzate
-                            dopo ogni survey compilato.
-                        </p>
+                        <motion.p {...fadeUp(0.16)} className={`text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                            Con Premium ricevi analisi approfondite, insight strutturati e raccomandazioni
+                            operative personalizzate dopo ogni survey compilato.
+                        </motion.p>
 
-                        <div className="flex items-center gap-8 pt-6">
-                            <LiquidGlassButton
+                        <motion.div {...fadeUp(0.22)} className="flex items-center gap-4 pt-2">
+                            <button
                                 onClick={() => setShowModal(true)}
-                                fillBackground='main'
-                                variant="navbar"
-                                className='!py-4'
+                                className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
+                                    bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold
+                                    transition-colors shadow-lg shadow-blue-600/25 hover:-translate-y-0.5 duration-200"
                             >
                                 Attiva Premium — 15€/mese
-                            </LiquidGlassButton>
-
-                            <span className={`text-sm ${cardTextClass}`}>
+                                <ArrowRight size={14} />
+                            </button>
+                            <span className={`text-xs ${isDark ? "text-slate-500" : "text-slate-400"}`}>
                                 Disdici in qualsiasi momento
                             </span>
-                        </div>
+                        </motion.div>
                     </div>
 
-                    {/* RIGHT VISUAL CORE */}
-                    <div className="relative flex items-center justify-center">
-
-                        {/* background glow */}
-                        <div className="absolute inset-0">
-                            <div
-                                className="absolute top-0 right-0 w-[400px] h-[400px] bg-red-500/20 rounded-full blur-3xl"/>
-                            <div
-                                className="absolute bottom-0 left-0 w-[350px] h-[350px] bg-red-400/20 rounded-full blur-3xl"/>
+                    {/* Visual card */}
+                    <motion.div
+                        {...fadeUp(0.12)}
+                        className={`rounded-2xl border p-8 space-y-6 ${card}`}
+                    >
+                        <div className="flex items-center gap-2 mb-2">
+                            <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                            <span className={`text-xs font-medium ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                                Live analysis engine
+                            </span>
                         </div>
-
-                        {/* main glass object */}
-                        <div
-                            className={`relative w-[420px] h-[420px] rounded-[2.5rem] ${cardBgClass} backdrop-blur-2xl shadow-sm overflow-hidden`}>
-
-                            {/* SVG “data flow” background */}
-                            <svg
-                                className="absolute inset-0 w-full h-full opacity-20"
-                                viewBox="0 0 400 400"
-                                fill="none"
-                            >
-                                <path
-                                    d="M0 300 C100 200, 200 400, 400 150"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                />
-                                <path
-                                    d="M0 250 C120 100, 220 350, 400 200"
-                                    stroke="currentColor"
-                                    strokeWidth="1.5"
-                                />
-                                <path
-                                    d="M0 200 C150 300, 250 50, 400 250"
-                                    stroke="currentColor"
-                                    strokeWidth="1"
-                                />
-                            </svg>
-
-                            {/* center content */}
-                            <div
-                                className="relative h-full flex flex-col justify-center items-center text-center p-10 space-y-6">
-
-                                <div className="text-sm uppercase tracking-widest opacity-70">
-                                    AI Processing
-                                </div>
-
-                                <div className={`text-2xl font-semibold ${cardTextClass}`}>
-                                    Generating insights
-                                </div>
-
-                                <div className={`text-sm ${textMainClass}`}>
-                                    Structuring responses into operational intelligence
-                                </div>
-
-                                {/* fake status indicator */}
-                                <div className="flex items-center gap-2 mt-6">
-                                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"/>
-                                    <span className="text-xs opacity-70">Live analysis engine</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                        <h3 className={`text-lg font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                            Output del report
+                        </h3>
+                        <ul className="space-y-3">
+                            {[
+                                "Mappatura dello stato attuale dei processi",
+                                "Valutazione del livello di digitalizzazione",
+                                "Analisi dei colli di bottiglia",
+                                "Opportunità di automazione",
+                                "Roadmap suggerita a breve e medio termine",
+                            ].map(item => (
+                                <li key={item} className={`flex items-start gap-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                                    <ArrowRight size={12} className="text-blue-500 mt-0.5 shrink-0" />
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
+                    </motion.div>
                 </section>
 
                 {/* WHAT YOU GET */}
-                <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-                    <div className="space-y-6">
-                        <h2 className={`text-4xl font-semibold ${cardTextClass}`}>
+                <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                    <motion.div
+                        {...fadeUp(0)}
+                        className="space-y-5"
+                    >
+                        <h2 className={`text-2xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                             Cosa include il piano Premium
                         </h2>
-
-                        <p className={`text-lg ${textMainClass}`}>
-                            Non si tratta di un semplice riepilogo automatico.
-                            Ogni report viene generato con un modello avanzato di sintesi,
-                            progettato per offrire chiarezza decisionale e priorità operative.
+                        <p className={`text-sm leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                            Non un semplice riepilogo automatico. Ogni report viene generato con un modello
+                            avanzato di sintesi per offrire chiarezza decisionale e priorità operative.
                         </p>
-
-                        <ul className={`space-y-4 ${cardTextClass}`}>
-                            <li>• Analisi strutturata delle risposte</li>
-                            <li>• Identificazione delle inefficienze operative</li>
-                            <li>• Evidenziazione delle aree a maggior impatto</li>
-                            <li>• Raccomandazioni strategiche personalizzate</li>
-                            <li>• Sintesi executive pronta per condivisione</li>
+                        <ul className="space-y-3">
+                            {FEATURES.map(({ icon, text }) => (
+                                <li key={text} className={`flex items-center gap-3 text-sm ${isDark ? "text-slate-300" : "text-slate-700"}`}>
+                                    <span className={`shrink-0 ${isDark ? "text-blue-400" : "text-blue-500"}`}>{icon}</span>
+                                    {text}
+                                </li>
+                            ))}
                         </ul>
-                    </div>
+                    </motion.div>
 
-                    <div className={`relative p-10 rounded-3xl ${cardBgClass} backdrop-blur-xl shadow-2xl`}>
-                        <h3 className={`text-2xl font-medium mb-6 ${cardTextClass}`}>
-                            Output del report
-                        </h3>
-
-                        <div className={`space-y-6 text-sm leading-relaxed ${cardTextClass}`}>
-                            <p>→ Mappatura dello stato attuale dei processi</p>
-                            <p>→ Valutazione del livello di digitalizzazione</p>
-                            <p>→ Analisi dei colli di bottiglia</p>
-                            <p>→ Opportunità di automazione</p>
-                            <p>→ Roadmap suggerita a breve e medio termine</p>
-                        </div>
-                    </div>
-                </section>
-
-                {/* VALUE SECTION */}
-                <section className="max-w-4xl space-y-10">
-                    <h2 className={`text-4xl font-semibold ${cardTextClass}`}>Perché 15€ al mese?</h2>
-
-                    <p className={`text-lg leading-relaxed ${textMainClass}`}>
-                        Un’analisi consulenziale tradizionale può costare centinaia di euro.
-                        Con Premium ottieni una valutazione strutturata ogni volta che
-                        completi un survey, a un costo mensile sostenibile.
-                    </p>
-
-                    <div className="grid md:grid-cols-3 gap-10">
-                        {["Chiarezza", "Priorità", "Velocità"].map(title => (
-                            <div key={title} className={`p-8 rounded-3xl ${cardBgClass} backdrop-blur`}>
-                                <h3 className="text-xl font-medium mb-4">{title}</h3>
-                                <p className={`${cardTextClass} text-sm`}>
-                                    {title === "Chiarezza" && "Decisioni basate su dati organizzati e leggibili."}
-                                    {title === "Priorità" && "Focus su ciò che genera reale impatto operativo."}
-                                    {title === "Velocità" && "Insight immediati senza settimane di attesa."}
+                    <div className="grid gap-4">
+                        {VALUE_CARDS.map((v, i) => (
+                            <motion.div
+                                key={v.title}
+                                {...fadeUp(i * 0.08)}
+                                className={`rounded-2xl border p-6 ${card}`}
+                            >
+                                <h3 className={`font-semibold mb-1.5 text-sm ${isDark ? "text-slate-200" : "text-slate-800"}`}>
+                                    {v.title}
+                                </h3>
+                                <p className={`text-xs leading-relaxed ${isDark ? "text-slate-500" : "text-slate-500"}`}>
+                                    {v.desc}
                                 </p>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </section>
 
-                {/* PRICING BLOCK */}
-                <section className="relative flex justify-center">
-                    <div
-                        className={`w-full max-w-2xl p-12 rounded-3xl ${cardBgClass} backdrop-blur-2xl shadow-2xl text-center space-y-8`}>
-                        <h2 className={`text-4xl font-semibold ${cardTextClass}`}>Premium</h2>
-
-                        <div className={`text-6xl font-semibold ${cardTextClass}`}>
-                            15€ <span className='text-main-red'>/ mese</span>
+                {/* PRICING */}
+                <motion.section
+                    {...fadeUp(0)}
+                    className="flex justify-center"
+                >
+                    <div className={`w-full max-w-lg rounded-2xl border p-10 text-center space-y-6 ${card}`}>
+                        <div className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                            Premium
                         </div>
-
-                        <p className={cardTextClass}>
-                            Accesso illimitato ai report avanzati generati
-                            dopo ogni compilazione del survey.
+                        <div className={`text-6xl font-semibold tabular-nums ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                            15€
+                            <span className={`text-base font-normal ml-1.5 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                                / mese
+                            </span>
+                        </div>
+                        <p className={`text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                            Accesso illimitato ai report avanzati generati dopo ogni compilazione del survey.
                         </p>
-
-                        <LiquidGlassButton onClick={() => setShowModal(true)} fillBackground='main'
-                                           className="!rounded-4xl !py-2">
+                        <button
+                            onClick={() => setShowModal(true)}
+                            className="w-full inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl
+                                bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold
+                                transition-colors shadow-lg shadow-blue-600/25 hover:-translate-y-0.5 duration-200"
+                        >
                             Attiva ora
-                        </LiquidGlassButton>
-
-                        <p className={`text-xs ${cardTextClass}`}>
-                            Pagamento sicuro tramite Stripe. Nessun vincolo annuale. Disattivazione immediata.
+                            <ArrowRight size={14} />
+                        </button>
+                        <p className={`text-xs ${isDark ? "text-slate-600" : "text-slate-400"}`}>
+                            Pagamento sicuro tramite Stripe · Nessun vincolo annuale · Disattivazione immediata
                         </p>
                     </div>
-                </section>
+                </motion.section>
             </div>
+
+            {error && (
+                <p className="relative text-red-400 text-sm text-center pb-8">{error}</p>
+            )}
 
             <CheckoutConfirmModal
                 open={showModal}
                 onConfirm={handleConfirmCheckout}
                 onCancel={() => setShowModal(false)}
                 loading={loading}
-                variant={theme} // passa il tema al modal
+                variant={theme}
             />
-
-            {error && (
-                <p className="text-red-400 text-sm text-center mt-4">
-                    {error}
-                </p>
-            )}
         </main>
     );
 }
