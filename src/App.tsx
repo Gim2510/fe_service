@@ -31,7 +31,7 @@ import {CookiePolicy} from "./Pages/CookiePolicy.tsx";
 
 function App() {
     return (
-        <div className='bg-black'>
+        <div className='bg-[#060D1B]'>
             <ThemeProvider>
                 <AuthProvider>
                     <PremiumProvider>

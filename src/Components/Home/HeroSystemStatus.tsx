@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "../../Context/ThemeContext.tsx";
 
 const systemData = [
     { label: "Utenti attivi", value: 1283 },
@@ -9,8 +10,11 @@ const systemData = [
 ];
 
 export function HeroSystemStatus() {
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
+
     const [index, setIndex] = useState(0);
-    const [displayValue, setDisplayValue] = useState(systemData[0].value);
+    const [displayValue, setDisplayValue] = useState<string | number>(systemData[0].value);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -42,7 +46,9 @@ export function HeroSystemStatus() {
 
     return (
         <div className="space-y-4">
-            <div className="text-neutral-400 text-sm mb-2">Stato del sistema</div>
+            <div className={`text-xs font-semibold uppercase tracking-widest mb-2 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                Stato del sistema
+            </div>
 
             <AnimatePresence mode="wait">
                 <motion.div
@@ -51,11 +57,11 @@ export function HeroSystemStatus() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -30 }}
                     transition={{ type: "spring", stiffness: 260, damping: 30 }}
-                    className="text-white text-lg font-semibold"
+                    className={`text-lg font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}
                 >
-          <span className="text-yellow-400 mr-2">
-            {systemData[index].label}:
-          </span>
+                    <span className={`mr-2 ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                        {systemData[index].label}:
+                    </span>
                     <span>{displayValue}</span>
                 </motion.div>
             </AnimatePresence>

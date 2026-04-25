@@ -17,8 +17,8 @@ export function Section({
                             textPrimary,
                             textSecondary,
                         }: SectionProps) {
-    const bg = bgSection ?? (theme === "dark" ? "bg-neutral-900/70 border-neutral-800" : "bg-white/70 border-gray-200");
-    const titleColor = textPrimary ?? (theme === "dark" ? "text-white" : "text-neutral-900");
+    const bg = bgSection ?? (theme === "dark" ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200");
+    const titleColor = textPrimary ?? (theme === "dark" ? "text-slate-100" : "text-slate-900");
 
     return (
         <section className={`${bg} border rounded-3xl p-10 space-y-6`}>

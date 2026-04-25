@@ -1,9 +1,8 @@
 import { useState } from "react";
-import {useTheme} from "../../Context/ThemeContext.tsx";
-import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
+import { useTheme } from "../../Context/ThemeContext.tsx";
+import { Upload } from "lucide-react";
 
 export function ApplyFormPage() {
-
     const { theme } = useTheme();
     const isDark = theme === "dark";
 
@@ -16,17 +15,11 @@ export function ApplyFormPage() {
     });
 
     const handleChange = (e: any) => {
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value
-        });
+        setForm({ ...form, [e.target.name]: e.target.value });
     };
 
     const handleFile = (e: any) => {
-        setForm({
-            ...form,
-            cv: e.target.files[0]
-        });
+        setForm({ ...form, cv: e.target.files[0] });
     };
 
     const handleSubmit = async (e: any) => {
@@ -37,90 +30,54 @@ export function ApplyFormPage() {
         data.append("email", form.email);
         data.append("linkedin", form.linkedin);
         data.append("message", form.message);
+        if (form.cv) data.append("cv", form.cv);
 
-        if (form.cv) {
-            data.append("cv", form.cv);
-        }
-
-        await fetch("/api/careers/apply", {
-            method: "POST",
-            body: data
-        });
-
+        await fetch("/api/careers/apply", { method: "POST", body: data });
         alert("Candidatura inviata!");
     };
 
-    const bgClass = isDark ? "bg-neutral-950 text-white" : "bg-white text-black";
-    const cardBgClass = isDark
-        ? "bg-neutral-900/70 border border-neutral-800"
-        : "bg-white/90 border border-neutral-300";
-
-    const inputClass =
-        "w-full p-4 rounded-xl bg-transparent border border-neutral-600 focus:outline-none";
+    const inputClass = `w-full px-4 py-3 rounded-xl border text-sm focus:outline-none transition-colors ${
+        isDark
+            ? "bg-[#060D1B] border-blue-900/30 text-slate-200 focus:border-blue-600"
+            : "bg-white border-slate-200 text-slate-900 focus:border-blue-500"
+    }`;
 
     return (
-        <main className={`min-h-screen flex justify-center items-center px-8 ${bgClass}`}>
-
-            <div className={`max-w-2xl w-full p-12 rounded-3xl backdrop-blur-xl ${cardBgClass}`}>
-
-                <h1 className="text-4xl font-semibold mb-10">
+        <main className={`min-h-screen flex justify-center items-center px-8 ${isDark ? "bg-[#060D1B]" : "bg-[#F8FAFC]"}`}>
+            <div className={`max-w-2xl w-full p-12 rounded-2xl border ${isDark ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200"}`}>
+                <h1 className={`text-3xl font-semibold mb-10 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                     Invia la tua candidatura
                 </h1>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-
-                    <input
-                        name="name"
-                        placeholder="Nome completo"
-                        className={inputClass}
-                        onChange={handleChange}
-                        required
-                    />
-
-                    <input
-                        name="email"
-                        placeholder="Email"
-                        type="email"
-                        className={inputClass}
-                        onChange={handleChange}
-                        required
-                    />
-
-                    <input
-                        name="linkedin"
-                        placeholder="LinkedIn / Portfolio"
-                        className={inputClass}
-                        onChange={handleChange}
-                    />
-
-                    <textarea
-                        name="message"
-                        placeholder="Perché vuoi lavorare con noi?"
-                        rows={5}
-                        className={inputClass}
-                        onChange={handleChange}
-                    />
+                <form onSubmit={handleSubmit} className="space-y-5">
+                    <input name="name" placeholder="Nome completo" className={inputClass} onChange={handleChange} required />
+                    <input name="email" placeholder="Email" type="email" className={inputClass} onChange={handleChange} required />
+                    <input name="linkedin" placeholder="LinkedIn / Portfolio" className={inputClass} onChange={handleChange} />
+                    <textarea name="message" placeholder="Perché vuoi lavorare con noi?" rows={5} className={inputClass} onChange={handleChange} />
 
                     <div className="space-y-2">
-                        <label className="text-sm opacity-70">
+                        <label className={`text-sm font-medium ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                             Carica il CV
                         </label>
-
-                        <input
-                            type="file"
-                            accept=".pdf,.doc,.docx"
-                            onChange={handleFile}
-                        />
+                        <label className={`flex items-center gap-3 px-4 py-3 rounded-xl border cursor-pointer transition-colors ${
+                            isDark
+                                ? "border-blue-900/30 text-slate-400 hover:border-blue-600 hover:text-slate-200"
+                                : "border-slate-200 text-slate-500 hover:border-blue-500 hover:text-slate-700"
+                        }`}>
+                            <Upload size={15} />
+                            <span className="text-sm">{form.cv ? form.cv.name : "Seleziona file (.pdf, .doc, .docx)"}</span>
+                            <input type="file" accept=".pdf,.doc,.docx" onChange={handleFile} className="hidden" />
+                        </label>
                     </div>
 
-                    <LiquidGlassButton>
+                    <button
+                        type="submit"
+                        className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-colors"
+                    >
                         Invia candidatura
-                    </LiquidGlassButton>
-
+                    </button>
                 </form>
-
             </div>
-
         </main>
     );
 }

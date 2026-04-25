@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle } from "lucide-react";
-import { LiquidGlassButton } from "../Buttons/LiquidGlassButton.tsx";
+
 import { HeroGlobeDark } from "./HeroGlobeDark.tsx";
 import { useNavigate } from "react-router-dom";
 
@@ -116,14 +116,13 @@ export function HeroSection({ theme }: { theme: string }) {
                         <ArrowRight size={16} />
                     </button>
 
-                    <LiquidGlassButton
+                    <button
                         onClick={goToSurvey}
-                        variant="navbar"
-                        className="!text-sm !px-5 !py-2.5"
-                        scale={false}
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5
+                            border-blue-900/30 text-slate-300 hover:border-blue-500 hover:text-slate-100"
                     >
                         Avvia l'analisi
-                    </LiquidGlassButton>
+                    </button>
                 </motion.div>
             </div>
         </section>
