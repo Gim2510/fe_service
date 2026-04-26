@@ -34,22 +34,22 @@ export const MultipleChoiceQuestion: FC<MultipleChoiceQuestionProps> = ({ option
                             transition-all duration-200 cursor-pointer
                             ${isSelected
                                 ? isDark
-                                    ? "bg-blue-600/15 border-blue-500/40 text-blue-300"
-                                    : "bg-blue-50 border-blue-400 text-blue-700"
+                                    ? "bg-amber-700/15 border-amber-600/40 text-amber-400"
+                                    : "bg-amber-50 border-amber-500 text-amber-800"
                                 : isDark
-                                    ? "bg-[#0D1A30]/60 border-blue-900/20 text-slate-300 hover:border-blue-700/30 hover:bg-[#0D1A30]"
-                                    : "bg-white border-slate-200 text-slate-700 hover:border-blue-300 hover:bg-blue-50/50"
+                                    ? "bg-[#1C1C1A]/60 border-stone-800/20 text-slate-300 hover:border-amber-800/30 hover:bg-[#1C1C1A]"
+                                    : "bg-[#F8FAFB] border-slate-200 text-slate-700 hover:border-amber-400 hover:bg-amber-50/50"
                             }`}
                     >
                         <span className="flex items-center gap-3">
                             <span className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center
                                 ${isSelected
-                                    ? "border-blue-500 bg-blue-500"
-                                    : isDark ? "border-blue-900/40" : "border-slate-300"
+                                    ? "border-amber-600 bg-amber-600"
+                                    : isDark ? "border-stone-800/40" : "border-slate-300"
                                 }`}
                             >
                                 {isSelected && (
-                                    <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#F8FAFB]" />
                                 )}
                             </span>
                             {option}

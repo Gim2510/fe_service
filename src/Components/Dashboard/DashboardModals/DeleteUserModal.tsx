@@ -10,7 +10,7 @@ type Props = {
 
 export function DeleteUserModal({ setShowDeleteUserModal, handleConfirmDeleteUser, loadingDeleteUser, theme }: Props) {
     const isDark = theme === "dark";
-    const card = isDark ? "bg-[#0D1A30] border-blue-900/30" : "bg-white border-slate-200";
+    const card = isDark ? "bg-[#1C1C1A] border-stone-800/30" : "bg-[#F8FAFB] border-slate-200";
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-50 p-4">
@@ -29,7 +29,7 @@ export function DeleteUserModal({ setShowDeleteUserModal, handleConfirmDeleteUse
                         onClick={() => setShowDeleteUserModal(false)}
                         disabled={loadingDeleteUser}
                         className={`flex-1 px-4 py-2.5 rounded-xl border text-sm font-medium transition-colors
-                            ${isDark ? "border-blue-900/30 text-slate-400 hover:text-slate-200" : "border-slate-200 text-slate-600 hover:bg-slate-50"}`}
+                            ${isDark ? "border-stone-800/30 text-slate-400 hover:text-slate-200" : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"}`}
                     >
                         Cancel
                     </button>

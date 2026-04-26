@@ -40,7 +40,7 @@ export function AdminActionsSection({
     const textSub = isDark ? "text-slate-500" : "text-slate-400";
 
     const selectClass = `w-full h-11 px-4 rounded-xl border text-sm appearance-none cursor-pointer focus:outline-none transition-colors
-        ${isDark ? "bg-[#060D1B] border-blue-900/30 text-slate-200 focus:border-blue-600" : "bg-white border-slate-200 text-slate-900 focus:border-blue-500"}`;
+        ${isDark ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-amber-700" : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-amber-600"}`;
 
     return (
         <>
@@ -69,7 +69,7 @@ export function AdminActionsSection({
                     <button
                         disabled={!selectedUserId}
                         onClick={() => setShowPromoteModal(true)}
-                        className="h-11 px-5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white text-sm font-semibold transition-colors"
+                        className="h-11 px-5 rounded-xl bg-amber-700 hover:bg-amber-600 disabled:opacity-40 text-white text-sm font-semibold transition-colors"
                     >
                         Promote
                     </button>

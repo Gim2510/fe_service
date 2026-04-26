@@ -5,7 +5,7 @@ function SecurityItem({ title, children }: { title: string; children: ReactNode 
     const [open, setOpen] = useState(false);
 
     return (
-        <div className="border-b border-blue-900/20 pb-4">
+        <div className="border-b border-stone-800/20 pb-4">
             <button
                 onClick={() => setOpen(!open)}
                 className="w-full flex justify-between items-center text-left gap-4 cursor-pointer"

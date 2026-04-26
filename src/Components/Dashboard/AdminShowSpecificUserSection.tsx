@@ -15,11 +15,11 @@ export function AdminShowSpecificUserSection({ allUsers, selectedUserIdToShow, s
     const { user, loading, error } = useSelectedUser(selectedUserIdToShow);
     const isDark = theme === "dark";
 
-    const card = isDark ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200";
-    const innerCard = isDark ? "bg-[#060D1B] border-blue-900/20" : "bg-slate-50 border-slate-200";
+    const card = isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200";
+    const innerCard = isDark ? "bg-[#111110] border-stone-800/20" : "bg-[#EDF2F7] border-slate-200";
 
     const selectClass = `w-full sm:w-80 h-11 px-4 rounded-xl border text-sm appearance-none cursor-pointer focus:outline-none
-        ${isDark ? "bg-[#060D1B] border-blue-900/30 text-slate-200 focus:border-blue-600" : "bg-white border-slate-200 text-slate-900 focus:border-blue-500"}`;
+        ${isDark ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-amber-700" : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-amber-600"}`;
 
     const badgeBg = {
         VIP: isDark ? "bg-amber-500/15 text-amber-400 border border-amber-500/30" : "bg-amber-50 text-amber-700 border border-amber-200",
@@ -56,14 +56,14 @@ export function AdminShowSpecificUserSection({ allUsers, selectedUserIdToShow, s
                         <img
                             src={user.user_image || "https://via.placeholder.com/150"}
                             alt="User profile"
-                            className="w-24 h-24 rounded-full object-cover mb-4 border-2 border-blue-500/20"
+                            className="w-24 h-24 rounded-full object-cover mb-4 border-2 border-amber-600/20"
                         />
                         <h3 className={`text-base font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                             {user.given_name} {user.family_name}
                         </h3>
                         <p className={`text-xs mt-1 ${isDark ? "text-slate-500" : "text-slate-400"}`}>{user.email}</p>
                         <div className="flex gap-2 mt-4 flex-wrap justify-center">
-                            <span className={`px-2.5 py-1 text-xs rounded-full border ${isDark ? "border-blue-900/30 text-slate-400" : "border-slate-200 text-slate-500"}`}>
+                            <span className={`px-2.5 py-1 text-xs rounded-full border ${isDark ? "border-stone-800/30 text-slate-400" : "border-slate-200 text-slate-500"}`}>
                                 {user.role}
                             </span>
                             {user.vip && <span className={`px-2.5 py-1 text-xs rounded-full ${badgeBg.VIP}`}>VIP</span>}

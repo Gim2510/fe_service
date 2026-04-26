@@ -46,8 +46,8 @@ export function GDPRBanner() {
     return (
         <div className={`fixed bottom-0 left-0 w-full z-50 border-t ${
             isDark
-                ? "bg-[#060D1B]/95 border-blue-900/30 backdrop-blur-xl"
-                : "bg-white/95 border-slate-200 backdrop-blur-xl"
+                ? "bg-[#111110]/95 border-stone-800/30 backdrop-blur-xl"
+                : "bg-[#F8FAFB]/95 border-slate-200 backdrop-blur-xl"
         } shadow-2xl`} style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
 
             {!openSettings ? (
@@ -67,9 +67,9 @@ export function GDPRBanner() {
                                 className={`px-4 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
                                     secondary
                                         ? isDark
-                                            ? "border-blue-900/30 text-slate-400 hover:text-slate-200 hover:border-blue-800/40"
-                                            : "border-slate-200 text-slate-600 hover:bg-slate-50"
-                                        : "bg-blue-600 hover:bg-blue-500 text-white border-transparent shadow-sm"
+                                            ? "border-stone-800/30 text-slate-400 hover:text-slate-200 hover:border-stone-700/40"
+                                            : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"
+                                        : "bg-amber-700 hover:bg-amber-600 text-white border-transparent shadow-sm"
                                 }`}
                             >
                                 {label}
@@ -82,7 +82,7 @@ export function GDPRBanner() {
                     <h2 className={`text-sm font-semibold mb-4 ${isDark ? "text-slate-200" : "text-slate-800"}`}>
                         Preferenze Cookie
                     </h2>
-                    <div className={`flex flex-col divide-y ${isDark ? "divide-blue-900/20" : "divide-slate-100"}`}>
+                    <div className={`flex flex-col divide-y ${isDark ? "divide-stone-800/20" : "divide-stone-200"}`}>
                         {consentItems.map((item: any) => (
                             <div key={item.key} className="flex justify-between items-center py-3">
                                 <div>
@@ -91,7 +91,7 @@ export function GDPRBanner() {
                                 </div>
                                 <input
                                     type="checkbox"
-                                    className="accent-blue-600 scale-110"
+                                    className="accent-amber-700 scale-110"
                                     checked={item.key === "necessary" ? true : tempConsent[item.key as keyof Consent]}
                                     disabled={item.disabled}
                                     onChange={(e) => setTempConsent(prev => ({ ...prev, [item.key]: e.target.checked }))}
@@ -103,14 +103,14 @@ export function GDPRBanner() {
                         <button
                             onClick={() => setOpenSettings(false)}
                             className={`px-4 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
-                                isDark ? "border-blue-900/30 text-slate-400 hover:text-slate-200" : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                                isDark ? "border-stone-800/30 text-slate-400 hover:text-slate-200" : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"
                             }`}
                         >
                             Indietro
                         </button>
                         <button
                             onClick={() => saveConsent(tempConsent)}
-                            className="px-4 py-1.5 rounded-lg text-xs font-medium bg-blue-600 hover:bg-blue-500 text-white transition-colors"
+                            className="px-4 py-1.5 rounded-lg text-xs font-medium bg-amber-700 hover:bg-amber-600 text-white transition-colors"
                         >
                             Salva preferenze
                         </button>

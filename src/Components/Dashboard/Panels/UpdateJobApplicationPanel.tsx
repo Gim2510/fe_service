@@ -10,14 +10,14 @@
 //
 //     const cardBg = isDark
 //         ? "bg-neutral-900/70 border-neutral-700"
-//         : "bg-white/50 border-gray-200";
+//         : "bg-[#F8FAFB]/50 border-gray-200";
 //
 //     const textColor = isDark ? "text-white" : "text-gray-900";
 //
 //     const inputStyle = `w-full rounded-xl border px-3 py-2 text-sm ${
 //         isDark
 //             ? "bg-neutral-800 border-neutral-700 text-white"
-//             : "bg-white border-gray-200 text-gray-900"
+//             : "bg-[#F8FAFB] border-gray-200 text-gray-900"
 //     }`;
 //
 //

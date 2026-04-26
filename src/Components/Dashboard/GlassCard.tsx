@@ -4,8 +4,8 @@ export function GlassCard({ title, children, theme }: any) {
     return (
         <div className={`rounded-2xl p-6 border transition-all
             ${isDark
-                ? "bg-[#0D1A30]/80 border-blue-900/20"
-                : "bg-white border-slate-200 shadow-sm"
+                ? "bg-[#1C1C1A]/80 border-stone-800/20"
+                : "bg-[#F8FAFB] border-slate-200 shadow-sm"
             }`}
         >
             {title && (

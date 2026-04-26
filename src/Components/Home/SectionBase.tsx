@@ -12,7 +12,7 @@ export function SectionBase({ children, theme, className = "" }: SectionBaseProp
     return (
         <section
             className={`relative overflow-hidden ${
-                isDark ? "bg-[#060D1B] text-white" : "bg-[#F8FAFC] text-slate-900"
+                isDark ? "bg-[#111110] text-white" : "bg-transparent text-[#162031]"
             } ${className}`}
         >
             {/* Subtle dot grid */}
@@ -26,7 +26,7 @@ export function SectionBase({ children, theme, className = "" }: SectionBaseProp
 
             {/* Blue glow accent in dark mode */}
             {isDark && (
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-800/40 to-transparent pointer-events-none" />
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-stone-700/40 to-transparent pointer-events-none" />
             )}
 
             <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-20 sm:py-32">

@@ -12,8 +12,8 @@ export function CTASection({ theme }: { theme: string }) {
             {/* Corporate gradient background */}
             <div className={`absolute inset-0 ${
                 isDark
-                    ? "bg-gradient-to-br from-[#060D1B] via-[#0A1628] to-[#060D1B]"
-                    : "bg-gradient-to-br from-blue-700 via-blue-600 to-blue-800"
+                    ? "bg-gradient-to-br from-[#111110] via-[#0A1628] to-[#111110]"
+                    : "bg-gradient-to-br from-[#1E1B14] via-[#2A2418] to-[#1E1B14]"
             }`} />
 
             {/* Decorative elements */}
@@ -21,8 +21,8 @@ export function CTASection({ theme }: { theme: string }) {
                 {isDark && (
                     <>
                         {/* Blue gradient accent */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-transparent to-blue-900/10" />
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full blur-[100px] opacity-10 bg-blue-500" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-stone-800/30 via-transparent to-stone-800/10" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full blur-[100px] opacity-10 bg-amber-600" />
                         {/* Grid */}
                         <div
                             className="absolute inset-0 opacity-[0.03]"
@@ -32,7 +32,7 @@ export function CTASection({ theme }: { theme: string }) {
                             }}
                         />
                         {/* Top border glow */}
-                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-700/60 to-transparent" />
+                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-800/60 to-transparent" />
                     </>
                 )}
                 {!isDark && (
@@ -45,7 +45,8 @@ export function CTASection({ theme }: { theme: string }) {
                                 backgroundSize: "28px 28px",
                             }}
                         />
-                        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-20 bg-blue-400" />
+                        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-10 bg-amber-600" />
+                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-700/40 to-transparent" />
                     </>
                 )}
             </div>
@@ -56,15 +57,15 @@ export function CTASection({ theme }: { theme: string }) {
                 <motion.span
                     className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border mb-8 ${
                         isDark
-                            ? "text-blue-400 border-blue-800/40 bg-blue-900/20"
-                            : "text-blue-100 border-white/20 bg-white/10"
+                            ? "text-amber-500 border-stone-700/40 bg-stone-800/20"
+                            : "text-amber-100 border-white/20 bg-[#F8FAFB]/10"
                     }`}
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
                 >
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
                     Inizia oggi
                 </motion.span>
 
@@ -79,7 +80,7 @@ export function CTASection({ theme }: { theme: string }) {
                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
                 >
                     Trasforma i tuoi processi in un{" "}
-                    <span className={isDark ? "text-blue-400" : "text-blue-200"}>
+                    <span className={isDark ? "text-amber-500" : "text-amber-300"}>
                         vantaggio competitivo misurabile.
                     </span>
                 </motion.h2>
@@ -87,7 +88,7 @@ export function CTASection({ theme }: { theme: string }) {
                 {/* Sub */}
                 <motion.p
                     className={`mt-6 text-lg leading-relaxed max-w-xl ${
-                        isDark ? "text-slate-400" : "text-blue-100"
+                        isDark ? "text-slate-400" : "text-amber-100"
                     }`}
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -111,10 +112,10 @@ export function CTASection({ theme }: { theme: string }) {
                         <span
                             key={item}
                             className={`flex items-center gap-1.5 text-sm ${
-                                isDark ? "text-slate-500" : "text-blue-200"
+                                isDark ? "text-slate-500" : "text-amber-300"
                             }`}
                         >
-                            <CheckCircle size={13} className={isDark ? "text-blue-600" : "text-blue-300"} />
+                            <CheckCircle size={13} className={isDark ? "text-amber-700" : "text-amber-400"} />
                             {item}
                         </span>
                     ))}
@@ -134,8 +135,8 @@ export function CTASection({ theme }: { theme: string }) {
                             text-sm font-semibold transition-all duration-200
                             shadow-xl hover:-translate-y-0.5
                             ${isDark
-                                ? "bg-blue-600 hover:bg-blue-500 text-white shadow-blue-900/40 hover:shadow-blue-900/60"
-                                : "bg-white hover:bg-blue-50 text-blue-700 shadow-blue-900/20 hover:shadow-blue-900/30"
+                                ? "bg-amber-700 hover:bg-amber-600 text-white shadow-stone-800/40 hover:shadow-stone-800/60"
+                                : "bg-[#F8FAFB] hover:bg-amber-50 text-amber-800 shadow-stone-800/20 hover:shadow-stone-800/30"
                             }
                         `}
                     >
@@ -150,7 +151,7 @@ export function CTASection({ theme }: { theme: string }) {
                 {/* Trust note */}
                 <motion.p
                     className={`mt-5 flex items-center gap-1.5 text-xs ${
-                        isDark ? "text-slate-600" : "text-blue-300"
+                        isDark ? "text-slate-600" : "text-amber-400"
                     }`}
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}

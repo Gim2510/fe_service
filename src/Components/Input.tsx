@@ -6,7 +6,7 @@ export function Input({label, value, onChange, theme}: { label: string; value: s
             <input
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                className={`w-full rounded-xl border px-4 py-3 active:ring-0 outline-none text-sm transition-colors ${isDark ? "bg-[#060D1B] text-slate-200 border-blue-900/30 focus:border-blue-600" : "bg-white text-slate-900 border-slate-200 focus:border-blue-500"}`}
+                className={`w-full rounded-xl border px-4 py-3 active:ring-0 outline-none text-sm transition-colors ${isDark ? "bg-[#111110] text-slate-200 border-stone-800/30 focus:border-amber-700" : "bg-[#F8FAFB] text-slate-900 border-slate-200 focus:border-amber-600"}`}
             />
         </div>
     );

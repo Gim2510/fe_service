@@ -26,7 +26,7 @@ export function VerifyEmailPage() {
     }, [_id]);
 
     return (
-        <main className="min-h-screen flex items-center justify-center bg-[#060D1B] px-6">
+        <main className="min-h-screen flex items-center justify-center bg-[#111110] px-6">
             <div
                 className="absolute inset-0 opacity-[0.035]"
                 style={{
@@ -41,10 +41,10 @@ export function VerifyEmailPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
             >
-                <div className="rounded-2xl border border-blue-900/20 bg-[#0D1A30]/80 backdrop-blur-xl p-10 shadow-[0_24px_80px_rgba(0,0,0,0.5)] flex flex-col items-center gap-6">
+                <div className="rounded-2xl border border-stone-800/20 bg-[#1C1C1A]/80 backdrop-blur-xl p-10 shadow-[0_24px_80px_rgba(0,0,0,0.5)] flex flex-col items-center gap-6">
                     {status === "loading" && (
                         <>
-                            <Loader2 size={40} className="text-blue-400 animate-spin" />
+                            <Loader2 size={40} className="text-amber-500 animate-spin" />
                             <p className="text-slate-400 text-sm">Verifica in corso…</p>
                         </>
                     )}
@@ -59,7 +59,7 @@ export function VerifyEmailPage() {
                             </div>
                             <button
                                 onClick={() => navigate("/login")}
-                                className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-colors"
+                                className="px-6 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-sm font-semibold transition-colors"
                             >
                                 Vai al login
                             </button>
@@ -76,7 +76,7 @@ export function VerifyEmailPage() {
                             </div>
                             <button
                                 onClick={() => navigate("/login")}
-                                className="px-6 py-2.5 rounded-xl border border-blue-900/30 text-slate-400 hover:text-slate-200 text-sm transition-colors"
+                                className="px-6 py-2.5 rounded-xl border border-stone-800/30 text-slate-400 hover:text-slate-200 text-sm transition-colors"
                             >
                                 Torna al login
                             </button>

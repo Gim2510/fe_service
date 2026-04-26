@@ -14,8 +14,8 @@ export function CheckoutConfirmModal({ open, onConfirm, onCancel, loading, varia
     const isDark = variant !== "light";
 
     const card = isDark
-        ? "bg-[#0D1A30] border-blue-900/30"
-        : "bg-white border-slate-200";
+        ? "bg-[#1C1C1A] border-stone-800/30"
+        : "bg-[#F8FAFB] border-slate-200";
 
     return (
         <AnimatePresence>
@@ -40,15 +40,15 @@ export function CheckoutConfirmModal({ open, onConfirm, onCancel, loading, varia
                         <button
                             onClick={loading ? undefined : onCancel}
                             className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors
-                                ${isDark ? "text-slate-500 hover:text-slate-300 hover:bg-white/5" : "text-slate-400 hover:text-slate-700 hover:bg-slate-100"}`}
+                                ${isDark ? "text-slate-500 hover:text-slate-300 hover:bg-[#F8FAFB]/5" : "text-slate-400 hover:text-slate-700 hover:bg-[#EDF2F7]"}`}
                         >
                             <X size={16} />
                         </button>
 
                         {/* Icon */}
                         <div className={`w-12 h-12 rounded-xl flex items-center justify-center
-                            ${isDark ? "bg-blue-600/15 border border-blue-600/20" : "bg-blue-50 border border-blue-200"}`}>
-                            <CreditCard size={20} className="text-blue-500" />
+                            ${isDark ? "bg-amber-700/15 border border-amber-700/20" : "bg-amber-50 border border-amber-300"}`}>
+                            <CreditCard size={20} className="text-amber-600" />
                         </div>
 
                         {/* Content */}
@@ -70,8 +70,8 @@ export function CheckoutConfirmModal({ open, onConfirm, onCancel, loading, varia
                                 className={`flex-1 px-4 py-2.5 rounded-xl border text-sm font-medium transition-colors
                                     disabled:opacity-40
                                     ${isDark
-                                        ? "border-blue-900/30 text-slate-400 hover:text-slate-200"
-                                        : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                                        ? "border-stone-800/30 text-slate-400 hover:text-slate-200"
+                                        : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"
                                     }`}
                             >
                                 Annulla
@@ -79,9 +79,9 @@ export function CheckoutConfirmModal({ open, onConfirm, onCancel, loading, varia
                             <button
                                 onClick={onConfirm}
                                 disabled={loading}
-                                className="flex-1 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500
+                                className="flex-1 px-4 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600
                                     disabled:opacity-40 text-white text-sm font-semibold transition-colors
-                                    shadow-lg shadow-blue-600/25"
+                                    shadow-lg shadow-amber-700/25"
                             >
                                 {loading
                                     ? <span className="flex justify-center"><FallingLines color="#fff" width="20" visible /></span>
@@ -92,7 +92,7 @@ export function CheckoutConfirmModal({ open, onConfirm, onCancel, loading, varia
 
                         {/* Trust */}
                         <p className={`flex items-center justify-center gap-1.5 text-xs ${isDark ? "text-slate-600" : "text-slate-400"}`}>
-                            <ShieldCheck size={12} className="text-blue-500" />
+                            <ShieldCheck size={12} className="text-amber-600" />
                             Pagamento sicuro · Nessun vincolo annuale · Disattiva quando vuoi
                         </p>
                     </motion.div>

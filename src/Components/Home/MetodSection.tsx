@@ -24,7 +24,7 @@ export function MetodSection({ theme }: { theme: string }) {
     const isDark = theme === "dark";
 
     return (
-        <SectionBase theme={theme} className={isDark ? "" : "!bg-white"}>
+        <SectionBase theme={theme}>
             {/* Header */}
             <motion.div
                 className="mb-16 text-center sm:text-left max-w-2xl"
@@ -34,7 +34,7 @@ export function MetodSection({ theme }: { theme: string }) {
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
                 <span className={`text-xs font-semibold uppercase tracking-widest ${
-                    isDark ? "text-blue-400" : "text-blue-600"
+                    isDark ? "text-amber-500" : "text-amber-700"
                 }`}>
                     Il nostro metodo
                 </span>
@@ -42,7 +42,7 @@ export function MetodSection({ theme }: { theme: string }) {
                     isDark ? "text-slate-100" : "text-slate-900"
                 }`}>
                     Un approccio strutturato
-                    <span className={`block mt-1 ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                    <span className={`block mt-1 ${isDark ? "text-amber-500" : "text-amber-700"}`}>
                         orientato ai risultati.
                     </span>
                 </h2>
@@ -65,12 +65,12 @@ export function MetodSection({ theme }: { theme: string }) {
                             {/* Step number */}
                             <div className="flex items-start justify-between mb-6">
                                 <span className={`font-mono text-4xl font-bold tracking-tight ${
-                                    isDark ? "text-blue-900/60" : "text-blue-100"
+                                    isDark ? "text-stone-800/60" : "text-amber-300"
                                 }`}>
                                     {item.step}
                                 </span>
                                 {/* Accent line */}
-                                <div className="w-8 h-0.5 bg-blue-500/60 mt-3" />
+                                <div className="w-8 h-0.5 bg-amber-600/60 mt-3" />
                             </div>
 
                             <h3 className={`text-xl font-semibold mb-3 ${

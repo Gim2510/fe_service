@@ -36,8 +36,8 @@ export function UserManagementPanel({ allUsers, refreshUsers, theme }: Props) {
 
     const isDark = theme === "dark";
     const glassBg = isDark
-        ? "bg-[#0D1A30]/80 border border-blue-900/20"
-        : "bg-white border border-slate-200";
+        ? "bg-[#1C1C1A]/80 border border-stone-800/20"
+        : "bg-[#F8FAFB] border border-slate-200";
 
     async function handleConfirmSetAdmin(setLoading: (value: boolean) => void) {
         setLoading(true); // mostra spinner e disabilita pulsanti

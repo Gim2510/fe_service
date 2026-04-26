@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle } from "lucide-react";
 
-import { HeroGlobeDark } from "./HeroGlobeDark.tsx";
+import { HeroNetwork } from "./HeroNetwork.tsx";
 import { useNavigate } from "react-router-dom";
 
 const fadeUp = (delay = 0) => ({
@@ -19,9 +19,20 @@ export function HeroSection({ theme }: { theme: string }) {
         <section className="relative min-h-[100dvh] flex items-center overflow-hidden">
 
             {/* ── Background ── */}
-            <div className="fixed inset-0 pointer-events-none z-0">
-                <div className={`absolute inset-0 ${isDark ? "bg-[#060D1B]" : "bg-[#F8FAFC]"}`} />
-                <HeroGlobeDark />
+            <div className="absolute inset-0 pointer-events-none z-0">
+                <div className={`absolute inset-0 ${isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"}`} />
+                <HeroNetwork />
+
+                {/* Readability gradient — on mobile the globe sits full-screen behind the text;
+                    this overlay fades from solid bg on the left (text area) to transparent on the right.
+                    On desktop the globe is already pushed to lg:left-140 so we lighten it significantly. */}
+                <div
+                    className={`absolute inset-0 pointer-events-none ${isDark
+                        ? "bg-gradient-to-r from-[#111110] via-[#111110]/80 to-transparent lg:via-[#111110]/25"
+                        : "bg-gradient-to-r from-[#E8EDF3] via-[#E8EDF3]/80 to-transparent lg:via-[#E8EDF3]/25"
+                    }`}
+                    style={{ zIndex: 21 }}
+                />
 
                 {/* Grid texture */}
                 <div
@@ -35,14 +46,14 @@ export function HeroSection({ theme }: { theme: string }) {
                 {/* Corporate blue glow */}
                 {isDark && (
                     <>
-                        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] opacity-[0.06] bg-blue-600 pointer-events-none" />
-                        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full blur-[120px] opacity-[0.04] bg-blue-400 pointer-events-none" />
+                        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] opacity-[0.06] bg-amber-700 pointer-events-none" />
+                        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full blur-[120px] opacity-[0.04] bg-amber-500 pointer-events-none" />
                     </>
                 )}
             </div>
 
             {/* ── Content ── */}
-            <div className="relative z-10 mx-auto max-w-7xl px-6 sm:px-8 pb-20 pt-32 sm:pt-24 w-full">
+            <div className="relative z-10 mx-auto max-w-7xl px-6 sm:px-8 pb-20 pt-32 sm:pt-24 w-full pointer-events-none">
 
                 {/* Tag line */}
                 <motion.div {...fadeUp(0.05)} className="mb-6">
@@ -50,11 +61,11 @@ export function HeroSection({ theme }: { theme: string }) {
                         inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest
                         px-3 py-1.5 rounded-full border
                         ${isDark
-                            ? "text-blue-400 border-blue-800/40 bg-blue-900/20"
-                            : "text-blue-600 border-blue-200 bg-blue-50"
+                            ? "text-amber-500 border-stone-700/40 bg-stone-800/20"
+                            : "text-amber-700 border-amber-300 bg-amber-50"
                         }
                     `}>
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
                         Consulenza digitale per PMI
                     </span>
                 </motion.div>
@@ -69,7 +80,7 @@ export function HeroSection({ theme }: { theme: string }) {
                     <span className="hero-line reveal delay-1 block">
                         Il tuo business
                     </span>
-                    <span className="hero-line reveal delay-2 block text-blue-500">
+                    <span className="hero-line reveal delay-2 block text-amber-600">
                         genera dati.
                     </span>
                     <span className="hero-line reveal delay-3 block text-4xl sm:text-5xl mt-2">
@@ -97,20 +108,20 @@ export function HeroSection({ theme }: { theme: string }) {
                                 isDark ? "text-slate-500" : "text-slate-500"
                             }`}
                         >
-                            <CheckCircle size={14} className="text-blue-500 shrink-0" />
+                            <CheckCircle size={14} className="text-amber-600 shrink-0" />
                             {item}
                         </span>
                     ))}
                 </motion.div>
 
                 {/* CTA */}
-                <motion.div {...fadeUp(0.42)} className="mt-10 flex flex-wrap items-center gap-4">
+                <motion.div {...fadeUp(0.42)} className="mt-10 flex flex-wrap items-center gap-4 pointer-events-auto">
                     <button
                         onClick={goToSurvey}
                         className="inline-flex items-center gap-2 px-6 py-3 rounded-xl
-                            bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold
-                            transition-all duration-200 shadow-lg shadow-blue-600/25
-                            hover:shadow-blue-500/35 hover:-translate-y-0.5"
+                            bg-amber-700 hover:bg-amber-600 text-white text-sm font-semibold
+                            transition-all duration-200 shadow-lg shadow-amber-700/25
+                            hover:shadow-amber-600/35 hover:-translate-y-0.5"
                     >
                         Scopri cosa stai perdendo
                         <ArrowRight size={16} />
@@ -119,7 +130,7 @@ export function HeroSection({ theme }: { theme: string }) {
                     <button
                         onClick={goToSurvey}
                         className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5
-                            border-blue-900/30 text-slate-300 hover:border-blue-500 hover:text-slate-100"
+                            border-stone-800/30 text-slate-300 hover:border-amber-600 hover:text-slate-100"
                     >
                         Avvia l'analisi
                     </button>

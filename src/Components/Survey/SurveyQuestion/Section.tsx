@@ -17,7 +17,7 @@ export function Section({
                             textPrimary,
                             textSecondary,
                         }: SectionProps) {
-    const bg = bgSection ?? (theme === "dark" ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200");
+    const bg = bgSection ?? (theme === "dark" ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200");
     const titleColor = textPrimary ?? (theme === "dark" ? "text-slate-100" : "text-slate-900");
 
     return (

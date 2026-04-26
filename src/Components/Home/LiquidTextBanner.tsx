@@ -40,19 +40,19 @@ export function LiquidTextBanner({ theme, messages, logos = [], speed = 50 }: Li
     return (
         <div className={`relative overflow-hidden border-y py-5 ${
             isDark
-                ? "bg-[#0D1A30]/60 border-blue-900/20"
-                : "bg-slate-50 border-slate-200"
+                ? "bg-[#1C1C1A]/60 border-stone-800/20"
+                : "bg-white/60 border-white/80 backdrop-blur-sm"
         }`}>
             {/* Fade edges */}
             <div className={`absolute inset-y-0 left-0 w-20 z-10 pointer-events-none ${
                 isDark
-                    ? "bg-gradient-to-r from-[#060D1B] to-transparent"
-                    : "bg-gradient-to-r from-[#F8FAFC] to-transparent"
+                    ? "bg-gradient-to-r from-[#111110] to-transparent"
+                    : "bg-gradient-to-r from-white to-transparent"
             }`} />
             <div className={`absolute inset-y-0 right-0 w-20 z-10 pointer-events-none ${
                 isDark
-                    ? "bg-gradient-to-l from-[#060D1B] to-transparent"
-                    : "bg-gradient-to-l from-[#F8FAFC] to-transparent"
+                    ? "bg-gradient-to-l from-[#111110] to-transparent"
+                    : "bg-gradient-to-l from-white to-transparent"
             }`} />
 
             <div

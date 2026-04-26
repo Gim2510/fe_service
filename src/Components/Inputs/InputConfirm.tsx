@@ -14,16 +14,16 @@ export function InputConfirm({ form, handleChange, theme, passwordsMatch }: Inpu
                 required
                 className={`w-full px-4 py-2.5 pr-10 rounded-lg border outline-none transition text-sm ${
                     isDark
-                        ? "bg-[#060D1B] text-slate-200"
-                        : "bg-white text-slate-900"
+                        ? "bg-[#111110] text-slate-200"
+                        : "bg-[#F8FAFB] text-slate-900"
                 } ${
                     form.confirmPassword
                         ? passwordsMatch
                             ? "border-green-500 focus:ring-green-500/20"
                             : "border-red-500 focus:ring-red-500/20"
                         : isDark
-                            ? "border-blue-900/30 focus:border-blue-600"
-                            : "border-slate-200 focus:border-blue-500"
+                            ? "border-stone-800/30 focus:border-amber-700"
+                            : "border-slate-200 focus:border-amber-600"
                 } focus:ring-1`}
             />
             {form.confirmPassword && (

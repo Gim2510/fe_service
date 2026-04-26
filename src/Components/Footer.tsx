@@ -13,12 +13,12 @@ const fadeUp = {
 
 export function Footer() {
     return (
-        <footer className="relative bg-[#060D1B] text-slate-400 border-t border-blue-900/20 overflow-hidden">
+        <footer className="relative bg-[#111110] text-slate-400 border-t border-stone-800/20 overflow-hidden">
 
             {/* Background decoration */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[size:28px_28px]" />
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full blur-[120px] opacity-5 bg-blue-500" />
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full blur-[120px] opacity-5 bg-amber-600" />
             </div>
 
             <div className="relative mx-auto max-w-7xl px-8 pt-20 pb-12">
@@ -37,7 +37,7 @@ export function Footer() {
                         <div>
                             <h3 className="text-white text-lg font-semibold tracking-tight">
                                 TechBridgeGroup
-                                <span className="text-blue-500">.</span>
+                                <span className="text-amber-600">.</span>
                             </h3>
                             <p className="text-xs text-slate-600 mt-0.5 uppercase tracking-widest">
                                 Digital Consulting
@@ -53,7 +53,7 @@ export function Footer() {
                         <div className="flex flex-col gap-2.5 text-sm">
                             <a
                                 href="mailto:service@techbridgegroup.it"
-                                className="flex items-center gap-2.5 text-slate-500 hover:text-blue-400 transition-colors duration-200"
+                                className="flex items-center gap-2.5 text-slate-500 hover:text-amber-500 transition-colors duration-200"
                             >
                                 <Mail size={14} className="shrink-0" />
                                 service@techbridgegroup.it
@@ -146,7 +146,7 @@ export function Footer() {
                         </h4>
                         <Link
                             to="/survey/start"
-                            className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors duration-200"
+                            className="inline-flex items-center gap-1.5 text-sm font-medium text-amber-500 hover:text-amber-400 transition-colors duration-200"
                         >
                             Avvia l'analisi
                             <ArrowUpRight size={14} />
@@ -162,7 +162,7 @@ export function Footer() {
                 </div>
 
                 {/* Bottom strip */}
-                <div className="border-t border-blue-900/20 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="border-t border-stone-800/20 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <span className="text-xs text-slate-700">
                         © {new Date().getFullYear()} TechBridgeGroup — Tutti i diritti riservati
                     </span>

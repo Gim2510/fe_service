@@ -6,7 +6,7 @@ function PolicySection({ title, children, isDark }: { title?: string; children?:
     const [open, setOpen] = useState(false);
 
     return (
-        <div className={`border-b ${isDark ? "border-blue-900/20" : "border-slate-100"}`}>
+        <div className={`border-b ${isDark ? "border-stone-800/20" : "border-slate-200"}`}>
             <button
                 onClick={() => setOpen(!open)}
                 className="w-full text-left flex justify-between items-center py-4 gap-4"
@@ -30,16 +30,16 @@ export function CookiePolicy() {
     const { theme } = useTheme();
     const isDark = theme === "dark";
 
-    const card = isDark ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200";
+    const card = isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200";
 
     return (
-        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#060D1B] text-white" : "bg-[#F8FAFC] text-slate-900"}`}>
+        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#111110] text-white" : "bg-[#E8EDF3] text-slate-900"}`}>
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
                 style={{ backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`, backgroundSize: "28px 28px" }} />
 
             <div className="relative max-w-3xl mx-auto px-6 py-32">
                 <div className="mb-10 space-y-3">
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
                         Legale
                     </span>
                     <h1 className={`text-3xl sm:text-4xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -60,7 +60,7 @@ export function CookiePolicy() {
                         <p>Attualmente utilizziamo esclusivamente cookie tecnici, necessari al funzionamento della piattaforma.</p>
                         <ul className="space-y-1">
                             {["Cookie di sessione", "Cookie di autenticazione", "Cookie per preferenze utente (es. tema dark/light)"].map(item => (
-                                <li key={item} className="flex items-start gap-2"><span className="text-blue-400 mt-0.5">•</span>{item}</li>
+                                <li key={item} className="flex items-start gap-2"><span className="text-amber-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
                     </PolicySection>
@@ -68,7 +68,7 @@ export function CookiePolicy() {
                     <PolicySection isDark={isDark} title="3. Finalità dei cookie">
                         <ul className="space-y-1">
                             {["Garantire il corretto funzionamento del sito", "Gestire l'accesso e l'autenticazione", "Salvare preferenze dell'utente", "Migliorare stabilità e sicurezza"].map(item => (
-                                <li key={item} className="flex items-start gap-2"><span className="text-blue-400 mt-0.5">•</span>{item}</li>
+                                <li key={item} className="flex items-start gap-2"><span className="text-amber-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
                     </PolicySection>

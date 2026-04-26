@@ -6,7 +6,7 @@ export function PaymentCancel() {
     const navigate = useNavigate();
 
     return (
-        <main className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#060D1B] px-6">
+        <main className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#111110] px-6">
             <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "28px 28px" }} />
             <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[400px] rounded-full blur-[140px] opacity-[0.05] bg-red-500 pointer-events-none" />
 
@@ -16,7 +16,7 @@ export function PaymentCancel() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
             >
-                <div className="rounded-2xl border border-blue-900/20 bg-[#0D1A30]/80 backdrop-blur-xl p-10 flex flex-col items-center gap-6 shadow-[0_24px_80px_rgba(0,0,0,0.5)]">
+                <div className="rounded-2xl border border-stone-800/20 bg-[#1C1C1A]/80 backdrop-blur-xl p-10 flex flex-col items-center gap-6 shadow-[0_24px_80px_rgba(0,0,0,0.5)]">
                     <div className="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center">
                         <XCircle size={32} className="text-red-400" />
                     </div>
@@ -30,7 +30,7 @@ export function PaymentCancel() {
 
                     <button
                         onClick={() => navigate("/")}
-                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-blue-900/30 text-slate-300 hover:text-white hover:border-blue-700/40 text-sm font-medium transition-colors"
+                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-stone-800/30 text-slate-300 hover:text-white hover:border-amber-800/40 text-sm font-medium transition-colors"
                     >
                         <ArrowLeft size={14} />
                         Torna alla Home

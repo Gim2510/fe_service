@@ -15,8 +15,8 @@ export function Input({ label, name, type = "text", value, onChange, theme }: In
                 required
                 className={`px-4 py-2.5 rounded-lg border outline-none transition text-sm ${
                     isDark
-                        ? "bg-[#060D1B] border-blue-900/30 text-slate-200 placeholder:text-slate-600 focus:border-blue-600 focus:ring-1 focus:ring-blue-500/30"
-                        : "bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+                        ? "bg-[#111110] border-stone-800/30 text-slate-200 placeholder:text-slate-600 focus:border-amber-700 focus:ring-1 focus:ring-amber-600/30"
+                        : "bg-[#F8FAFB] border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-amber-600 focus:ring-1 focus:ring-amber-600/20"
                 }`}
             />
         </div>

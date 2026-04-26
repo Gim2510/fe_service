@@ -6,8 +6,8 @@ export function ActionCard({ title, children, theme }: { title: string; children
     return (
         <div className={`group relative rounded-2xl p-8 border transition-all duration-300 hover:-translate-y-0.5
             ${isDark
-                ? "bg-[#0D1A30]/80 border-blue-900/20 hover:border-blue-700/30"
-                : "bg-white border-slate-200 hover:border-blue-200"
+                ? "bg-[#1C1C1A]/80 border-stone-800/20 hover:border-amber-800/30"
+                : "bg-[#F8FAFB] border-slate-200 hover:border-amber-400"
             }`}
         >
             <h3 className={`text-base font-semibold mb-6 ${isDark ? "text-slate-200" : "text-slate-800"}`}>{title}</h3>

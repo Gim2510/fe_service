@@ -38,7 +38,7 @@ export function Login() {
 
     return (
         <main className={`relative min-h-screen flex items-center overflow-hidden ${
-            isDark ? "bg-[#060D1B]" : "bg-[#F8FAFC]"
+            isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"
         }`}>
             {/* Background */}
             <div className="absolute inset-0 pointer-events-none">
@@ -50,7 +50,7 @@ export function Login() {
                     }}
                 />
                 {isDark && (
-                    <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.05] bg-blue-600" />
+                    <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.05] bg-amber-700" />
                 )}
             </div>
 
@@ -66,7 +66,7 @@ export function Login() {
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                     <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-blue-400" : "text-blue-600"
+                        isDark ? "text-amber-500" : "text-amber-700"
                     }`}>
                         Bentornato
                     </span>
@@ -74,7 +74,7 @@ export function Login() {
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Accedi al tuo
-                        <span className="block text-blue-500 mt-1">spazio di controllo.</span>
+                        <span className="block text-amber-600 mt-1">spazio di controllo.</span>
                     </h1>
                     <p className={`text-lg leading-relaxed max-w-md ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                         Visualizza dati, analisi e strumenti progettati per rendere
@@ -93,8 +93,8 @@ export function Login() {
                 >
                     <div className={`rounded-2xl border backdrop-blur-xl p-8 sm:p-10 ${
                         isDark
-                            ? "bg-[#0D1A30]/80 border-blue-900/20 shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
-                            : "bg-white border-slate-200 shadow-[0_8px_40px_rgba(0,0,0,0.06)]"
+                            ? "bg-[#1C1C1A]/80 border-stone-800/20 shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
+                            : "bg-[#F8FAFB] border-slate-200 shadow-[0_8px_40px_rgba(0,0,0,0.06)]"
                     }`}>
 
                         {/* Restore banner */}
@@ -140,9 +140,9 @@ export function Login() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="mt-2 w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50
+                                className="mt-2 w-full py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 disabled:opacity-50
                                     text-white text-sm font-semibold transition-colors duration-200
-                                    shadow-lg shadow-blue-600/20 flex items-center justify-center"
+                                    shadow-lg shadow-amber-700/20 flex items-center justify-center"
                             >
                                 {loading
                                     ? <FallingLines color="white" width="20" visible ariaLabel="loading" />
@@ -152,9 +152,9 @@ export function Login() {
 
                             {/* Divider */}
                             <div className="flex items-center gap-3">
-                                <div className={`flex-1 h-px ${isDark ? "bg-blue-900/30" : "bg-slate-200"}`} />
+                                <div className={`flex-1 h-px ${isDark ? "bg-stone-800/30" : "bg-slate-200"}`} />
                                 <span className={`text-xs ${isDark ? "text-slate-600" : "text-slate-400"}`}>oppure</span>
-                                <div className={`flex-1 h-px ${isDark ? "bg-blue-900/30" : "bg-slate-200"}`} />
+                                <div className={`flex-1 h-px ${isDark ? "bg-stone-800/30" : "bg-slate-200"}`} />
                             </div>
 
                             {googleLoading ? (
@@ -188,7 +188,7 @@ export function Login() {
                                     <button
                                         type="button"
                                         onClick={() => navigate("/register")}
-                                        className={`font-medium transition ${isDark ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-500"}`}
+                                        className={`font-medium transition ${isDark ? "text-amber-500 hover:text-amber-400" : "text-amber-700 hover:text-amber-600"}`}
                                     >
                                         Registrati
                                     </button>

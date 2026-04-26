@@ -7,22 +7,26 @@ import {CTASection} from "../Components/Home/CTASection.tsx";
 import {useTheme} from "../Context/ThemeContext.tsx";
 import {LiquidTextBanner} from "../Components/Home/LiquidTextBanner.tsx";
 import {logos} from "../staticData/logos.ts";
+import {SunsetTransition} from "../Components/Home/SunsetTransition.tsx";
 
 export function Home() {
     const {theme} = useTheme()
     return (
-        <main className={`flex flex-col ${theme === "dark" ? "bg-[#060D1B]" : "bg-[#F8FAFC]"}`}>
+        <main className={`flex flex-col ${theme === "dark" ? "bg-[#111110]" : "bg-[#E8EDF3]"}`}>
             <HeroSection theme={theme} />
-            <LiquidTextBanner
-                theme={theme}
-                messages={[
-                ]}
-                logos={logos}
-            />
-            <ProblemiSection theme={theme} />
-            <DigitalMaturitySection theme={theme} />
-            <WAWD theme={theme} />
-            <MetodSection theme={theme} />
+            <SunsetTransition theme={theme} />
+            <div className={`relative z-10 ${theme === "dark" ? "bg-[#111110]" : "bg-gradient-to-b from-[#E8EDF3] via-[#DAE3EE] to-[#CAD4E0]"}`}>
+                <ProblemiSection theme={theme} />
+                <WAWD theme={theme} />
+                <MetodSection theme={theme} />
+                <LiquidTextBanner
+                    theme={theme}
+                    messages={[
+                    ]}
+                    logos={logos}
+                />
+                <DigitalMaturitySection theme={theme} />
+            </div>
             <CTASection theme={theme} />
         </main>
     );

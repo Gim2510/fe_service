@@ -41,7 +41,7 @@ export function WAWD({ theme }: { theme: string }) {
                 >
                     <div>
                         <span className={`text-xs font-semibold uppercase tracking-widest ${
-                            isDark ? "text-blue-400" : "text-blue-600"
+                            isDark ? "text-amber-500" : "text-amber-700"
                         }`}>
                             Cosa facciamo
                         </span>
@@ -71,7 +71,7 @@ export function WAWD({ theme }: { theme: string }) {
                                 viewport={{ once: true, amount: 0.2 }}
                                 transition={{ duration: 0.4, delay: 0.1 + i * 0.07 }}
                             >
-                                <CheckCircle2 size={15} className="text-blue-500 shrink-0 mt-0.5" />
+                                <CheckCircle2 size={15} className="text-amber-600 shrink-0 mt-0.5" />
                                 <span>{item}</span>
                             </motion.div>
                         ))}

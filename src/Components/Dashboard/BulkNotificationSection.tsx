@@ -17,11 +17,11 @@ export function BulkNotificationSection({ theme }: { theme: string }) {
     const [subject, setSubject] = useState("");
     const [html, setHtml] = useState(TEMPLATE_HTML);
 
-    const card = isDark ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200";
+    const card = isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200";
     const inputClass = `w-full px-4 py-2.5 rounded-xl border text-sm focus:outline-none focus:ring-2 transition-colors
         ${isDark
-            ? "bg-[#060D1B] border-blue-900/30 text-slate-200 focus:border-blue-600 focus:ring-blue-500/20"
-            : "bg-white border-slate-200 text-slate-900 focus:border-blue-500 focus:ring-blue-500/10"
+            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-amber-700 focus:ring-amber-600/20"
+            : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-amber-600 focus:ring-amber-600/10"
         }`;
 
     return (
@@ -47,7 +47,7 @@ export function BulkNotificationSection({ theme }: { theme: string }) {
                     <button
                         disabled={loading || !subject || !html}
                         onClick={async () => { if (token) await sendBulkNotification(type as any, subject, html, token); }}
-                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white text-sm font-semibold transition-colors"
+                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 disabled:opacity-40 text-white text-sm font-semibold transition-colors"
                     >
                         {loading ? <FallingLines color="#fff" width="20" visible ariaLabel="loading" /> : <><Send size={13} /> Send Email</>}
                     </button>

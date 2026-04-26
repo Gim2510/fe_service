@@ -5,30 +5,30 @@
     --font-fjalla: 'Recursive', sans-serif;
 
     /* Legacy colors (kept for compatibility) */
-    --color-main-white: #f0efeb;
-    --color-green-buttons: #40916c;
-    --color-green-buttons-hover: #52b788;
-    --color-abstract-grey: #EAEAEA;
-    --color-primary-white: #F1F5F9;
-    --color-secondary-white: #E2E8F0;
-    --color-primary: #2563EB;
-    --color-secondary: #14B8A6;
-    --color-main-red: #2563EB;
+    --color-main-white: #FAF9F7;
+    --color-green-buttons: #B8860B;
+    --color-green-buttons-hover: #D4A017;
+    --color-abstract-grey: #EAEAE8;
+    --color-primary-white: #FAF9F7;
+    --color-secondary-white: #F0EDE8;
+    --color-primary: #C9A84C;
+    --color-secondary: #B8860B;
+    --color-main-red: #C9A84C;
 
-    /* Corporate design system */
-    --color-corp-navy:    #060D1B;
-    --color-corp-surface: #0D1A30;
-    --color-corp-blue:    #2563EB;
-    --color-corp-blue-dim: rgba(37, 99, 235, 0.15);
-    --color-corp-blue-glow: rgba(37, 99, 235, 0.25);
-    --color-corp-slate:   #94A3B8;
-    --color-corp-light-bg: #F8FAFC;
-    --color-corp-light-surface: #FFFFFF;
-    --color-corp-light-border: #E2E8F0;
+    /* Corporate design system — Charcoal + Gold */
+    --color-corp-navy:    #111110;
+    --color-corp-surface: #1C1C1A;
+    --color-corp-blue:    #C9A84C;
+    --color-corp-blue-dim: rgba(201, 168, 76, 0.15);
+    --color-corp-blue-glow: rgba(201, 168, 76, 0.25);
+    --color-corp-slate:   #A8A39A;
+    --color-corp-light-bg: #E8EDF3;
+    --color-corp-light-surface: #F8FAFB;
+    --color-corp-light-border: #C8D6E4;
 }
 
 html, body {
-    background-color: #060D1B;
+    background-color: #111110;
 }
 
 /* ── Corporate animation utilities ── */
@@ -38,8 +38,8 @@ html, body {
 }
 
 @keyframes borderGlow {
-    0%, 100% { border-color: rgba(37, 99, 235, 0.15); }
-    50%       { border-color: rgba(37, 99, 235, 0.40); }
+    0%, 100% { border-color: rgba(201, 168, 76, 0.15); }
+    50%       { border-color: rgba(201, 168, 76, 0.40); }
 }
 
 @keyframes shimmer {
@@ -65,7 +65,7 @@ html, body {
 }
 .corp-link::after {
     content: '';
-    @apply absolute left-0 -bottom-px h-px w-0 bg-blue-500 transition-all duration-300;
+    @apply absolute left-0 -bottom-px h-px w-0 bg-yellow-600 transition-all duration-300;
 }
 .corp-link:hover::after {
     @apply w-full;

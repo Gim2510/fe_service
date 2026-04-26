@@ -34,8 +34,8 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                     flex items-center justify-center border transition-all duration-200
                     hover:scale-105 active:scale-95 shadow-lg
                     ${isDark
-                        ? "bg-[#0D1A30] border-blue-900/30 text-blue-400 shadow-black/40 hover:border-blue-700/40"
-                        : "bg-white border-slate-200 text-blue-600 shadow-slate-200 hover:border-blue-300"
+                        ? "bg-[#1C1C1A] border-stone-800/30 text-amber-500 shadow-black/40 hover:border-amber-800/40"
+                        : "bg-[#F8FAFB] border-slate-200 text-amber-700 shadow-slate-200 hover:border-amber-400"
                     }`}
             >
                 {open
@@ -52,20 +52,20 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                         transform transition-all duration-300
                         ${open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
                         ${isDark
-                            ? "bg-[#0D1A30] border-blue-900/30 shadow-black/60"
-                            : "bg-white border-slate-200 shadow-slate-300/50"
+                            ? "bg-[#1C1C1A] border-stone-800/30 shadow-black/60"
+                            : "bg-[#F8FAFB] border-slate-200 shadow-slate-300/50"
                         }`}
                 >
                     {/* Header */}
                     <div className={`px-5 py-4 border-b flex items-center gap-3
-                        ${isDark ? "border-blue-900/20 bg-[#060D1B]" : "border-slate-100 bg-slate-50"}`}>
+                        ${isDark ? "border-stone-800/20 bg-[#111110]" : "border-slate-200 bg-[#EDF2F7]"}`}>
                         {/* AI avatar */}
                         <div className="w-8 h-8 shrink-0">
                             <svg viewBox="0 0 100 100" className="w-full h-full">
                                 <circle cx="50" cy="50" r="40" fill={isDark ? "white" : "#1e3a5f"} opacity="0.08">
                                     <animate attributeName="r" values="38;42;38" dur="2.5s" repeatCount="indefinite" />
                                 </circle>
-                                <rect x="25" y="30" width="50" height="40" rx="14" fill={isDark ? "white" : "#2563EB"} opacity="0.9" />
+                                <rect x="25" y="30" width="50" height="40" rx="14" fill={isDark ? "white" : "#C9A84C"} opacity="0.9" />
                                 <g>
                                     <circle cx="42" cy="50" r="4" fill={isDark ? "black" : "white"}>
                                         <animate attributeName="ry" values="4;0.5;4" dur="3s" repeatCount="indefinite" />
@@ -75,8 +75,8 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                                     </circle>
                                 </g>
                                 <rect x="42" y="62" width="16" height="3" rx="2" fill={isDark ? "black" : "white"} opacity="0.7" />
-                                <line x1="50" y1="30" x2="50" y2="18" stroke={isDark ? "white" : "#2563EB"} strokeWidth="2.5" />
-                                <circle cx="50" cy="15" r="2.5" fill={isDark ? "white" : "#2563EB"}>
+                                <line x1="50" y1="30" x2="50" y2="18" stroke={isDark ? "white" : "#C9A84C"} strokeWidth="2.5" />
+                                <circle cx="50" cy="15" r="2.5" fill={isDark ? "white" : "#C9A84C"}>
                                     <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" />
                                 </circle>
                             </svg>
@@ -101,11 +101,11 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                                 <div className={`max-w-[78%] px-4 py-2.5 rounded-2xl text-xs leading-relaxed
                                     ${msg.role === "user"
                                         ? isDark
-                                            ? "bg-blue-600 text-white"
-                                            : "bg-blue-600 text-white"
+                                            ? "bg-amber-700 text-white"
+                                            : "bg-amber-700 text-white"
                                         : isDark
-                                            ? "bg-[#060D1B] border border-blue-900/20 text-slate-300"
-                                            : "bg-slate-100 text-slate-700"
+                                            ? "bg-[#111110] border border-stone-800/20 text-slate-300"
+                                            : "bg-[#EDF2F7] text-slate-700"
                                     }`}>
                                     {msg.content}
                                 </div>
@@ -115,7 +115,7 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                         {loading && (
                             <div className="flex justify-start">
                                 <div className={`px-4 py-2.5 rounded-2xl border
-                                    ${isDark ? "bg-[#060D1B] border-blue-900/20" : "bg-slate-100"}`}>
+                                    ${isDark ? "bg-[#111110] border-stone-800/20" : "bg-[#EDF2F7]"}`}>
                                     <FallingLines color={isDark ? "#fff" : "#3B82F6"} width="28" visible ariaLabel="loading" />
                                 </div>
                             </div>
@@ -129,7 +129,7 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                     </div>
 
                     {/* Input */}
-                    <div className={`p-4 border-t flex gap-2 ${isDark ? "border-blue-900/20" : "border-slate-100"}`}>
+                    <div className={`p-4 border-t flex gap-2 ${isDark ? "border-stone-800/20" : "border-slate-200"}`}>
                         <input
                             value={input}
                             onChange={e => setInput(e.target.value)}
@@ -138,15 +138,15 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                             className={`flex-1 text-xs px-4 py-2.5 rounded-xl border outline-none transition-colors
                                 focus:ring-2 placeholder:text-slate-500
                                 ${isDark
-                                    ? "bg-[#060D1B] border-blue-900/30 text-slate-200 focus:border-blue-600 focus:ring-blue-500/20"
-                                    : "bg-slate-50 border-slate-200 text-slate-900 focus:border-blue-500 focus:ring-blue-500/10"
+                                    ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-amber-700 focus:ring-amber-600/20"
+                                    : "bg-[#EDF2F7] border-slate-200 text-slate-900 focus:border-amber-600 focus:ring-amber-600/10"
                                 }`}
                         />
                         <button
                             onClick={handleSend}
                             disabled={loading || !input.trim()}
                             className="shrink-0 w-9 h-9 rounded-xl flex items-center justify-center
-                                bg-blue-600 hover:bg-blue-500 disabled:opacity-40
+                                bg-amber-700 hover:bg-amber-600 disabled:opacity-40
                                 text-white transition-colors"
                         >
                             <Send size={13} />

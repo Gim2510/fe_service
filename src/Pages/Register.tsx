@@ -56,12 +56,12 @@ export function Register() {
 
     const selectClass = `px-4 py-2.5 rounded-lg border outline-none transition text-sm ${
         isDark
-            ? "bg-[#060D1B] border-blue-900/30 text-slate-200 focus:border-blue-600"
-            : "bg-white border-slate-200 text-slate-900 focus:border-blue-500"
-    } focus:ring-1 focus:ring-blue-500/30`;
+            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-amber-700"
+            : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-amber-600"
+    } focus:ring-1 focus:ring-amber-600/30`;
 
     return (
-        <main className={`relative min-h-screen flex items-start overflow-hidden ${isDark ? "bg-[#060D1B]" : "bg-[#F8FAFC]"}`}>
+        <main className={`relative min-h-screen flex items-start overflow-hidden ${isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"}`}>
             {/* Background */}
             <div className="absolute inset-0 pointer-events-none">
                 <div
@@ -72,7 +72,7 @@ export function Register() {
                     }}
                 />
                 {isDark && (
-                    <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.05] bg-blue-600" />
+                    <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.05] bg-amber-700" />
                 )}
             </div>
 
@@ -87,12 +87,12 @@ export function Register() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
                         Accesso piattaforma
                     </span>
                     <h1 className={`font-fjalla text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         Inizia a costruire
-                        <span className="block text-blue-500 mt-1">un sistema sotto controllo.</span>
+                        <span className="block text-amber-600 mt-1">un sistema sotto controllo.</span>
                     </h1>
                     <p className={`text-lg leading-relaxed max-w-md ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                         Registrati per accedere agli strumenti di analisi e trasformare
@@ -111,8 +111,8 @@ export function Register() {
                 >
                     <div className={`rounded-2xl border backdrop-blur-xl p-8 sm:p-10 ${
                         isDark
-                            ? "bg-[#0D1A30]/80 border-blue-900/20 shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
-                            : "bg-white border-slate-200 shadow-[0_8px_40px_rgba(0,0,0,0.06)]"
+                            ? "bg-[#1C1C1A]/80 border-stone-800/20 shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
+                            : "bg-[#F8FAFB] border-slate-200 shadow-[0_8px_40px_rgba(0,0,0,0.06)]"
                     }`}>
                         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                             <div className="text-center mb-2">
@@ -145,7 +145,7 @@ export function Register() {
                                 <Input theme={theme} label="Password" name="password" type="password" value={form.password} onChange={handleChange} />
                                 {form.password && (
                                     <div className="flex flex-col gap-1">
-                                        <div className={`w-full h-1.5 rounded-full overflow-hidden ${isDark ? "bg-white/5" : "bg-slate-100"}`}>
+                                        <div className={`w-full h-1.5 rounded-full overflow-hidden ${isDark ? "bg-[#F8FAFB]/5" : "bg-[#EDF2F7]"}`}>
                                             <div
                                                 className={`h-full transition-all duration-300 rounded-full ${getStrengthColor(passwordScore)}`}
                                                 style={{ width: `${(passwordScore + 1) * 20}%` }}
@@ -180,9 +180,9 @@ export function Register() {
                             <button
                                 type="submit"
                                 disabled={loading || !passwordsMatch || passwordScore < 2}
-                                className="mt-3 w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed
+                                className="mt-3 w-full py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 disabled:opacity-40 disabled:cursor-not-allowed
                                     text-white text-sm font-semibold transition-colors duration-200
-                                    shadow-lg shadow-blue-600/20 flex items-center justify-center"
+                                    shadow-lg shadow-amber-700/20 flex items-center justify-center"
                             >
                                 {loading
                                     ? <FallingLines width="20" color="white" visible />
@@ -192,9 +192,9 @@ export function Register() {
 
                             {/* Divider */}
                             <div className="flex items-center gap-3">
-                                <div className={`flex-1 h-px ${isDark ? "bg-blue-900/30" : "bg-slate-200"}`} />
+                                <div className={`flex-1 h-px ${isDark ? "bg-stone-800/30" : "bg-slate-200"}`} />
                                 <span className={`text-xs ${isDark ? "text-slate-600" : "text-slate-400"}`}>oppure</span>
-                                <div className={`flex-1 h-px ${isDark ? "bg-blue-900/30" : "bg-slate-200"}`} />
+                                <div className={`flex-1 h-px ${isDark ? "bg-stone-800/30" : "bg-slate-200"}`} />
                             </div>
 
                             {googleLoading ? (
@@ -220,7 +220,7 @@ export function Register() {
                                 <button
                                     type="button"
                                     onClick={() => navigate("/login")}
-                                    className={`font-medium transition ${isDark ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-500"}`}
+                                    className={`font-medium transition ${isDark ? "text-amber-500 hover:text-amber-400" : "text-amber-700 hover:text-amber-600"}`}
                                 >
                                     Accedi
                                 </button>

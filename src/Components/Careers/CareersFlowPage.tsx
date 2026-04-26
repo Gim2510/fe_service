@@ -100,10 +100,10 @@ export function CareersFlowPage() {
         return `${minStr}${min && max ? " – " : ""}${maxStr} ${currency || ""} / ${period || ""}`;
     };
 
-    const card = isDark ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200";
+    const card = isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200";
 
     return (
-        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#060D1B] text-white" : "bg-[#F8FAFC] text-slate-900"}`}>
+        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#111110] text-white" : "bg-[#E8EDF3] text-slate-900"}`}>
             {/* Grid bg */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
                 style={{ backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`, backgroundSize: "28px 28px" }} />
@@ -117,12 +117,12 @@ export function CareersFlowPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, ease: "easeOut" as const }}
                 >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
                         Carriere
                     </span>
                     <h1 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         Lavora{" "}
-                        <span className="text-blue-500">con noi</span>
+                        <span className="text-amber-600">con noi</span>
                     </h1>
                     <p className={`text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                         Stiamo costruendo strumenti che trasformano i dati delle survey
@@ -134,7 +134,7 @@ export function CareersFlowPage() {
                 <div className={`rounded-2xl border ${card}`}>
                     {/* Back nav */}
                     {step !== "list" && (
-                        <div className={`px-8 py-4 border-b ${isDark ? "border-blue-900/20" : "border-slate-100"}`}>
+                        <div className={`px-8 py-4 border-b ${isDark ? "border-stone-800/20" : "border-slate-200"}`}>
                             <button
                                 onClick={() => {
                                     if (step === "details") setStep("list");
@@ -171,7 +171,7 @@ export function CareersFlowPage() {
                                     <div
                                         key={job.id}
                                         className={`py-7 first:pt-0 last:pb-0 flex flex-col md:flex-row md:items-center justify-between gap-5
-                                            ${isDark ? "divide-blue-900/20" : "divide-slate-100"}`}
+                                            ${isDark ? "divide-stone-800/20" : "divide-stone-200"}`}
                                     >
                                         <div className="space-y-2">
                                             <h2 className={`text-base font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -199,8 +199,8 @@ export function CareersFlowPage() {
                                             onClick={() => { setSelectedJob(job); setStep("details"); }}
                                             className={`shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border text-xs font-medium transition-colors
                                                 ${isDark
-                                                    ? "border-blue-900/30 text-slate-300 hover:border-blue-700/40 hover:text-slate-100"
-                                                    : "border-slate-200 text-slate-700 hover:border-blue-300 hover:bg-blue-50/50"
+                                                    ? "border-stone-800/30 text-slate-300 hover:border-amber-800/40 hover:text-slate-100"
+                                                    : "border-slate-200 text-slate-700 hover:border-amber-400 hover:bg-amber-50/50"
                                                 }`}
                                         >
                                             Dettagli <ChevronRight size={12} />
@@ -243,7 +243,7 @@ export function CareersFlowPage() {
                                         <ul className="space-y-1.5">
                                             {selectedJob.responsibilities.map(r => (
                                                 <li key={r} className={`flex items-start gap-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                                                    <span className="text-blue-400 mt-0.5">•</span>{r}
+                                                    <span className="text-amber-500 mt-0.5">•</span>{r}
                                                 </li>
                                             ))}
                                         </ul>
@@ -255,7 +255,7 @@ export function CareersFlowPage() {
                                         <ul className="space-y-1.5">
                                             {selectedJob.requirements.map(r => (
                                                 <li key={r} className={`flex items-start gap-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                                                    <span className="text-blue-400 mt-0.5">•</span>{r}
+                                                    <span className="text-amber-500 mt-0.5">•</span>{r}
                                                 </li>
                                             ))}
                                             {selectedJob.niceToHave?.map(r => (
@@ -276,7 +276,7 @@ export function CareersFlowPage() {
                                         <ul className="flex flex-wrap gap-2">
                                             {selectedJob.benefits.map(b => (
                                                 <li key={b} className={`px-3 py-1.5 rounded-lg text-xs font-medium border
-                                                    ${isDark ? "border-blue-900/20 bg-blue-600/10 text-blue-300" : "border-blue-200 bg-blue-50 text-blue-700"}`}>
+                                                    ${isDark ? "border-stone-800/20 bg-amber-700/10 text-amber-400" : "border-amber-300 bg-amber-50 text-amber-800"}`}>
                                                     {b}
                                                 </li>
                                             ))}
@@ -292,7 +292,7 @@ export function CareersFlowPage() {
                                         <ul className="flex flex-wrap gap-2">
                                             {selectedJob.techStack.map(t => (
                                                 <li key={t} className={`px-3 py-1.5 rounded-lg text-xs font-medium border
-                                                    ${isDark ? "border-blue-900/20 text-slate-300" : "border-slate-200 text-slate-700"}`}>
+                                                    ${isDark ? "border-stone-800/20 text-slate-300" : "border-slate-200 text-slate-700"}`}>
                                                     {t}
                                                 </li>
                                             ))}
@@ -308,7 +308,7 @@ export function CareersFlowPage() {
                                         <ol className="space-y-1.5">
                                             {selectedJob.hiringProcess.steps.map((s, i) => (
                                                 <li key={i} className={`flex items-start gap-3 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                                                    <span className={`font-mono text-xs mt-0.5 ${isDark ? "text-blue-600" : "text-blue-400"}`}>
+                                                    <span className={`font-mono text-xs mt-0.5 ${isDark ? "text-amber-700" : "text-amber-500"}`}>
                                                         {String(i + 1).padStart(2, "0")}
                                                     </span>
                                                     {s}
@@ -326,8 +326,8 @@ export function CareersFlowPage() {
                                 <button
                                     onClick={() => setStep("apply")}
                                     className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
-                                        bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold
-                                        transition-colors shadow-lg shadow-blue-600/25 hover:-translate-y-0.5 duration-200"
+                                        bg-amber-700 hover:bg-amber-600 text-white text-sm font-semibold
+                                        transition-colors shadow-lg shadow-amber-700/25 hover:-translate-y-0.5 duration-200"
                                 >
                                     Candidati per questa posizione
                                     <ChevronRight size={14} />

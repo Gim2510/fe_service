@@ -29,7 +29,7 @@ const livelli = [
         score: "86–100%",
         description: "Processi completamente digitalizzati, KPI predittivi e automazione intelligente.",
         accent: "#3B82F6",
-        barBg: "bg-blue-500",
+        barBg: "bg-blue-500/70",
     },
 ];
 
@@ -44,7 +44,7 @@ export function DigitalMaturitySection({ theme }: { theme: string }) {
     const isDark = theme === "dark";
 
     return (
-        <SectionBase theme={theme} className={isDark ? "" : "!bg-white"}>
+        <SectionBase theme={theme}>
             {/* Header */}
             <motion.div
                 className="text-center mb-16"
@@ -54,7 +54,7 @@ export function DigitalMaturitySection({ theme }: { theme: string }) {
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
                 <span className={`text-xs font-semibold uppercase tracking-widest ${
-                    isDark ? "text-blue-400" : "text-blue-600"
+                    isDark ? "text-amber-500" : "text-amber-700"
                 }`}>
                     Maturità digitale
                 </span>
@@ -62,7 +62,7 @@ export function DigitalMaturitySection({ theme }: { theme: string }) {
                     isDark ? "text-slate-100" : "text-slate-900"
                 }`}>
                     Il tuo livello di{" "}
-                    <span className={isDark ? "text-blue-400" : "text-blue-600"}>
+                    <span className={isDark ? "text-amber-500" : "text-amber-700"}>
                         maturità digitale
                     </span>
                 </h2>
@@ -99,7 +99,7 @@ export function DigitalMaturitySection({ theme }: { theme: string }) {
                             </div>
 
                             {/* Bar */}
-                            <div className={`h-1 rounded-full ${isDark ? "bg-white/5" : "bg-slate-100"}`}>
+                            <div className={`h-1 rounded-full ${isDark ? "bg-[#F8FAFB]/5" : "bg-[#EDF2F7]"}`}>
                                 <div className={`h-full rounded-full ${lvl.barBg}`} />
                             </div>
 
@@ -145,10 +145,10 @@ export function DigitalMaturitySection({ theme }: { theme: string }) {
                                     </span>
                                 </div>
                                 <div className={`w-full h-2 rounded-full ${
-                                    isDark ? "bg-white/5" : "bg-slate-100"
+                                    isDark ? "bg-[#F8FAFB]/5" : "bg-[#EDF2F7]"
                                 }`}>
                                     <motion.div
-                                        className="h-full rounded-full bg-gradient-to-r from-blue-600 to-blue-400"
+                                        className="h-full rounded-full bg-gradient-to-r from-amber-700 to-amber-500"
                                         initial={{ width: 0 }}
                                         whileInView={{ width: `${p.weight * 100}%` }}
                                         viewport={{ once: true }}

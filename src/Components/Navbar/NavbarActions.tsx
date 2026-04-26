@@ -33,8 +33,8 @@ export function NavbarActions({ closeMenu }: NavbarActionsProps) {
                         onClick={closeMenu}
                         className={`text-sm font-medium px-3 py-1.5 rounded-lg transition-colors duration-200 ${
                             isDark
-                                ? "text-slate-300 hover:text-white hover:bg-white/5"
-                                : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                                ? "text-slate-300 hover:text-white hover:bg-[#F8FAFB]/5"
+                                : "text-slate-600 hover:text-slate-900 hover:bg-[#EDF2F7]"
                         }`}
                     >
                         Login
@@ -43,9 +43,9 @@ export function NavbarActions({ closeMenu }: NavbarActionsProps) {
                         to="/register"
                         onClick={closeMenu}
                         className="text-sm font-medium px-4 py-1.5 rounded-lg
-                            bg-blue-600 hover:bg-blue-500 text-white
+                            bg-amber-700 hover:bg-amber-600 text-white
                             transition-colors duration-200 shadow-sm
-                            shadow-blue-600/30 hover:shadow-blue-500/40"
+                            shadow-amber-700/30 hover:shadow-amber-600/40"
                     >
                         Registrati
                     </Link>
@@ -57,8 +57,8 @@ export function NavbarActions({ closeMenu }: NavbarActionsProps) {
                         onClick={closeMenu}
                         className={`flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-lg transition-colors duration-200 ${
                             isDark
-                                ? "text-slate-400 hover:text-white hover:bg-white/5"
-                                : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+                                ? "text-slate-400 hover:text-white hover:bg-[#F8FAFB]/5"
+                                : "text-slate-500 hover:text-slate-900 hover:bg-[#EDF2F7]"
                         }`}
                     >
                         <User size={14} />
@@ -68,7 +68,7 @@ export function NavbarActions({ closeMenu }: NavbarActionsProps) {
                         onClick={handleLogoutClick}
                         className={`text-sm font-medium px-3 py-1.5 rounded-lg border transition-all duration-200 ${
                             isDark
-                                ? "text-slate-400 border-blue-900/30 hover:text-red-400 hover:border-red-900/40 hover:bg-red-900/10"
+                                ? "text-slate-400 border-stone-800/30 hover:text-red-400 hover:border-red-900/40 hover:bg-red-900/10"
                                 : "text-slate-500 border-slate-200 hover:text-red-500 hover:border-red-200 hover:bg-red-50"
                         }`}
                     >

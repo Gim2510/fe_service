@@ -24,14 +24,14 @@ export function SurveyIntro() {
     const isDark = theme === "dark";
 
     const card = isDark
-        ? "bg-[#0D1A30]/80 border-blue-900/20"
-        : "bg-white border-slate-200";
+        ? "bg-[#1C1C1A]/80 border-stone-800/20"
+        : "bg-[#F8FAFB] border-slate-200";
 
     return (
-        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#060D1B] text-white" : "bg-[#F8FAFC] text-slate-900"} px-6 py-32`}>
+        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#111110] text-white" : "bg-[#E8EDF3] text-slate-900"} px-6 py-32`}>
             {/* Grid bg */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`, backgroundSize: "28px 28px" }} />
-            {isDark && <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-[140px] opacity-[0.05] bg-blue-600 pointer-events-none" />}
+            {isDark && <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-[140px] opacity-[0.05] bg-amber-700 pointer-events-none" />}
 
             {/* Hero */}
             <motion.section
@@ -40,12 +40,12 @@ export function SurveyIntro() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
             >
-                <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
                     Survey digitale
                 </span>
                 <h1 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                     Struttura la tua{" "}
-                    <span className="text-blue-500">crescita digitale</span>
+                    <span className="text-amber-600">crescita digitale</span>
                 </h1>
                 <p className={`text-lg leading-relaxed max-w-2xl mx-auto ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                     Compila il questionario per analizzare processi, strumenti e criticità della tua azienda.
@@ -62,8 +62,8 @@ export function SurveyIntro() {
                 <Link
                     to="/register"
                     className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
-                        bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold
-                        transition-colors shadow-lg shadow-blue-600/25 hover:-translate-y-0.5 duration-200"
+                        bg-amber-700 hover:bg-amber-600 text-white text-sm font-semibold
+                        transition-colors shadow-lg shadow-amber-700/25 hover:-translate-y-0.5 duration-200"
                 >
                     Registrati per iniziare
                     <ArrowRight size={15} />
@@ -81,7 +81,7 @@ export function SurveyIntro() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: i * 0.1 }}
                     >
-                        <span className={`font-mono text-xs font-medium ${isDark ? "text-blue-600" : "text-blue-400"}`}>{s.n}</span>
+                        <span className={`font-mono text-xs font-medium ${isDark ? "text-amber-700" : "text-amber-500"}`}>{s.n}</span>
                         <h3 className={`font-semibold mt-2 mb-1 text-sm ${isDark ? "text-slate-200" : "text-slate-800"}`}>{s.title}</h3>
                         <p className={`text-xs leading-relaxed ${isDark ? "text-slate-500" : "text-slate-500"}`}>{s.desc}</p>
                     </motion.div>
@@ -105,7 +105,7 @@ export function SurveyIntro() {
                     <ul className={`space-y-1.5 text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>
                         {["Analisi dei processi aziendali", "Identificazione delle inefficienze operative", "Prioritizzazione delle esigenze software", "Preparazione di un confronto consulenziale mirato"].map(item => (
                             <li key={item} className="flex items-start gap-2">
-                                <span className="text-blue-500 mt-0.5">•</span>
+                                <span className="text-amber-600 mt-0.5">•</span>
                                 {item}
                             </li>
                         ))}
@@ -123,7 +123,7 @@ export function SurveyIntro() {
                     <div className={`space-y-2.5 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                         {["Visione chiara dello stato attuale", "Identificazione delle criticità principali", "Linee guida per evoluzione digitale", "Base concreta per confronto consulenziale"].map(item => (
                             <p key={item} className="flex items-start gap-2">
-                                <ArrowRight size={13} className="text-blue-500 mt-0.5 shrink-0" />
+                                <ArrowRight size={13} className="text-amber-600 mt-0.5 shrink-0" />
                                 {item}
                             </p>
                         ))}
@@ -143,7 +143,7 @@ export function SurveyIntro() {
                 transition={{ duration: 0.5 }}
             >
                 <div className="flex items-center gap-2 mb-5">
-                    <ShieldCheck size={16} className="text-blue-400" />
+                    <ShieldCheck size={16} className="text-amber-500" />
                     <h2 className={`text-base font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>Protezione dei dati</h2>
                 </div>
                 <div className="space-y-0">

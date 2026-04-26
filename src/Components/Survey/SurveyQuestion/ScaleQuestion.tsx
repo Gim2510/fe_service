@@ -27,7 +27,7 @@ export const ScaleQuestion: FC<PropsScaleQuestion> = ({ min = 1, max = 5, answer
                         [&::-webkit-slider-thumb]:w-5
                         [&::-webkit-slider-thumb]:h-5
                         [&::-webkit-slider-thumb]:rounded-full
-                        [&::-webkit-slider-thumb]:bg-blue-500
+                        [&::-webkit-slider-thumb]:bg-amber-600
                         [&::-webkit-slider-thumb]:shadow-lg
                         [&::-webkit-slider-thumb]:cursor-pointer"
                     style={{

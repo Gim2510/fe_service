@@ -30,8 +30,8 @@ export function LogoutConfirmModal({ open, onConfirm, onCancel, theme }: Props) 
                     <motion.div
                         className={`relative z-10 w-full max-w-sm mx-4 p-8 rounded-2xl border ${
                             isDark
-                                ? "bg-[#0D1A30] border-blue-900/30 shadow-[0_24px_80px_rgba(0,0,0,0.7)]"
-                                : "bg-white border-slate-200 shadow-[0_24px_80px_rgba(0,0,0,0.12)]"
+                                ? "bg-[#1C1C1A] border-stone-800/30 shadow-[0_24px_80px_rgba(0,0,0,0.7)]"
+                                : "bg-[#F8FAFB] border-slate-200 shadow-[0_24px_80px_rgba(0,0,0,0.12)]"
                         }`}
                         initial={{ opacity: 0, scale: 0.94, y: 12 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -57,8 +57,8 @@ export function LogoutConfirmModal({ open, onConfirm, onCancel, theme }: Props) 
                                 onClick={onCancel}
                                 className={`flex-1 px-4 py-2.5 rounded-lg text-sm font-medium border transition-all duration-200 ${
                                     isDark
-                                        ? "border-blue-900/30 text-slate-300 hover:bg-white/5 hover:border-blue-800/40"
-                                        : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                                        ? "border-stone-800/30 text-slate-300 hover:bg-[#F8FAFB]/5 hover:border-stone-700/40"
+                                        : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"
                                 }`}
                             >
                                 Annulla

@@ -38,13 +38,13 @@ export function ApplyFormPage() {
 
     const inputClass = `w-full px-4 py-3 rounded-xl border text-sm focus:outline-none transition-colors ${
         isDark
-            ? "bg-[#060D1B] border-blue-900/30 text-slate-200 focus:border-blue-600"
-            : "bg-white border-slate-200 text-slate-900 focus:border-blue-500"
+            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-amber-700"
+            : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-amber-600"
     }`;
 
     return (
-        <main className={`min-h-screen flex justify-center items-center px-8 ${isDark ? "bg-[#060D1B]" : "bg-[#F8FAFC]"}`}>
-            <div className={`max-w-2xl w-full p-12 rounded-2xl border ${isDark ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200"}`}>
+        <main className={`min-h-screen flex justify-center items-center px-8 ${isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"}`}>
+            <div className={`max-w-2xl w-full p-12 rounded-2xl border ${isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200"}`}>
                 <h1 className={`text-3xl font-semibold mb-10 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                     Invia la tua candidatura
                 </h1>
@@ -61,8 +61,8 @@ export function ApplyFormPage() {
                         </label>
                         <label className={`flex items-center gap-3 px-4 py-3 rounded-xl border cursor-pointer transition-colors ${
                             isDark
-                                ? "border-blue-900/30 text-slate-400 hover:border-blue-600 hover:text-slate-200"
-                                : "border-slate-200 text-slate-500 hover:border-blue-500 hover:text-slate-700"
+                                ? "border-stone-800/30 text-slate-400 hover:border-amber-700 hover:text-slate-200"
+                                : "border-slate-200 text-slate-500 hover:border-amber-600 hover:text-slate-700"
                         }`}>
                             <Upload size={15} />
                             <span className="text-sm">{form.cv ? form.cv.name : "Seleziona file (.pdf, .doc, .docx)"}</span>
@@ -72,7 +72,7 @@ export function ApplyFormPage() {
 
                     <button
                         type="submit"
-                        className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-colors"
+                        className="w-full py-3 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-sm font-semibold transition-colors"
                     >
                         Invia candidatura
                     </button>

@@ -59,7 +59,7 @@ export function HeroSystemStatus() {
                     transition={{ type: "spring", stiffness: 260, damping: 30 }}
                     className={`text-lg font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}
                 >
-                    <span className={`mr-2 ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                    <span className={`mr-2 ${isDark ? "text-amber-500" : "text-amber-700"}`}>
                         {systemData[index].label}:
                     </span>
                     <span>{displayValue}</span>

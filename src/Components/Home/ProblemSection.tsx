@@ -30,7 +30,7 @@ export function ProblemiSection({ theme }: { theme: string }) {
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
                 <span className={`text-xs font-semibold uppercase tracking-widest ${
-                    isDark ? "text-blue-400" : "text-blue-600"
+                    isDark ? "text-amber-500" : "text-amber-700"
                 }`}>
                     Scenari comuni
                 </span>
@@ -38,7 +38,7 @@ export function ProblemiSection({ theme }: { theme: string }) {
                     isDark ? "text-slate-100" : "text-slate-900"
                 }`}>
                     I problemi non sono isolati.
-                    <span className={`block mt-1 ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                    <span className={`block mt-1 ${isDark ? "text-amber-500" : "text-amber-700"}`}>
                         C'è sempre un filo conduttore.
                     </span>
                 </h2>
@@ -61,7 +61,7 @@ export function ProblemiSection({ theme }: { theme: string }) {
                         <GlassCard theme={theme} className="p-7 h-full">
                             {/* Number badge */}
                             <span className={`text-xs font-mono font-medium mb-4 block ${
-                                isDark ? "text-blue-600" : "text-blue-400"
+                                isDark ? "text-amber-700" : "text-amber-500"
                             }`}>
                                 {String(index + 1).padStart(2, "0")}
                             </span>

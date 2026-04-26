@@ -29,15 +29,15 @@ export function Survey() {
 
     if (loading) {
         return (
-            <div className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#060D1B]" : "bg-[#F8FAFC]"}`}>
+            <div className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"}`}>
                 <FallingLines color={isDark ? "#fff" : "#3B82F6"} width="60" visible />
             </div>
         );
     }
 
-    if (error) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#060D1B] text-slate-400" : "bg-[#F8FAFC] text-slate-600"}`}>{error}</div>;
-    if (!surveyId || !survey) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#060D1B] text-slate-400" : "bg-[#F8FAFC] text-slate-600"}`}>Survey non disponibile</div>;
-    if (!questions.length) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#060D1B] text-slate-400" : "bg-[#F8FAFC] text-slate-600"}`}>Nessuna domanda disponibile</div>;
+    if (error) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#111110] text-slate-400" : "bg-[#E8EDF3] text-slate-600"}`}>{error}</div>;
+    if (!surveyId || !survey) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#111110] text-slate-400" : "bg-[#E8EDF3] text-slate-600"}`}>Survey non disponibile</div>;
+    if (!questions.length) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#111110] text-slate-400" : "bg-[#E8EDF3] text-slate-600"}`}>Nessuna domanda disponibile</div>;
 
     if (survey.status === "published") {
         return <Navigate to={`/survey/${survey._id}/recap`} replace />;
@@ -53,7 +53,7 @@ export function Survey() {
 
     return (
         <main className={`min-h-screen flex items-center justify-center px-6 py-16
-            ${isDark ? "bg-[#060D1B] text-white" : "bg-[#F8FAFC] text-slate-900"}`}>
+            ${isDark ? "bg-[#111110] text-white" : "bg-[#E8EDF3] text-slate-900"}`}>
 
             <section className="w-full max-w-2xl">
                 {/* Progress bar */}
@@ -66,9 +66,9 @@ export function Survey() {
                             {currentStep} / {totalSteps}
                         </span>
                     </div>
-                    <div className={`h-0.5 rounded-full ${isDark ? "bg-blue-900/30" : "bg-slate-200"}`}>
+                    <div className={`h-0.5 rounded-full ${isDark ? "bg-stone-800/30" : "bg-slate-200"}`}>
                         <div
-                            className="h-full rounded-full bg-blue-600 transition-all duration-500"
+                            className="h-full rounded-full bg-amber-700 transition-all duration-500"
                             style={{ width: `${progress}%` }}
                         />
                     </div>
@@ -83,7 +83,7 @@ export function Survey() {
                     {isQuestionStep && (
                         <div className="space-y-6">
                             <header className="space-y-3">
-                                <span className={`font-mono text-xs font-medium ${isDark ? "text-blue-500" : "text-blue-600"}`}>
+                                <span className={`font-mono text-xs font-medium ${isDark ? "text-amber-600" : "text-amber-700"}`}>
                                     {String(flow.step + 1).padStart(2, "0")}
                                 </span>
                                 <h1 className={`text-2xl md:text-3xl font-semibold leading-tight
@@ -106,8 +106,8 @@ export function Survey() {
                                         onClick={flow.prev}
                                         className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border text-sm font-medium transition-colors
                                             ${isDark
-                                                ? "border-blue-900/30 text-slate-400 hover:text-slate-200 hover:border-blue-700/40"
-                                                : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                                                ? "border-stone-800/30 text-slate-400 hover:text-slate-200 hover:border-amber-800/40"
+                                                : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"
                                             }`}
                                     >
                                         <ArrowLeft size={14} /> Indietro
@@ -118,9 +118,9 @@ export function Survey() {
                                     disabled={!flow.canProceed}
                                     onClick={() => flow.next(survey._id)}
                                     className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl
-                                        bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed
+                                        bg-amber-700 hover:bg-amber-600 disabled:opacity-40 disabled:cursor-not-allowed
                                         text-white text-sm font-semibold transition-colors
-                                        shadow-lg shadow-blue-600/20 hover:-translate-y-0.5 duration-200"
+                                        shadow-lg shadow-amber-700/20 hover:-translate-y-0.5 duration-200"
                                 >
                                     {flow.isLast ? "Completa survey" : "Continua"}
                                     <ArrowRight size={14} />

@@ -14,7 +14,7 @@ export function PaymentSuccess() {
     useEffect(() => { refreshPremium(); }, []);
 
     return (
-        <main className={`relative min-h-screen flex items-center justify-center overflow-hidden px-6 ${isDark ? "bg-[#060D1B]" : "bg-[#F8FAFC]"}`}>
+        <main className={`relative min-h-screen flex items-center justify-center overflow-hidden px-6 ${isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"}`}>
             {/* Background */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "28px 28px" }} />
@@ -29,8 +29,8 @@ export function PaymentSuccess() {
             >
                 <div className={`rounded-2xl border p-10 flex flex-col items-center gap-6 ${
                     isDark
-                        ? "bg-[#0D1A30]/80 border-blue-900/20 shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
-                        : "bg-white border-slate-200 shadow-[0_8px_40px_rgba(0,0,0,0.08)]"
+                        ? "bg-[#1C1C1A]/80 border-stone-800/20 shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
+                        : "bg-[#F8FAFB] border-slate-200 shadow-[0_8px_40px_rgba(0,0,0,0.08)]"
                 }`}>
                     <div className="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center">
                         <CheckCircle size={32} className="text-green-400" />
@@ -48,7 +48,7 @@ export function PaymentSuccess() {
 
                     <button
                         onClick={() => navigate("/dashboard")}
-                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-colors shadow-lg shadow-blue-600/20"
+                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-sm font-semibold transition-colors shadow-lg shadow-amber-700/20"
                     >
                         Vai alla Dashboard
                         <ArrowRight size={14} />

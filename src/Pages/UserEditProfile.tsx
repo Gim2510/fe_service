@@ -72,12 +72,12 @@ export function UserEditProfile() {
     }
 
     const card = isDark
-        ? "bg-[#0D1A30]/80 border-blue-900/20"
-        : "bg-white border-slate-200";
+        ? "bg-[#1C1C1A]/80 border-stone-800/20"
+        : "bg-[#F8FAFB] border-slate-200";
 
     if (loading) {
         return (
-            <div className={`min-h-screen flex justify-center items-center ${isDark ? "bg-[#060D1B]" : "bg-[#F8FAFC]"}`}>
+            <div className={`min-h-screen flex justify-center items-center ${isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"}`}>
                 <FallingLines color={isDark ? "#fff" : "#000"} width={80} visible ariaLabel="loading" />
             </div>
         );
@@ -85,20 +85,20 @@ export function UserEditProfile() {
 
     if (error || !user) {
         return (
-            <div className={`min-h-screen flex justify-center items-center ${isDark ? "bg-[#060D1B] text-white" : "bg-[#F8FAFC] text-slate-900"}`}>
+            <div className={`min-h-screen flex justify-center items-center ${isDark ? "bg-[#111110] text-white" : "bg-[#E8EDF3] text-slate-900"}`}>
                 <div className="text-center">
                     <p className="text-red-400 mb-4">{error}</p>
-                    <button onClick={refetch} className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm">Riprova</button>
+                    <button onClick={refetch} className="px-5 py-2 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-sm">Riprova</button>
                 </div>
             </div>
         );
     }
 
     return (
-        <main className={`${isDark ? "bg-[#060D1B] text-white" : "bg-[#F8FAFC] text-slate-900"} min-h-screen px-6 sm:px-8 pt-28 pb-24`}>
+        <main className={`${isDark ? "bg-[#111110] text-white" : "bg-[#E8EDF3] text-slate-900"} min-h-screen px-6 sm:px-8 pt-28 pb-24`}>
             <div className="max-w-2xl mx-auto space-y-10">
                 <motion.header initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
                         Profilo
                     </span>
                     <h1 className={`text-3xl font-semibold mt-2 ${isDark ? "text-slate-100" : "text-slate-900"}`}>Modifica profilo</h1>
@@ -150,7 +150,7 @@ export function UserEditProfile() {
                     <button
                         type="submit"
                         disabled={loadingUpdate}
-                        className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-sm font-semibold transition-colors shadow-lg shadow-blue-600/20"
+                        className="w-full py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 disabled:opacity-50 text-white text-sm font-semibold transition-colors shadow-lg shadow-amber-700/20"
                     >
                         Salva modifiche
                     </button>
@@ -161,7 +161,7 @@ export function UserEditProfile() {
             {showConfirmModal && (
                 <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
                     <div className={`rounded-2xl border p-8 w-full max-w-sm space-y-5 ${
-                        isDark ? "bg-[#0D1A30] border-blue-900/20" : "bg-white border-slate-200"
+                        isDark ? "bg-[#1C1C1A] border-stone-800/20" : "bg-[#F8FAFB] border-slate-200"
                     }`}>
                         <h2 className={`text-lg font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>Conferma aggiornamento</h2>
                         <p className={`text-sm ${isDark ? "text-slate-400" : "text-slate-500"}`}>Sei sicuro di voler salvare le modifiche?</p>
@@ -169,7 +169,7 @@ export function UserEditProfile() {
                             <button
                                 onClick={() => setShowConfirmModal(false)}
                                 className={`flex-1 py-2.5 rounded-xl border text-sm font-medium transition-colors ${
-                                    isDark ? "border-blue-900/30 text-slate-400 hover:text-slate-200" : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                                    isDark ? "border-stone-800/30 text-slate-400 hover:text-slate-200" : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"
                                 }`}
                             >
                                 Annulla
@@ -177,7 +177,7 @@ export function UserEditProfile() {
                             <button
                                 onClick={confirmUpdate}
                                 disabled={loadingUpdate}
-                                className="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-colors flex items-center justify-center"
+                                className="flex-1 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-sm font-semibold transition-colors flex items-center justify-center"
                             >
                                 {loadingUpdate
                                     ? <FallingLines color="white" width="20" visible ariaLabel="loading" />

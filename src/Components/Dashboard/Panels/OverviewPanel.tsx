@@ -3,7 +3,7 @@ import { DetailItem } from "../DetailItem.tsx";
 export function OverviewPanel({ users, surveys, theme }: any) {
     const isDark = theme === "dark";
 
-    const cardBg = isDark ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200";
+    const cardBg = isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200";
     const textColor = isDark ? "text-slate-100" : "text-slate-900";
 
     return (
@@ -22,7 +22,7 @@ export function OverviewPanel({ users, surveys, theme }: any) {
                 <h2 className={`text-xl font-semibold mb-4 sm:mb-6 ${textColor}`}>Survey Trend</h2>
                 <div className="space-y-2">
                     {surveys?.responsesByMonth.map((item: any) => (
-                        <div key={item.month} className={`flex justify-between border-b ${isDark ? "border-blue-900/20" : "border-slate-200"} pb-2 text-sm ${isDark ? "text-slate-300" : "text-slate-700"}`}>
+                        <div key={item.month} className={`flex justify-between border-b ${isDark ? "border-stone-800/20" : "border-slate-200"} pb-2 text-sm ${isDark ? "text-slate-300" : "text-slate-700"}`}>
                             <span>{item.month}</span>
                             <span>{item.count}</span>
                         </div>

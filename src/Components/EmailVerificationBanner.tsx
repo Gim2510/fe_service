@@ -25,12 +25,12 @@ export function EmailVerificationBanner() {
     if (!isAuthenticated || emailVer || dismissed) return null;
 
     return (
-        <div className="sticky bottom-0 z-20 w-full border-t border-blue-900/30 bg-blue-900/20 backdrop-blur-xl overflow-hidden">
+        <div className="sticky bottom-0 z-20 w-full border-t border-stone-800/30 bg-stone-800/20 backdrop-blur-xl overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-2.5 overflow-hidden">
-                    <Mail size={14} className="text-blue-400 shrink-0" />
+                    <Mail size={14} className="text-amber-500 shrink-0" />
                     <div className="overflow-hidden relative w-full">
-                        <p className="animate-scroll whitespace-nowrap text-xs text-blue-300 font-medium">
+                        <p className="animate-scroll whitespace-nowrap text-xs text-amber-400 font-medium">
                             Verifica la tua email per inizializzare il survey — controlla la tua casella di posta e
                             conferma il link di verifica.
                         </p>
@@ -38,7 +38,7 @@ export function EmailVerificationBanner() {
                 </div>
                 <button
                     onClick={handleDismiss}
-                    className="shrink-0 p-1 rounded text-blue-400 hover:text-blue-200 transition-colors"
+                    className="shrink-0 p-1 rounded text-amber-500 hover:text-amber-300 transition-colors"
                     aria-label="Chiudi"
                 >
                     <X size={14} />

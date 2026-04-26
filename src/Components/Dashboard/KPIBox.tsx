@@ -4,8 +4,8 @@ export function KPIBox({ label, value, sub, theme }: any) {
     return (
         <div className={`p-6 rounded-2xl border transition-all hover:-translate-y-0.5 duration-200
             ${isDark
-                ? "bg-[#0D1A30]/80 border-blue-900/20"
-                : "bg-white border-slate-200 shadow-sm"
+                ? "bg-[#1C1C1A]/80 border-stone-800/20"
+                : "bg-[#F8FAFB] border-slate-200 shadow-sm"
             }`}
         >
             <div className={`text-xs font-medium uppercase tracking-widest ${isDark ? "text-slate-500" : "text-slate-400"}`}>

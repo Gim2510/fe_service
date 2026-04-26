@@ -6,7 +6,7 @@ function PolicySection({ title, children, isDark }: { title?: string; children?:
     const [open, setOpen] = useState(false);
 
     return (
-        <div className={`border-b ${isDark ? "border-blue-900/20" : "border-slate-100"}`}>
+        <div className={`border-b ${isDark ? "border-stone-800/20" : "border-slate-200"}`}>
             <button
                 onClick={() => setOpen(!open)}
                 className="w-full text-left flex justify-between items-center py-4 gap-4"
@@ -30,16 +30,16 @@ export function PrivacyPolicy() {
     const { theme } = useTheme();
     const isDark = theme === "dark";
 
-    const card = isDark ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200";
+    const card = isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200";
 
     return (
-        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#060D1B] text-white" : "bg-[#F8FAFC] text-slate-900"}`}>
+        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#111110] text-white" : "bg-[#E8EDF3] text-slate-900"}`}>
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
                 style={{ backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`, backgroundSize: "28px 28px" }} />
 
             <div className="relative max-w-3xl mx-auto px-6 py-32">
                 <div className="mb-10 space-y-3">
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
                         Legale
                     </span>
                     <h1 className={`text-3xl sm:text-4xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -61,7 +61,7 @@ export function PrivacyPolicy() {
                         <p>Raccogliamo dati personali forniti direttamente dagli utenti e dati generati durante l'utilizzo della piattaforma.</p>
                         <ul className="space-y-1">
                             {["Dati identificativi (nome, cognome, email)", "Informazioni aziendali e ruolo professionale", "Risposte a questionari e contenuti inseriti", "Dati di clienti inseriti dagli utenti", "Dati di fatturazione e pagamento", "Dati tecnici e di utilizzo (log, IP, device)"].map(item => (
-                                <li key={item} className="flex items-start gap-2"><span className="text-blue-400 mt-0.5">•</span>{item}</li>
+                                <li key={item} className="flex items-start gap-2"><span className="text-amber-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
                     </PolicySection>
@@ -70,7 +70,7 @@ export function PrivacyPolicy() {
                         <p>I dati sono trattati per finalità strettamente connesse al servizio:</p>
                         <ul className="space-y-1">
                             {["Creazione e gestione account utente", "Generazione di report avanzati tramite AI", "Analisi e miglioramento dei processi aziendali", "Gestione pagamenti e abbonamenti", "Supporto tecnico e assistenza", "Comunicazioni operative e marketing (previo consenso)"].map(item => (
-                                <li key={item} className="flex items-start gap-2"><span className="text-blue-400 mt-0.5">•</span>{item}</li>
+                                <li key={item} className="flex items-start gap-2"><span className="text-amber-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
                     </PolicySection>
@@ -84,7 +84,7 @@ export function PrivacyPolicy() {
                         <p>Il trattamento si basa su diverse basi giuridiche, tra cui:</p>
                         <ul className="space-y-1">
                             {["Esecuzione di un contratto", "Consenso dell'interessato", "Obblighi legali", "Legittimo interesse del titolare"].map(item => (
-                                <li key={item} className="flex items-start gap-2"><span className="text-blue-400 mt-0.5">•</span>{item}</li>
+                                <li key={item} className="flex items-start gap-2"><span className="text-amber-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
                     </PolicySection>
@@ -93,7 +93,7 @@ export function PrivacyPolicy() {
                         <p>I dati possono essere condivisi con fornitori esterni che supportano l'erogazione del servizio:</p>
                         <ul className="space-y-1">
                             {["Stripe (pagamenti)", "SendGrid (email)", "Calendly (prenotazioni)", "Hosting cloud (Vercel, Railway)", "Database (MongoDB, Redis)", "AI providers (DeepSeek)"].map(item => (
-                                <li key={item} className="flex items-start gap-2"><span className="text-blue-400 mt-0.5">•</span>{item}</li>
+                                <li key={item} className="flex items-start gap-2"><span className="text-amber-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
                     </PolicySection>

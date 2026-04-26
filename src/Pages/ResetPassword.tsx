@@ -12,7 +12,7 @@ export function ResetPassword() {
 
     if (!token) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-[#060D1B] text-slate-400">
+            <div className="min-h-screen flex items-center justify-center bg-[#111110] text-slate-400">
                 Link non valido o scaduto.
             </div>
         );
@@ -25,7 +25,7 @@ export function ResetPassword() {
     };
 
     return (
-        <main className="min-h-screen flex items-center justify-center bg-[#060D1B] px-6">
+        <main className="min-h-screen flex items-center justify-center bg-[#111110] px-6">
             <div
                 className="absolute inset-0 opacity-[0.035]"
                 style={{
@@ -40,7 +40,7 @@ export function ResetPassword() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
             >
-                <div className="rounded-2xl border border-blue-900/20 bg-[#0D1A30]/80 backdrop-blur-xl p-8 sm:p-10 shadow-[0_24px_80px_rgba(0,0,0,0.5)]">
+                <div className="rounded-2xl border border-stone-800/20 bg-[#1C1C1A]/80 backdrop-blur-xl p-8 sm:p-10 shadow-[0_24px_80px_rgba(0,0,0,0.5)]">
                     <h1 className="text-2xl font-semibold text-center text-slate-100">Nuova password</h1>
                     <p className="text-sm text-slate-500 text-center mt-2">
                         Inserisci una nuova password per il tuo account
@@ -70,7 +70,7 @@ export function ResetPassword() {
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50
+                                    className="w-full py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 disabled:opacity-50
                                         text-white text-sm font-semibold transition-colors duration-200 mt-1"
                                 >
                                     {loading ? "Aggiornamento…" : "Aggiorna password"}
@@ -82,7 +82,7 @@ export function ResetPassword() {
                             <button
                                 type="button"
                                 onClick={() => navigate("/login")}
-                                className="text-sm text-blue-400 hover:text-blue-300 transition text-center"
+                                className="text-sm text-amber-500 hover:text-amber-400 transition text-center"
                             >
                                 Torna al login
                             </button>
@@ -103,9 +103,9 @@ function FieldInput({ label, type, value, onChange }: {
             <input
                 type={type} value={value} onChange={onChange}
                 required minLength={8}
-                className="px-4 py-2.5 rounded-lg border border-blue-900/30 bg-[#060D1B]
+                className="px-4 py-2.5 rounded-lg border border-stone-800/30 bg-[#111110]
                     text-slate-200 text-sm outline-none transition
-                    focus:border-blue-600 focus:ring-1 focus:ring-blue-500/30"
+                    focus:border-amber-700 focus:ring-1 focus:ring-amber-600/30"
             />
         </div>
     );

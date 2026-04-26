@@ -38,8 +38,8 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
                     <motion.div
                         className={`absolute right-0 top-0 h-full w-80 flex flex-col border-l ${
                             isDark
-                                ? "bg-[#060D1B] border-blue-900/20"
-                                : "bg-white border-slate-200"
+                                ? "bg-[#111110] border-stone-800/20"
+                                : "bg-[#F8FAFB] border-slate-200"
                         }`}
                         initial={{ x: "100%" }}
                         animate={{ x: 0 }}
@@ -48,7 +48,7 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
                     >
                         {/* Header */}
                         <div className={`flex items-center justify-between px-6 py-5 border-b ${
-                            isDark ? "border-blue-900/20" : "border-slate-100"
+                            isDark ? "border-stone-800/20" : "border-slate-200"
                         }`}>
                             <span className={`text-xs uppercase tracking-widest font-medium ${
                                 isDark ? "text-slate-500" : "text-slate-400"
@@ -59,8 +59,8 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
                                 onClick={closeMenu}
                                 className={`p-1.5 rounded-lg transition-colors ${
                                     isDark
-                                        ? "text-slate-500 hover:text-slate-200 hover:bg-white/5"
-                                        : "text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+                                        ? "text-slate-500 hover:text-slate-200 hover:bg-[#F8FAFB]/5"
+                                        : "text-slate-400 hover:text-slate-700 hover:bg-[#EDF2F7]"
                                 }`}
                             >
                                 <X size={18} />
@@ -81,7 +81,7 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
                         </div>
 
                         {/* Divider */}
-                        <div className={`mx-4 mt-6 border-t ${isDark ? "border-blue-900/20" : "border-slate-100"}`} />
+                        <div className={`mx-4 mt-6 border-t ${isDark ? "border-stone-800/20" : "border-slate-200"}`} />
 
                         {/* Auth actions */}
                         <div className="flex flex-col gap-2 px-4 pt-4">
@@ -110,8 +110,8 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
                                 onClick={toggleTheme}
                                 className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 border ${
                                     isDark
-                                        ? "text-slate-400 bg-white/3 border-blue-900/20 hover:border-blue-800/40 hover:text-slate-200"
-                                        : "text-slate-600 bg-slate-50 border-slate-200 hover:bg-slate-100"
+                                        ? "text-slate-400 bg-[#F8FAFB]/3 border-stone-800/20 hover:border-stone-700/40 hover:text-slate-200"
+                                        : "text-slate-600 bg-[#EDF2F7] border-slate-200 hover:bg-[#EDF2F7]"
                                 }`}
                             >
                                 <span>Tema</span>

@@ -5,7 +5,7 @@ export const getFillBackground = (type: LiquidGlassButtonProps["fillBackground"]
         case "main":
             return `
                 bg-gradient-to-br 
-                from-[#2563EBFF] 
+                from-[#C9A84CFF] 
                 via-[#2258CBFF] 
                 to-[#1E4FB9FF]
             `;
@@ -13,7 +13,7 @@ export const getFillBackground = (type: LiquidGlassButtonProps["fillBackground"]
         case "cta":
             return `
                 bg-gradient-to-br 
-                from-[#2563EBFF] 
+                from-[#C9A84CFF] 
                 via-[#2258CBFF] 
                 to-[#1E4FB9FF]
             `;
@@ -21,7 +21,7 @@ export const getFillBackground = (type: LiquidGlassButtonProps["fillBackground"]
         case "secondary":
             return `
                 bg-gradient-to-br 
-                from-[#2563EBFF] 
+                from-[#C9A84CFF] 
                 via-[#2258CBFF] 
                 to-[#1E4FB9FF]
             `;

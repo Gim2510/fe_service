@@ -29,12 +29,12 @@ export function UserDashboard() {
     const [activeTab, setActiveTab] = useState("account");
 
     const card = isDark
-        ? "bg-[#0D1A30]/80 border-blue-900/20"
-        : "bg-white border-slate-200";
+        ? "bg-[#1C1C1A]/80 border-stone-800/20"
+        : "bg-[#F8FAFB] border-slate-200";
 
     if (loading) {
         return (
-            <main className={`${isDark ? "bg-[#060D1B]" : "bg-[#F8FAFC]"} min-h-screen flex items-center justify-center`}>
+            <main className={`${isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"} min-h-screen flex items-center justify-center`}>
                 <FallingLines color={isDark ? "#fff" : "#000"} width={80} visible ariaLabel="loading" />
             </main>
         );
@@ -42,10 +42,10 @@ export function UserDashboard() {
 
     if (error || !user) {
         return (
-            <main className={`${isDark ? "bg-[#060D1B] text-white" : "bg-[#F8FAFC] text-slate-900"} min-h-screen flex items-center justify-center`}>
+            <main className={`${isDark ? "bg-[#111110] text-white" : "bg-[#E8EDF3] text-slate-900"} min-h-screen flex items-center justify-center`}>
                 <div className="text-center">
                     <p className="text-red-400 mb-4">{error || "Utente non trovato"}</p>
-                    <button onClick={refetch} className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm">
+                    <button onClick={refetch} className="px-5 py-2 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-sm">
                         Riprova
                     </button>
                 </div>
@@ -54,7 +54,7 @@ export function UserDashboard() {
     }
 
     return (
-        <main className={`${isDark ? "bg-[#060D1B] text-white" : "bg-[#F8FAFC] text-slate-900"} min-h-screen px-6 sm:px-8 pt-28 pb-24`}>
+        <main className={`${isDark ? "bg-[#111110] text-white" : "bg-[#E8EDF3] text-slate-900"} min-h-screen px-6 sm:px-8 pt-28 pb-24`}>
             <div className="max-w-5xl mx-auto space-y-8">
 
                 {/* Header */}
@@ -63,7 +63,7 @@ export function UserDashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
                         Pannello personale
                     </span>
                     <h1 className={`text-3xl font-semibold mt-2 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -85,7 +85,7 @@ export function UserDashboard() {
                         Immagine profilo
                     </h2>
                     <div className="flex items-center gap-6">
-                        <div className={`w-20 h-20 rounded-full overflow-hidden border flex items-center justify-center ${isDark ? "border-blue-900/30 bg-[#060D1B]" : "border-slate-200 bg-slate-100"}`}>
+                        <div className={`w-20 h-20 rounded-full overflow-hidden border flex items-center justify-center ${isDark ? "border-stone-800/30 bg-[#111110]" : "border-slate-200 bg-[#EDF2F7]"}`}>
                             {selectedImage ? (
                                 <img alt="profile" src={selectedImage} className="w-full h-full object-cover" />
                             ) : user.user_image ? (
@@ -97,8 +97,8 @@ export function UserDashboard() {
                         <div className="flex flex-col gap-2">
                             <label className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg border text-sm font-medium cursor-pointer transition-colors ${
                                 isDark
-                                    ? "border-blue-900/30 text-slate-400 hover:text-slate-200 hover:border-blue-800/50 bg-white/3"
-                                    : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                                    ? "border-stone-800/30 text-slate-400 hover:text-slate-200 hover:border-stone-700/50 bg-[#F8FAFB]/3"
+                                    : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"
                             }`}>
                                 <Upload size={14} />
                                 Carica immagine
@@ -119,7 +119,7 @@ export function UserDashboard() {
                 </motion.section>
 
                 {/* Tabs */}
-                <div className={`flex gap-1 overflow-x-auto border-b pb-0 ${isDark ? "border-blue-900/20" : "border-slate-200"}`}>
+                <div className={`flex gap-1 overflow-x-auto border-b pb-0 ${isDark ? "border-stone-800/20" : "border-slate-200"}`}>
                     {tabs.map(tab => {
                         const Icon = tab.icon;
                         const active = activeTab === tab.id;
@@ -130,8 +130,8 @@ export function UserDashboard() {
                                 className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium rounded-t-lg transition-colors whitespace-nowrap border-b-2 -mb-px ${
                                     active
                                         ? isDark
-                                            ? "text-blue-400 border-blue-500"
-                                            : "text-blue-600 border-blue-500"
+                                            ? "text-amber-500 border-amber-600"
+                                            : "text-amber-700 border-amber-600"
                                         : isDark
                                             ? "text-slate-500 border-transparent hover:text-slate-300"
                                             : "text-slate-500 border-transparent hover:text-slate-700"
@@ -217,12 +217,12 @@ export function UserDashboard() {
             {showImageModal && selectedImage && (
                 <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
                     <div className={`rounded-2xl border p-8 w-full max-w-sm space-y-6 ${
-                        isDark ? "bg-[#0D1A30] border-blue-900/20" : "bg-white border-slate-200"
+                        isDark ? "bg-[#1C1C1A] border-stone-800/20" : "bg-[#F8FAFB] border-slate-200"
                     }`}>
                         <h2 className={`text-lg font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                             Conferma immagine profilo
                         </h2>
-                        <img alt="preview" src={selectedImage} className="w-32 h-32 rounded-full object-cover mx-auto border-4 border-blue-500/20" />
+                        <img alt="preview" src={selectedImage} className="w-32 h-32 rounded-full object-cover mx-auto border-4 border-amber-600/20" />
                         <p className={`text-sm text-center ${isDark ? "text-slate-400" : "text-slate-500"}`}>
                             Vuoi impostare questa immagine come foto profilo?
                         </p>
@@ -230,7 +230,7 @@ export function UserDashboard() {
                             <button
                                 onClick={() => { setShowImageModal(false); setSelectedImage(null); }}
                                 className={`flex-1 py-2.5 rounded-xl border text-sm font-medium transition-colors ${
-                                    isDark ? "border-blue-900/30 text-slate-400 hover:text-slate-200" : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                                    isDark ? "border-stone-800/30 text-slate-400 hover:text-slate-200" : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"
                                 }`}
                             >
                                 Annulla
@@ -243,7 +243,7 @@ export function UserDashboard() {
                                     refetch();
                                 }}
                                 disabled={uploading}
-                                className="flex-1 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-colors flex items-center justify-center"
+                                className="flex-1 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-sm font-semibold transition-colors flex items-center justify-center"
                             >
                                 {uploading
                                     ? <FallingLines color="white" width="15" visible ariaLabel="loading" />
@@ -290,16 +290,16 @@ function ActionCard({ title, description, onClick, isDark, icon: Icon, danger = 
                         ? "border-red-900/30 bg-red-900/5 hover:border-red-700/40 hover:bg-red-900/10"
                         : "border-red-200 bg-red-50 hover:border-red-300"
                     : isDark
-                        ? "border-blue-900/20 bg-[#0D1A30]/80 hover:border-blue-800/40"
-                        : "border-slate-200 bg-white hover:border-blue-200"
+                        ? "border-stone-800/20 bg-[#1C1C1A]/80 hover:border-stone-700/40"
+                        : "border-slate-200 bg-[#F8FAFB] hover:border-amber-400"
             }`}
         >
             <div className={`w-8 h-8 rounded-lg flex items-center justify-center mb-4 ${
                 danger
                     ? "bg-red-500/10"
-                    : isDark ? "bg-blue-600/10" : "bg-blue-50"
+                    : isDark ? "bg-amber-700/10" : "bg-amber-50"
             }`}>
-                <Icon size={16} className={danger ? "text-red-400" : isDark ? "text-blue-400" : "text-blue-600"} />
+                <Icon size={16} className={danger ? "text-red-400" : isDark ? "text-amber-500" : "text-amber-700"} />
             </div>
             <h3 className={`text-sm font-semibold mb-1 ${isDark ? "text-slate-200" : "text-slate-800"}`}>{title}</h3>
             <p className={`text-xs ${isDark ? "text-slate-500" : "text-slate-500"}`}>{description}</p>

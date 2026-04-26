@@ -8,8 +8,8 @@ export function TagInput({label, values, setValues, theme}: any) {
 
     const inputStyle = `flex-1 rounded-xl border px-3 py-2 text-sm focus:outline-none transition-colors ${
         isDark
-            ? "bg-[#060D1B] border-blue-900/30 text-slate-200 focus:border-blue-600"
-            : "bg-white border-slate-200 text-slate-900 focus:border-blue-500"
+            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-amber-700"
+            : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-amber-600"
     }`;
 
     const addTag = () => {
@@ -36,7 +36,7 @@ export function TagInput({label, values, setValues, theme}: any) {
                 <button
                     type="button"
                     onClick={addTag}
-                    className="inline-flex items-center gap-1 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-colors"
+                    className="inline-flex items-center gap-1 px-4 py-2 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-sm font-semibold transition-colors"
                 >
                     <Plus size={14} /> Add
                 </button>
@@ -48,8 +48,8 @@ export function TagInput({label, values, setValues, theme}: any) {
                         key={i}
                         className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border ${
                             isDark
-                                ? "bg-blue-600/10 border-blue-900/30 text-blue-400"
-                                : "bg-blue-50 border-blue-200 text-blue-700"
+                                ? "bg-amber-700/10 border-stone-800/30 text-amber-500"
+                                : "bg-amber-50 border-amber-300 text-amber-800"
                         }`}
                     >
                         {tag}

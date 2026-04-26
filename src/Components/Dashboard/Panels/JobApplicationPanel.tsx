@@ -11,13 +11,13 @@ export function CreateJobApplicationPanel({ theme, token }: {
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const isDark = theme === "dark";
 
-    const cardBg = isDark ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200";
+    const cardBg = isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200";
     const textColor = isDark ? "text-slate-100" : "text-slate-900";
 
     const inputStyle = `w-full rounded-xl border px-3 py-2 text-sm focus:outline-none transition-colors ${
         isDark
-            ? "bg-[#060D1B] border-blue-900/30 text-slate-200 focus:border-blue-600"
-            : "bg-white border-slate-200 text-slate-900 focus:border-blue-500"
+            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-amber-700"
+            : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-amber-600"
     }`;
 
     const { createJobApplication, loading, error, success } = useCreateJobApplication();
@@ -272,7 +272,7 @@ export function CreateJobApplicationPanel({ theme, token }: {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="inline-flex items-center px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white text-sm font-semibold transition-colors"
+                            className="inline-flex items-center px-6 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 disabled:opacity-40 text-white text-sm font-semibold transition-colors"
                         >
                             Create Job
                         </button>

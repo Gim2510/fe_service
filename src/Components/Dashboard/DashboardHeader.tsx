@@ -10,11 +10,11 @@ export function DashboardHeader({ users, surveys, theme }: any) {
     return (
         <div className="space-y-10">
             <div>
-                <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-blue-400" : "text-blue-600"}`}>
+                <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
                     Pannello amministrativo
                 </span>
                 <h1 className={`text-3xl font-semibold mt-2 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                    Admin <span className="text-blue-500">Dashboard</span>
+                    Admin <span className="text-amber-600">Dashboard</span>
                 </h1>
                 <p className={`mt-1.5 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                     Monitor growth, engagement and system health

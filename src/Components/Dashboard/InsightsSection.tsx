@@ -7,7 +7,7 @@ export function InsightsSection({ users, surveys, theme }: any) {
     if (surveys.publishedResponses < surveys.totalResponses * 0.5) insights.push({ level: "low", text: "Many surveys are not being published" });
 
     return (
-        <div className={`p-6 rounded-2xl border ${isDark ? "bg-[#0D1A30]/80 border-blue-900/20" : "bg-white border-slate-200"}`}>
+        <div className={`p-6 rounded-2xl border ${isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200"}`}>
             <div className={`mb-4 text-xs font-semibold uppercase tracking-widest ${isDark ? "text-slate-500" : "text-slate-400"}`}>
                 System Insights
             </div>
@@ -16,7 +16,7 @@ export function InsightsSection({ users, surveys, theme }: any) {
                 {insights.map((item, idx) => (
                     <div key={idx} className={`text-sm ${
                         item.level === "high" ? "text-red-400" :
-                        item.level === "medium" ? "text-amber-400" : "text-blue-400"
+                        item.level === "medium" ? "text-amber-400" : "text-amber-500"
                     }`}>
                         {item.text}
                     </div>

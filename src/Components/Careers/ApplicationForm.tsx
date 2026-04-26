@@ -36,8 +36,8 @@ export function ApplicationForm({ jobId, jobTitle }: Props) {
     const inputClass = `w-full px-4 py-3 rounded-xl border text-sm
         transition-colors focus:outline-none focus:ring-2 placeholder:text-slate-500
         ${isDark
-            ? "bg-[#060D1B] border-blue-900/30 text-slate-200 focus:border-blue-600 focus:ring-blue-500/20"
-            : "bg-white border-slate-200 text-slate-900 focus:border-blue-500 focus:ring-blue-500/10"
+            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-amber-700 focus:ring-amber-600/20"
+            : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-amber-600 focus:ring-amber-600/10"
         }`;
 
     return (
@@ -84,8 +84,8 @@ export function ApplicationForm({ jobId, jobTitle }: Props) {
                 <label className={`flex items-center gap-3 px-4 py-3 rounded-xl border cursor-pointer
                     transition-colors
                     ${isDark
-                        ? "border-blue-900/30 text-slate-400 hover:border-blue-700/40 hover:text-slate-200"
-                        : "border-slate-200 text-slate-500 hover:border-blue-300 hover:bg-blue-50/50"
+                        ? "border-stone-800/30 text-slate-400 hover:border-amber-800/40 hover:text-slate-200"
+                        : "border-slate-200 text-slate-500 hover:border-amber-400 hover:bg-amber-50/50"
                     }`}>
                     <Upload size={14} className="shrink-0" />
                     <span className="text-sm">
@@ -105,9 +105,9 @@ export function ApplicationForm({ jobId, jobTitle }: Props) {
                 type="submit"
                 disabled={loading}
                 className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
-                    bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed
+                    bg-amber-700 hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed
                     text-white text-sm font-semibold transition-colors
-                    shadow-lg shadow-blue-600/25 hover:-translate-y-0.5 duration-200"
+                    shadow-lg shadow-amber-700/25 hover:-translate-y-0.5 duration-200"
             >
                 {loading
                     ? <FallingLines color="#fff" width="20" visible />
