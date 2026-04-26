@@ -279,7 +279,7 @@ function InfoRow({ label, value, highlight, isDark }: { label: string; value?: s
 }
 
 function ActionCard({ title, description, onClick, isDark, icon: Icon, danger = false }: {
-    title: string; description: string; onClick: () => void; isDark: boolean; icon: React.ElementType; danger?: boolean;
+    title: string; description: string; onClick: () => void; isDark: boolean; icon: React.ComponentType<{ size?: number; className?: string }>; danger?: boolean;
 }) {
     return (
         <button
