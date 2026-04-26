@@ -9,7 +9,7 @@ export function ContactPage() {
 
     return (
         <main className={`relative min-h-screen flex items-center overflow-hidden ${
-            isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"
+            isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"
         }`}>
             {/* Background */}
             <div className="absolute inset-0 pointer-events-none">

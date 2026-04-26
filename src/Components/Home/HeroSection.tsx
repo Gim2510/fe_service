@@ -20,8 +20,8 @@ export function HeroSection({ theme }: { theme: string }) {
 
             {/* ── Background ── */}
             <div className="absolute inset-0 pointer-events-none z-0">
-                <div className={`absolute inset-0 ${isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"}`} />
-                <HeroNetwork />
+                <div className={`absolute inset-0 ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`} />
+                <div className="hidden lg:block"><HeroNetwork /></div>
 
                 {/* Readability gradient — on mobile the globe sits full-screen behind the text;
                     this overlay fades from solid bg on the left (text area) to transparent on the right.
@@ -29,14 +29,14 @@ export function HeroSection({ theme }: { theme: string }) {
                 <div
                     className={`absolute inset-0 pointer-events-none ${isDark
                         ? "bg-gradient-to-r from-[#111110] via-[#111110]/80 to-transparent lg:via-[#111110]/25"
-                        : "bg-gradient-to-r from-[#E8EDF3] via-[#E8EDF3]/80 to-transparent lg:via-[#E8EDF3]/25"
+                        : "bg-gradient-to-r from-[#FAF8F4] via-[#FAF8F4]/80 to-transparent lg:via-[#FAF8F4]/25"
                     }`}
                     style={{ zIndex: 21 }}
                 />
 
                 {/* Grid texture */}
                 <div
-                    className="absolute inset-0 opacity-[0.04]"
+                    className={`absolute inset-0 ${isDark ? "opacity-[0.04]" : "opacity-[0.18]"}`}
                     style={{
                         backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`,
                         backgroundSize: "28px 28px",
@@ -66,7 +66,7 @@ export function HeroSection({ theme }: { theme: string }) {
                         }
                     `}>
                         <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
-                        Consulenza digitale per PMI
+                        Consulenza digitale per PMI italiane
                     </span>
                 </motion.div>
 
@@ -78,13 +78,13 @@ export function HeroSection({ theme }: { theme: string }) {
                     }`}
                 >
                     <span className="hero-line reveal delay-1 block">
-                        Il tuo business
+                        La tua azienda
                     </span>
                     <span className="hero-line reveal delay-2 block text-amber-600">
-                        genera dati.
+                        perde margine
                     </span>
                     <span className="hero-line reveal delay-3 block text-4xl sm:text-5xl mt-2">
-                        Sei in grado di gestirli?
+                        ogni giorno che non è digitale.
                     </span>
                 </motion.h1>
 
@@ -95,13 +95,14 @@ export function HeroSection({ theme }: { theme: string }) {
                         isDark ? "text-slate-400" : "text-slate-600"
                     }`}
                 >
-                    Aiutiamo le aziende a trasformare operazioni, vendite e relazioni
-                    con i clienti in sistemi chiari, misurabili e automatizzati.
+                    Progettiamo sistemi su misura che eliminano sprechi operativi,
+                    aumentano la visibilità sui dati e accelerano le decisioni
+                    che contano davvero per il tuo business.
                 </motion.p>
 
                 {/* Trust signals */}
                 <motion.div {...fadeUp(0.35)} className="mt-6 flex flex-wrap gap-4">
-                    {["Analisi guidata", "Nessun impegno", "Risultati immediati"].map((item) => (
+                    {["Report personalizzato incluso", "Nessun impegno iniziale", "Risultati verificabili"].map((item) => (
                         <span
                             key={item}
                             className={`flex items-center gap-1.5 text-sm ${
@@ -123,17 +124,13 @@ export function HeroSection({ theme }: { theme: string }) {
                             transition-all duration-200 shadow-lg shadow-amber-700/25
                             hover:shadow-amber-600/35 hover:-translate-y-0.5"
                     >
-                        Scopri cosa stai perdendo
+                        Misura il tuo gap digitale
                         <ArrowRight size={16} />
                     </button>
 
-                    <button
-                        onClick={goToSurvey}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5
-                            border-stone-800/30 text-slate-300 hover:border-amber-600 hover:text-slate-100"
-                    >
-                        Avvia l'analisi
-                    </button>
+                    <span className={`text-sm ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                        Circa 10–15 minuti
+                    </span>
                 </motion.div>
             </div>
         </section>

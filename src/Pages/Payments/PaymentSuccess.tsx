@@ -14,7 +14,7 @@ export function PaymentSuccess() {
     useEffect(() => { refreshPremium(); }, []);
 
     return (
-        <main className={`relative min-h-screen flex items-center justify-center overflow-hidden px-6 ${isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"}`}>
+        <main className={`relative min-h-screen flex items-center justify-center overflow-hidden px-6 ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}>
             {/* Background */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "28px 28px" }} />

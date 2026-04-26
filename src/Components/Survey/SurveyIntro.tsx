@@ -28,7 +28,7 @@ export function SurveyIntro() {
         : "bg-[#F8FAFB] border-slate-200";
 
     return (
-        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#111110] text-white" : "bg-[#E8EDF3] text-slate-900"} px-6 py-32`}>
+        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"} px-6 py-32`}>
             {/* Grid bg */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`, backgroundSize: "28px 28px" }} />
             {isDark && <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-[140px] opacity-[0.05] bg-amber-700 pointer-events-none" />}

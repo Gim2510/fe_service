@@ -8,12 +8,12 @@ const cardVariants: Variants = {
 };
 
 const problemi = [
-    { title: "«I dati ci sono, ma non li vediamo»", text: "Informazioni disperse tra fogli Excel, CRM parziali e strumenti che non comunicano tra loro. Il risultato: decisioni prese a sensazione." },
-    { title: "«Facciamo tutto a mano»", text: "Processi ripetitivi che consumano tempo e attenzione, aumentando il rischio di errore e rallentando ogni attività." },
-    { title: "«Le vendite sono imprevedibili»", text: "Mancanza di una visione chiara sul funnel, sui clienti realmente interessati e sulle opportunità che contano." },
-    { title: "«Corriamo sempre dietro ai problemi»", text: "La gestione clienti è reattiva. Si risponde alle urgenze, ma non si anticipano bisogni e comportamenti." },
-    { title: "«Il magazzino non torna mai»", text: "Scorte e approvvigionamenti non allineati alla domanda reale, per mancanza di dati affidabili e aggiornati." },
-    { title: "«Tanti strumenti, poco controllo»", text: "Software acquistati nel tempo, usati solo in parte e mai davvero integrati tra loro." },
+    { title: "«I dati ci sono, ma non li usiamo»", text: "Ogni reparto lavora in silos: Excel, CRM parziali, gestionali non integrati. Le decisioni si prendono a intuizione — e il costo di ogni errore si accumula in silenzio." },
+    { title: "«Sprechiamo ore in attività manuali»", text: "Processi ripetitivi che sottraggono tempo alle persone chiave. Ogni ora persa in inserimento dati o riconciliazioni manuali è un'ora sottratta alla crescita." },
+    { title: "«Non sappiamo dove andremo a fine mese»", text: "Pipeline commerciale opaca, forecast inaffidabili, opportunità che sfuggono. Senza visibilità sul funnel, il fatturato diventa una sorpresa anziché un obiettivo." },
+    { title: "«Reagiamo sempre, non anticipiamo mai»", text: "La relazione con i clienti è gestita a emergenza. Chi se ne occupa non ha gli strumenti per prevedere i bisogni e agire prima che diventino problemi." },
+    { title: "«I costi operativi crescono, i margini no»", text: "Senza controllo sui dati di produzione, acquisti e logistica, è impossibile capire dove si perde margine — e quindi impossibile recuperarlo." },
+    { title: "«Abbiamo software ovunque, integrazione zero»", text: "Ogni strumento aggiunto nel tempo ha creato un ecosistema frammentato. Nessuno parla con nessuno, i dati si duplicano, e l'unico collante è il lavoro manuale." },
 ];
 
 export function ProblemiSection({ theme }: { theme: string }) {
@@ -32,18 +32,18 @@ export function ProblemiSection({ theme }: { theme: string }) {
                 <span className={`text-xs font-semibold uppercase tracking-widest ${
                     isDark ? "text-amber-500" : "text-amber-700"
                 }`}>
-                    Scenari comuni
+                    Ti riconosci?
                 </span>
                 <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight mt-3 ${
                     isDark ? "text-slate-100" : "text-slate-900"
                 }`}>
-                    I problemi non sono isolati.
+                    Non sono problemi tecnici.
                     <span className={`block mt-1 ${isDark ? "text-amber-500" : "text-amber-700"}`}>
-                        C'è sempre un filo conduttore.
+                        Sono problemi di business.
                     </span>
                 </h2>
                 <p className={`mt-5 text-lg ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                    Nella maggior parte delle PMI troviamo le stesse frizioni.
+                    Ogni PMI che incontriamo ha una storia diversa, ma racconta sempre le stesse frustrazioni. Se almeno una ti suona familiare, hai già un motivo per parlare con noi.
                 </p>
             </motion.div>
 

@@ -4,11 +4,11 @@ interface SunsetTransitionProps {
 
 export function SunsetTransition({ theme }: SunsetTransitionProps) {
     const isDark = theme === "dark";
-    const bgColor = isDark ? "#111110" : "#E8EDF3";
-    const bgRgb = isDark ? "17,17,16" : "232,237,243";
+    const bgColor = isDark ? "#111110" : "#FAF8F4";
+    const bgRgb = isDark ? "17,17,16" : "250,248,244";
 
     return (
-        <div className="relative z-10 h-48 sm:h-64 pointer-events-none">
+        <div className="relative z-10 h-10 sm:h-14 pointer-events-none">
 
             {/* Bg rising from bottom */}
             <div

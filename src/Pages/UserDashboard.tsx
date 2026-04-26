@@ -34,7 +34,7 @@ export function UserDashboard() {
 
     if (loading) {
         return (
-            <main className={`${isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"} min-h-screen flex items-center justify-center`}>
+            <main className={`${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"} min-h-screen flex items-center justify-center`}>
                 <FallingLines color={isDark ? "#fff" : "#000"} width={80} visible ariaLabel="loading" />
             </main>
         );
@@ -42,7 +42,7 @@ export function UserDashboard() {
 
     if (error || !user) {
         return (
-            <main className={`${isDark ? "bg-[#111110] text-white" : "bg-[#E8EDF3] text-slate-900"} min-h-screen flex items-center justify-center`}>
+            <main className={`${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"} min-h-screen flex items-center justify-center`}>
                 <div className="text-center">
                     <p className="text-red-400 mb-4">{error || "Utente non trovato"}</p>
                     <button onClick={refetch} className="px-5 py-2 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-sm">
@@ -54,7 +54,7 @@ export function UserDashboard() {
     }
 
     return (
-        <main className={`${isDark ? "bg-[#111110] text-white" : "bg-[#E8EDF3] text-slate-900"} min-h-screen px-6 sm:px-8 pt-28 pb-24`}>
+        <main className={`${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"} min-h-screen px-6 sm:px-8 pt-28 pb-24`}>
             <div className="max-w-5xl mx-auto space-y-8">
 
                 {/* Header */}

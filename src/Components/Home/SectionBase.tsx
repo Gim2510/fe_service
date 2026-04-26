@@ -17,7 +17,7 @@ export function SectionBase({ children, theme, className = "" }: SectionBaseProp
         >
             {/* Subtle dot grid */}
             <div
-                className="absolute inset-0 opacity-[0.035] pointer-events-none"
+                className={`absolute inset-0 pointer-events-none ${isDark ? "opacity-[0.035]" : "opacity-[0.18]"}`}
                 style={{
                     backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`,
                     backgroundSize: "28px 28px",

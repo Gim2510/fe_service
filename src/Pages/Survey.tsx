@@ -29,15 +29,15 @@ export function Survey() {
 
     if (loading) {
         return (
-            <div className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"}`}>
+            <div className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}>
                 <FallingLines color={isDark ? "#fff" : "#3B82F6"} width="60" visible />
             </div>
         );
     }
 
-    if (error) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#111110] text-slate-400" : "bg-[#E8EDF3] text-slate-600"}`}>{error}</div>;
-    if (!surveyId || !survey) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#111110] text-slate-400" : "bg-[#E8EDF3] text-slate-600"}`}>Survey non disponibile</div>;
-    if (!questions.length) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#111110] text-slate-400" : "bg-[#E8EDF3] text-slate-600"}`}>Nessuna domanda disponibile</div>;
+    if (error) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#111110] text-slate-400" : "bg-[#FAF8F4] text-slate-600"}`}>{error}</div>;
+    if (!surveyId || !survey) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#111110] text-slate-400" : "bg-[#FAF8F4] text-slate-600"}`}>Survey non disponibile</div>;
+    if (!questions.length) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#111110] text-slate-400" : "bg-[#FAF8F4] text-slate-600"}`}>Nessuna domanda disponibile</div>;
 
     if (survey.status === "published") {
         return <Navigate to={`/survey/${survey._id}/recap`} replace />;
@@ -53,7 +53,7 @@ export function Survey() {
 
     return (
         <main className={`min-h-screen flex items-center justify-center px-6 py-16
-            ${isDark ? "bg-[#111110] text-white" : "bg-[#E8EDF3] text-slate-900"}`}>
+            ${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"}`}>
 
             <section className="w-full max-w-2xl">
                 {/* Progress bar */}

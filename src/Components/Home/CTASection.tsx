@@ -12,8 +12,8 @@ export function CTASection({ theme }: { theme: string }) {
             {/* Corporate gradient background */}
             <div className={`absolute inset-0 ${
                 isDark
-                    ? "bg-gradient-to-br from-[#111110] via-[#0A1628] to-[#111110]"
-                    : "bg-gradient-to-br from-[#1E1B14] via-[#2A2418] to-[#1E1B14]"
+                    ? "bg-gradient-to-br from-[#0C0C0B] via-[#161410] to-[#0C0C0B]"
+                    : "bg-gradient-to-br from-[#FDFAF4] via-[#F2E8D5] to-[#FDFAF4]"
             }`} />
 
             {/* Decorative elements */}
@@ -37,16 +37,15 @@ export function CTASection({ theme }: { theme: string }) {
                 )}
                 {!isDark && (
                     <>
-                        {/* Subtle grid on light */}
                         <div
-                            className="absolute inset-0 opacity-[0.08]"
+                            className="absolute inset-0 opacity-[0.10]"
                             style={{
-                                backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
+                                backgroundImage: "radial-gradient(circle at 1px 1px, #92400e 1px, transparent 0)",
                                 backgroundSize: "28px 28px",
                             }}
                         />
-                        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-10 bg-amber-600" />
-                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-700/40 to-transparent" />
+                        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-20 bg-amber-300" />
+                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" />
                     </>
                 )}
             </div>
@@ -58,7 +57,7 @@ export function CTASection({ theme }: { theme: string }) {
                     className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border mb-8 ${
                         isDark
                             ? "text-amber-500 border-stone-700/40 bg-stone-800/20"
-                            : "text-amber-100 border-white/20 bg-[#F8FAFB]/10"
+                            : "text-amber-800 border-amber-300 bg-amber-50"
                     }`}
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -66,38 +65,36 @@ export function CTASection({ theme }: { theme: string }) {
                     transition={{ duration: 0.5 }}
                 >
                     <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-                    Inizia oggi
+                    Assessment gratuito
                 </motion.span>
 
                 {/* Headline */}
                 <motion.h2
                     className={`font-fjalla text-4xl md:text-5xl font-semibold leading-tight max-w-3xl ${
-                        isDark ? "text-slate-100" : "text-white"
+                        isDark ? "text-slate-100" : "text-stone-900"
                     }`}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
                 >
-                    Trasforma i tuoi processi in un{" "}
-                    <span className={isDark ? "text-amber-500" : "text-amber-300"}>
-                        vantaggio competitivo misurabile.
+                    Scopri esattamente dove la tua azienda{" "}
+                    <span className={isDark ? "text-amber-500" : "text-amber-700"}>
+                        perde efficienza — e come recuperarla.
                     </span>
                 </motion.h2>
 
                 {/* Sub */}
                 <motion.p
                     className={`mt-6 text-lg leading-relaxed max-w-xl ${
-                        isDark ? "text-slate-400" : "text-amber-100"
+                        isDark ? "text-slate-400" : "text-stone-600"
                     }`}
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.15 }}
                 >
-                    In poche ore ottieni una valutazione strutturata del livello
-                    di maturità digitale della tua azienda, con indicazioni concrete
-                    sulle priorità di intervento.
+                    In 10 minuti ottieni un report personalizzato sul livello di maturità digitale della tua azienda: punti critici, opportunità prioritarie e un piano d'azione concreto — senza impegno.
                 </motion.p>
 
                 {/* Micro-benefits */}
@@ -108,14 +105,14 @@ export function CTASection({ theme }: { theme: string }) {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.22 }}
                 >
-                    {["Analisi strutturata", "Nessun impegno", "Risultati immediati"].map((item) => (
+                    {["Report personalizzato incluso", "Nessun impegno o costo", "Piano d'azione concreto"].map((item) => (
                         <span
                             key={item}
                             className={`flex items-center gap-1.5 text-sm ${
-                                isDark ? "text-slate-500" : "text-amber-300"
+                                isDark ? "text-slate-500" : "text-stone-500"
                             }`}
                         >
-                            <CheckCircle size={13} className={isDark ? "text-amber-700" : "text-amber-400"} />
+                            <CheckCircle size={13} className={isDark ? "text-amber-700" : "text-amber-600"} />
                             {item}
                         </span>
                     ))}
@@ -140,7 +137,7 @@ export function CTASection({ theme }: { theme: string }) {
                             }
                         `}
                     >
-                        Avvia l'analisi strategica
+                        Ottieni il tuo report gratuito
                         <ArrowRight
                             size={16}
                             className="transition-transform duration-200 group-hover:translate-x-1"
@@ -151,7 +148,7 @@ export function CTASection({ theme }: { theme: string }) {
                 {/* Trust note */}
                 <motion.p
                     className={`mt-5 flex items-center gap-1.5 text-xs ${
-                        isDark ? "text-slate-600" : "text-amber-400"
+                        isDark ? "text-slate-600" : "text-stone-400"
                     }`}
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
@@ -159,7 +156,7 @@ export function CTASection({ theme }: { theme: string }) {
                     transition={{ duration: 0.5, delay: 0.35 }}
                 >
                     <Clock size={11} />
-                    Tempo stimato: 3–5 minuti • registrazione richiesta
+                    10–15 minuti • report personalizzato • nessuna carta di credito
                 </motion.p>
             </div>
         </section>

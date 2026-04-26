@@ -6,28 +6,28 @@ const livelli = [
     {
         level: "Base",
         score: "0–30%",
-        description: "Processi ancora manuali o parzialmente digitalizzati. Dati sparsi e decisioni basate su intuizione.",
+        description: "Operatività prevalentemente manuale. Alto rischio di errori, dati non strutturati e decisioni prese senza dati affidabili. Potenziale di miglioramento massimo.",
         accent: "#EF4444",
         barBg: "bg-red-500/70",
     },
     {
         level: "Intermedio",
         score: "31–60%",
-        description: "Parte dei processi digitalizzata e integrata. KPI iniziali monitorati.",
+        description: "Digitalizzazione parziale con isole non integrate. Alcuni KPI monitorati, ma processi ancora dipendenti da intervento manuale e riconciliazioni frequenti.",
         accent: "#F59E0B",
         barBg: "bg-amber-500/70",
     },
     {
         level: "Avanzato",
         score: "61–85%",
-        description: "Processi digitali consolidati, dati centralizzati e dashboard operative.",
+        description: "Processi chiave digitalizzati e dati centralizzati. Dashboard operative attive. Margini di ottimizzazione su automazione avanzata e AI applicata.",
         accent: "#22C55E",
         barBg: "bg-green-500/70",
     },
     {
         level: "Eccellente",
         score: "86–100%",
-        description: "Processi completamente digitalizzati, KPI predittivi e automazione intelligente.",
+        description: "Ecosistema digitale integrato, KPI predittivi e automazione intelligente su processi core. Competitive advantage sostenibile nel tempo.",
         accent: "#3B82F6",
         barBg: "bg-blue-500/70",
     },
@@ -56,21 +56,20 @@ export function DigitalMaturitySection({ theme }: { theme: string }) {
                 <span className={`text-xs font-semibold uppercase tracking-widest ${
                     isDark ? "text-amber-500" : "text-amber-700"
                 }`}>
-                    Maturità digitale
+                    Dove sei oggi?
                 </span>
                 <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold mt-3 ${
                     isDark ? "text-slate-100" : "text-slate-900"
                 }`}>
-                    Il tuo livello di{" "}
+                    Ogni PMI ha un livello di{" "}
                     <span className={isDark ? "text-amber-500" : "text-amber-700"}>
-                        maturità digitale
+                        maturità digitale misurabile.
                     </span>
                 </h2>
                 <p className={`mt-5 text-lg max-w-2xl mx-auto ${
                     isDark ? "text-slate-400" : "text-slate-600"
                 }`}>
-                    Valutiamo i tuoi processi, tecnologia e dati secondo standard strutturati,
-                    generando un punteggio chiaro e operativo.
+                    Il nostro assessment misura processi, tecnologia, dati e automazione con un modello strutturato. Il risultato non è un numero generico — è una mappa precisa di dove intervenire per ottenere il massimo impatto nel minor tempo.
                 </p>
             </motion.div>
 
@@ -130,7 +129,7 @@ export function DigitalMaturitySection({ theme }: { theme: string }) {
                     <h3 className={`text-xl font-semibold mb-8 text-center ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
-                        Peso dei fattori nella valutazione
+                        Come calcoliamo il tuo score
                     </h3>
 
                     <div className="space-y-5">
@@ -162,7 +161,7 @@ export function DigitalMaturitySection({ theme }: { theme: string }) {
                     <p className={`mt-8 text-xs text-center ${
                         isDark ? "text-slate-600" : "text-slate-400"
                     }`}>
-                        I pesi riflettono l'importanza relativa di ogni dimensione nel determinare il livello di maturità digitale.
+                        I pesi sono calibrati su dati reali di PMI italiane. I processi pesano di più perché è lì che si genera — o si perde — il margine operativo.
                     </p>
                 </GlassCard>
             </motion.div>

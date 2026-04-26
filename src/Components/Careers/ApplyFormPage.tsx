@@ -43,7 +43,7 @@ export function ApplyFormPage() {
     }`;
 
     return (
-        <main className={`min-h-screen flex justify-center items-center px-8 ${isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"}`}>
+        <main className={`min-h-screen flex justify-center items-center px-8 ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}>
             <div className={`max-w-2xl w-full p-12 rounded-2xl border ${isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200"}`}>
                 <h1 className={`text-3xl font-semibold mb-10 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                     Invia la tua candidatura

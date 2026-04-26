@@ -61,7 +61,7 @@ export function Register() {
     } focus:ring-1 focus:ring-amber-600/30`;
 
     return (
-        <main className={`relative min-h-screen flex items-start overflow-hidden ${isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"}`}>
+        <main className={`relative min-h-screen flex items-start overflow-hidden ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}>
             {/* Background */}
             <div className="absolute inset-0 pointer-events-none">
                 <div

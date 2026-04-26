@@ -17,7 +17,7 @@ export function LayoutHomepage({ children }: { children: ReactNode }) {
             <div onClick={() => setOpen(false)}>
                 <Navbar />
                 {children}
-                <Footer />
+                <Footer theme={theme} />
                 <GDPRBanner />
                 <EmailVerificationBanner />
             </div>

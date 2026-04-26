@@ -28,6 +28,7 @@ import {CareersFlowPage} from "./Components/Careers/CareersFlowPage.tsx";
 import {PrivacyPolicy} from "./Pages/PrivacyPolicy.tsx";
 import {TermsOfService} from "./Pages/TermOfService.tsx";
 import {CookiePolicy} from "./Pages/CookiePolicy.tsx";
+import {About} from "./Pages/About.tsx";
 
 function App() {
     return (
@@ -57,6 +58,7 @@ function App() {
                             <Route path="/privacy" element={<LayoutHomepage><PrivacyPolicy /></LayoutHomepage>} />
                             <Route path="/terms" element={<LayoutHomepage><TermsOfService /></LayoutHomepage>} />
                             <Route path="/cookies" element={<LayoutHomepage><CookiePolicy /></LayoutHomepage>} />
+                            <Route path="/about" element={<LayoutHomepage><About /></LayoutHomepage>} />
                         </Routes>
                     </PremiumProvider>
                 </AuthProvider>

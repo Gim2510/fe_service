@@ -5,18 +5,18 @@ import { motion } from "framer-motion";
 const steps = [
     {
         step: "01",
-        title: "Analisi",
-        text: "Comprendiamo i processi, individuiamo colli di bottiglia e opportunità di miglioramento.",
+        title: "Diagnosi",
+        text: "Analizziamo i tuoi processi, flussi di dati e strumenti esistenti. Identifichiamo dove perdi margine, tempo e controllo — con dati, non supposizioni.",
     },
     {
         step: "02",
         title: "Progettazione",
-        text: "Definiamo un'architettura solida, sostenibile e allineata agli obiettivi di business.",
+        text: "Progettiamo un'architettura digitale su misura: integrata con ciò che già hai, scalabile, e con KPI definiti prima ancora di iniziare a costruire.",
     },
     {
         step: "03",
-        title: "Implementazione",
-        text: "Costruiamo soluzioni operative che trasformano i dati in azioni misurabili.",
+        title: "Attivazione",
+        text: "Implementiamo, formiamo il team e misuriamo i risultati. Non consegniamo un sistema — affiancamo l'azienda finché il cambiamento è consolidato.",
     },
 ];
 
@@ -41,13 +41,13 @@ export function MetodSection({ theme }: { theme: string }) {
                 <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight mt-3 ${
                     isDark ? "text-slate-100" : "text-slate-900"
                 }`}>
-                    Un approccio strutturato
+                    Tre fasi. Zero improvvisazione.
                     <span className={`block mt-1 ${isDark ? "text-amber-500" : "text-amber-700"}`}>
-                        orientato ai risultati.
+                        Risultati misurabili dal giorno uno.
                     </span>
                 </h2>
                 <p className={`mt-5 text-lg ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                    Ogni progetto segue tre fasi distinte per garantire risultati concreti e misurabili.
+                    Lavoriamo con un metodo collaudato su decine di PMI italiane. Ogni fase ha deliverable chiari, tempi definiti e un obiettivo verificabile — così sai sempre dove siamo e cosa aspettarti.
                 </p>
             </motion.div>
 

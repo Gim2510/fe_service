@@ -44,7 +44,7 @@ export function SurveyDashboard() {
 
     if (loading || !survey) {
         return (
-            <div className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"}`}>
+            <div className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}>
                 <FallingLines color={isDark ? "#fff" : "#3B82F6"} width="60" visible />
             </div>
         );
@@ -74,7 +74,7 @@ export function SurveyDashboard() {
     const scoreColor = survey.score >= 70 ? "text-green-400" : survey.score >= 40 ? "text-amber-400" : "text-red-400";
 
     return (
-        <main className={`min-h-screen ${isDark ? "bg-[#111110] text-white" : "bg-[#E8EDF3] text-slate-900"}`}>
+        <main className={`min-h-screen ${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"}`}>
 
             {/* Grid bg */}
             <div className="absolute inset-0 opacity-[0.02] pointer-events-none"

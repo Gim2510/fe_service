@@ -50,7 +50,7 @@ export function SurveyStart() {
     if (!isAuthenticated) return <SurveyIntro />;
 
     return (
-        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#111110] text-white" : "bg-[#E8EDF3] text-slate-900"} px-6 py-32`}>
+        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"} px-6 py-32`}>
             {/* Overlay loader */}
             {initLoading && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">

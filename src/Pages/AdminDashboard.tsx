@@ -33,14 +33,14 @@ export function AdminDashboard() {
 
     if (loadingUsers || loadingSurveys) {
         return (
-            <div className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#111110]" : "bg-[#E8EDF3]"}`}>
+            <div className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}>
                 <FallingLines color={isDark ? "#fff" : "#3B82F6"} width="60" visible />
             </div>
         );
     }
 
     return (
-        <section className={`min-h-screen py-16 ${isDark ? "bg-[#111110] text-white" : "bg-[#E8EDF3] text-slate-900"}`}>
+        <section className={`min-h-screen py-16 ${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"}`}>
             {/* Grid bg */}
             <div className="fixed inset-0 opacity-[0.02] pointer-events-none"
                 style={{ backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`, backgroundSize: "28px 28px" }} />
