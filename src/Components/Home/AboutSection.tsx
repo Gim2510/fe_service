@@ -1,14 +1,73 @@
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { SectionBase } from "./SectionBase.tsx";
 import { useNavigate } from "react-router-dom";
+import { useRef, useEffect, useState } from "react";
 
-const stats = [
-    { value: "47+",    label: "PMI seguite"         },
-    { value: "12",     label: "Settori presidiati"   },
-    { value: "€4.1M",  label: "Margine recuperato"   },
-    { value: "96%",    label: "Clienti fidelizzati"  },
+interface StatConfig {
+    prefix: string;
+    number: number;
+    suffix: string;
+    label: string;
+    decimals?: number;
+}
+
+const stats: StatConfig[] = [
+    { prefix: "",  number: 47,  suffix: "+",  label: "PMI seguite"        },
+    { prefix: "",  number: 12,  suffix: "",   label: "Settori presidiati"  },
+    { prefix: "€", number: 4.1, suffix: "M",  label: "Margine recuperato", decimals: 1 },
+    { prefix: "",  number: 96,  suffix: "%",  label: "Clienti fidelizzati" },
 ];
+
+function AnimatedStat({ stat, delay, isDark }: { stat: StatConfig; delay: number; isDark: boolean }) {
+    const ref = useRef<HTMLDivElement>(null);
+    const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        if (!isInView) return;
+        const duration = 1400;
+        const steps = 60;
+        const increment = stat.number / steps;
+        let current = 0;
+        let step = 0;
+        const timer = setInterval(() => {
+            step++;
+            current = Math.min(increment * step, stat.number);
+            setCount(current);
+            if (step >= steps) clearInterval(timer);
+        }, duration / steps);
+        return () => clearInterval(timer);
+    }, [isInView, stat.number]);
+
+    const display = stat.decimals != null
+        ? count.toFixed(stat.decimals)
+        : Math.round(count).toString();
+
+    return (
+        <motion.div
+            ref={ref}
+            className={`rounded-2xl border p-6 flex flex-col gap-2 ${
+                isDark
+                    ? "bg-[#1C1C1A]/80 border-stone-800/20 hover:border-amber-800/30"
+                    : "bg-white border-slate-200 hover:border-amber-400"
+            } transition-colors duration-300`}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, delay }}
+        >
+            <span className={`text-3xl font-bold tracking-tight font-fjalla ${
+                isDark ? "text-amber-500" : "text-amber-700"
+            }`}>
+                {stat.prefix}{display}{stat.suffix}
+            </span>
+            <span className={`text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>
+                {stat.label}
+            </span>
+        </motion.div>
+    );
+}
 
 export function AboutSection({ theme }: { theme: string }) {
     const isDark = theme === "dark";
@@ -74,27 +133,7 @@ export function AboutSection({ theme }: { theme: string }) {
                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
                 >
                     {stats.map((s, i) => (
-                        <motion.div
-                            key={s.label}
-                            className={`rounded-2xl border p-6 flex flex-col gap-2 ${
-                                isDark
-                                    ? "bg-[#1C1C1A]/80 border-stone-800/20 hover:border-amber-800/30"
-                                    : "bg-white border-slate-200 hover:border-amber-400"
-                            } transition-colors duration-300`}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.45, delay: 0.1 + i * 0.08 }}
-                        >
-                            <span className={`text-3xl font-bold tracking-tight font-fjalla ${
-                                isDark ? "text-amber-500" : "text-amber-700"
-                            }`}>
-                                {s.value}
-                            </span>
-                            <span className={`text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>
-                                {s.label}
-                            </span>
-                        </motion.div>
+                        <AnimatedStat key={s.label} stat={s} delay={0.1 + i * 0.08} isDark={isDark} />
                     ))}
                 </motion.div>
             </div>

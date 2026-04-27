@@ -1,18 +1,14 @@
 import type { FC } from "react";
 import type { PropsBooleanQuestion } from "../../../props.ts";
-import { useTheme } from "../../../Context/ThemeContext.tsx";
 
 const OPTIONS = [
     { label: "Sì", value: true },
     { label: "No", value: false },
 ];
 
-export const BooleanQuestion: FC<PropsBooleanQuestion> = ({ answer, onChange }) => {
-    const { theme } = useTheme();
-    const isDark = theme === "dark";
-
+export const BooleanQuestion: FC<PropsBooleanQuestion> = ({ answer, onChange, isDark }) => {
     return (
-        <div className="grid grid-cols-2 gap-4 py-8">
+        <div className="grid grid-cols-2 gap-4">
             {OPTIONS.map(({ label, value }) => {
                 const isSelected = answer === value;
 

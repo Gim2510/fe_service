@@ -9,6 +9,9 @@ import {LiquidTextBanner} from "../Components/Home/LiquidTextBanner.tsx";
 import {logos} from "../staticData/logos.ts";
 import {SunsetTransition} from "../Components/Home/SunsetTransition.tsx";
 import {AboutSection} from "../Components/Home/AboutSection.tsx";
+import {VideoSection} from "../Components/Home/VideoSection.tsx";
+import {TestimonialsSection} from "../Components/Home/TestimonialsSection.tsx";
+import {FAQSection} from "../Components/Home/FAQSection.tsx";
 
 export function Home() {
     const {theme} = useTheme()
@@ -18,16 +21,27 @@ export function Home() {
             <SunsetTransition theme={theme} />
             <div className={`relative z-10 ${theme === "dark" ? "bg-[#111110]" : "bg-gradient-to-b from-[#FAF8F4] via-[#F0EAE0] to-[#E8DDD0]"}`}>
                 <ProblemiSection theme={theme} />
+                <VideoSection theme={theme} />
                 <WAWD theme={theme} />
                 <MetodSection theme={theme} />
+                <TestimonialsSection theme={theme} />
                 <AboutSection theme={theme} />
                 <LiquidTextBanner
                     theme={theme}
                     messages={[
+                        "Diagnosi in 48h",
+                        "ROI misurabile dal primo mese",
+                        "Zero template generici",
+                        "Integrazione con i tuoi sistemi esistenti",
+                        "Affiancamento fino ai risultati",
+                        "Soluzioni su misura per PMI italiane",
+                        "KPI definiti prima di iniziare",
+                        "Nessun impegno iniziale",
                     ]}
                     logos={logos}
                 />
                 <DigitalMaturitySection theme={theme} />
+                <FAQSection theme={theme} />
             </div>
             <CTASection theme={theme} />
         </main>

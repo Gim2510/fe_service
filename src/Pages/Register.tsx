@@ -61,7 +61,7 @@ export function Register() {
     } focus:ring-1 focus:ring-amber-600/30`;
 
     return (
-        <main className={`relative min-h-screen flex items-start overflow-hidden ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}>
+        <main className={`relative min-h-screen flex items-start overflow-hidden ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`} style={{ scrollbarWidth: "none" }}>
             {/* Background */}
             <div className="absolute inset-0 pointer-events-none">
                 <div
@@ -76,13 +76,13 @@ export function Register() {
                 )}
             </div>
 
-            <div className={`relative z-10 mx-auto w-full max-w-6xl px-6 sm:px-8 py-24 grid lg:grid-cols-2 gap-16 items-start ${
+            <div className={`relative z-10 mx-auto w-full max-w-5xl px-6 sm:px-8 pt-28 pb-16 grid lg:grid-cols-2 gap-10 items-center ${
                 isDark ? "text-white" : "text-slate-900"
             }`}>
 
                 {/* Left copy */}
                 <motion.div
-                    className="flex flex-col gap-6 lg:sticky lg:top-28"
+                    className="flex flex-col gap-6 text-center lg:text-left"
                     initial={{ opacity: 0, x: -24 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
@@ -109,15 +109,15 @@ export function Register() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.55, ease: "easeOut", delay: 0.08 }}
                 >
-                    <div className={`rounded-2xl border backdrop-blur-xl p-8 sm:p-10 ${
+                    <div className={`rounded-2xl border backdrop-blur-xl p-6 sm:p-8 ${
                         isDark
                             ? "bg-[#1C1C1A]/80 border-stone-800/20 shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
                             : "bg-[#F8FAFB] border-slate-200 shadow-[0_8px_40px_rgba(0,0,0,0.06)]"
                     }`}>
-                        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                            <div className="text-center mb-2">
-                                <h2 className={`text-2xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>Crea account</h2>
-                                <p className={`text-sm mt-1 ${isDark ? "text-slate-500" : "text-slate-500"}`}>Inserisci i tuoi dati</p>
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                            <div className="text-center mb-1">
+                                <h2 className={`text-xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>Crea account</h2>
+                                <p className={`text-xs mt-1 ${isDark ? "text-slate-500" : "text-slate-500"}`}>Inserisci i tuoi dati per iniziare</p>
                             </div>
 
                             {(error || googleError) && (
@@ -163,19 +163,22 @@ export function Register() {
                                 <InputConfirm form={form} handleChange={handleChange} theme={theme} passwordsMatch={passwordsMatch} />
                             </div>
 
-                            <Input theme={theme} label="Nome azienda" name="company_name" value={form.company_name} onChange={handleChange} />
-
-                            <div className="flex flex-col gap-2">
-                                <label className={`text-sm font-medium ${isDark ? "text-slate-400" : "text-slate-600"}`}>Ruolo aziendale</label>
-                                <select name="company_role" value={form.company_role} onChange={handleChange} className={selectClass}>
-                                    {companyRoles.map(role => (
-                                        <option key={role} value={role}>{role}</option>
-                                    ))}
-                                </select>
+                            <div className="grid grid-cols-2 gap-3">
+                                <Input theme={theme} label="Nome azienda" name="company_name" value={form.company_name} onChange={handleChange} />
+                                <div className="flex flex-col gap-1.5">
+                                    <label className={`text-sm font-medium ${isDark ? "text-slate-400" : "text-slate-600"}`}>Ruolo aziendale</label>
+                                    <select name="company_role" value={form.company_role} onChange={handleChange} className={selectClass}>
+                                        {companyRoles.map(role => (
+                                            <option key={role} value={role}>{role}</option>
+                                        ))}
+                                    </select>
+                                </div>
                             </div>
 
-                            <Input theme={theme} label="Codice fiscale" name="fiscal_code" value={form.fiscal_code.toUpperCase()} onChange={handleChange} />
-                            <Input theme={theme} label="Partita IVA" name="partita_iva" value={form.partita_iva} onChange={handleChange} />
+                            <div className="grid grid-cols-2 gap-3">
+                                <Input theme={theme} label="Codice fiscale" name="fiscal_code" value={form.fiscal_code.toUpperCase()} onChange={handleChange} />
+                                <Input theme={theme} label="Partita IVA" name="partita_iva" value={form.partita_iva} onChange={handleChange} />
+                            </div>
 
                             <button
                                 type="submit"

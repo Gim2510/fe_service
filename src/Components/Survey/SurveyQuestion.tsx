@@ -5,44 +5,58 @@ import { BooleanQuestion } from "./SurveyQuestion/BooleanQuestion.tsx"
 import { ScaleQuestion } from "./SurveyQuestion/ScaleQuestion.tsx"
 import { TextQuestion } from "./SurveyQuestion/TextQuestion.tsx"
 
-export function SurveyQuestion({question, lang, answer, setAnswer}: PropsSurveyQuestion) {
+export function SurveyQuestion({ question, lang, answer, setAnswer, theme }: PropsSurveyQuestion) {
+    const isDark = theme === "dark"
+
+    let content: React.ReactNode = null
+
     switch (question.type) {
         case "multipleChoice":
-            return (
+            content = (
                 <MultipleChoiceQuestion
                     options={question.opt?.[lang] ?? []}
                     answer={answer}
                     onChange={setAnswer}
+                    isDark={isDark}
                 />
             )
+            break
 
         case "boolean":
-            return (
+            content = (
                 <BooleanQuestion
                     answer={answer}
                     onChange={setAnswer}
+                    isDark={isDark}
                 />
             )
+            break
 
         case "scale":
-            return (
+            content = (
                 <ScaleQuestion
                     min={question.min}
                     max={question.max}
                     answer={answer}
                     onChange={setAnswer}
+                    isDark={isDark}
                 />
             )
+            break
 
         case "text":
-            return (
+            content = (
                 <TextQuestion
                     answer={answer}
                     onChange={setAnswer}
+                    isDark={isDark}
                 />
             )
+            break
 
         default:
             return null
     }
+
+    return <div className="py-8">{content}</div>
 }

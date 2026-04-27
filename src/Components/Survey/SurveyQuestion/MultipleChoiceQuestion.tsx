@@ -1,13 +1,7 @@
-import { useTheme } from "../../../Context/ThemeContext.tsx";
 import type { FC } from "react";
 import type { PropsMultipleChoiceQuestion } from "../../../props.ts";
 
-type MultipleChoiceQuestionProps = PropsMultipleChoiceQuestion & { multiple?: boolean }
-
-export const MultipleChoiceQuestion: FC<MultipleChoiceQuestionProps> = ({ options, answer, onChange, multiple = false }) => {
-    const { theme } = useTheme();
-    const isDark = theme === "dark";
-
+export const MultipleChoiceQuestion: FC<PropsMultipleChoiceQuestion> = ({ options, answer, onChange, isDark, multiple = false }) => {
     const handleClick = (option: string) => {
         if (multiple) {
             const current = Array.isArray(answer) ? answer : [];
@@ -19,7 +13,7 @@ export const MultipleChoiceQuestion: FC<MultipleChoiceQuestionProps> = ({ option
     };
 
     return (
-        <div className="grid gap-3 py-8">
+        <div className="grid gap-3">
             {options.map(option => {
                 const isSelected = multiple
                     ? Array.isArray(answer) && answer.includes(option)

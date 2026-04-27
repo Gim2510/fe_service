@@ -54,7 +54,7 @@ export function Login() {
                 )}
             </div>
 
-            <div className={`relative z-10 mx-auto w-full max-w-5xl px-6 sm:px-8 py-24 grid lg:grid-cols-2 gap-16 items-center ${
+            <div className={`relative z-10 mx-auto w-full max-w-5xl px-6 sm:px-8 pt-28 pb-16 grid lg:grid-cols-2 gap-10 items-center ${
                 isDark ? "text-white" : "text-slate-900"
             }`}>
 
@@ -91,7 +91,7 @@ export function Login() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.55, ease: "easeOut", delay: 0.08 }}
                 >
-                    <div className={`rounded-2xl border backdrop-blur-xl p-8 sm:p-10 ${
+                    <div className={`rounded-2xl border backdrop-blur-xl p-6 sm:p-8 ${
                         isDark
                             ? "bg-[#1C1C1A]/80 border-stone-800/20 shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
                             : "bg-[#F8FAFB] border-slate-200 shadow-[0_8px_40px_rgba(0,0,0,0.06)]"
@@ -116,12 +116,12 @@ export function Login() {
                             </div>
                         )}
 
-                        <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
                             <div className="text-center mb-1">
-                                <h2 className={`text-2xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                                <h2 className={`text-xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                                     Accedi
                                 </h2>
-                                <p className={`text-sm mt-1 ${isDark ? "text-slate-500" : "text-slate-500"}`}>
+                                <p className={`text-xs mt-1 ${isDark ? "text-slate-500" : "text-slate-500"}`}>
                                     Inserisci le tue credenziali
                                 </p>
                             </div>

@@ -1,46 +1,41 @@
 import type { FC } from "react";
 import type { PropsScaleQuestion } from "../../../props.ts";
-import { useTheme } from "../../../Context/ThemeContext.tsx";
 
-export const ScaleQuestion: FC<PropsScaleQuestion> = ({ min = 1, max = 5, answer, onChange }) => {
-    const { theme } = useTheme();
-    const isDark = theme === "dark";
-    const value = typeof answer === "number" ? answer : Math.round((min + max) / 2);
-
-    const pct = ((value - min) / (max - min)) * 100;
+export const ScaleQuestion: FC<PropsScaleQuestion> = ({ min = 1, max = 5, answer, onChange, isDark }) => {
+    const steps = Array.from({ length: max - min + 1 }, (_, i) => min + i);
+    const isWide = steps.length > 7;
 
     return (
-        <div className="space-y-6 py-8">
-            <div className={`text-center text-5xl font-semibold tabular-nums ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                {value}
+        <div className="space-y-4">
+            <div className={`flex ${isWide ? "flex-wrap" : ""} gap-2`}>
+                {steps.map(n => {
+                    const isSelected = answer === n;
+                    return (
+                        <button
+                            key={n}
+                            type="button"
+                            onClick={() => onChange(n)}
+                            className={`
+                                ${isWide ? "min-w-[3rem]" : "flex-1"}
+                                py-4 rounded-xl border text-sm font-semibold
+                                transition-all duration-200 cursor-pointer
+                                ${isSelected
+                                    ? isDark
+                                        ? "bg-amber-700/15 border-amber-600/40 text-amber-400"
+                                        : "bg-amber-50 border-amber-500 text-amber-800"
+                                    : isDark
+                                        ? "bg-[#1C1C1A]/60 border-stone-800/20 text-slate-400 hover:border-amber-800/30 hover:text-slate-200"
+                                        : "bg-[#F8FAFB] border-slate-200 text-slate-600 hover:border-amber-400 hover:bg-amber-50/50"
+                                }`}
+                        >
+                            {n}
+                        </button>
+                    );
+                })}
             </div>
-
-            <div className="relative">
-                <input
-                    type="range"
-                    min={min}
-                    max={max}
-                    value={value}
-                    onChange={e => onChange(Number(e.target.value))}
-                    className="w-full h-2 rounded-full appearance-none cursor-pointer
-                        [&::-webkit-slider-thumb]:appearance-none
-                        [&::-webkit-slider-thumb]:w-5
-                        [&::-webkit-slider-thumb]:h-5
-                        [&::-webkit-slider-thumb]:rounded-full
-                        [&::-webkit-slider-thumb]:bg-amber-600
-                        [&::-webkit-slider-thumb]:shadow-lg
-                        [&::-webkit-slider-thumb]:cursor-pointer"
-                    style={{
-                        background: isDark
-                            ? `linear-gradient(to right, #3B82F6 ${pct}%, #1e3a5f ${pct}%)`
-                            : `linear-gradient(to right, #3B82F6 ${pct}%, #e2e8f0 ${pct}%)`,
-                    }}
-                />
-            </div>
-
-            <div className={`flex justify-between text-xs font-medium ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-                <span>{min}</span>
-                <span>{max}</span>
+            <div className={`flex justify-between text-xs ${isDark ? "text-slate-600" : "text-slate-400"}`}>
+                <span>{min} — minimo</span>
+                <span>massimo — {max}</span>
             </div>
         </div>
     );

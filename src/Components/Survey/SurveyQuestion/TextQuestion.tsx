@@ -1,14 +1,11 @@
 import type { FC } from "react";
 import type { PropsTextQuestion } from "../../../props.ts";
-import { useTheme } from "../../../Context/ThemeContext.tsx";
 
-export const TextQuestion: FC<PropsTextQuestion> = ({ answer, onChange }) => {
-    const { theme } = useTheme();
-    const isDark = theme === "dark";
+export const TextQuestion: FC<PropsTextQuestion> = ({ answer, onChange, isDark }) => {
     const value = answer ?? "";
 
     return (
-        <div className="space-y-2 py-8">
+        <div className="space-y-2">
             <textarea
                 value={value}
                 onChange={e => onChange(e.target.value)}

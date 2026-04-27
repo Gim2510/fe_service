@@ -30,7 +30,7 @@ export function Survey() {
     if (loading) {
         return (
             <div className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}>
-                <FallingLines color={isDark ? "#fff" : "#3B82F6"} width="60" visible />
+                <FallingLines color={isDark ? "#fff" : "#B45309"} width="60" visible />
             </div>
         );
     }

@@ -1,6 +1,51 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Clock, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useMemo } from "react";
+
+const PARTICLE_COUNT = 22;
+
+function FloatingParticles({ isDark }: { isDark: boolean }) {
+    const particles = useMemo(() =>
+        Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
+            id: i,
+            x: Math.random() * 100,
+            y: Math.random() * 100,
+            size: 1 + Math.random() * 2.5,
+            duration: 6 + Math.random() * 10,
+            delay: Math.random() * 8,
+            opacity: 0.08 + Math.random() * 0.18,
+        })), []);
+
+    return (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {particles.map((p) => (
+                <motion.div
+                    key={p.id}
+                    className={`absolute rounded-full ${isDark ? "bg-amber-500" : "bg-amber-600"}`}
+                    style={{
+                        left: `${p.x}%`,
+                        top: `${p.y}%`,
+                        width: p.size,
+                        height: p.size,
+                        opacity: p.opacity,
+                    }}
+                    animate={{
+                        y: [0, -28, 0],
+                        x: [0, Math.random() > 0.5 ? 10 : -10, 0],
+                        opacity: [p.opacity, p.opacity * 2.5, p.opacity],
+                    }}
+                    transition={{
+                        duration: p.duration,
+                        delay: p.delay,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                    }}
+                />
+            ))}
+        </div>
+    );
+}
 
 export function CTASection({ theme }: { theme: string }) {
     const isDark = theme === "dark";
@@ -15,6 +60,9 @@ export function CTASection({ theme }: { theme: string }) {
                     ? "bg-gradient-to-br from-[#0C0C0B] via-[#161410] to-[#0C0C0B]"
                     : "bg-gradient-to-br from-[#FDFAF4] via-[#F2E8D5] to-[#FDFAF4]"
             }`} />
+
+            {/* Floating particles */}
+            <FloatingParticles isDark={isDark} />
 
             {/* Decorative elements */}
             <div className="absolute inset-0 pointer-events-none">
