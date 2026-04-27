@@ -84,6 +84,24 @@ const EDGES: EdgeDef[] = [
     { from: "hr",        to: "leads",     type: "outer"  },
 ];
 
+// ── Node info (shown on double-click expand) ───────────────────────────────────
+
+const NODE_INFO: Record<string, { metric: string; desc: string }> = {
+    hub:       { metric: "13 sistemi",    desc: "connessi in tempo reale"       },
+    crm:       { metric: "+24% lead",     desc: "tasso di conversione"          },
+    analytics: { metric: "Real-time",     desc: "dati aggiornati ogni 30s"      },
+    sales:     { metric: "€2.4M",         desc: "pipeline commerciale"          },
+    finance:   { metric: "−12% costi",    desc: "risparmio operativo"           },
+    ops:       { metric: "85% auto",      desc: "processi senza intervento"     },
+    leads:     { metric: "340",           desc: "nuovi lead questo mese"        },
+    reports:   { metric: "28 report",     desc: "generati automaticamente"      },
+    forecast:  { metric: "94% acc.",      desc: "precisione forecast"           },
+    pipeline:  { metric: "€890K",         desc: "valore in lavorazione"         },
+    invoicing: { metric: "48h",           desc: "tempo medio di incasso"        },
+    support:   { metric: "4.8 / 5",       desc: "soddisfazione clienti"         },
+    hr:        { metric: "91 / 100",      desc: "engagement del team"           },
+};
+
 // ── Math ───────────────────────────────────────────────────────────────────────
 
 function qbez(p0: V2, cp: V2, p1: V2, t: number): V2 {
@@ -183,26 +201,71 @@ export function HeroNetwork() {
         let dragId:     string | null = null;
         let prevMx = 0, prevMy = 0;
         let throwVx = 0, throwVy = 0;
+        let dragMoved = false; void dragMoved; // reserved for future click-vs-drag distinction
+
+        // ── Expand state ───────────────────────────────────────────────────────
+        let expandedId:   string | null = null;
+        let expandT       = 0;     // 0=collapsed → 1=expanded
+        let expandDir     = 0;     // +1 expanding, -1 collapsing, 0 idle
+        let lastClickId:  string | null = null;
+        let lastClickTime = 0;
+
+        // ── Auto-demo state ────────────────────────────────────────────────────
+        type DemoPhase = "waiting" | "expanding" | "open" | "collapsing";
+        let autoDemo      = true;
+        let demoPhase:    DemoPhase = "waiting";
+        let demoTimer     = 2.0;   // initial delay before first expand
+        let lastDemoId:   string | null = null;
+        const DEMO_NODES  = NODES.map(n => n.id); // all nodes eligible
+        const pickDemoNode = () => {
+            const pool = DEMO_NODES.filter(id => id !== lastDemoId);
+            return pool[Math.floor(Math.random() * pool.length)];
+        };
 
         const clientXY = (e: PointerEvent): V2 => {
             const r = canvas.getBoundingClientRect();
             return [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height];
         };
 
-        const onPointerDown = (e: PointerEvent) => {
-            const [nx, ny] = clientXY(e);
-            const W = canvas.getBoundingClientRect().width;
-            const H = canvas.getBoundingClientRect().height;
+        const findClosestNode = (nx: number, ny: number, W: number, H: number): string | null => {
             let closest: string | null = null;
-            let minD = 40 / Math.min(W, H);  // 40px threshold in normalized
-
+            let minD = 60 / Math.min(W, H);
             states.forEach((ns, id) => {
                 const d = Math.hypot(nx - ns.cx, (ny - ns.cy) * (W / H));
                 if (d < minD) { minD = d; closest = id; }
             });
+            return closest;
+        };
+
+        const onPointerDown = (e: PointerEvent) => {
+            const [nx, ny] = clientXY(e);
+            const W = canvas.getBoundingClientRect().width;
+            const H = canvas.getBoundingClientRect().height;
+            const closest = findClosestNode(nx, ny, W, H);
 
             if (closest) {
+                // Double-click detection
+                const now = performance.now();
+                if (closest === lastClickId && now - lastClickTime < 350) {
+                    // Double-click → toggle expand, stop auto-demo
+                    autoDemo = false;
+                    if (expandedId === closest) {
+                        expandDir = -1;
+                    } else {
+                        expandedId = closest;
+                        expandT    = 0;
+                        expandDir  = 1;
+                    }
+                    lastClickTime = 0;
+                    lastClickId   = null;
+                    e.preventDefault();
+                    return;
+                }
+                lastClickTime = now;
+                lastClickId   = closest;
+
                 dragId  = closest;
+                dragMoved = false;
                 const ns = states.get(closest)!;
                 ns.dragged = true;
                 ns.vx = 0; ns.vy = 0;
@@ -211,6 +274,13 @@ export function HeroNetwork() {
                 canvas.setPointerCapture(e.pointerId);
                 canvas.style.cursor = "grabbing";
                 e.preventDefault();
+            } else {
+                // Click outside → collapse
+                if (expandedId) {
+                    expandDir = -1;
+                }
+                lastClickId   = null;
+                lastClickTime = 0;
             }
         };
 
@@ -231,6 +301,7 @@ export function HeroNetwork() {
             }
 
             const [nx, ny] = clientXY(e);
+            dragMoved = true;
             const ns = states.get(dragId)!;
             throwVx = (nx - prevMx) / (1 / 60);   // approx velocity
             throwVy = (ny - prevMy) / (1 / 60);
@@ -263,9 +334,54 @@ export function HeroNetwork() {
         let last = performance.now();
         let raf:  number;
 
+        const easeInOut = (t: number) => t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+
         const frame = (now: number) => {
             const dt = Math.min((now - last) / 1000, 0.05);
             last = now;
+
+            // ── Expand animation ───────────────────────────────────────────────
+            if (expandDir !== 0) {
+                expandT += expandDir * dt * 2.0; // ~0.5s duration
+                if (expandT >= 1) { expandT = 1; expandDir = 0; }
+                if (expandT <= 0) { expandT = 0; expandDir = 0; expandedId = null; }
+            }
+
+            // ── Auto-demo driver ───────────────────────────────────────────────
+            if (autoDemo) {
+                switch (demoPhase) {
+                    case "waiting":
+                        demoTimer -= dt;
+                        if (demoTimer <= 0) {
+                            const id   = pickDemoNode();
+                            lastDemoId = id;
+                            expandedId = id;
+                            expandT    = 0;
+                            expandDir  = 1;
+                            demoPhase  = "expanding";
+                        }
+                        break;
+                    case "expanding":
+                        if (expandDir === 0 && expandT >= 1) {
+                            demoPhase  = "open";
+                            demoTimer  = 2.8; // seconds to stay open
+                        }
+                        break;
+                    case "open":
+                        demoTimer -= dt;
+                        if (demoTimer <= 0) {
+                            expandDir = -1;
+                            demoPhase = "collapsing";
+                        }
+                        break;
+                    case "collapsing":
+                        if (expandDir === 0 && expandT <= 0) {
+                            demoPhase = "waiting";
+                            demoTimer = 1.2; // pause between nodes
+                        }
+                        break;
+                }
+            }
 
             const W = canvas.width  / dpr;
             const H = canvas.height / dpr;
@@ -275,20 +391,24 @@ export function HeroNetwork() {
             ctx.clearRect(0, 0, W, H);
 
             // ── Palette ────────────────────────────────────────────────────────
-            // Warm gold (hub + tier1)
-            const Gw   = isDark ? [201, 168,  76] : [140, 100,  40];
-            const ga   = (a: number) => `rgba(${Gw[0]},${Gw[1]},${Gw[2]},${a.toFixed(3)})`;
-            const gHex = isDark ? "#C9A84C"       : "#8C6428";
-            const gBrt = isDark ? "#FFE090"       : "#D4A030";
+            // alpha multiplier: light mode needs higher values to pop on cream bg
+            const aM = isDark ? 1.0 : 2.4;
+            const clamp = (v: number) => Math.min(1, v);
+
+            // Amber — exact Tailwind values used in text/CTAs across the page
+            const Gw   = isDark ? [245, 158,  11] : [180,  83,   9]; // amber-500 / amber-700
+            const ga   = (a: number) => `rgba(${Gw[0]},${Gw[1]},${Gw[2]},${clamp(a * aM).toFixed(3)})`;
+            const gHex = isDark ? "#F59E0B"       : "#B45309";
+            const gBrt = isDark ? "#FCD34D"       : "#F59E0B";
             // Steel blue (tier2)
-            const Gs   = isDark ? [ 91, 155, 213] : [ 43,  108, 176];
-            const sa   = (a: number) => `rgba(${Gs[0]},${Gs[1]},${Gs[2]},${a.toFixed(3)})`;
+            const Gs   = isDark ? [ 91, 155, 213] : [ 43, 108, 176];
+            const sa   = (a: number) => `rgba(${Gs[0]},${Gs[1]},${Gs[2]},${clamp(a * aM).toFixed(3)})`;
             const sHex = isDark ? "#5B9BD5"       : "#2B6CB0";
             const sBrt = isDark ? "#A8D4FF"       : "#5B9BD5";
             // Shared
-            const gBg  = isDark ? "rgba(22,20,14,0.90)" : "rgba(248,246,240,0.92)";
-            const tCol = isDark ? "#CEC0A0"       : "#4A3A1C";
-            const tCo2 = isDark ? "#94BAD8"       : "#2B6CB0";
+            const gBg  = isDark ? "rgba(22,20,14,0.90)" : "rgba(255,250,240,0.97)";
+            const tCol = isDark ? "#FCD34D"       : "#1C1917"; // amber-300 / stone-900
+            const tCo2 = isDark ? "#94BAD8"       : "#0F172A"; // / slate-900
 
             // Edge color helpers
             const edgeColor = (type: EdgeType, alpha: number) => {
@@ -380,7 +500,7 @@ export function HeroNetwork() {
             // ── Dot grid ───────────────────────────────────────────────────────
             {
                 const sp   = 36;
-                const dotA = isDark ? 0.055 : 0.07;
+                const dotA = isDark ? 0.055 : 0.14;
                 ctx.fillStyle = ga(dotA);
                 for (let gx = sp / 2; gx < W; gx += sp) {
                     for (let gy = sp / 2; gy < H; gy += sp) {
@@ -399,10 +519,10 @@ export function HeroNetwork() {
                 ctx.beginPath();
                 ctx.moveTo(a[0], a[1]);
                 ctx.quadraticCurveTo(cp[0], cp[1], b[0], b[1]);
-                const baseAlpha = e.type === "spoke" ? 0.14
-                                : e.type === "inner"  ? 0.10
-                                : e.type === "bridge" ? 0.11
-                                :                       0.06;
+                const baseAlpha = e.type === "spoke" ? (isDark ? 0.14 : 0.38)
+                                : e.type === "inner"  ? (isDark ? 0.10 : 0.28)
+                                : e.type === "bridge" ? (isDark ? 0.11 : 0.30)
+                                :                       (isDark ? 0.06 : 0.18);
                 ctx.strokeStyle = edgeColor(e.type, baseAlpha);
                 ctx.lineWidth   = e.type === "spoke" ? 1.1 : e.type === "outer" ? 0.6 : 0.85;
                 ctx.stroke();
@@ -477,7 +597,7 @@ export function HeroNetwork() {
                 if (rings[i].t > 1.5) { rings.splice(i, 1); continue; }
                 const prog = rings[i].t / 1.5;
                 const rr   = 32 + prog * 70;
-                const al   = (1 - prog) * (1 - prog) * 0.50;
+                const al   = (1 - prog) * (1 - prog) * (isDark ? 0.50 : 0.80);
                 ctx.beginPath();
                 ctx.arc(hubPos[0], hubPos[1], rr, 0, Math.PI * 2);
                 ctx.strokeStyle = ga(al);
@@ -485,8 +605,9 @@ export function HeroNetwork() {
                 ctx.stroke();
             }
 
-            // ── Nodes ──────────────────────────────────────────────────────────
+            // ── Nodes (skip expanded — drawn last) ────────────────────────────
             NODES.forEach(n => {
+                if (n.id === expandedId && expandT > 0) return; // drawn in expanded pass
                 const ns       = states.get(n.id)!;
                 const [x, y]   = px(ns, n);
                 const isHub    = n.tier === 0;
@@ -520,29 +641,69 @@ export function HeroNetwork() {
                 ctx.fillStyle = ig;
                 ctx.fill();
 
-                // Body
+                // Body — backdrop blur: sample already-drawn canvas content, blur it inside clip
+                ctx.save();
                 ctx.beginPath();
                 ctx.arc(x, y, r, 0, Math.PI * 2);
-                ctx.fillStyle = gBg;
+                ctx.clip();
+                ctx.filter = `blur(${isHub ? 7 : 5}px)`;
+                ctx.drawImage(canvas, 0, 0, W, H);
+                ctx.filter = "none";
+                // Tint overlay on top of blur
+                if (isDark) {
+                    ctx.fillStyle = gBg;
+                } else {
+                    const bubble = ctx.createRadialGradient(
+                        x - r * 0.20, y - r * 0.25, r * 0.05,
+                        x, y, r
+                    );
+                    bubble.addColorStop(0,    nodeGa(0.08));
+                    bubble.addColorStop(0.55, nodeGa(0.16));
+                    bubble.addColorStop(1,    nodeGa(0.36));
+                    ctx.fillStyle = bubble;
+                }
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
                 ctx.fill();
+                ctx.restore();
 
                 // Border
                 ctx.beginPath();
                 ctx.arc(x, y, r, 0, Math.PI * 2);
                 ctx.strokeStyle = isDragging
                     ? nodeGa(0.90)
-                    : isHub ? nodeHex : nodeGa(isDark ? 0.42 : 0.48);
-                ctx.lineWidth = isHub ? 1.8 : 1.0;
+                    : isHub ? nodeHex : nodeGa(isDark ? 0.42 : 0.85);
+                ctx.lineWidth = isHub ? (isDark ? 1.8 : 2.2) : (isDark ? 1.0 : 1.6);
                 ctx.stroke();
 
-                // Top-left rim highlight
-                ctx.save();
-                ctx.beginPath();
-                ctx.arc(x, y, r - 0.5, -Math.PI * 0.95, -Math.PI * 0.15);
-                ctx.strokeStyle = nodeGa(isDark ? 0.28 : 0.20);
-                ctx.lineWidth   = 1.5;
-                ctx.stroke();
-                ctx.restore();
+                // Glossy shine — top-left specular (bubble effect, light mode only)
+                if (!isDark) {
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(x, y, r, 0, Math.PI * 2);
+                    ctx.clip();
+                    const shine = ctx.createRadialGradient(
+                        x - r * 0.35, y - r * 0.38, 0,
+                        x - r * 0.20, y - r * 0.20, r * 0.72
+                    );
+                    shine.addColorStop(0,   "rgba(255,255,255,0.62)");
+                    shine.addColorStop(0.45, "rgba(255,255,255,0.18)");
+                    shine.addColorStop(1,    "rgba(255,255,255,0)");
+                    ctx.fillStyle = shine;
+                    ctx.fillRect(x - r, y - r, r * 2, r * 2);
+                    ctx.restore();
+                }
+
+                // Top-left rim highlight (dark only — light uses shine instead)
+                if (isDark) {
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(x, y, r - 0.5, -Math.PI * 0.95, -Math.PI * 0.15);
+                    ctx.strokeStyle = nodeGa(0.28);
+                    ctx.lineWidth   = 1.5;
+                    ctx.stroke();
+                    ctx.restore();
+                }
 
                 // Hub: dual counter-rotating dashed rings
                 if (isHub) {
@@ -552,8 +713,8 @@ export function HeroNetwork() {
                     ctx.beginPath();
                     ctx.arc(0, 0, r + 11, 0, Math.PI * 2);
                     ctx.setLineDash([6, 10]);
-                    ctx.strokeStyle = ga(0.30);
-                    ctx.lineWidth   = 0.9;
+                    ctx.strokeStyle = ga(isDark ? 0.30 : 0.60);
+                    ctx.lineWidth   = isDark ? 0.9 : 1.2;
                     ctx.stroke();
                     ctx.setLineDash([]);
                     ctx.restore();
@@ -564,37 +725,41 @@ export function HeroNetwork() {
                     ctx.beginPath();
                     ctx.arc(0, 0, r + 5, 0, Math.PI * 2);
                     ctx.setLineDash([3, 14]);
-                    ctx.strokeStyle = ga(0.18);
+                    ctx.strokeStyle = ga(isDark ? 0.18 : 0.40);
                     ctx.lineWidth   = 0.7;
                     ctx.stroke();
                     ctx.setLineDash([]);
                     ctx.restore();
                 }
 
-                // Inner fill highlight
-                const hl = ctx.createRadialGradient(x - r * 0.28, y - r * 0.32, 0, x, y, r);
-                hl.addColorStop(0, nodeGa(isHub ? 0.22 : 0.10));
-                hl.addColorStop(1, nodeGa(0));
-                ctx.beginPath();
-                ctx.arc(x, y, r, 0, Math.PI * 2);
-                ctx.fillStyle = hl;
-                ctx.fill();
+                // Inner fill highlight (dark only)
+                if (isDark) {
+                    const hl = ctx.createRadialGradient(x - r * 0.28, y - r * 0.32, 0, x, y, r);
+                    hl.addColorStop(0, nodeGa(isHub ? 0.22 : 0.10));
+                    hl.addColorStop(1, nodeGa(0));
+                    ctx.beginPath();
+                    ctx.arc(x, y, r, 0, Math.PI * 2);
+                    ctx.fillStyle = hl;
+                    ctx.fill();
+                }
 
                 // Label
                 ctx.textAlign    = "center";
                 ctx.textBaseline = "middle";
                 if (isHub) {
-                    ctx.fillStyle = gHex;
-                    ctx.font      = `700 10px 'Fjalla One', Georgia, serif`;
+                    ctx.fillStyle = isDark ? gHex : "#1C1917";
+                    ctx.font      = `600 9.5px system-ui, -apple-system, sans-serif`;
+                    ctx.letterSpacing = "0.08em";
                     ctx.fillText("DATA", x, y - 6);
-                    ctx.font      = `400 8.5px 'Fjalla One', Georgia, serif`;
-                    ctx.globalAlpha = 0.70;
+                    ctx.font      = `500 8px system-ui, -apple-system, sans-serif`;
+                    ctx.globalAlpha = 0.65;
                     ctx.fillText("HUB", x, y + 6);
                     ctx.globalAlpha = 1;
+                    ctx.letterSpacing = "0px";
                 } else {
-                    const sz = n.label.length > 7 ? 7.5 : isTier2 ? 8.0 : 9.0;
+                    const sz = n.label.length > 7 ? 7.5 : isTier2 ? 8.5 : 9.0;
                     ctx.fillStyle = isTier2 ? tCo2 : tCol;
-                    ctx.font      = `600 ${sz}px 'Fjalla One', Georgia, serif`;
+                    ctx.font      = `600 ${sz}px system-ui, -apple-system, sans-serif`;
                     ctx.fillText(n.label, x, y);
                 }
             });
@@ -606,13 +771,114 @@ export function HeroNetwork() {
                 const cp    = ctrlPt(a, b);
                 const mid   = qbez(a, cp, b, 0.42);
                 const pulse = 0.5 + 0.5 * Math.sin(T * 1.4 + a[0] * 0.05);
-                ctx.fillStyle    = ga(pulse * 0.22);
+                ctx.fillStyle    = ga(pulse * (isDark ? 0.22 : 0.55));
                 ctx.font         = `400 7px monospace`;
                 ctx.textAlign    = "center";
                 ctx.textBaseline = "middle";
                 ctx.fillText("◆", mid[0], mid[1]);
             });
 
+            // ── Expanded node (drawn last = on top) ────────────────────────────
+            if (expandedId && expandT > 0) {
+                const n    = ndMap.get(expandedId)!;
+                const ns   = states.get(expandedId)!;
+                const [x, y] = px(ns, n);
+                const isHub  = n.tier === 0;
+                const isTier2 = n.tier === 2;
+                const rBase  = isHub ? 32 : isTier2 ? 18 : 22;
+                const rMax   = isHub ? 82 : 70;
+                const prog   = easeInOut(expandT);
+                const r      = rBase + (rMax - rBase) * prog;
+                const nodeGa = isTier2 ? sa : ga;
+                const nodeHex = isTier2 ? sHex : gHex;
+                const info   = NODE_INFO[expandedId] ?? { metric: "", desc: "" };
+
+                // Outer glow
+                const og = ctx.createRadialGradient(x, y, r * 0.3, x, y, r * 2.6);
+                og.addColorStop(0, nodeGa(isHub ? 0.28 : 0.18));
+                og.addColorStop(1, nodeGa(0));
+                ctx.beginPath();
+                ctx.arc(x, y, r * 2.6, 0, Math.PI * 2);
+                ctx.fillStyle = og;
+                ctx.fill();
+
+                // Backdrop blur body
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.clip();
+                ctx.filter = `blur(${isHub ? 9 : 7}px)`;
+                ctx.drawImage(canvas, 0, 0, W, H);
+                ctx.filter = "none";
+                // Tint
+                if (isDark) {
+                    ctx.fillStyle = gBg;
+                } else {
+                    const bub = ctx.createRadialGradient(x - r * 0.2, y - r * 0.25, r * 0.05, x, y, r);
+                    bub.addColorStop(0,    nodeGa(0.08));
+                    bub.addColorStop(0.55, nodeGa(0.18));
+                    bub.addColorStop(1,    nodeGa(0.42));
+                    ctx.fillStyle = bub;
+                }
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.fill();
+                // Glossy shine (light mode)
+                if (!isDark) {
+                    const shine = ctx.createRadialGradient(x - r * 0.35, y - r * 0.38, 0, x - r * 0.2, y - r * 0.2, r * 0.72);
+                    shine.addColorStop(0,   "rgba(255,255,255,0.55)");
+                    shine.addColorStop(0.45, "rgba(255,255,255,0.15)");
+                    shine.addColorStop(1,    "rgba(255,255,255,0)");
+                    ctx.fillStyle = shine;
+                    ctx.fillRect(x - r, y - r, r * 2, r * 2);
+                }
+                ctx.restore();
+
+                // Border
+                ctx.beginPath();
+                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.strokeStyle = nodeHex;
+                ctx.lineWidth   = isHub ? 2.2 : 1.8;
+                ctx.stroke();
+
+                // Counter-rotating dashed ring (hub style for all expanded)
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(T * 0.28);
+                ctx.beginPath();
+                ctx.arc(0, 0, r + 8, 0, Math.PI * 2);
+                ctx.setLineDash([5, 9]);
+                ctx.strokeStyle = nodeGa(isDark ? 0.28 : 0.55);
+                ctx.lineWidth   = 0.9;
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.restore();
+
+                // Content — fades in with prog
+                ctx.globalAlpha = Math.max(0, (prog - 0.55) / 0.45); // appear in last 45% of anim
+                ctx.textAlign    = "center";
+                ctx.textBaseline = "middle";
+
+                // Node label (small, dimmed)
+                ctx.fillStyle = isTier2 ? tCo2 : tCol;
+                ctx.font      = `500 9px system-ui, -apple-system, sans-serif`;
+                ctx.globalAlpha *= 0.65;
+                ctx.fillText(n.label.toUpperCase(), x, y - r * 0.44);
+                ctx.globalAlpha /= 0.65;
+
+                // Metric (large, colored)
+                ctx.fillStyle = nodeHex;
+                const metricSz = info.metric.length > 8 ? 13 : 16;
+                ctx.font      = `700 ${metricSz}px system-ui, -apple-system, sans-serif`;
+                ctx.fillText(info.metric, x, y - r * 0.08);
+
+                // Description (small, muted)
+                ctx.fillStyle = isTier2 ? tCo2 : tCol;
+                ctx.font      = `400 8.5px system-ui, -apple-system, sans-serif`;
+                ctx.globalAlpha *= 0.70;
+                ctx.fillText(info.desc, x, y + r * 0.35);
+                ctx.globalAlpha = 1;
+            }
 
             raf = requestAnimationFrame(frame);
         };
