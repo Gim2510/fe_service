@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FallingLines } from "react-loader-spinner";
 import { ArrowLeft, MapPin, Clock, Briefcase, DollarSign, ChevronRight } from "lucide-react";
 import { useTheme } from "../../Context/ThemeContext.tsx";
@@ -50,95 +50,93 @@ export function CareersFlowPage() {
     const { theme } = useTheme();
     const isDark = theme === "dark";
 
-    const [step, setStep] = useState<Step>("list");
+    const [step,        setStep]        = useState<Step>("list");
     const [selectedJob, setSelectedJob] = useState<CreateJobPositionDTO | null>(null);
-    const [jobs, setJobs] = useState<CreateJobPositionDTO[]>([]);
+    const [jobs,        setJobs]        = useState<CreateJobPositionDTO[]>([]);
 
     const { getAllJobOffers, loading, error } = useGetAllJobOffers();
 
     useEffect(() => {
-        const fetchJobs = async () => {
-            try {
-                const data = await getAllJobOffers();
-                setJobs(data);
-            } catch (err) {
-                console.error(err);
-            }
-        };
-        fetchJobs();
+        getAllJobOffers().then(setJobs).catch(console.error);
     }, []);
 
-    const displayLocation = (location: CreateJobPositionDTO["location"]) => {
-        if (location.remote) {
-            const policy = location.remotePolicy === "full-remote"
-                ? "Remote"
-                : location.remotePolicy === "hybrid"
-                    ? "Remote / Hybrid"
-                    : "Remote";
-            return `${policy} · ${location.country}${location.city ? ", " + location.city : ""}`;
-        }
-        return `${location.country}${location.city ? ", " + location.city : ""}`;
+    const border    = isDark ? "border-stone-800/30" : "border-slate-200";
+    const mutedText = isDark ? "text-slate-500" : "text-slate-400";
+    const bodyText  = isDark ? "text-slate-400" : "text-slate-600";
+
+    const displayLocation = (loc: CreateJobPositionDTO["location"]) => {
+        const policy = loc.remote
+            ? (loc.remotePolicy === "full-remote" ? "Remote" : "Remote / Hybrid")
+            : null;
+        const place = `${loc.country}${loc.city ? ", " + loc.city : ""}`;
+        return policy ? `${policy} · ${place}` : place;
     };
 
-    const displayEmploymentType = (employment: CreateJobPositionDTO["employment"]) => {
-        const typeMap: Record<typeof employment.type, string> = {
-            "full-time": "Full-time",
-            "part-time": "Part-time",
-            "contract": "Contratto",
-            "internship": "Stage",
-            "freelance": "Freelance",
-        };
-        return typeMap[employment.type] || employment.type;
-    };
+    const displayEmploymentType = (emp: CreateJobPositionDTO["employment"]) => ({
+        "full-time": "Full-time", "part-time": "Part-time",
+        "contract": "Contratto", "internship": "Stage", "freelance": "Freelance",
+    }[emp.type] ?? emp.type);
 
-    const displaySalary = (employment: CreateJobPositionDTO["employment"]) => {
-        if (!employment.salary?.visible) return null;
-        const { min, max, currency, period } = employment.salary;
+    const displaySalary = (emp: CreateJobPositionDTO["employment"]) => {
+        if (!emp.salary?.visible) return null;
+        const { min, max, currency, period } = emp.salary;
         if (!min && !max) return null;
-        const minStr = min ? min.toLocaleString() : "";
-        const maxStr = max ? max.toLocaleString() : "";
-        return `${minStr}${min && max ? " – " : ""}${maxStr} ${currency || ""} / ${period || ""}`;
+        return `${min ? min.toLocaleString() : ""}${min && max ? " – " : ""}${max ? max.toLocaleString() : ""} ${currency || ""} / ${period || ""}`;
     };
 
-    const card = isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200";
+    const sectionLabel = (text: string) => (
+        <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-3 ${mutedText}`}>{text}</p>
+    );
 
     return (
         <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"}`}>
-            {/* Grid bg */}
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
-                style={{ backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`, backgroundSize: "28px 28px" }} />
+            {/* grid bg */}
+            <div
+                className="absolute inset-0 opacity-[0.015] pointer-events-none"
+                style={{
+                    backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`,
+                    backgroundSize: "28px 28px",
+                }}
+            />
 
             <div className="relative max-w-5xl mx-auto px-6 py-32 space-y-12">
 
                 {/* Hero */}
                 <motion.section
-                    className="max-w-2xl space-y-4"
+                    className="max-w-2xl space-y-3"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, ease: "easeOut" as const }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
+                    <span className={`text-[10px] font-mono uppercase tracking-[0.22em] ${isDark ? "text-amber-600" : "text-amber-700"}`}>
                         Carriere
                     </span>
                     <h1 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                        Lavora{" "}
-                        <span className="text-amber-600">con noi</span>
+                        Lavora <span className="text-amber-600">con noi</span>
                     </h1>
-                    <p className={`text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                    <p className={`text-base leading-relaxed ${bodyText}`}>
                         Stiamo costruendo strumenti che trasformano i dati delle survey
                         in insight operativi per le aziende.
                     </p>
                 </motion.section>
 
                 {/* Main card */}
-                <div className={`rounded-2xl border ${card}`}>
+                <motion.div
+                    initial={{ opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                    className={`rounded-2xl border overflow-hidden ${border}`}
+                    style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+                >
+                    <div className="h-[2px] w-full bg-amber-700/60" />
+
                     {/* Back nav */}
                     {step !== "list" && (
                         <div className={`px-8 py-4 border-b ${isDark ? "border-stone-800/20" : "border-slate-200"}`}>
                             <button
                                 onClick={() => {
                                     if (step === "details") setStep("list");
-                                    if (step === "apply") setStep("details");
+                                    if (step === "apply")   setStep("details");
                                 }}
                                 className={`inline-flex items-center gap-2 text-xs font-medium transition-colors
                                     ${isDark ? "text-slate-500 hover:text-slate-300" : "text-slate-400 hover:text-slate-700"}`}
@@ -152,195 +150,222 @@ export function CareersFlowPage() {
                         {/* Loading */}
                         {loading && (
                             <div className="flex justify-center py-12">
-                                <FallingLines color={isDark ? "#fff" : "#3B82F6"} width="50" visible ariaLabel="loading" />
+                                <FallingLines color={isDark ? "#fff" : "#B45309"} width="50" visible ariaLabel="loading" />
                             </div>
                         )}
 
                         {/* Error */}
                         {error && <p className="text-sm text-red-400">Errore nel caricamento delle posizioni.</p>}
 
-                        {/* STEP 1 — Job list */}
-                        {step === "list" && !loading && (
-                            <div className="divide-y">
-                                {jobs.length === 0 && (
-                                    <p className={`text-sm py-8 text-center ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-                                        Nessuna posizione aperta al momento.
-                                    </p>
-                                )}
-                                {jobs.map(job => (
-                                    <div
-                                        key={job.id}
-                                        className={`py-7 first:pt-0 last:pb-0 flex flex-col md:flex-row md:items-center justify-between gap-5
-                                            ${isDark ? "divide-stone-800/20" : "divide-stone-200"}`}
-                                    >
-                                        <div className="space-y-2">
-                                            <h2 className={`text-base font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                                                {job.title}
-                                            </h2>
-                                            <div className={`flex flex-wrap gap-x-4 gap-y-1 text-xs ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-                                                <span className="flex items-center gap-1">
-                                                    <MapPin size={11} /> {displayLocation(job.location)}
-                                                </span>
-                                                <span className="flex items-center gap-1">
-                                                    <Clock size={11} /> {displayEmploymentType(job.employment)}
-                                                </span>
-                                                {displaySalary(job.employment) && (
-                                                    <span className="flex items-center gap-1">
-                                                        <DollarSign size={11} /> {displaySalary(job.employment)}
-                                                    </span>
-                                                )}
-                                            </div>
-                                            <p className={`text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                                                {job.summary}
-                                            </p>
-                                        </div>
+                        <AnimatePresence mode="wait">
 
-                                        <button
-                                            onClick={() => { setSelectedJob(job); setStep("details"); }}
-                                            className={`shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border text-xs font-medium transition-colors
-                                                ${isDark
-                                                    ? "border-stone-800/30 text-slate-300 hover:border-amber-800/40 hover:text-slate-100"
-                                                    : "border-slate-200 text-slate-700 hover:border-amber-400 hover:bg-amber-50/50"
-                                                }`}
-                                        >
-                                            Dettagli <ChevronRight size={12} />
-                                        </button>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-
-                        {/* STEP 2 — Job details */}
-                        {step === "details" && selectedJob && (
-                            <div className="space-y-8">
-                                <div className="space-y-3">
-                                    <h2 className={`text-2xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                                        {selectedJob.title}
-                                    </h2>
-                                    <div className={`flex flex-wrap gap-x-4 gap-y-1 text-xs ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-                                        <span className="flex items-center gap-1">
-                                            <MapPin size={11} /> {displayLocation(selectedJob.location)}
-                                        </span>
-                                        <span className="flex items-center gap-1">
-                                            <Briefcase size={11} /> {displayEmploymentType(selectedJob.employment)}
-                                        </span>
-                                        {displaySalary(selectedJob.employment) && (
-                                            <span className="flex items-center gap-1">
-                                                <DollarSign size={11} /> {displaySalary(selectedJob.employment)}
-                                            </span>
-                                        )}
-                                    </div>
-                                    <p className={`text-sm leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                                        {selectedJob.description}
-                                    </p>
-                                </div>
-
-                                <div className="grid md:grid-cols-2 gap-8">
-                                    <div>
-                                        <h3 className={`text-xs font-semibold uppercase tracking-widest mb-3 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-                                            Responsabilità
-                                        </h3>
-                                        <ul className="space-y-1.5">
-                                            {selectedJob.responsibilities.map(r => (
-                                                <li key={r} className={`flex items-start gap-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                                                    <span className="text-amber-500 mt-0.5">•</span>{r}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h3 className={`text-xs font-semibold uppercase tracking-widest mb-3 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-                                            Requisiti
-                                        </h3>
-                                        <ul className="space-y-1.5">
-                                            {selectedJob.requirements.map(r => (
-                                                <li key={r} className={`flex items-start gap-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                                                    <span className="text-amber-500 mt-0.5">•</span>{r}
-                                                </li>
-                                            ))}
-                                            {selectedJob.niceToHave?.map(r => (
-                                                <li key={r} className={`flex items-start gap-2 text-sm ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-                                                    <span className="mt-0.5">◦</span>{r}{" "}
-                                                    <span className="opacity-60">(Nice to have)</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                {selectedJob.benefits && selectedJob.benefits.length > 0 && (
-                                    <div>
-                                        <h3 className={`text-xs font-semibold uppercase tracking-widest mb-3 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-                                            Benefit
-                                        </h3>
-                                        <ul className="flex flex-wrap gap-2">
-                                            {selectedJob.benefits.map(b => (
-                                                <li key={b} className={`px-3 py-1.5 rounded-lg text-xs font-medium border
-                                                    ${isDark ? "border-stone-800/20 bg-amber-700/10 text-amber-400" : "border-amber-300 bg-amber-50 text-amber-800"}`}>
-                                                    {b}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
-
-                                {selectedJob.techStack && selectedJob.techStack.length > 0 && (
-                                    <div>
-                                        <h3 className={`text-xs font-semibold uppercase tracking-widest mb-3 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-                                            Tech Stack
-                                        </h3>
-                                        <ul className="flex flex-wrap gap-2">
-                                            {selectedJob.techStack.map(t => (
-                                                <li key={t} className={`px-3 py-1.5 rounded-lg text-xs font-medium border
-                                                    ${isDark ? "border-stone-800/20 text-slate-300" : "border-slate-200 text-slate-700"}`}>
-                                                    {t}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                )}
-
-                                {selectedJob.hiringProcess && (
-                                    <div>
-                                        <h3 className={`text-xs font-semibold uppercase tracking-widest mb-3 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-                                            Processo di selezione
-                                        </h3>
-                                        <ol className="space-y-1.5">
-                                            {selectedJob.hiringProcess.steps.map((s, i) => (
-                                                <li key={i} className={`flex items-start gap-3 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                                                    <span className={`font-mono text-xs mt-0.5 ${isDark ? "text-amber-700" : "text-amber-500"}`}>
-                                                        {String(i + 1).padStart(2, "0")}
-                                                    </span>
-                                                    {s}
-                                                </li>
-                                            ))}
-                                        </ol>
-                                        {selectedJob.hiringProcess.estimatedDuration && (
-                                            <p className={`text-xs mt-3 ${isDark ? "text-slate-600" : "text-slate-400"}`}>
-                                                Durata stimata: {selectedJob.hiringProcess.estimatedDuration}
-                                            </p>
-                                        )}
-                                    </div>
-                                )}
-
-                                <button
-                                    onClick={() => setStep("apply")}
-                                    className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
-                                        bg-amber-700 hover:bg-amber-600 text-white text-sm font-semibold
-                                        transition-colors shadow-lg shadow-amber-700/25 hover:-translate-y-0.5 duration-200"
+                            {/* STEP 1 — Job list */}
+                            {step === "list" && !loading && (
+                                <motion.div
+                                    key="list"
+                                    initial={{ opacity: 0, y: 8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -8 }}
+                                    transition={{ duration: 0.2 }}
                                 >
-                                    Candidati per questa posizione
-                                    <ChevronRight size={14} />
-                                </button>
-                            </div>
-                        )}
+                                    {jobs.length === 0 ? (
+                                        <p className={`text-sm py-8 text-center ${mutedText}`}>
+                                            Nessuna posizione aperta al momento.
+                                        </p>
+                                    ) : (
+                                        <div className="space-y-0">
+                                            {jobs.map((job, i) => (
+                                                <motion.div
+                                                    key={job.id}
+                                                    initial={{ opacity: 0, y: 6 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    transition={{ delay: i * 0.06 }}
+                                                    className={`py-7 flex flex-col md:flex-row md:items-center justify-between gap-5
+                                                        border-b last:border-none
+                                                        ${isDark ? "border-stone-800/20" : "border-slate-100"}`}
+                                                >
+                                                    <div className="space-y-2">
+                                                        <h2 className={`text-base font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                                                            {job.title}
+                                                        </h2>
+                                                        <div className={`flex flex-wrap gap-x-4 gap-y-1 text-xs font-mono ${mutedText}`}>
+                                                            <span className="flex items-center gap-1">
+                                                                <MapPin size={11} /> {displayLocation(job.location)}
+                                                            </span>
+                                                            <span className="flex items-center gap-1">
+                                                                <Clock size={11} /> {displayEmploymentType(job.employment)}
+                                                            </span>
+                                                            {displaySalary(job.employment) && (
+                                                                <span className="flex items-center gap-1">
+                                                                    <DollarSign size={11} /> {displaySalary(job.employment)}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        <p className={`text-sm ${bodyText}`}>{job.summary}</p>
+                                                    </div>
 
-                        {/* STEP 3 — Apply */}
-                        {step === "apply" && selectedJob && (
-                            <ApplicationForm jobId={selectedJob._id} jobTitle={selectedJob.title} />
-                        )}
+                                                    <button
+                                                        onClick={() => { setSelectedJob(job); setStep("details"); }}
+                                                        className={`shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border
+                                                            text-xs font-medium transition-all hover:-translate-y-0.5 duration-200
+                                                            ${isDark
+                                                                ? "border-stone-800/30 text-slate-300 hover:border-amber-700/40 hover:text-amber-400"
+                                                                : "border-slate-200 text-slate-700 hover:border-amber-400 hover:bg-amber-50/50"
+                                                            }`}
+                                                    >
+                                                        Dettagli <ChevronRight size={12} />
+                                                    </button>
+                                                </motion.div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </motion.div>
+                            )}
+
+                            {/* STEP 2 — Job details */}
+                            {step === "details" && selectedJob && (
+                                <motion.div
+                                    key="details"
+                                    initial={{ opacity: 0, y: 8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -8 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="space-y-8"
+                                >
+                                    {/* title + meta */}
+                                    <div className="space-y-2">
+                                        <h2 className={`text-2xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                                            {selectedJob.title}
+                                        </h2>
+                                        <div className={`flex flex-wrap gap-x-4 gap-y-1 text-xs font-mono ${mutedText}`}>
+                                            <span className="flex items-center gap-1">
+                                                <MapPin size={11} /> {displayLocation(selectedJob.location)}
+                                            </span>
+                                            <span className="flex items-center gap-1">
+                                                <Briefcase size={11} /> {displayEmploymentType(selectedJob.employment)}
+                                            </span>
+                                            {displaySalary(selectedJob.employment) && (
+                                                <span className="flex items-center gap-1">
+                                                    <DollarSign size={11} /> {displaySalary(selectedJob.employment)}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <p className={`text-sm leading-relaxed pt-1 ${bodyText}`}>
+                                            {selectedJob.description}
+                                        </p>
+                                    </div>
+
+                                    {/* responsibilities + requirements */}
+                                    <div className={`rounded-xl border p-6 grid md:grid-cols-2 gap-8
+                                        ${isDark ? "border-stone-800/20 bg-white/[0.02]" : "border-slate-100 bg-slate-50/50"}`}>
+                                        <div>
+                                            {sectionLabel("Responsabilità")}
+                                            <ul className="space-y-1.5">
+                                                {selectedJob.responsibilities.map(r => (
+                                                    <li key={r} className={`flex items-start gap-2 text-sm ${bodyText}`}>
+                                                        <span className="text-amber-500 mt-0.5 shrink-0">•</span>{r}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            {sectionLabel("Requisiti")}
+                                            <ul className="space-y-1.5">
+                                                {selectedJob.requirements.map(r => (
+                                                    <li key={r} className={`flex items-start gap-2 text-sm ${bodyText}`}>
+                                                        <span className="text-amber-500 mt-0.5 shrink-0">•</span>{r}
+                                                    </li>
+                                                ))}
+                                                {selectedJob.niceToHave?.map(r => (
+                                                    <li key={r} className={`flex items-start gap-2 text-sm ${mutedText}`}>
+                                                        <span className="mt-0.5 shrink-0">◦</span>
+                                                        {r} <span className="opacity-60">(nice to have)</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    {/* benefits */}
+                                    {selectedJob.benefits && selectedJob.benefits.length > 0 && (
+                                        <div>
+                                            {sectionLabel("Benefit")}
+                                            <ul className="flex flex-wrap gap-2">
+                                                {selectedJob.benefits.map(b => (
+                                                    <li key={b} className={`px-3 py-1.5 rounded-lg text-xs font-medium border
+                                                        ${isDark ? "border-stone-800/30 bg-amber-700/10 text-amber-400" : "border-amber-300 bg-amber-50 text-amber-800"}`}>
+                                                        {b}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+
+                                    {/* tech stack */}
+                                    {selectedJob.techStack && selectedJob.techStack.length > 0 && (
+                                        <div>
+                                            {sectionLabel("Tech Stack")}
+                                            <ul className="flex flex-wrap gap-2">
+                                                {selectedJob.techStack.map(t => (
+                                                    <li key={t} className={`px-3 py-1.5 rounded-lg text-xs font-medium border
+                                                        ${isDark ? "border-stone-800/30 text-slate-300" : "border-slate-200 text-slate-700"}`}>
+                                                        {t}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+
+                                    {/* hiring process */}
+                                    {selectedJob.hiringProcess && selectedJob.hiringProcess.steps.length > 0 && (
+                                        <div>
+                                            {sectionLabel("Processo di selezione")}
+                                            <ol className="space-y-2">
+                                                {selectedJob.hiringProcess.steps.map((s, i) => (
+                                                    <li key={i} className={`flex items-start gap-3 text-sm ${bodyText}`}>
+                                                        <span className={`font-mono text-xs mt-0.5 shrink-0 ${isDark ? "text-amber-700" : "text-amber-500"}`}>
+                                                            {String(i + 1).padStart(2, "0")}
+                                                        </span>
+                                                        {s}
+                                                    </li>
+                                                ))}
+                                            </ol>
+                                            {selectedJob.hiringProcess.estimatedDuration && (
+                                                <p className={`text-xs mt-3 font-mono ${mutedText}`}>
+                                                    Durata stimata: {selectedJob.hiringProcess.estimatedDuration}
+                                                </p>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    <button
+                                        onClick={() => setStep("apply")}
+                                        className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
+                                            bg-amber-700 hover:bg-amber-600 text-white text-sm font-semibold
+                                            transition-all shadow-lg shadow-amber-700/25 hover:-translate-y-0.5 duration-200"
+                                    >
+                                        Candidati per questa posizione
+                                        <ChevronRight size={14} />
+                                    </button>
+                                </motion.div>
+                            )}
+
+                            {/* STEP 3 — Apply */}
+                            {step === "apply" && selectedJob && (
+                                <motion.div
+                                    key="apply"
+                                    initial={{ opacity: 0, y: 8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -8 }}
+                                    transition={{ duration: 0.2 }}
+                                >
+                                    <ApplicationForm jobId={selectedJob._id} jobTitle={selectedJob.title} />
+                                </motion.div>
+                            )}
+
+                        </AnimatePresence>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </main>
     );
