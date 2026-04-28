@@ -4,7 +4,6 @@ import { DetailItem } from "../DetailItem.tsx";
 export function OverviewPanel({ users, surveys, theme }: any) {
     const isDark = theme === "dark";
     const border = isDark ? "border-stone-800/30" : "border-slate-200";
-    const bodyText = isDark ? "text-slate-400" : "text-slate-600";
 
     return (
         <div className="space-y-4">

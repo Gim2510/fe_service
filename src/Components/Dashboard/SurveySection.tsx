@@ -30,7 +30,7 @@ export function SurveySection({ surveys, theme }: any) {
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
-                    {stats.map((s, i) => (
+                    {stats.map((s) => (
                         <div key={s.label}>
                             <p className={`text-[10px] font-mono uppercase tracking-widest mb-1.5
                                 ${isDark ? "text-slate-600" : "text-slate-400"}`}>

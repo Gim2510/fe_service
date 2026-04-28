@@ -13,7 +13,6 @@ export function CreateJobApplicationPanel({ theme, token }: {
     const isDark = theme === "dark";
 
     const border = isDark ? "border-stone-800/30" : "border-slate-200";
-    const textColor = isDark ? "text-slate-100" : "text-slate-900";
 
     const inputStyle = `w-full rounded-xl border px-3 py-2 text-sm focus:outline-none transition-colors ${
         isDark
