@@ -7,7 +7,8 @@ export type InputProps = {
     type?: string,
     value: string,
     onChange: ChangeEventHandler<HTMLInputElement>,
-    theme: string
+    theme: string,
+    error?: string,
 }
 
 export type InputConfirmProps = {

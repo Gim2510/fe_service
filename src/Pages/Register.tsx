@@ -1,4 +1,5 @@
 import { type ChangeEvent, type SubmitEventHandler, useEffect, useRef, useState } from "react";
+import { validateRegisterForm, type RegisterFormErrors } from "../utils/validation.ts";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useRegister } from "../hooks/useRegister";
@@ -31,6 +32,7 @@ export function Register() {
         confirmPassword: "", fiscal_code: "", partita_iva: "",
         company_name: "", company_role: CompanyRoles.Employee,
     });
+    const [formErrors, setFormErrors] = useState<RegisterFormErrors>({});
 
     const passwordScore   = zxcvbn(form.password).score;
     const passwordsMatch  = form.password === form.confirmPassword;
@@ -47,11 +49,20 @@ export function Register() {
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setForm(prev => ({ ...prev, [name]: value }));
+        if (formErrors[name as keyof RegisterFormErrors]) {
+            setFormErrors(prev => ({ ...prev, [name]: undefined }));
+        }
     };
 
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
         if (!passwordsMatch || passwordScore < 2) return;
+        const errors = validateRegisterForm(form);
+        if (Object.keys(errors).length > 0) {
+            setFormErrors(errors);
+            return;
+        }
+        setFormErrors({});
         try {
             await register(form);
             setTimeout(() => navigate("/login"), 5000);
@@ -173,15 +184,15 @@ export function Register() {
 
                             {/* name */}
                             <div className="grid grid-cols-2 gap-3">
-                                <Input theme={theme} label="Nome"    name="given_name"  value={form.given_name}  onChange={handleChange} />
-                                <Input theme={theme} label="Cognome" name="family_name" value={form.family_name} onChange={handleChange} />
+                                <Input theme={theme} label="Nome"    name="given_name"  value={form.given_name}  onChange={handleChange} error={formErrors.given_name} />
+                                <Input theme={theme} label="Cognome" name="family_name" value={form.family_name} onChange={handleChange} error={formErrors.family_name} />
                             </div>
 
-                            <Input theme={theme} label="Email" name="email" type="email" value={form.email} onChange={handleChange} />
+                            <Input theme={theme} label="Email" name="email" type="email" value={form.email} onChange={handleChange} error={formErrors.email} />
 
                             {/* password + strength */}
                             <div className="flex flex-col gap-2">
-                                <Input theme={theme} label="Password" name="password" type="password" value={form.password} onChange={handleChange} />
+                                <Input theme={theme} label="Password" name="password" type="password" value={form.password} onChange={handleChange} error={formErrors.password} />
                                 {form.password && (
                                     <div className="flex flex-col gap-1.5">
                                         <div className={`w-full h-[3px] rounded-full overflow-hidden ${isDark ? "bg-white/6" : "bg-black/8"}`}>
@@ -207,7 +218,7 @@ export function Register() {
 
                             {/* company */}
                             <div className="grid grid-cols-2 gap-3">
-                                <Input theme={theme} label="Nome azienda" name="company_name" value={form.company_name} onChange={handleChange} />
+                                <Input theme={theme} label="Nome azienda" name="company_name" value={form.company_name} onChange={handleChange} error={formErrors.company_name} />
                                 <div className="flex flex-col gap-1.5">
                                     <label className={`text-[10px] font-mono uppercase tracking-[0.15em] ${mutedText}`}>
                                         Ruolo aziendale
@@ -222,8 +233,8 @@ export function Register() {
 
                             {/* fiscal */}
                             <div className="grid grid-cols-2 gap-3">
-                                <Input theme={theme} label="Codice fiscale" name="fiscal_code"  value={form.fiscal_code.toUpperCase()} onChange={handleChange} />
-                                <Input theme={theme} label="Partita IVA"    name="partita_iva"  value={form.partita_iva}               onChange={handleChange} />
+                                <Input theme={theme} label="Codice fiscale" name="fiscal_code"  value={form.fiscal_code.toUpperCase()} onChange={handleChange} error={formErrors.fiscal_code} />
+                                <Input theme={theme} label="Partita IVA"    name="partita_iva"  value={form.partita_iva}               onChange={handleChange} error={formErrors.partita_iva} />
                             </div>
 
                             <button
