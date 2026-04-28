@@ -41,7 +41,10 @@ export function SurveyStart() {
 
     const handleStart = async () => {
         try {
-            if (survey?._id) { navigate(`/survey/${survey._id}/recap`); return; }
+            if (survey?._id) {
+                navigate(survey.status === "published" ? `/survey/${survey._id}/recap` : `/survey`);
+                return;
+            }
             const newSurveyId = await initSurvey(templateId, locale);
             navigate(newSurveyId ? `/survey` : "/survey");
         } catch (e) { console.error("Errore avvio survey:", e); }
@@ -99,7 +102,7 @@ export function SurveyStart() {
                         {initLoading
                             ? <FallingLines width="20" color="#fff" visible />
                             : <>
-                                {survey ? "Riprendi la compilazione" : "Inizia il questionario"}
+                                {survey?.status === "published" ? "Vai ai risultati" : survey ? "Riprendi la compilazione" : "Inizia il questionario"}
                                 <ArrowRight size={15} />
                             </>
                         }

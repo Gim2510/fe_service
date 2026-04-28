@@ -6,7 +6,7 @@ const OPTIONS = [
     { label: "No", value: false },
 ];
 
-export const BooleanQuestion: FC<PropsBooleanQuestion> = ({ answer, onChange, isDark }) => {
+export const BooleanQuestion: FC<PropsBooleanQuestion> = ({ answer, onChange, isDark, onAutoSelect }) => {
     return (
         <div className="grid grid-cols-2 gap-4">
             {OPTIONS.map(({ label, value }) => {
@@ -16,7 +16,7 @@ export const BooleanQuestion: FC<PropsBooleanQuestion> = ({ answer, onChange, is
                     <button
                         key={label}
                         type="button"
-                        onClick={() => onChange(value)}
+                        onClick={() => { onChange(value); onAutoSelect?.(value); }}
                         className={`px-8 py-6 rounded-xl border text-base font-semibold
                             transition-all duration-200 cursor-pointer
                             ${isSelected

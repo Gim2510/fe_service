@@ -104,38 +104,37 @@ html, body {
 /* Scrollbar per container orizzontale */
 .scrollbar-theme {
     overflow-x: auto;
-    scrollbar-width: thin;           /* Firefox */
-    scrollbar-color: #c0c0c0 #f0f0f0; /* thumb track per Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #C9A84C #F0EDE8; /* thumb track — gold su warm-white */
 }
 
 /* Webkit (Chrome, Edge, Safari) */
 .scrollbar-theme::-webkit-scrollbar {
-    height: 6px;                     /* altezza scrollbar orizzontale */
+    height: 4px;
 }
 
 .scrollbar-theme::-webkit-scrollbar-track {
-    background: #f0f0f0;             /* colore dello sfondo della track */
-    border-radius: 3px;
+    background: #F0EDE8;
+    border-radius: 2px;
 }
 
 .scrollbar-theme::-webkit-scrollbar-thumb {
-    background-color: #c0c0c0;       /* colore del pollice */
-    border-radius: 3px;
-    border: 2px solid #f0f0f0;       /* bordo per dare effetto "sottile" */
+    background-color: #C9A84C;
+    border-radius: 2px;
 }
 
 /* Variante scura */
 .dark .scrollbar-theme {
-    scrollbar-color: #555 #2a2a2a;   /* Firefox */
+    scrollbar-color: rgba(201, 168, 76, 0.45) #1C1C1A;
 }
 
 .dark .scrollbar-theme::-webkit-scrollbar-track {
-    background: #2a2a2a;
+    background: #1C1C1A;
 }
 
 .dark .scrollbar-theme::-webkit-scrollbar-thumb {
-    background-color: #555;
-    border: 2px solid #2a2a2a;
+    background-color: rgba(201, 168, 76, 0.45);
+    border: none;
 }
 
 /* stato iniziale */

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { useCreateJobApplication } from "../../../hooks/useCreateJobApplication";
 import type { CreateJobPositionInput } from "../../../types/JobApplicationTypes";
 import { CreateJobConfirmModal } from "../DashboardModals/CreateJobConfirmModal";
@@ -11,13 +12,13 @@ export function CreateJobApplicationPanel({ theme, token }: {
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const isDark = theme === "dark";
 
-    const cardBg = isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200";
+    const border = isDark ? "border-stone-800/30" : "border-slate-200";
     const textColor = isDark ? "text-slate-100" : "text-slate-900";
 
     const inputStyle = `w-full rounded-xl border px-3 py-2 text-sm focus:outline-none transition-colors ${
         isDark
             ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-amber-700"
-            : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-amber-600"
+            : "bg-white border-slate-200 text-slate-900 focus:border-amber-600"
     }`;
 
     const { createJobApplication, loading, error, success } = useCreateJobApplication();
@@ -83,11 +84,20 @@ export function CreateJobApplicationPanel({ theme, token }: {
     };
 
     return (
-        <div className="space-y-8">
-            <div className={`rounded-2xl border ${cardBg} p-6 sm:p-8`}>
-                <h2 className={`text-xl font-semibold mb-6 ${textColor}`}>
-                    Create Job Application
-                </h2>
+        <div className="space-y-4">
+            <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className={`rounded-2xl border overflow-hidden ${border}`}
+                style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+            >
+            <div className="h-[2px] w-full bg-amber-700/40" />
+            <div className="p-7">
+                <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-6
+                    ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                    Create Job Position
+                </p>
 
                 <form onSubmit={handleSubmit} className="space-y-8">
 
@@ -272,15 +282,18 @@ export function CreateJobApplicationPanel({ theme, token }: {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="inline-flex items-center px-6 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 disabled:opacity-40 text-white text-sm font-semibold transition-colors"
+                            className="inline-flex items-center px-6 py-2.5 rounded-xl
+                                bg-amber-700 hover:bg-amber-600 disabled:opacity-40
+                                text-white text-sm font-semibold transition-all hover:-translate-y-0.5 duration-200"
                         >
                             Create Job
                         </button>
-                        {success && <span className="text-green-400 text-sm">Job created successfully</span>}
-                        {error && <span className="text-red-400 text-sm">{error}</span>}
+                        {success && <span className="text-green-400 text-xs">Job created successfully</span>}
+                        {error   && <span className="text-red-400 text-xs">{error}</span>}
                     </div>
                 </form>
             </div>
+            </motion.div>
 
             {showConfirmModal && (
                 <CreateJobConfirmModal

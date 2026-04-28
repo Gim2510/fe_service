@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FallingLines } from "react-loader-spinner";
+import { motion, AnimatePresence } from "framer-motion";
 import type { UserType } from "../types/userTypes";
 
 import { useUsersDashboard } from "../hooks/useUserDarshboard";
@@ -14,54 +15,79 @@ import { useAuth } from "../auth/AuthContext.tsx";
 export function AdminDashboard() {
     const { theme } = useTheme();
     const isDark = theme === "dark";
-    const { data: users, loading: loadingUsers } = useUsersDashboard();
+    const { data: users,   loading: loadingUsers }   = useUsersDashboard();
     const { data: surveys, loading: loadingSurveys } = useSurveyDashboard();
     const { getAllUsers } = useGetAllUsers();
     const { token } = useAuth();
 
     const [activeTab, setActiveTab] = useState<AdminTab>("overview");
-    const [allUsers, setAllUsers] = useState<UserType[]>([]);
+    const [allUsers,  setAllUsers]  = useState<UserType[]>([]);
 
     async function refreshUsers() {
         const data = await getAllUsers();
         setAllUsers(data);
     }
 
-    useEffect(() => {
-        refreshUsers();
-    }, []);
+    useEffect(() => { refreshUsers(); }, []);
 
     if (loadingUsers || loadingSurveys) {
         return (
             <div className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}>
-                <FallingLines color={isDark ? "#fff" : "#3B82F6"} width="60" visible />
+                <FallingLines color={isDark ? "#fff" : "#B45309"} width="60" visible />
             </div>
         );
     }
 
     return (
-        <section className={`min-h-screen py-16 ${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"}`}>
-            {/* Grid bg */}
-            <div className="fixed inset-0 opacity-[0.02] pointer-events-none"
-                style={{ backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`, backgroundSize: "28px 28px" }} />
+        <main className={`min-h-screen ${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"}`}>
 
-            <div className="relative max-w-7xl mx-auto px-6 py-12">
-                <DashboardHeader users={users} surveys={surveys} theme={theme} />
+            {/* subtle grid bg */}
+            <div
+                className="fixed inset-0 opacity-[0.015] pointer-events-none"
+                style={{
+                    backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`,
+                    backgroundSize: "28px 28px",
+                }}
+            />
 
-                <div className="flex gap-8 mt-10 sm:flex-row flex-col">
+            <div className="relative max-w-7xl mx-auto px-6 pt-24 pb-20">
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <DashboardHeader users={users} surveys={surveys} theme={theme} />
+                </motion.div>
+
+                {/* divider */}
+                <div className={`my-10 h-px ${isDark ? "bg-stone-800/40" : "bg-slate-200"}`} />
+
+                <div className="flex gap-6 sm:flex-row flex-col">
                     <SidebarNavigation activeTab={activeTab} setActiveTab={setActiveTab} theme={theme} />
 
-                    <DashboardContent
-                        activeTab={activeTab}
-                        users={users}
-                        surveys={surveys}
-                        allUsers={allUsers}
-                        refreshUsers={refreshUsers}
-                        theme={theme}
-                        token={token}
-                    />
+                    <div className="flex-1 min-w-0">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={activeTab}
+                                initial={{ opacity: 0, y: 8 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -8 }}
+                                transition={{ duration: 0.2, ease: "easeOut" as const }}
+                            >
+                                <DashboardContent
+                                    activeTab={activeTab}
+                                    users={users}
+                                    surveys={surveys}
+                                    allUsers={allUsers}
+                                    refreshUsers={refreshUsers}
+                                    theme={theme}
+                                    token={token}
+                                />
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
                 </div>
             </div>
-        </section>
+        </main>
     );
 }

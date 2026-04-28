@@ -1,14 +1,17 @@
 import type { FC } from "react";
 import type { PropsMultipleChoiceQuestion } from "../../../props.ts";
 
-export const MultipleChoiceQuestion: FC<PropsMultipleChoiceQuestion> = ({ options, answer, onChange, isDark, multiple = false }) => {
+export const MultipleChoiceQuestion: FC<PropsMultipleChoiceQuestion> = ({ options, answer, onChange, isDark, multiple = false, onAutoSelect }) => {
     const handleClick = (option: string) => {
         if (multiple) {
             const current = Array.isArray(answer) ? answer : [];
-            if (current.includes(option)) onChange(current.filter(a => a !== option));
-            else onChange([...current, option]);
+            const next = current.includes(option)
+                ? current.filter(a => a !== option)
+                : [...current, option];
+            onChange(next);
         } else {
             onChange(option);
+            onAutoSelect?.(option);
         }
     };
 

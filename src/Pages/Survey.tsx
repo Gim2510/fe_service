@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { FallingLines } from "react-loader-spinner";
+import { useMemo, useRef, useEffect } from "react";
 
 import { useSurvey } from "../hooks/useSurvey";
 import { useUserSurvey } from "../hooks/useUserSurvey";
@@ -22,7 +23,25 @@ export function Survey() {
     const { survey, loading: loadingSurvey, error: errorSurvey } = useSurvey(surveyId);
     const { questions, loading: loadingTemplate, error: errorTemplate } = useSurveyTemplate(surveyTemplateId);
 
-    const flow = useSurveyFlow(questions ?? []);
+    // Resume from the first unanswered question, restore all previous answers
+    const { resumeStep, resumeAnswer, savedAnswers } = useMemo(() => {
+        if (!questions.length || !survey?.answers) return { resumeStep: 0, resumeAnswer: null, savedAnswers: {} };
+        const idx = questions.findIndex(q => !survey.answers[q.id]?.filled);
+        const step = idx === -1 ? questions.length : idx;
+        const ans = idx >= 0 ? (survey.answers[questions[idx].id]?.value ?? null) : null;
+        const saved: Record<string, any> = {};
+        for (const q of questions) {
+            const a = survey.answers[q.id];
+            if (a?.filled) saved[q.id] = a.value;
+        }
+        return { resumeStep: step, resumeAnswer: ans, savedAnswers: saved };
+    }, [questions, survey?.answers]);
+
+    const flow = useSurveyFlow(questions ?? [], resumeStep, resumeAnswer, savedAnswers);
+
+    // Ref always pointing to latest next() — avoids stale closure in auto-advance setTimeout
+    const nextRef = useRef(flow.next);
+    useEffect(() => { nextRef.current = flow.next; });
 
     const loading = loadingSurveyId || loadingSurvey || loadingTemplate;
     const error = errorSurveyId || errorSurvey || errorTemplate;
@@ -98,9 +117,12 @@ export function Survey() {
                                 answer={flow.answer}
                                 setAnswer={flow.setAnswer}
                                 theme={theme}
+                                onAutoSelect={() => {
+                                    setTimeout(() => nextRef.current(survey._id), 150);
+                                }}
                             />
 
-                            <div className={`flex pt-4 ${flow.step > 0 ? "justify-between" : "justify-end"}`}>
+                            <div className="flex items-center pt-4 gap-3">
                                 {flow.step > 0 && (
                                     <button
                                         onClick={flow.prev}
@@ -113,6 +135,17 @@ export function Survey() {
                                         <ArrowLeft size={14} /> Indietro
                                     </button>
                                 )}
+
+                                <div className="flex-1" />
+
+                                <button
+                                    onClick={() => flow.skip(survey._id)}
+                                    disabled={flow.animating}
+                                    className={`text-xs font-medium transition-colors disabled:opacity-30
+                                        ${isDark ? "text-slate-600 hover:text-slate-400" : "text-slate-400 hover:text-slate-500"}`}
+                                >
+                                    Salta
+                                </button>
 
                                 <button
                                     disabled={!flow.canProceed}

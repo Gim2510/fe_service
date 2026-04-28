@@ -5,7 +5,7 @@ import { BooleanQuestion } from "./SurveyQuestion/BooleanQuestion.tsx"
 import { ScaleQuestion } from "./SurveyQuestion/ScaleQuestion.tsx"
 import { TextQuestion } from "./SurveyQuestion/TextQuestion.tsx"
 
-export function SurveyQuestion({ question, lang, answer, setAnswer, theme }: PropsSurveyQuestion) {
+export function SurveyQuestion({ question, lang, answer, setAnswer, theme, onAutoSelect }: PropsSurveyQuestion) {
     const isDark = theme === "dark"
 
     let content: React.ReactNode = null
@@ -18,6 +18,7 @@ export function SurveyQuestion({ question, lang, answer, setAnswer, theme }: Pro
                     answer={answer}
                     onChange={setAnswer}
                     isDark={isDark}
+                    onAutoSelect={onAutoSelect}
                 />
             )
             break
@@ -28,6 +29,7 @@ export function SurveyQuestion({ question, lang, answer, setAnswer, theme }: Pro
                     answer={answer}
                     onChange={setAnswer}
                     isDark={isDark}
+                    onAutoSelect={onAutoSelect}
                 />
             )
             break
@@ -40,6 +42,7 @@ export function SurveyQuestion({ question, lang, answer, setAnswer, theme }: Pro
                     answer={answer}
                     onChange={setAnswer}
                     isDark={isDark}
+                    onAutoSelect={onAutoSelect}
                 />
             )
             break

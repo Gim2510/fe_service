@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import type { PropsScaleQuestion } from "../../../props.ts";
 
-export const ScaleQuestion: FC<PropsScaleQuestion> = ({ min = 1, max = 5, answer, onChange, isDark }) => {
+export const ScaleQuestion: FC<PropsScaleQuestion> = ({ min = 1, max = 5, answer, onChange, isDark, onAutoSelect }) => {
     const steps = Array.from({ length: max - min + 1 }, (_, i) => min + i);
     const isWide = steps.length > 7;
 
@@ -14,7 +14,7 @@ export const ScaleQuestion: FC<PropsScaleQuestion> = ({ min = 1, max = 5, answer
                         <button
                             key={n}
                             type="button"
-                            onClick={() => onChange(n)}
+                            onClick={() => { onChange(n); onAutoSelect?.(n); }}
                             className={`
                                 ${isWide ? "min-w-[3rem]" : "flex-1"}
                                 py-4 rounded-xl border text-sm font-semibold
