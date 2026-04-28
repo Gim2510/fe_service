@@ -25,7 +25,14 @@ export function useLogin() {
 
             if (!res.ok) {
                 const msg = await res.json();
-                throw new Error(msg?.message || "Login failed");
+                const errorText = typeof msg === "string"
+                    ? msg
+                    : (msg?.message || "Login fallito");
+                const italianMap: Record<string, string> = {
+                    "email or password incorrect": "Email o password non corretti",
+                    "missing params: email=undefined, password=undefined": "Email e password obbligatorie",
+                };
+                throw new Error(italianMap[errorText] ?? errorText);
             }
 
             const data = await res.json();

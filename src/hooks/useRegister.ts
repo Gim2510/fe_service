@@ -34,7 +34,18 @@ export function useRegister() {
 
             if (!res.ok) {
                 const msg = await res.json();
-                throw new Error(msg?.message || "Registrazione fallita");
+                const codeMap: Record<string, string> = {
+                    MISSING_FIELD:            msg?.field ? `Campo obbligatorio mancante: ${msg.field}` : "Campo obbligatorio mancante",
+                    INVALID_LENGTH:           msg?.field === "family_name" ? "Cognome troppo lungo (max 25 caratteri)" : "Nome troppo lungo (max 25 caratteri)",
+                    INVALID_EMAIL:            "Formato email non valido",
+                    INVALID_PASSWORD:         "La password non soddisfa i requisiti di sicurezza",
+                    EMAIL_ALREADY_REGISTERED: "Email già registrata",
+                    INVALID_FISCAL_CODE:      "Codice fiscale non valido",
+                    USER_CREATION_FAILED:     "Impossibile creare l'account",
+                    INTERNAL_ERROR:           "Errore interno del server",
+                };
+                const errorMsg = codeMap[msg?.code] ?? msg?.message ?? "Registrazione fallita";
+                throw new Error(errorMsg);
             }
 
             const result = await res.json();
