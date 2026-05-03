@@ -65,7 +65,7 @@ export function MetodSection({ theme }: { theme: string }) {
                             {/* Step number */}
                             <div className="flex items-start justify-between mb-6">
                                 <span className={`font-mono text-4xl font-bold tracking-tight ${
-                                    isDark ? "text-stone-800/60" : "text-amber-300"
+                                    isDark ? "text-amber-700" : "text-amber-300"
                                 }`}>
                                     {item.step}
                                 </span>

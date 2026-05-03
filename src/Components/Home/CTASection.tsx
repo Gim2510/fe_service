@@ -71,27 +71,12 @@ export function CTASection({ theme }: { theme: string }) {
                         {/* Blue gradient accent */}
                         <div className="absolute inset-0 bg-gradient-to-br from-stone-800/30 via-transparent to-stone-800/10" />
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full blur-[100px] opacity-10 bg-amber-600" />
-                        {/* Grid */}
-                        <div
-                            className="absolute inset-0 opacity-[0.03]"
-                            style={{
-                                backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
-                                backgroundSize: "28px 28px",
-                            }}
-                        />
                         {/* Top border glow */}
                         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-800/60 to-transparent" />
                     </>
                 )}
                 {!isDark && (
                     <>
-                        <div
-                            className="absolute inset-0 opacity-[0.10]"
-                            style={{
-                                backgroundImage: "radial-gradient(circle at 1px 1px, #92400e 1px, transparent 0)",
-                                backgroundSize: "28px 28px",
-                            }}
-                        />
                         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-20 bg-amber-300" />
                         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" />
                     </>

@@ -75,15 +75,6 @@ export function VideoSection({ theme }: { theme: string }) {
                                     ? "bg-gradient-to-br from-[#1C1C1A] via-[#222220] to-[#161614]"
                                     : "bg-gradient-to-br from-slate-100 via-amber-50 to-slate-100"
                             }`}>
-                                {/* Decorative grid */}
-                                <div
-                                    className={`absolute inset-0 pointer-events-none ${isDark ? "opacity-[0.04]" : "opacity-[0.12]"}`}
-                                    style={{
-                                        backgroundImage: `radial-gradient(circle at 1px 1px, ${isDark ? "white" : "#0F172A"} 1px, transparent 0)`,
-                                        backgroundSize: "28px 28px",
-                                    }}
-                                />
-
                                 {/* Amber glow rings */}
                                 <div className={`absolute w-64 h-64 rounded-full blur-3xl pointer-events-none ${
                                     isDark ? "bg-amber-700/15" : "bg-amber-300/25"

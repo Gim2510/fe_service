@@ -15,11 +15,25 @@ import {FAQSection} from "../Components/Home/FAQSection.tsx";
 
 export function Home() {
     const {theme} = useTheme()
+    const isDark = theme === "dark";
     return (
-        <main className={`flex flex-col ${theme === "dark" ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}>
+        <main className={`flex flex-col ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}>
+            {/* Fixed hex grid */}
+            <div
+                className={`fixed inset-0 pointer-events-none z-0 ${isDark ? "opacity-[0.05]" : "opacity-[0.10]"}`}
+                style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 0 L56 16 L56 50 L28 66 L0 50 L0 16 Z' fill='none' stroke='${isDark ? '%23F59E0B' : '%23B45309'}' stroke-width='0.8'/%3E%3Cpath d='M28 66 L56 50 L56 84 L28 100 L0 84 L0 50 Z' fill='none' stroke='${isDark ? '%23F59E0B' : '%23B45309'}' stroke-width='0.8'/%3E%3C/svg%3E")`,
+                    backgroundSize: "56px 100px",
+                }}
+            />
+            {/* Vignette — fades grid on left/right edges */}
+            <div
+                className="fixed inset-0 pointer-events-none z-0"
+                style={{ background: `linear-gradient(to right, ${isDark ? "#111110" : "#FAF8F4"} 0%, transparent 18%, transparent 82%, ${isDark ? "#111110" : "#FAF8F4"} 100%)` }}
+            />
             <HeroSection theme={theme} />
             <SunsetTransition theme={theme} />
-            <div className={`relative z-10 ${theme === "dark" ? "bg-[#111110]" : "bg-gradient-to-b from-[#FAF8F4] via-[#F0EAE0] to-[#E8DDD0]"}`}>
+            <div className={`relative z-10 ${isDark ? "" : "bg-gradient-to-b from-[#FAF8F4] via-[#F0EAE0] to-[#E8DDD0]"}`}>
                 <ProblemiSection theme={theme} />
                 <VideoSection theme={theme} />
                 <WAWD theme={theme} />

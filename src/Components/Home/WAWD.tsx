@@ -12,8 +12,15 @@ function ConsultingIllustration({ isDark }: { isDark: boolean }) {
     const blue     = "#60A5FA";
     const purple   = "#A78BFA";
     const red      = "#F87171";
+    const teal     = "#2DD4BF";
+    const orange   = "#FB923C";
+    const pink     = "#F472B6";
+    const lime     = "#A3E635";
+    const indigo   = "#818CF8";
+    const rose     = "#FB7185";
+    const cyan     = "#22D3EE";
 
-    const cx = 190, cy = 142, R = 88;
+    const cx = 190, cy = 142, R = 88, Rs = 138;
 
     const nodes = [
         { angle: 90,  label: "CRM",        sub: "+24% lead",   color: gold,   metric: true  },
@@ -21,7 +28,16 @@ function ConsultingIllustration({ isDark }: { isDark: boolean }) {
         { angle: 330, label: "Finance",    sub: "−12% costi",  color: green,  metric: true  },
         { angle: 270, label: "Operations", sub: "Automatizzato",color: purple, metric: false },
         { angle: 210, label: "Marketing",  sub: "€2.4M pipe",  color: red,    metric: true  },
-        { angle: 150, label: "HR",         sub: "Score 91/100",color: gold,   metric: false },
+        { angle: 150, label: "HR",         sub: "Score 91/100",color: teal,   metric: false },
+    ];
+
+    const satellites = [
+        { angle: 60,  label: "Legal",      color: orange },
+        { angle: 0,   label: "IT",         color: cyan   },
+        { angle: 300, label: "Payroll",    color: pink   },
+        { angle: 240, label: "ESG",        color: lime   },
+        { angle: 180, label: "Training",   color: indigo },
+        { angle: 120, label: "Recruiting", color: rose   },
     ];
 
     const toRad = (deg: number) => (deg * Math.PI) / 180;
@@ -69,6 +85,42 @@ function ConsultingIllustration({ isDark }: { isDark: boolean }) {
 
             {/* ── ambient glow behind hub ── */}
             <circle cx={cx} cy={cy} r="130" fill="url(#hubGlow)" className="hub-glow"/>
+
+            {/* ── satellite outer nodes ── */}
+            {satellites.map((s, i) => {
+                const sx = cx + Rs * Math.cos(toRad(s.angle));
+                const sy = cy - Rs * Math.sin(toRad(s.angle));
+                // find parent node at same sector
+                const parent = nodes.find(n => n.angle === s.angle) ??
+                    nodes.reduce((a, b) =>
+                        Math.abs(a.angle - s.angle) < Math.abs(b.angle - s.angle) ? a : b
+                    );
+                const px2 = cx + R * Math.cos(toRad(parent.angle));
+                const py2 = cy - R * Math.sin(toRad(parent.angle));
+                return (
+                    <g key={i}>
+                        <line x1={px2} y1={py2} x2={sx} y2={sy}
+                            stroke={s.color} strokeWidth="0.9" strokeOpacity="0.20" strokeDasharray="3 4"/>
+                        <circle r="2.2" fill={s.color} opacity="0.80" filter="url(#glowPacket)">
+                            <animateMotion
+                                dur={`${2.8 + i * 0.4}s`}
+                                begin={`${i * 0.6}s`}
+                                repeatCount="indefinite"
+                                path={`M ${px2},${py2} L ${sx},${sy}`}
+                            />
+                            <animate attributeName="opacity" values="0;0.85;0.85;0" keyTimes="0;0.1;0.85;1"
+                                dur={`${2.8 + i * 0.4}s`} begin={`${i * 0.6}s`} repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx={sx} cy={sy} r="15" fill={surface} stroke={s.color} strokeWidth="1.0" strokeOpacity="0.65" filter="url(#glowNode)"/>
+                        <circle cx={sx} cy={sy} r="15" fill={s.color} fillOpacity="0.10"/>
+                        <text x={sx} y={sy + 4} fontSize="7.5" fill={s.color} fontFamily="system-ui"
+                            fontWeight="700" textAnchor="middle" letterSpacing="0.2">{s.label}</text>
+                    </g>
+                );
+            })}
+
+            {/* ── satellite outer ring ── */}
+            <circle cx={cx} cy={cy} r={Rs} stroke={gold} strokeWidth="0.5" strokeOpacity="0.07" strokeDasharray="4 8"/>
 
             {/* ── connection lines + animated packets ── */}
             {nodes.map((n, i) => {

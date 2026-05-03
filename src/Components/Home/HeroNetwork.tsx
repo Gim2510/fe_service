@@ -5,15 +5,15 @@ import { useTheme } from "../../Context/ThemeContext.tsx";
 
 type V2 = [number, number];
 
-// tier: 0=hub, 1=inner ring, 2=outer ring
+// tier: 0=hub, 1=inner ring, 2=outer ring, 3=satellite
 interface NodeDef {
     id: string; label: string; x: number; y: number;
-    tier: 0 | 1 | 2;
+    tier: 0 | 1 | 2 | 3;
     fp: number; fs: number; fa: number;
 }
 
-// type: "spoke"=to hub, "inner"=tier1↔tier1, "outer"=tier2↔tier2, "bridge"=tier1↔tier2
-type EdgeType = "spoke" | "inner" | "bridge" | "outer";
+// type: "spoke"=to hub, "inner"=tier1↔tier1, "outer"=tier2↔tier2, "bridge"=tier1↔tier2, "satellite"=tier3↔tier2
+type EdgeType = "spoke" | "inner" | "bridge" | "outer" | "satellite";
 interface EdgeDef {
     from: string;
     to:   string;
@@ -32,25 +32,41 @@ interface Ring   { t: number; }
 
 // ── Scene data ─────────────────────────────────────────────────────────────────
 
-// Hub at 0.46,0.50. Tier1 inner ring r≈0.18. Tier2 outer ring r≈0.30.
-// x clamped 0.20–0.76 to stay inside canvas.
+// Hub at 0.46,0.50. Rings are evenly spaced concentric circles.
+// Tier1 r≈0.14 (5 nodes, 72° apart). Tier2 r≈0.23 (7 nodes, ~51° apart). Tier3 r≈0.33 (8 nodes, 45° apart).
+const CX = 0.46, CY = 0.50;
+const toNorm = (cx: number, cy: number, r: number, deg: number) => ({
+    x: +(cx + r * Math.cos(deg * Math.PI / 180)).toFixed(3),
+    y: +(cy - r * Math.sin(deg * Math.PI / 180)).toFixed(3),
+});
+// Tier1: top=90°, then clockwise every 72°
+const T1 = [90, 18, 306, 234, 162].map(a => toNorm(CX, CY, 0.14, a));
+// Tier2: top=90°, then clockwise every ~51.4°
+const T2 = [90, 39, 347, 296, 244, 193, 141].map(a => toNorm(CX, CY, 0.23, a));
+// Tier3: top=90°, then clockwise every 45°
+const T3 = [90, 45, 0, 315, 270, 225, 180, 135].map(a => toNorm(CX, CY, 0.33, a));
+
 const NODES: NodeDef[] = [
     // Hub
-    { id: "hub",       label: "DATA HUB",  tier: 0, x: 0.46, y: 0.50, fp: 0.0, fs: 0.30, fa: 0.003 },
+    { id: "hub",       label: "DATA HUB",  tier: 0, x: CX,      y: CY,      fp: 0.0, fs: 0.30, fa: 0.003 },
     // Tier 1 — inner ring, warm gold
-    { id: "crm",       label: "CRM",       tier: 1, x: 0.30, y: 0.34, fp: 0.0, fs: 0.58, fa: 0.007 },
-    { id: "analytics", label: "Analytics", tier: 1, x: 0.46, y: 0.26, fp: 1.1, fs: 0.72, fa: 0.006 },
-    { id: "sales",     label: "Sales",     tier: 1, x: 0.55, y: 0.34, fp: 2.2, fs: 0.65, fa: 0.008 },
-    { id: "finance",   label: "Finance",   tier: 1, x: 0.57, y: 0.64, fp: 3.3, fs: 0.50, fa: 0.006 },
-    { id: "ops",       label: "Ops",       tier: 1, x: 0.38, y: 0.70, fp: 4.4, fs: 0.82, fa: 0.007 },
+    { id: "analytics", label: "Analytics", tier: 1, x: T1[0].x, y: T1[0].y, fp: 1.1, fs: 0.72, fa: 0.006 },
+    { id: "sales",     label: "Sales",     tier: 1, x: T1[1].x, y: T1[1].y, fp: 2.2, fs: 0.65, fa: 0.008 },
+    { id: "finance",   label: "Finance",   tier: 1, x: T1[2].x, y: T1[2].y, fp: 3.3, fs: 0.50, fa: 0.006 },
+    { id: "ops",       label: "Ops",       tier: 1, x: T1[3].x, y: T1[3].y, fp: 4.4, fs: 0.82, fa: 0.007 },
+    { id: "crm",       label: "CRM",       tier: 1, x: T1[4].x, y: T1[4].y, fp: 0.0, fs: 0.58, fa: 0.007 },
     // Tier 2 — outer ring, steel blue
-    { id: "leads",     label: "Leads",     tier: 2, x: 0.20, y: 0.22, fp: 0.5, fs: 0.64, fa: 0.008 },
-    { id: "reports",   label: "Reports",   tier: 2, x: 0.46, y: 0.14, fp: 1.6, fs: 0.70, fa: 0.007 },
-    { id: "forecast",  label: "Forecast",  tier: 2, x: 0.62, y: 0.20, fp: 2.7, fs: 0.60, fa: 0.009 },
-    { id: "pipeline",  label: "Pipeline",  tier: 2, x: 0.66, y: 0.50, fp: 3.8, fs: 0.55, fa: 0.006 },
-    { id: "invoicing", label: "Invoicing", tier: 2, x: 0.60, y: 0.80, fp: 4.9, fs: 0.75, fa: 0.008 },
-    { id: "support",   label: "Support",   tier: 2, x: 0.30, y: 0.84, fp: 0.3, fs: 0.68, fa: 0.007 },
-    { id: "hr",        label: "HR",        tier: 2, x: 0.20, y: 0.62, fp: 1.4, fs: 0.62, fa: 0.009 },
+    { id: "reports",   label: "Reports",   tier: 2, x: T2[0].x, y: T2[0].y, fp: 1.6, fs: 0.70, fa: 0.007 },
+    { id: "forecast",  label: "Forecast",  tier: 2, x: T2[1].x, y: T2[1].y, fp: 2.7, fs: 0.60, fa: 0.009 },
+    { id: "invoicing", label: "Invoicing", tier: 2, x: T2[3].x, y: T2[3].y, fp: 4.9, fs: 0.75, fa: 0.008 },
+    { id: "support",   label: "Support",   tier: 2, x: T2[4].x, y: T2[4].y, fp: 0.3, fs: 0.68, fa: 0.007 },
+    { id: "hr",        label: "HR",        tier: 2, x: T2[5].x, y: T2[5].y, fp: 1.4, fs: 0.62, fa: 0.009 },
+    { id: "leads",     label: "Leads",     tier: 2, x: T2[6].x, y: T2[6].y, fp: 0.5, fs: 0.64, fa: 0.008 },
+    // Tier 3 — satellite ring, emerald green
+    { id: "webhook",   label: "Webhook",   tier: 3, x: 0.38, y: T3[0].y, fp: 1.3, fs: 0.85, fa: 0.009 },
+    { id: "email",     label: "Email",     tier: 3, x: T3[4].x, y: T3[4].y, fp: 0.7, fs: 0.88, fa: 0.010 },
+    { id: "sms",       label: "SMS",       tier: 3, x: T3[5].x, y: T3[5].y, fp: 1.8, fs: 0.76, fa: 0.011 },
+    { id: "api",       label: "API",       tier: 3, x: T3[7].x, y: T3[7].y, fp: 0.2, fs: 0.90, fa: 0.010 },
 ];
 
 const EDGES: EdgeDef[] = [
@@ -69,8 +85,6 @@ const EDGES: EdgeDef[] = [
     { from: "leads",     to: "crm",       type: "bridge" },
     { from: "reports",   to: "analytics", type: "bridge" },
     { from: "forecast",  to: "sales",     type: "bridge" },
-    { from: "pipeline",  to: "sales",     type: "bridge" },
-    { from: "pipeline",  to: "finance",   type: "bridge" },
     { from: "invoicing", to: "finance",   type: "bridge" },
     { from: "invoicing", to: "ops",       type: "bridge" },
     { from: "support",   to: "ops",       type: "bridge" },
@@ -78,16 +92,25 @@ const EDGES: EdgeDef[] = [
     { from: "hr",        to: "ops",       type: "bridge" },
     { from: "hr",        to: "crm",       type: "bridge" },
     // Outer cross-links: tier2 ↔ tier2 (dim steel)
-    { from: "leads",     to: "reports",   type: "outer"  },
-    { from: "forecast",  to: "pipeline",  type: "outer"  },
-    { from: "invoicing", to: "support",   type: "outer"  },
-    { from: "hr",        to: "leads",     type: "outer"  },
+    { from: "leads",     to: "reports",   type: "outer"     },
+    { from: "forecast",  to: "reports",   type: "outer"     },
+    { from: "invoicing", to: "support",   type: "outer"     },
+    { from: "hr",        to: "leads",     type: "outer"     },
+    // Satellites: tier3 → tier2/tier1 (emerald)
+    { from: "api",       to: "leads",     type: "satellite" },
+    { from: "api",       to: "crm",       type: "satellite" },
+    { from: "webhook",   to: "reports",   type: "satellite" },
+    { from: "webhook",   to: "analytics", type: "satellite" },
+    { from: "email",     to: "invoicing", type: "satellite" },
+    { from: "email",     to: "support",   type: "satellite" },
+    { from: "sms",       to: "support",   type: "satellite" },
+    { from: "sms",       to: "crm",       type: "satellite" },
 ];
 
 // ── Node info (shown on double-click expand) ───────────────────────────────────
 
 const NODE_INFO: Record<string, { metric: string; desc: string }> = {
-    hub:       { metric: "13 sistemi",    desc: "connessi in tempo reale"       },
+    hub:       { metric: "16 sistemi",    desc: "connessi in tempo reale"       },
     crm:       { metric: "+24% lead",     desc: "tasso di conversione"          },
     analytics: { metric: "Real-time",     desc: "dati aggiornati ogni 30s"      },
     sales:     { metric: "€2.4M",         desc: "pipeline commerciale"          },
@@ -97,9 +120,16 @@ const NODE_INFO: Record<string, { metric: string; desc: string }> = {
     reports:   { metric: "28 report",     desc: "generati automaticamente"      },
     forecast:  { metric: "94% acc.",      desc: "precisione forecast"           },
     pipeline:  { metric: "€890K",         desc: "valore in lavorazione"         },
-    invoicing: { metric: "48h",           desc: "tempo medio di incasso"        },
-    support:   { metric: "4.8 / 5",       desc: "soddisfazione clienti"         },
+    invoicing: { metric: "48h",           desc: "tempo medio di incasso"        },    support:   { metric: "4.8 / 5",       desc: "soddisfazione clienti"         },
     hr:        { metric: "91 / 100",      desc: "engagement del team"           },
+    api:       { metric: "12K req/s",     desc: "throughput medio giornaliero"  },
+    webhook:   { metric: "99.9%",         desc: "uptime eventi in tempo reale"  },
+    cloud:     { metric: "3 region",      desc: "infrastruttura multi-cloud"    },
+    mobile:    { metric: "18K utenti",    desc: "app attive questo mese"        },
+    iot:       { metric: "4.2K device",   desc: "sensori connessi"              },
+    email:     { metric: "92% open",      desc: "tasso apertura campagne"       },
+    sms:       { metric: "< 2s",          desc: "latenza media notifiche"       },
+    bi:        { metric: "360°",          desc: "visibilità dati aziendali"     },
 };
 
 // ── Math ───────────────────────────────────────────────────────────────────────
@@ -405,18 +435,25 @@ export function HeroNetwork() {
             const sa   = (a: number) => `rgba(${Gs[0]},${Gs[1]},${Gs[2]},${clamp(a * aM).toFixed(3)})`;
             const sHex = isDark ? "#5B9BD5"       : "#2B6CB0";
             const sBrt = isDark ? "#A8D4FF"       : "#5B9BD5";
+            // Emerald green (tier3)
+            const Ge   = isDark ? [ 52, 211, 153] : [ 4, 120,  87];
+            const ea   = (a: number) => `rgba(${Ge[0]},${Ge[1]},${Ge[2]},${clamp(a * aM).toFixed(3)})`;
+            const eHex = isDark ? "#34D399"       : "#047857";
+            const eBrt = isDark ? "#6EE7B7"       : "#10B981";
             // Shared
-            const gBg  = isDark ? "rgba(22,20,14,0.90)" : "rgba(255,250,240,0.97)";
+            const gBg  = isDark ? "rgba(22,20,14,0.90)" : "rgba(255,251,235,0.95)";
             const tCol = isDark ? "#FCD34D"       : "#1C1917"; // amber-300 / stone-900
             const tCo2 = isDark ? "#94BAD8"       : "#0F172A"; // / slate-900
 
             // Edge color helpers
             const edgeColor = (type: EdgeType, alpha: number) => {
                 if (type === "spoke" || type === "inner") return ga(alpha);
+                if (type === "satellite") return ea(alpha);
                 return sa(alpha);
             };
             const packetColor = (type: EdgeType, bright: boolean) => {
                 if (type === "spoke" || type === "inner") return bright ? gBrt : gHex;
+                if (type === "satellite") return bright ? eBrt : eHex;
                 return bright ? sBrt : sHex;
             };
 
@@ -444,8 +481,8 @@ export function HeroNetwork() {
                     const dx   = (nsb.cx - nsa.cx) * W;
                     const dy   = (nsb.cy - nsa.cy) * H;
                     const dist = Math.sqrt(dx * dx + dy * dy);
-                    const ra   = na.tier === 0 ? 32 : na.tier === 2 ? 18 : 22;
-                    const rb   = nb.tier === 0 ? 32 : nb.tier === 2 ? 18 : 22;
+                    const ra   = na.tier === 0 ? 32 : na.tier === 3 ? 12 : na.tier === 2 ? 18 : 22;
+                    const rb   = nb.tier === 0 ? 32 : nb.tier === 3 ? 12 : nb.tier === 2 ? 18 : 22;
                     const minD = ra + rb + 8;
 
                     if (dist < minD && dist > 0.5) {
@@ -519,10 +556,11 @@ export function HeroNetwork() {
                 ctx.beginPath();
                 ctx.moveTo(a[0], a[1]);
                 ctx.quadraticCurveTo(cp[0], cp[1], b[0], b[1]);
-                const baseAlpha = e.type === "spoke" ? (isDark ? 0.14 : 0.38)
-                                : e.type === "inner"  ? (isDark ? 0.10 : 0.28)
-                                : e.type === "bridge" ? (isDark ? 0.11 : 0.30)
-                                :                       (isDark ? 0.06 : 0.18);
+                const baseAlpha = e.type === "spoke"     ? (isDark ? 0.14 : 0.38)
+                                : e.type === "inner"      ? (isDark ? 0.10 : 0.28)
+                                : e.type === "bridge"     ? (isDark ? 0.11 : 0.30)
+                                : e.type === "satellite"  ? (isDark ? 0.13 : 0.32)
+                                :                           (isDark ? 0.06 : 0.18);
                 ctx.strokeStyle = edgeColor(e.type, baseAlpha);
                 ctx.lineWidth   = e.type === "spoke" ? 1.1 : e.type === "outer" ? 0.6 : 0.85;
                 ctx.stroke();
@@ -564,7 +602,7 @@ export function HeroNetwork() {
                     // Head halo
                     const [hx, hy] = qbez(a, cp, b, p.t);
                     const isWarm   = e.type === "spoke" || e.type === "inner";
-                    const haloFn   = isWarm ? ga : sa;
+                    const haloFn   = isWarm ? ga : e.type === "satellite" ? ea : sa;
                     const halo     = ctx.createRadialGradient(hx, hy, 0, hx, hy, 8);
                     halo.addColorStop(0,   haloFn(0.85));
                     halo.addColorStop(0.4, haloFn(0.35));
@@ -612,12 +650,13 @@ export function HeroNetwork() {
                 const [x, y]   = px(ns, n);
                 const isHub    = n.tier === 0;
                 const isTier2  = n.tier === 2;
-                const r        = isHub ? 32 : isTier2 ? 18 : 22;
+                const isTier3  = n.tier === 3;
+                const r        = isHub ? 32 : isTier3 ? 12 : isTier2 ? 18 : 22;
                 const isDragging = ns.dragged;
 
                 // Color helpers per tier
-                const nodeGa = isTier2 ? sa : ga;
-                const nodeHex = isTier2 ? sHex : gHex;
+                const nodeGa  = isTier3 ? ea : isTier2 ? sa : ga;
+                const nodeHex = isTier3 ? eHex : isTier2 ? sHex : gHex;
 
                 // Wide outer glow
                 const glowR = isDragging ? r * 3.2 : r * 2.8;
@@ -641,7 +680,7 @@ export function HeroNetwork() {
                 ctx.fillStyle = ig;
                 ctx.fill();
 
-                // Body — backdrop blur: sample already-drawn canvas content, blur it inside clip
+                // Body
                 ctx.save();
                 ctx.beginPath();
                 ctx.arc(x, y, r, 0, Math.PI * 2);
@@ -649,19 +688,7 @@ export function HeroNetwork() {
                 ctx.filter = `blur(${isHub ? 7 : 5}px)`;
                 ctx.drawImage(canvas, 0, 0, W, H);
                 ctx.filter = "none";
-                // Tint overlay on top of blur
-                if (isDark) {
-                    ctx.fillStyle = gBg;
-                } else {
-                    const bubble = ctx.createRadialGradient(
-                        x - r * 0.20, y - r * 0.25, r * 0.05,
-                        x, y, r
-                    );
-                    bubble.addColorStop(0,    nodeGa(0.08));
-                    bubble.addColorStop(0.55, nodeGa(0.16));
-                    bubble.addColorStop(1,    nodeGa(0.36));
-                    ctx.fillStyle = bubble;
-                }
+                ctx.fillStyle = gBg;
                 ctx.beginPath();
                 ctx.arc(x, y, r, 0, Math.PI * 2);
                 ctx.fill();
@@ -675,24 +702,6 @@ export function HeroNetwork() {
                     : isHub ? nodeHex : nodeGa(isDark ? 0.42 : 0.85);
                 ctx.lineWidth = isHub ? (isDark ? 1.8 : 2.2) : (isDark ? 1.0 : 1.6);
                 ctx.stroke();
-
-                // Glossy shine — top-left specular (bubble effect, light mode only)
-                if (!isDark) {
-                    ctx.save();
-                    ctx.beginPath();
-                    ctx.arc(x, y, r, 0, Math.PI * 2);
-                    ctx.clip();
-                    const shine = ctx.createRadialGradient(
-                        x - r * 0.35, y - r * 0.38, 0,
-                        x - r * 0.20, y - r * 0.20, r * 0.72
-                    );
-                    shine.addColorStop(0,   "rgba(255,255,255,0.62)");
-                    shine.addColorStop(0.45, "rgba(255,255,255,0.18)");
-                    shine.addColorStop(1,    "rgba(255,255,255,0)");
-                    ctx.fillStyle = shine;
-                    ctx.fillRect(x - r, y - r, r * 2, r * 2);
-                    ctx.restore();
-                }
 
                 // Top-left rim highlight (dark only — light uses shine instead)
                 if (isDark) {
@@ -757,8 +766,8 @@ export function HeroNetwork() {
                     ctx.globalAlpha = 1;
                     ctx.letterSpacing = "0px";
                 } else {
-                    const sz = n.label.length > 7 ? 7.5 : isTier2 ? 8.5 : 9.0;
-                    ctx.fillStyle = isTier2 ? tCo2 : tCol;
+                    const sz = isTier3 ? 7.0 : n.label.length > 7 ? 7.5 : isTier2 ? 8.5 : 9.0;
+                    ctx.fillStyle = isTier3 ? (isDark ? eBrt : "#065F46") : isTier2 ? tCo2 : tCol;
                     ctx.font      = `600 ${sz}px system-ui, -apple-system, sans-serif`;
                     ctx.fillText(n.label, x, y);
                 }
@@ -783,14 +792,15 @@ export function HeroNetwork() {
                 const n    = ndMap.get(expandedId)!;
                 const ns   = states.get(expandedId)!;
                 const [x, y] = px(ns, n);
-                const isHub  = n.tier === 0;
+                const isHub   = n.tier === 0;
                 const isTier2 = n.tier === 2;
-                const rBase  = isHub ? 32 : isTier2 ? 18 : 22;
-                const rMax   = isHub ? 82 : 70;
-                const prog   = easeInOut(expandT);
-                const r      = rBase + (rMax - rBase) * prog;
-                const nodeGa = isTier2 ? sa : ga;
-                const nodeHex = isTier2 ? sHex : gHex;
+                const isTier3 = n.tier === 3;
+                const rBase   = isHub ? 32 : isTier3 ? 12 : isTier2 ? 18 : 22;
+                const rMax    = isHub ? 82 : isTier3 ? 58 : 70;
+                const prog    = easeInOut(expandT);
+                const r       = rBase + (rMax - rBase) * prog;
+                const nodeGa  = isTier3 ? ea : isTier2 ? sa : ga;
+                const nodeHex = isTier3 ? eHex : isTier2 ? sHex : gHex;
                 const info   = NODE_INFO[expandedId] ?? { metric: "", desc: "" };
 
                 // Outer glow
@@ -810,28 +820,10 @@ export function HeroNetwork() {
                 ctx.filter = `blur(${isHub ? 9 : 7}px)`;
                 ctx.drawImage(canvas, 0, 0, W, H);
                 ctx.filter = "none";
-                // Tint
-                if (isDark) {
-                    ctx.fillStyle = gBg;
-                } else {
-                    const bub = ctx.createRadialGradient(x - r * 0.2, y - r * 0.25, r * 0.05, x, y, r);
-                    bub.addColorStop(0,    nodeGa(0.08));
-                    bub.addColorStop(0.55, nodeGa(0.18));
-                    bub.addColorStop(1,    nodeGa(0.42));
-                    ctx.fillStyle = bub;
-                }
+                ctx.fillStyle = gBg;
                 ctx.beginPath();
                 ctx.arc(x, y, r, 0, Math.PI * 2);
                 ctx.fill();
-                // Glossy shine (light mode)
-                if (!isDark) {
-                    const shine = ctx.createRadialGradient(x - r * 0.35, y - r * 0.38, 0, x - r * 0.2, y - r * 0.2, r * 0.72);
-                    shine.addColorStop(0,   "rgba(255,255,255,0.55)");
-                    shine.addColorStop(0.45, "rgba(255,255,255,0.15)");
-                    shine.addColorStop(1,    "rgba(255,255,255,0)");
-                    ctx.fillStyle = shine;
-                    ctx.fillRect(x - r, y - r, r * 2, r * 2);
-                }
                 ctx.restore();
 
                 // Border
@@ -860,7 +852,7 @@ export function HeroNetwork() {
                 ctx.textBaseline = "middle";
 
                 // Node label (small, dimmed)
-                ctx.fillStyle = isTier2 ? tCo2 : tCol;
+                ctx.fillStyle = isTier3 ? (isDark ? eBrt : "#065F46") : isTier2 ? tCo2 : tCol;
                 ctx.font      = `500 9px system-ui, -apple-system, sans-serif`;
                 ctx.globalAlpha *= 0.65;
                 ctx.fillText(n.label.toUpperCase(), x, y - r * 0.44);
@@ -873,7 +865,7 @@ export function HeroNetwork() {
                 ctx.fillText(info.metric, x, y - r * 0.08);
 
                 // Description (small, muted)
-                ctx.fillStyle = isTier2 ? tCo2 : tCol;
+                ctx.fillStyle = isTier3 ? (isDark ? eBrt : "#065F46") : isTier2 ? tCo2 : tCol;
                 ctx.font      = `400 8.5px system-ui, -apple-system, sans-serif`;
                 ctx.globalAlpha *= 0.70;
                 ctx.fillText(info.desc, x, y + r * 0.35);
