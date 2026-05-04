@@ -1,4 +1,4 @@
-name: Auto PR - master
+name: Auto PR - main
 
 on:
   push:
@@ -17,28 +17,28 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Create PR dev to master (skip if exists)
+      - name: Create PR dev to main (skip if exists)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           EXISTING=$(gh pr list \
-            --base master \
+            --base main \
             --head dev \
             --state open \
             --json number \
             --jq '.[0].number')
 
           if [ -n "$EXISTING" ]; then
-            echo "PR #$EXISTING already open for dev -> master. Skip."
+            echo "PR #$EXISTING already open for dev -> main. Skip."
             exit 0
           fi
 
-          COMMITS=$(git log origin/master..HEAD --oneline | head -20)
+          COMMITS=$(git log origin/main..HEAD --oneline | head -20)
 
           BODY=$(printf "## Automated release\n\nAuto-generated PR after merge to dev.\n\n## Commits\n%s\n\n## Checklist\n- [ ] All tests pass on dev\n- [ ] Review complete\n- [ ] No undocumented breaking changes" "$COMMITS")
 
           gh pr create \
-            --base master \
+            --base main \
             --head dev \
-            --title "Release: dev -> master" \
+            --title "Release: dev -> main" \
             --body "$BODY"
