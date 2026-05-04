@@ -1,0 +1,45 @@
+name: Auto PR - dev
+
+on:
+  push:
+    branches:
+      - 'TBDO-*'
+      - 'HTFX-*'
+      - 'TBAM-*'
+      - 'TBOPS-*'
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create PR to dev (skip if exists)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="${{ github.ref_name }}"
+
+          EXISTING=$(gh pr list \
+            --base dev \
+            --head "$BRANCH" \
+            --state open \
+            --json number \
+            --jq '.[0].number')
+
+          if [ -n "$EXISTING" ]; then
+            echo "PR #$EXISTING already open for $BRANCH -> dev. Skip."
+            exit 0
+          fi
+
+          BODY=$(printf "## Branch: %s\n\n## Checklist\n- [ ] npm test passes locally\n- [ ] npm run lint no errors\n- [ ] No new env vars without updating .env.example" "$BRANCH")
+
+          gh pr create \
+            --base dev \
+            --head "$BRANCH" \
+            --title "$BRANCH" \
+            --body "$BODY"

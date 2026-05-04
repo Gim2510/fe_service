@@ -1,6 +1,54 @@
-// CTASection.tsx
+import { motion } from "framer-motion";
+import { ArrowRight, Clock, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { LiquidGlassButton } from "../Buttons/LiquidGlassButton.tsx";
+import { useMemo } from "react";
+
+const PARTICLE_COUNT = 72;
+const COLORS_DARK  = ["bg-red-400", "bg-red-500", "bg-orange-400", "bg-amber-400"];
+const COLORS_LIGHT = ["bg-red-500", "bg-red-600", "bg-orange-500", "bg-amber-500"];
+
+function FloatingParticles({ isDark }: { isDark: boolean }) {
+    const particles = useMemo(() =>
+        Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
+            id: i,
+            x: Math.random() * 100,
+            y: Math.random() * 100,
+            size: 1 + Math.random() * 2.5,
+            duration: 6 + Math.random() * 10,
+            delay: Math.random() * 8,
+            opacity: 0.08 + Math.random() * 0.18,
+            colorIdx: Math.floor(Math.random() * 4),
+        })), []);
+
+    return (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {particles.map((p) => (
+                <motion.div
+                    key={p.id}
+                    className={`absolute rounded-full ${isDark ? COLORS_DARK[p.colorIdx] : COLORS_LIGHT[p.colorIdx]}`}
+                    style={{
+                        left: `${p.x}%`,
+                        top: `${p.y}%`,
+                        width: p.size,
+                        height: p.size,
+                        opacity: p.opacity,
+                    }}
+                    animate={{
+                        y: [0, -28, 0],
+                        x: [0, Math.random() > 0.5 ? 10 : -10, 0],
+                        opacity: [p.opacity, p.opacity * 2.5, p.opacity],
+                    }}
+                    transition={{
+                        duration: p.duration,
+                        delay: p.delay,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                    }}
+                />
+            ))}
+        </div>
+    );
+}
 
 export function CTASection({ theme }: { theme: string }) {
     const isDark = theme === "dark";
@@ -8,62 +56,144 @@ export function CTASection({ theme }: { theme: string }) {
     const goToSurvey = () => navigate("/survey/start");
 
     return (
-        <section className={`relative overflow-hidden ${isDark ? "bg-neutral-900" : "bg-gray-100"}`}>
-            {/* Subtle technical grid texture */}
-            <div className="absolute inset-0 opacity-[0.04]
-                bg-[linear-gradient(to_right,#000_1px,transparent_1px),
-                linear-gradient(to_bottom,#000_1px,transparent_1px)]
-                bg-[size:60px_60px]" />
+        <section className="relative overflow-hidden">
+            {/* Corporate gradient background */}
+            <div className={`absolute inset-0 ${
+                isDark
+                    ? "bg-gradient-to-br from-[#0C0C0B] via-[#161410] to-[#0C0C0B]"
+                    : "bg-gradient-to-br from-[#FDFAF4] via-[#F2E8D5] to-[#FDFAF4]"
+            }`} />
 
-            {/* Soft radial light diffusion */}
-            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                w-[800px] h-[800px] rounded-full blur-3xl opacity-30 ${isDark ? "bg-white/5" : "bg-black/5"}`} />
+            {/* Floating particles */}
+            <FloatingParticles isDark={isDark} />
 
-            <div className="relative mx-auto max-w-5xl px-8 py-32 text-center flex flex-col items-center">
+            {/* Decorative elements */}
+            <div className="absolute inset-0 pointer-events-none">
+                {isDark && (
+                    <>
+                        {/* Blue gradient accent */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-stone-800/30 via-transparent to-stone-800/10" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full blur-[100px] opacity-10 bg-amber-600" />
+                        {/* Top border glow */}
+                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-800/60 to-transparent" />
+                    </>
+                )}
+                {!isDark && (
+                    <>
+                        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-20 bg-amber-300" />
+                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" />
+                    </>
+                )}
+            </div>
+
+            <div className="relative mx-auto max-w-4xl px-6 sm:px-8 py-28 sm:py-36 text-center flex flex-col items-center">
+
+                {/* Badge */}
+                <motion.span
+                    className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border mb-8 ${
+                        isDark
+                            ? "text-amber-500 border-stone-700/40 bg-stone-800/20"
+                            : "text-amber-800 border-amber-300 bg-amber-50"
+                    }`}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                    Assessment gratuito
+                </motion.span>
 
                 {/* Headline */}
-                <h2 className={`${isDark ? "text-white" : "text-gray-900"} text-4xl md:text-5xl font-semibold leading-tight max-w-4xl`}>
-                    Trasforma i tuoi processi in un
-                    <span className={`${isDark ? "text-neutral-400" : "text-gray-500"} block`}>
-                        vantaggio competitivo misurabile.
+                <motion.h2
+                    className={`font-fjalla text-4xl md:text-5xl font-semibold leading-tight max-w-3xl ${
+                        isDark ? "text-slate-100" : "text-stone-900"
+                    }`}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+                >
+                    Scopri esattamente dove la tua azienda{" "}
+                    <span className={isDark ? "text-amber-500" : "text-amber-700"}>
+                        perde efficienza — e come recuperarla.
                     </span>
-                </h2>
+                </motion.h2>
 
-                {/* Subheadline */}
-                <p className={`${isDark ? "text-neutral-400" : "text-gray-600"} mt-6 text-lg max-w-2xl leading-relaxed`}>
-                    In pochi minuti ottieni una valutazione strutturata
-                    del livello di maturità digitale della tua azienda,
-                    con indicazioni concrete sulle priorità di intervento.
-                </p>
+                {/* Sub */}
+                <motion.p
+                    className={`mt-6 text-lg leading-relaxed max-w-xl ${
+                        isDark ? "text-slate-400" : "text-stone-600"
+                    }`}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.15 }}
+                >
+                    In 10 minuti ottieni un report personalizzato sul livello di maturità digitale della tua azienda: punti critici, opportunità prioritarie e un piano d'azione concreto — senza impegno.
+                </motion.p>
 
                 {/* Micro-benefits */}
-                <div className={`mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6
-                                text-sm ${isDark ? "text-neutral-400" : "text-gray-500"} max-w-3xl`}>
-                    <div className="flex justify-center gap-2">
-                        <span className={`font-medium ${isDark ? "text-white" : "text-black"}`}>✓</span>
-                        Analisi strutturata
-                    </div>
-                    <div className="flex justify-center gap-2">
-                        <span className={`font-medium ${isDark ? "text-white" : "text-black"}`}>✓</span>
-                        Nessun impegno
-                    </div>
-                    <div className="flex justify-center gap-2">
-                        <span className={`font-medium ${isDark ? "text-white" : "text-black"}`}>✓</span>
-                        Risultati immediati
-                    </div>
-                </div>
+                <motion.div
+                    className="mt-8 flex flex-wrap justify-center gap-x-8 gap-y-2"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.22 }}
+                >
+                    {["Report personalizzato incluso", "Nessun impegno o costo", "Piano d'azione concreto"].map((item) => (
+                        <span
+                            key={item}
+                            className={`flex items-center gap-1.5 text-sm ${
+                                isDark ? "text-slate-500" : "text-stone-500"
+                            }`}
+                        >
+                            <CheckCircle size={13} className={isDark ? "text-amber-700" : "text-amber-600"} />
+                            {item}
+                        </span>
+                    ))}
+                </motion.div>
 
-                {/* CTA */}
-                <div className="mt-14">
-                    <LiquidGlassButton onClick={goToSurvey} className={` ${!isDark ? `!bg-white/90 sm:bg-transparent !border-black/20 shadow-lg` : ``}`}>
-                        Avvia l’analisi strategica
-                    </LiquidGlassButton>
-                </div>
+                {/* CTA button */}
+                <motion.div
+                    className="mt-12"
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.55, delay: 0.28 }}
+                >
+                    <button
+                        onClick={goToSurvey}
+                        className={`group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl
+                            text-sm font-semibold transition-all duration-200
+                            shadow-xl hover:-translate-y-0.5
+                            ${isDark
+                                ? "bg-amber-700 hover:bg-amber-600 text-white shadow-stone-800/40 hover:shadow-stone-800/60"
+                                : "bg-[#F8FAFB] hover:bg-amber-50 text-amber-800 shadow-stone-800/20 hover:shadow-stone-800/30"
+                            }
+                        `}
+                    >
+                        Ottieni il tuo report gratuito
+                        <ArrowRight
+                            size={16}
+                            className="transition-transform duration-200 group-hover:translate-x-1"
+                        />
+                    </button>
+                </motion.div>
 
-                {/* Trust reinforcement */}
-                <p className={`${isDark ? "text-neutral-400" : "text-black"} mt-6 text-xs`}>
-                    Tempo stimato: 3–5 minuti • Nessuna registrazione richiesta
-                </p>
+                {/* Trust note */}
+                <motion.p
+                    className={`mt-5 flex items-center gap-1.5 text-xs ${
+                        isDark ? "text-slate-600" : "text-stone-400"
+                    }`}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.35 }}
+                >
+                    <Clock size={11} />
+                    10–15 minuti • report personalizzato • nessuna carta di credito
+                </motion.p>
             </div>
         </section>
     );
