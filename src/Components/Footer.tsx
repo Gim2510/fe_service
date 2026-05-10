@@ -22,26 +22,9 @@ export function Footer({ theme }: { theme: string }) {
         }`}>
 
             {/* Background decoration */}
-            <div className="absolute inset-0 pointer-events-none">
-                {isDark ? (
-                    <>
-                        <div
-                            className="absolute inset-0 opacity-[0.05]"
-                            style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 0 L56 16 L56 50 L28 66 L0 50 L0 16 Z' fill='none' stroke='%23F59E0B' stroke-width='0.8'/%3E%3Cpath d='M28 66 L56 50 L56 84 L28 100 L0 84 L0 50 Z' fill='none' stroke='%23F59E0B' stroke-width='0.8'/%3E%3C/svg%3E\")", backgroundSize: "56px 100px" }}
-                        />
-                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full blur-[120px] opacity-5 bg-amber-600" />
-                    </>
-                ) : (
-                    <>
-                        <div
-                            className="absolute inset-0 opacity-[0.10]"
-                            style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 0 L56 16 L56 50 L28 66 L0 50 L0 16 Z' fill='none' stroke='%23B45309' stroke-width='0.8'/%3E%3Cpath d='M28 66 L56 50 L56 84 L28 100 L0 84 L0 50 Z' fill='none' stroke='%23B45309' stroke-width='0.8'/%3E%3C/svg%3E\")", backgroundSize: "56px 100px" }}
-                        />
-                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full blur-[120px] opacity-10 bg-amber-400" />
-                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
-                    </>
-                )}
-            </div>
+            {!isDark && (
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
+            )}
 
             <div className="relative mx-auto max-w-7xl px-8 pt-20 pb-12">
 

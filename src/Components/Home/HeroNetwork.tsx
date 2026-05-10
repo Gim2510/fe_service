@@ -30,81 +30,79 @@ interface NodeState {
 interface Packet { t: number; speed: number; }
 interface Ring   { t: number; }
 
-// ── Scene data ─────────────────────────────────────────────────────────────────
+// ─ Scene data ─────────────────────────────────────────────────────────────────
 
-// Hub at 0.46,0.50. Rings are evenly spaced concentric circles.
-// Tier1 r≈0.14 (5 nodes, 72° apart). Tier2 r≈0.23 (7 nodes, ~51° apart). Tier3 r≈0.33 (8 nodes, 45° apart).
+// Symmetric spider-web layout: hub + 3 concentric rings.
+// Tier1: pentagon (5 nodes, 72° apart) at r=0.13
+// Tier2: hexagon  (6 nodes, 60° apart) at r=0.22
+// Tier3: square   (4 nodes, 90° apart, diagonal) at r=0.31
 const CX = 0.46, CY = 0.50;
 const toNorm = (cx: number, cy: number, r: number, deg: number) => ({
     x: +(cx + r * Math.cos(deg * Math.PI / 180)).toFixed(3),
     y: +(cy - r * Math.sin(deg * Math.PI / 180)).toFixed(3),
 });
-// Tier1: top=90°, then clockwise every 72°
-const T1 = [90, 18, 306, 234, 162].map(a => toNorm(CX, CY, 0.14, a));
-// Tier2: top=90°, then clockwise every ~51.4°
-const T2 = [90, 39, 347, 296, 244, 193, 141].map(a => toNorm(CX, CY, 0.23, a));
-// Tier3: top=90°, then clockwise every 45°
-const T3 = [90, 45, 0, 315, 270, 225, 180, 135].map(a => toNorm(CX, CY, 0.33, a));
+// Tier1: top=90°, clockwise every 72°
+const T1 = [90, 18, 306, 234, 162].map(a => toNorm(CX, CY, 0.13, a));
+// Tier2: top=90°, clockwise every 60°
+const T2 = [90, 30, 330, 270, 210, 150].map(a => toNorm(CX, CY, 0.22, a));
+// Tier3: 4 corners at 45° offsets
+const T3 = [45, 135, 225, 315].map(a => toNorm(CX, CY, 0.31, a));
 
 const NODES: NodeDef[] = [
     // Hub
     { id: "hub",       label: "DATA HUB",  tier: 0, x: CX,      y: CY,      fp: 0.0, fs: 0.30, fa: 0.003 },
-    // Tier 1 — inner ring, warm gold
+    // Tier 1 — inner ring (core systems)
     { id: "analytics", label: "Analytics", tier: 1, x: T1[0].x, y: T1[0].y, fp: 1.1, fs: 0.72, fa: 0.006 },
     { id: "sales",     label: "Sales",     tier: 1, x: T1[1].x, y: T1[1].y, fp: 2.2, fs: 0.65, fa: 0.008 },
     { id: "finance",   label: "Finance",   tier: 1, x: T1[2].x, y: T1[2].y, fp: 3.3, fs: 0.50, fa: 0.006 },
     { id: "ops",       label: "Ops",       tier: 1, x: T1[3].x, y: T1[3].y, fp: 4.4, fs: 0.82, fa: 0.007 },
     { id: "crm",       label: "CRM",       tier: 1, x: T1[4].x, y: T1[4].y, fp: 0.0, fs: 0.58, fa: 0.007 },
-    // Tier 2 — outer ring, steel blue
+    // Tier 2 — middle ring (services)
     { id: "reports",   label: "Reports",   tier: 2, x: T2[0].x, y: T2[0].y, fp: 1.6, fs: 0.70, fa: 0.007 },
     { id: "forecast",  label: "Forecast",  tier: 2, x: T2[1].x, y: T2[1].y, fp: 2.7, fs: 0.60, fa: 0.009 },
-    { id: "invoicing", label: "Invoicing", tier: 2, x: T2[3].x, y: T2[3].y, fp: 4.9, fs: 0.75, fa: 0.008 },
-    { id: "support",   label: "Support",   tier: 2, x: T2[4].x, y: T2[4].y, fp: 0.3, fs: 0.68, fa: 0.007 },
-    { id: "hr",        label: "HR",        tier: 2, x: T2[5].x, y: T2[5].y, fp: 1.4, fs: 0.62, fa: 0.009 },
-    { id: "leads",     label: "Leads",     tier: 2, x: T2[6].x, y: T2[6].y, fp: 0.5, fs: 0.64, fa: 0.008 },
-    // Tier 3 — satellite ring, emerald green
-    { id: "webhook",   label: "Webhook",   tier: 3, x: 0.38, y: T3[0].y, fp: 1.3, fs: 0.85, fa: 0.009 },
-    { id: "email",     label: "Email",     tier: 3, x: T3[4].x, y: T3[4].y, fp: 0.7, fs: 0.88, fa: 0.010 },
-    { id: "sms",       label: "SMS",       tier: 3, x: T3[5].x, y: T3[5].y, fp: 1.8, fs: 0.76, fa: 0.011 },
-    { id: "api",       label: "API",       tier: 3, x: T3[7].x, y: T3[7].y, fp: 0.2, fs: 0.90, fa: 0.010 },
+    { id: "invoicing", label: "Invoicing", tier: 2, x: T2[2].x, y: T2[2].y, fp: 4.9, fs: 0.75, fa: 0.008 },
+    { id: "support",   label: "Support",   tier: 2, x: T2[3].x, y: T2[3].y, fp: 0.3, fs: 0.68, fa: 0.007 },
+    { id: "hr",        label: "HR",        tier: 2, x: T2[4].x, y: T2[4].y, fp: 1.4, fs: 0.62, fa: 0.009 },
+    { id: "leads",     label: "Leads",     tier: 2, x: T2[5].x, y: T2[5].y, fp: 0.5, fs: 0.64, fa: 0.008 },
+    // Tier 3 — outer ring (integrations)
+    { id: "webhook",   label: "Webhook",   tier: 3, x: T3[0].x, y: T3[0].y, fp: 1.3, fs: 0.85, fa: 0.009 },
+    { id: "email",     label: "Email",     tier: 3, x: T3[1].x, y: T3[1].y, fp: 0.7, fs: 0.88, fa: 0.010 },
+    { id: "sms",       label: "SMS",       tier: 3, x: T3[2].x, y: T3[2].y, fp: 1.8, fs: 0.76, fa: 0.011 },
+    { id: "api",       label: "API",       tier: 3, x: T3[3].x, y: T3[3].y, fp: 0.2, fs: 0.90, fa: 0.010 },
 ];
 
 const EDGES: EdgeDef[] = [
-    // Spokes: tier1 → hub (gold)
+    // Spokes: tier1 → hub
     { from: "crm",       to: "hub",       type: "spoke"  },
     { from: "analytics", to: "hub",       type: "spoke"  },
     { from: "sales",     to: "hub",       type: "spoke"  },
     { from: "finance",   to: "hub",       type: "spoke"  },
     { from: "ops",       to: "hub",       type: "spoke"  },
-    // Inner cross-links: tier1 ↔ tier1 (soft gold)
+    // Inner ring: tier1 ↔ tier1 (pentagon)
     { from: "crm",       to: "analytics", type: "inner"  },
     { from: "analytics", to: "sales",     type: "inner"  },
     { from: "sales",     to: "finance",   type: "inner"  },
     { from: "finance",   to: "ops",       type: "inner"  },
-    // Bridges: tier2 → tier1 (steel blue)
-    { from: "leads",     to: "crm",       type: "bridge" },
+    { from: "ops",       to: "crm",       type: "inner"  },
+    // Bridges: tier2 → tier1 (nearest angular match, 1-to-1)
     { from: "reports",   to: "analytics", type: "bridge" },
     { from: "forecast",  to: "sales",     type: "bridge" },
     { from: "invoicing", to: "finance",   type: "bridge" },
-    { from: "invoicing", to: "ops",       type: "bridge" },
     { from: "support",   to: "ops",       type: "bridge" },
-    { from: "support",   to: "crm",       type: "bridge" },
     { from: "hr",        to: "ops",       type: "bridge" },
-    { from: "hr",        to: "crm",       type: "bridge" },
-    // Outer cross-links: tier2 ↔ tier2 (dim steel)
-    { from: "leads",     to: "reports",   type: "outer"     },
-    { from: "forecast",  to: "reports",   type: "outer"     },
+    { from: "leads",     to: "crm",       type: "bridge" },
+    // Outer ring: tier2 ↔ tier2 (hexagon, closed loop)
+    { from: "reports",   to: "forecast",  type: "outer"     },
+    { from: "forecast",  to: "invoicing", type: "outer"     },
     { from: "invoicing", to: "support",   type: "outer"     },
+    { from: "support",   to: "hr",        type: "outer"     },
     { from: "hr",        to: "leads",     type: "outer"     },
-    // Satellites: tier3 → tier2/tier1 (emerald)
-    { from: "api",       to: "leads",     type: "satellite" },
-    { from: "api",       to: "crm",       type: "satellite" },
-    { from: "webhook",   to: "reports",   type: "satellite" },
-    { from: "webhook",   to: "analytics", type: "satellite" },
-    { from: "email",     to: "invoicing", type: "satellite" },
-    { from: "email",     to: "support",   type: "satellite" },
-    { from: "sms",       to: "support",   type: "satellite" },
-    { from: "sms",       to: "crm",       type: "satellite" },
+    { from: "leads",     to: "reports",   type: "outer"     },
+    // Satellites: tier3 → tier2 (nearest angular match, 1-to-1)
+    { from: "webhook",   to: "forecast",  type: "satellite" },
+    { from: "email",     to: "leads",     type: "satellite" },
+    { from: "sms",       to: "hr",        type: "satellite" },
+    { from: "api",       to: "invoicing", type: "satellite" },
 ];
 
 // ── Node info (shown on double-click expand) ───────────────────────────────────
@@ -457,7 +455,7 @@ export function HeroNetwork() {
                 return bright ? sBrt : sHex;
             };
 
-            // ── Spring physics ─────────────────────────────────────────────────
+            // ── Spring physics (pulls dragged nodes back to geometric base) ──────
             const SPRING  = 8.0;
             const DAMPING = 5.8;
             states.forEach(ns => {
@@ -489,20 +487,16 @@ export function HeroNetwork() {
                         const nx  = dx / dist;
                         const ny  = dy / dist;
                         const pen = minD - dist;
-
-                        // Positional correction — push apart proportionally
                         const corr = pen * 0.5;
                         nsa.cx -= (nx * corr) / W;
                         nsa.cy -= (ny * corr) / H;
                         nsb.cx += (nx * corr) / W;
                         nsb.cy += (ny * corr) / H;
 
-                        // Elastic impulse along collision normal
                         const dvx = (nsb.vx - nsa.vx) * W;
                         const dvy = (nsb.vy - nsa.vy) * H;
                         const dvn = dvx * nx + dvy * ny;
-
-                        if (dvn < 0) {   // only if approaching
+                        if (dvn < 0) {
                             const restitution = 0.55;
                             const impulse = -(1 + restitution) * dvn / 2;
                             nsa.vx -= (nx * impulse) / W;
@@ -514,7 +508,7 @@ export function HeroNetwork() {
                 }
             }
 
-            // Helper: normalized → pixels (float added on top of spring position)
+            // Helper: normalized → pixels (float on top of physics position)
             const px = (ns: NodeState, n: NodeDef): V2 => {
                 const floatX = ns.dragged ? 0 : Math.sin(T * n.fs         + n.fp    ) * n.fa;
                 const floatY = ns.dragged ? 0 : Math.cos(T * n.fs * 1.31  + n.fp + 1) * n.fa;
@@ -889,7 +883,7 @@ export function HeroNetwork() {
 
     return (
         <div
-            className="absolute inset-0 w-full h-full pointer-events-none top-0 left-0 lg:left-[30%] z-20"
+            className="absolute inset-0 w-full h-full pointer-events-none top-0 left-0 lg:left-[30%] lg:pr-40 z-20"
             style={{
                 opacity:    visible ? 1 : 0,
                 transition: "opacity 1.4s ease-in",

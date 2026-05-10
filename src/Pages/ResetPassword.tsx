@@ -29,8 +29,8 @@ export function ResetPassword() {
             <div
                 className="absolute inset-0 opacity-[0.08]"
                 style={{
-                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 0 L56 16 L56 50 L28 66 L0 50 L0 16 Z' fill='none' stroke='%23F59E0B' stroke-width='0.8'/%3E%3Cpath d='M28 66 L56 50 L56 84 L28 100 L0 84 L0 50 Z' fill='none' stroke='%23F59E0B' stroke-width='0.8'/%3E%3C/svg%3E\")",
-                    backgroundSize: "56px 100px",
+                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='%23F59E0B' stroke-width='0.5'/%3E%3C/svg%3E\")",
+                    backgroundSize: "40px 40px",
                 }}
             />
 
