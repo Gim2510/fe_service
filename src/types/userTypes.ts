@@ -34,7 +34,7 @@ export type UserType = {
     deleted?: {
         emailBeforeDeletion: string;
         deletedAt: Date;
-        authIdBeforeDeletion: string;
+        idBeforeDeletion: string;
     };
     lastLogIn?: Date;
     relations?: string[];

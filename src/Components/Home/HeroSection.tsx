@@ -1,78 +1,137 @@
+import { motion } from "framer-motion";
+import { ArrowRight, CheckCircle } from "lucide-react";
+
+import { HeroNetwork } from "./HeroNetwork.tsx";
 import { useNavigate } from "react-router-dom";
-import { HeroGlobeDark } from "./HeroGlobeDark.tsx";
-import { LiquidGlassButton } from "../Buttons/LiquidGlassButton.tsx";
-import { useInitSurvey } from "../../hooks/useInitSurvey.ts";
-import { HeroOperationalSnapshot } from "./HeroOperationalSnapshot.tsx";
 
-export function HeroSection({theme}: {theme: string}) {
+const fadeUp = (delay = 0) => ({
+    initial: { opacity: 0, y: 28 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.65, ease: "easeOut" as const, delay },
+});
+
+export function HeroSection({ theme }: { theme: string }) {
     const navigate = useNavigate();
-    const template_id = import.meta.env.VITE_SURVEY_TEMPLATE_ID;
-    useInitSurvey(template_id, 'it', true);
-
     const goToSurvey = () => navigate("/survey/start");
-
     const isDark = theme === "dark";
 
     return (
-        <section className="relative min-h-[100vh] flex items-center overflow-hidden sm:pt-0 pt-20 overflow-auto">
-            {/* Background */}
-            <div className={`absolute inset-0 ${isDark ? "bg-neutral-950" : "bg-primary-white"}`} />
+        <section className="relative min-h-[100dvh] flex items-center overflow-hidden">
 
-            {/* Globe */}
-            <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-10">
-                <HeroGlobeDark/>
+            {/* ── Background ── */}
+            <div className="absolute inset-0 pointer-events-none z-0">
+                <div className={`absolute inset-0 ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`} />
+                <div className="hidden lg:block"><HeroNetwork /></div>
+
+                {/* Readability gradient — on mobile the globe sits full-screen behind the text;
+                    this overlay fades from solid bg on the left (text area) to transparent on the right.
+                    On desktop the globe is already pushed to lg:left-140 so we lighten it significantly. */}
+                <div
+                    className={`absolute inset-0 pointer-events-none ${isDark
+                        ? "bg-gradient-to-r from-[#111110] via-[#111110]/80 to-transparent lg:via-[#111110]/25"
+                        : "bg-gradient-to-r from-[#FAF8F4] via-[#FAF8F4]/80 to-transparent lg:via-[#FAF8F4]/25"
+                    }`}
+                    style={{ zIndex: 21 }}
+                />
+
+                {/* Square grid texture */}
+                <div
+                    className={`absolute inset-0 ${isDark ? "opacity-[0.04]" : "opacity-[0.06]"}`}
+                    style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%23F59E0B' : '%23B45309'}' stroke-width='0.5'/%3E%3C/svg%3E")`,
+                        backgroundSize: "40px 40px",
+                    }}
+                />
+
+                {/* Corporate blue glow */}
+                {isDark && (
+                    <>
+                        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] opacity-[0.06] bg-rose-700 pointer-events-none" />
+                        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full blur-[120px] opacity-[0.04] bg-rose-500 pointer-events-none" />
+                    </>
+                )}
             </div>
 
-            {/* Grid Overlay */}
-            <div className={`absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,${isDark ? "white" : "black"}_1px,transparent_0)] bg-[size:32px_32px]`} />
+            {/* ── Content ── */}
+            <div className="relative z-10 mx-auto max-w-7xl px-6 sm:px-8 pb-20 pt-32 sm:pt-24 w-full pointer-events-none">
 
-            <div className="relative mx-auto max-w-7xl px-8 pb-18 pt-8 sm:py-16 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center z-10">
-
-                {/* LEFT */}
-                <div className="flex flex-col sm:gap-8 gap-10">
-                    <span
-                        className={`${isDark ? "text-neutral-400" : "text-white sm:text-black"} text-sm sm:text-base uppercase tracking-widest`}>
-                        Consulenza digitale per PMI
+                {/* Tag line */}
+                <motion.div {...fadeUp(0.05)} className="mb-6">
+                    <span className={`
+                        inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest
+                        px-3 py-1.5 rounded-full border
+                        ${isDark
+                            ? "text-rose-500 border-stone-700/40 bg-stone-800/20"
+                            : "text-rose-700 border-rose-300 bg-rose-50"
+                        }
+                    `}>
+                        <span className="w-1.5 h-1.5 rounded-full bg-rose-600 animate-pulse" />
+                        Consulenza digitale per PMI italiane
                     </span>
+                </motion.div>
 
-                    <h1 className={`${isDark ? "text-white" : "text-neutral-900 sm:text-neutral-900 text-white sm:text-neutral-900"} text-4xl sm:text-6xl font-semibold leading-tight`}>
-                        Il tuo business
-                        <br/>
+                {/* Headline */}
+                <motion.h1
+                    {...fadeUp(0.15)}
+                    className={`font-fjalla text-5xl sm:text-7xl font-semibold leading-tight max-w-2xl ${
+                        isDark ? "text-slate-100" : "text-slate-900"
+                    }`}
+                >
+                    <span className="hero-line reveal delay-1 block">
+                        La tua azienda
+                    </span>
+                    <span className="hero-line reveal delay-2 block text-rose-600">
+                        perde margine
+                    </span>
+                    <span className="hero-line reveal delay-3 block text-4xl sm:text-5xl mt-2">
+                        ogni giorno che non è digitale.
+                    </span>
+                </motion.h1>
+
+                {/* Subheadline */}
+                <motion.p
+                    {...fadeUp(0.28)}
+                    className={`mt-8 text-lg leading-relaxed max-w-xl ${
+                        isDark ? "text-slate-400" : "text-slate-600"
+                    }`}
+                >
+                    Progettiamo sistemi su misura che eliminano sprechi operativi,
+                    aumentano la visibilità sui dati e accelerano le decisioni
+                    che contano davvero per il tuo business.
+                </motion.p>
+
+                {/* Trust signals */}
+                <motion.div {...fadeUp(0.35)} className="mt-6 flex flex-wrap gap-4">
+                    {["Report personalizzato incluso", "Nessun impegno iniziale", "Risultati verificabili"].map((item) => (
                         <span
-                            className={`${isDark ? "text-neutral-400" : "text-neutral-600 sm:text-neutral-600 text-white sm:text-neutral-600"}`}>genera dati.</span>
-                        <br/>
-                        <span className="text-3xl sm:text-5xl">sei in grado di gestirli?</span>
-                    </h1>
-
-                    <p className={`${isDark ? "text-neutral-300" : "text-neutral-700 sm:text-neutral-700 text-white"} text-lg max-w-xl`}>
-                        Aiutiamo le aziende a trasformare operazioni, vendite e relazioni con i clienti
-                        in sistemi chiari, misurabili e automatizzati.
-                        Meno caos. Più controllo.
-                    </p>
-
-                    <div className="flex items-center sm:gap-8 gap-4">
-                        <LiquidGlassButton onClick={goToSurvey}
-                                           className={` ${!isDark ? `!bg-white/90 sm:bg-transparent !border-black/20 shadow-lg` : ``}`}>
-                            Scopri cosa stai perdendo
-                        </LiquidGlassButton>
-                        <span
-                            className={`${isDark ? "text-neutral-400" : "text-neutral-500 sm:text-neutral-500 text-white"} text-sm text-center`}>
-                            Analisi guidata • Nessun impegno
+                            key={item}
+                            className={`flex items-center gap-1.5 text-sm ${
+                                isDark ? "text-slate-500" : "text-slate-500"
+                            }`}
+                        >
+                            <CheckCircle size={14} className="text-rose-600 shrink-0" />
+                            {item}
                         </span>
-                    </div>
-                </div>
+                    ))}
+                </motion.div>
 
-                {/* RIGHT */}
-                <div className="relative z-20">
-                    <div
-                        className={`group relative mt-8 rounded-3xl border ${
-                            isDark ? "border-neutral-700 bg-neutral-900/80" : "border-neutral-300 bg-white/80"
-                        } sm:py-8 sm:px-10 shadow-2xl backdrop-blur opacity-100 sm:opacity-20 sm:hover:opacity-100
-                            transition-all duration-700 ease-out cursor-pointer`}
+                {/* CTA */}
+                <motion.div {...fadeUp(0.42)} className="mt-10 flex flex-wrap items-center gap-4 pointer-events-auto">
+                    <button
+                        onClick={goToSurvey}
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl
+                            bg-rose-700 hover:bg-rose-600 text-white text-sm font-semibold
+                            transition-all duration-200 shadow-lg shadow-rose-700/25
+                            hover:shadow-rose-600/35 hover:-translate-y-0.5"
                     >
-                        <HeroOperationalSnapshot theme={theme}/>
-                    </div>
-                </div>
+                        Misura il tuo gap digitale
+                        <ArrowRight size={16} />
+                    </button>
+
+                    <span className={`text-sm ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                        Circa 10–15 minuti
+                    </span>
+                </motion.div>
             </div>
         </section>
     );

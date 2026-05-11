@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext.tsx";
 
+export type CategoryScore = {
+    category: string;
+    score: number;
+    maxScore: number;
+    percentage: number;
+};
+
 export type SurveyInstance = {
     _id: string;
     templateId: string;
@@ -8,6 +15,7 @@ export type SurveyInstance = {
     status: "draft" | "published";
     currentStep?: number;
     score: number;
+    score_by_category?: CategoryScore[];
 };
 
 export function useSurvey(surveyId: string | undefined) {

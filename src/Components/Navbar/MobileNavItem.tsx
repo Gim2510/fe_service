@@ -12,14 +12,11 @@ export function MobileNavItem({ to, label, closeMenu }: Props) {
             to={to}
             onClick={closeMenu}
             className={({ isActive }) =>
-                `
-                block px-4 py-3 rounded-xl transition-all duration-200
-                ${
+                `block px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
                     isActive
-                        ? "bg-white/10 text-white"
-                        : "text-neutral-400 hover:text-white hover:bg-white/5"
-                }
-                `
+                        ? "bg-rose-700/15 text-rose-500 border border-rose-700/20"
+                        : "text-slate-400 hover:text-slate-100 hover:bg-[#F8FAFB]/5 border border-transparent"
+                }`
             }
         >
             {label}

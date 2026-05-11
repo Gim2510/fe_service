@@ -1,7 +1,6 @@
 import { UserRoles } from "../../types/userRoles";
 import type { UserType } from "../../types/userTypes";
 import { ActionCard } from "./ActionCard";
-import {LiquidGlassButton} from "../Buttons/LiquidGlassButton.tsx";
 
 type Props = {
     allUsers: UserType[];
@@ -17,89 +16,106 @@ type Props = {
     setShowVipModal: (v: boolean) => void;
     vipSuccess: boolean;
     BulkEmailComponent: React.ReactNode;
-    theme: string; // <-- aggiunto
+    theme: string;
 };
 
 export function AdminActionsSection({
-                                        allUsers,
-                                        selectedUserId,
-                                        setSelectedUserId,
-                                        setShowPromoteModal,
-                                        selectedUserToDelete,
-                                        setSelectedUserToDelete,
-                                        setShowDeleteModal,
-                                        deleteSuccess,
-                                        selectedUserToVip,
-                                        setSelectedUserToVip,
-                                        setShowVipModal,
-                                        vipSuccess,
-                                        BulkEmailComponent,
-                                        theme,
-                                    }: Props) {
+    allUsers,
+    selectedUserId,
+    setSelectedUserId,
+    setShowPromoteModal,
+    selectedUserToDelete,
+    setSelectedUserToDelete,
+    setShowDeleteModal,
+    deleteSuccess,
+    selectedUserToVip,
+    setSelectedUserToVip,
+    setShowVipModal,
+    vipSuccess,
+    BulkEmailComponent,
+    theme,
+}: Props) {
     const isDark = theme === "dark";
-    const cardBg = isDark ? "bg-white/[0.04] border border-white/[0.08]" : "bg-white/50 border border-gray-200";
-    const textHeader = isDark ? "text-white" : "text-gray-900";
-    const textSub = isDark ? "text-neutral-400" : "text-gray-600";
+    const textSub = isDark ? "text-slate-500" : "text-slate-400";
+
+    const selectClass = `w-full h-11 px-4 rounded-xl border text-sm appearance-none cursor-pointer focus:outline-none transition-colors
+        ${isDark
+            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-rose-700"
+            : "bg-white border-slate-200 text-slate-900 focus:border-rose-600"
+        }`;
 
     return (
-        <div className={`relative rounded-[36px] p-12 space-y-12 backdrop-blur-3xl shadow-[0_0_80px_rgba(0,0,0,0.04)] ${cardBg}`}>
-            {/* HEADER */}
-            <div className="flex justify-between items-center">
+        <>
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
                 <div>
-                    <h2 className={`text-2xl font-semibold tracking-tight ${textHeader}`}>
+                    <h2 className={`text-base font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         Admin Control Center
                     </h2>
-                    <p className={`text-sm mt-1 ${textSub}`}>
-                        System privileges & user management
+                    <p className={`text-xs mt-0.5 ${textSub}`}>
+                        System privileges &amp; user management
                     </p>
                 </div>
-                <span className={`uppercase text-xs tracking-widest ${textSub}`}>
+                <span className={`text-[10px] font-mono uppercase tracking-[0.18em] ${textSub}`}>
                     Core Actions
                 </span>
             </div>
 
-            {/* GRID */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                <ActionCard title="Promote to Admin" theme={theme}>
-                    <select value={selectedUserId} onChange={e => setSelectedUserId(e.target.value)} className="glass-input cursor-pointer">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <ActionCard title="Promote to Admin" theme={theme} index={0}>
+                    <select value={selectedUserId} onChange={e => setSelectedUserId(e.target.value)} className={selectClass}>
                         <option value="">Select user</option>
                         {allUsers.filter(u => u.role !== UserRoles.Admin).map(u => (
                             <option key={u._id} value={u._id}>{u.email}</option>
                         ))}
                     </select>
-                    <LiquidGlassButton variant='navbar' disabled={!selectedUserId} onClick={() => setShowPromoteModal(true)} className={isDark ? "glass-button" : "bg-indigo-100 text-indigo-900 hover:bg-indigo-200"}>
+                    <button
+                        disabled={!selectedUserId}
+                        onClick={() => setShowPromoteModal(true)}
+                        className="h-11 px-5 rounded-xl bg-rose-700 hover:bg-rose-600 disabled:opacity-40
+                            text-white text-sm font-semibold transition-all hover:-translate-y-0.5 duration-200"
+                    >
                         Promote
-                    </LiquidGlassButton>
+                    </button>
                 </ActionCard>
 
-                <ActionCard title="Delete User" theme={theme}>
-                    <select value={selectedUserToDelete} onChange={e => setSelectedUserToDelete(e.target.value)} className="glass-input cursor-pointer">
+                <ActionCard title="Delete User" theme={theme} index={1}>
+                    <select value={selectedUserToDelete} onChange={e => setSelectedUserToDelete(e.target.value)} className={selectClass}>
                         <option value="">Select user</option>
                         {allUsers.filter(u => u.role !== UserRoles.Admin).map(u => (
                             <option key={u._id} value={u._id}>{u.email}</option>
                         ))}
                     </select>
-                    <LiquidGlassButton variant='navbar' disabled={!selectedUserToDelete} onClick={() => setShowDeleteModal(true)} className={isDark ? "glass-button-danger" : "bg-red-100 text-red-800 hover:bg-red-200"}>
+                    <button
+                        disabled={!selectedUserToDelete}
+                        onClick={() => setShowDeleteModal(true)}
+                        className="h-11 px-5 rounded-xl bg-red-600 hover:bg-red-500 disabled:opacity-40
+                            text-white text-sm font-semibold transition-all hover:-translate-y-0.5 duration-200"
+                    >
                         Delete
-                    </LiquidGlassButton>
-                    {deleteSuccess && <p className="text-green-600 text-sm mt-2">User deleted successfully</p>}
+                    </button>
+                    {deleteSuccess && <p className="text-green-400 text-xs mt-1">User deleted successfully</p>}
                 </ActionCard>
 
-                <ActionCard title="Assign VIP Status" theme={theme}>
-                    <select value={selectedUserToVip} onChange={e => setSelectedUserToVip(e.target.value)} className="glass-input cursor-pointer">
+                <ActionCard title="Assign VIP Status" theme={theme} index={2}>
+                    <select value={selectedUserToVip} onChange={e => setSelectedUserToVip(e.target.value)} className={selectClass}>
                         <option value="">Select user</option>
                         {allUsers.filter(u => !u.vip).map(u => (
                             <option key={u._id} value={u._id}>{u.email}</option>
                         ))}
                     </select>
-                    <LiquidGlassButton variant='navbar' disabled={!selectedUserToVip} onClick={() => setShowVipModal(true)} className={isDark ? "glass-button-success" : "bg-green-100 text-green-900 hover:bg-green-200"}>
+                    <button
+                        disabled={!selectedUserToVip}
+                        onClick={() => setShowVipModal(true)}
+                        className="h-11 px-5 rounded-xl bg-rose-500 hover:bg-rose-400 disabled:opacity-40
+                            text-white text-sm font-semibold transition-all hover:-translate-y-0.5 duration-200"
+                    >
                         Upgrade
-                    </LiquidGlassButton>
-                    {vipSuccess && <p className="text-green-600 text-sm mt-2">User upgraded successfully</p>}
+                    </button>
+                    {vipSuccess && <p className="text-green-400 text-xs mt-1">User upgraded successfully</p>}
                 </ActionCard>
 
                 <div className="col-span-1 lg:col-span-2">{BulkEmailComponent}</div>
             </div>
-        </div>
+        </>
     );
 }

@@ -1,151 +1,231 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { useLogin } from "../hooks/useLogin"
-import {LiquidGlassButton} from "../Components/Buttons/LiquidGlassButton.tsx";
-import {FallingLines} from "react-loader-spinner";
-import {useTheme} from "../Context/ThemeContext.tsx";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useLogin } from "../hooks/useLogin";
+import { useGoogleLogin } from "../hooks/useGoogleLogin";
+import { FallingLines } from "react-loader-spinner";
+import { useTheme } from "../Context/ThemeContext.tsx";
+import { Input } from "../Components/Inputs/Input.tsx";
+import { GoogleLogin } from "@react-oauth/google";
+import { BarChart2, ShieldCheck, TrendingUp } from "lucide-react";
+
+type RestoreInfo = {
+    restored: boolean;
+    daysSinceDeletion?: number;
+};
+
+const FEATURES = [
+    { icon: BarChart2,   text: "Survey di maturità digitale" },
+    { icon: TrendingUp,  text: "Score e analisi per categoria" },
+    { icon: ShieldCheck, text: "Report operativi personalizzati" },
+];
 
 export function Login() {
-    const {theme} = useTheme()
-    const navigate = useNavigate()
-    const { doLogin, loading, error } = useLogin()
+    const { theme } = useTheme();
+    const navigate   = useNavigate();
+    const { doLogin, loading, error }                          = useLogin();
+    const { doGoogleLogin, loading: googleLoading, error: googleError } = useGoogleLogin();
+    const isDark = theme === "dark";
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [email,       setEmail]       = useState("");
+    const [password,    setPassword]    = useState("");
+    const [restoreInfo, setRestoreInfo] = useState<RestoreInfo | null>(null);
+
+    const border    = isDark ? "border-stone-800/30" : "border-slate-200";
+    const mutedText = isDark ? "text-slate-500" : "text-slate-400";
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
-            await doLogin({ email, password })
-            navigate("/")
+            const res = await doLogin({ email, password });
+            if (res?.restored) {
+                setRestoreInfo({ restored: true, daysSinceDeletion: res.daysSinceDeletion });
+                return;
+            }
+            navigate("/");
         } catch (_) {}
-    }
+    };
 
     return (
-        <main className="relative min-h-screen flex items-center overflow-hidden bg-neutral-950 text-white">
+        <main className={`relative min-h-screen flex items-center overflow-hidden
+            ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}>
 
-            {/* Gradient background */}
-            <div className={`${theme === "dark" ? "bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800" : "bg-white"} absolute inset-0 `} />
+            {/* grid bg */}
+            <div className="absolute inset-0 pointer-events-none">
+                <div
+                    className="absolute inset-0 opacity-[0.08]"
+                    style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%23F59E0B' : '%23B45309'}' stroke-width='0.5'/%3E%3C/svg%3E")`,
+                        backgroundSize: "40px 40px",
+                    }}
+                />
+                {isDark && (
+                    <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] rounded-full blur-[160px] opacity-[0.04] bg-rose-700" />
+                )}
+            </div>
 
-            {/* Grid texture */}
-            <div
-                className={`absolute inset-0 opacity-10 bg-[size:32px_32px]  ${theme === "dark" ? "bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)]" : "bg-[radial-gradient(circle_at_1px_1px,black_1px,transparent_0)]"}`}
-            />
+            <div className={`relative z-10 mx-auto w-full max-w-5xl px-6 sm:px-8 pt-28 pb-16
+                grid lg:grid-cols-2 gap-12 items-center
+                ${isDark ? "text-white" : "text-slate-900"}`}>
 
-            <div className={`relative z-10 mx-auto w-full max-w-5xl px-8 py-24 grid lg:grid-cols-2 gap-20 items-center ${theme === "dark" ? "text-white" : "text-black"}`}>
-
-                {/* LEFT COPY */}
-                <div className="hidden lg:flex flex-col gap-8">
-                  <span className={`text-sm uppercase tracking-widest ${theme === "dark" ? "text-neutral-400" : "text-black"}`}>
-                    Bentornato
-                  </span>
-
-                    <h1 className="text-5xl font-semibold leading-tight">
-                        Accedi al tuo
-                        <br />
-                        <span className={`${theme === "dark" ? "text-neutral-400" : "text-black"}`}>
-                          spazio di controllo.
+                {/* Left — copy */}
+                <motion.div
+                    className="hidden lg:flex flex-col gap-7"
+                    initial={{ opacity: 0, x: -24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                >
+                    <div className="space-y-4">
+                        <span className={`text-[10px] font-mono uppercase tracking-[0.22em]
+                            ${isDark ? "text-rose-600" : "text-rose-700"}`}>
+                            Bentornato
                         </span>
-                    </h1>
+                        <h1 className={`font-fjalla text-5xl font-semibold leading-tight
+                            ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                            Accedi al tuo
+                            <span className="block text-rose-600 mt-1">spazio di controllo.</span>
+                        </h1>
+                        <p className={`text-base leading-relaxed max-w-md
+                            ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                            Visualizza dati, analisi e strumenti progettati per rendere
+                            il tuo business più chiaro, misurabile e scalabile.
+                        </p>
+                    </div>
 
-                    <p className={`text-lg ${theme === "dark" ? "text-neutral-300" : "text-black"} max-w-lg`}>
-                        Visualizza dati, analisi e strumenti progettati per
-                        rendere il tuo business più chiaro, misurabile e scalabile.
+                    {/* feature pills */}
+                    <div className="space-y-2.5">
+                        {FEATURES.map(({ icon: Icon, text }, i) => (
+                            <motion.div
+                                key={text}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.3 + i * 0.08 }}
+                                className={`flex items-center gap-3 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}
+                            >
+                                <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0
+                                    ${isDark ? "bg-rose-700/10 border border-rose-700/20" : "bg-rose-50 border border-rose-200"}`}>
+                                    <Icon size={13} className={isDark ? "text-rose-600" : "text-rose-700"} />
+                                </div>
+                                {text}
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    <p className={`text-[10px] font-mono uppercase tracking-[0.18em] ${mutedText}`}>
+                        Analisi guidata · Nessun impegno
                     </p>
-                </div>
+                </motion.div>
 
-                {/* LOGIN CARD */}
-                <div className="relative">
-                    <div className={`rounded-3xl ${theme === "dark" ? "bg-neutral-900/70 border border-neutral-800" : "bg-white/40 shadow-3xl"} backdrop-blur-xl p-10 shadow-2xl`}>
+                {/* Right — form card */}
+                <motion.div
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.08 }}
+                    className={`rounded-2xl border overflow-hidden ${border}`}
+                    style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+                >
+                    <div className="h-[2px] w-full bg-rose-700/60" />
 
-                        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                    <div className="p-7 sm:p-8">
+                        {/* Restore banner */}
+                        {restoreInfo?.restored && (
+                            <div className="mb-6 rounded-xl border border-green-500/30 bg-green-500/10 p-4 text-sm text-green-400 flex flex-col gap-3">
+                                <p>
+                                    Bentornato! Account ripristinato
+                                    {restoreInfo.daysSinceDeletion !== undefined && (
+                                        <span> dopo <b>{restoreInfo.daysSinceDeletion}</b> giorni</span>
+                                    )}.
+                                </p>
+                                <button
+                                    type="button"
+                                    onClick={() => navigate("/")}
+                                    className="self-end px-4 py-1.5 rounded-lg bg-green-500/15 hover:bg-green-500/25 transition text-xs"
+                                >
+                                    Chiudi e continua
+                                </button>
+                            </div>
+                        )}
 
-                            <div className="text-center mb-2">
-                                <h2 className="text-2xl font-semibold">
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                            {/* header */}
+                            <div className="mb-1">
+                                <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-1 ${mutedText}`}>
+                                    Accesso piattaforma
+                                </p>
+                                <h2 className={`text-xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                                     Accedi
                                 </h2>
-                                <p className="text-sm text-neutral-500 mt-1">
-                                    Inserisci le tue credenziali
-                                </p>
                             </div>
 
-                            {error && (
-                                <div
-                                    className="text-sm px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400">
-                                    {error}
+                            {(error || googleError) && (
+                                <div className="text-xs px-4 py-3 rounded-xl border border-red-500/20 bg-red-500/8 text-red-400">
+                                    {error || googleError}
                                 </div>
                             )}
 
-                            <Input
-                                type="email"
-                                label="Email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
+                            <Input name="email"    type="email"    label="Email"    value={email}    onChange={e => setEmail(e.target.value)}    theme={theme} />
+                            <Input name="password" type="password" label="Password" value={password} onChange={e => setPassword(e.target.value)} theme={theme} />
 
-                            <Input
-                                type="password"
-                                label="Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                            <LiquidGlassButton type="submit" disabled={loading} className="mt-4">{loading ? <FallingLines
-                                color={theme === "dark" ? "white" : "black"}
-                                width="30"
-                                visible={true}
-                                ariaLabel="falling-circles-loading"
-                            /> : "Accedi"}</LiquidGlassButton>
-                            <div className="text-center text-sm text-neutral-500 mt-2">
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="mt-1 w-full py-2.5 rounded-xl bg-rose-700 hover:bg-rose-600 disabled:opacity-50
+                                    text-white text-sm font-semibold transition-all hover:-translate-y-0.5 duration-200
+                                    shadow-lg shadow-rose-700/20 flex items-center justify-center"
+                            >
+                                {loading
+                                    ? <FallingLines color="white" width="20" visible ariaLabel="loading" />
+                                    : "Accedi"
+                                }
+                            </button>
+
+                            {/* divider */}
+                            <div className="flex items-center gap-3">
+                                <div className={`flex-1 h-px ${isDark ? "bg-stone-800/40" : "bg-slate-200"}`} />
+                                <span className={`text-[10px] font-mono uppercase tracking-[0.15em] ${mutedText}`}>oppure</span>
+                                <div className={`flex-1 h-px ${isDark ? "bg-stone-800/40" : "bg-slate-200"}`} />
+                            </div>
+
+                            {googleLoading ? (
+                                <div className="flex justify-center py-1">
+                                    <FallingLines color={isDark ? "white" : "#B45309"} width="20" visible ariaLabel="loading" />
+                                </div>
+                            ) : (
+                                <GoogleLogin
+                                    onSuccess={async cr => { await doGoogleLogin(cr.credential!); navigate("/"); }}
+                                    onError={() => console.log("Google login failed")}
+                                    theme={isDark ? "filled_black" : "outline"}
+                                    size="large"
+                                    width="100%"
+                                    text="continue_with"
+                                />
+                            )}
+
+                            {/* footer links */}
+                            <div className="flex flex-col items-center gap-2 mt-1">
                                 <button
                                     type="button"
                                     onClick={() => navigate("/password-reset")}
-                                    className={`${theme === "dark" ? "text-neutral-300 hover:text-white" : "text-black hover:text-neutral-400"} transition cursor-pointer`}
+                                    className={`text-xs transition ${mutedText} hover:${isDark ? "text-slate-300" : "text-slate-700"}`}
                                 >
                                     Password dimenticata?
                                 </button>
+                                <span className={`text-xs ${mutedText}`}>
+                                    Non hai un account?{" "}
+                                    <button
+                                        type="button"
+                                        onClick={() => navigate("/register")}
+                                        className={`font-semibold transition
+                                            ${isDark ? "text-rose-500 hover:text-rose-400" : "text-rose-700 hover:text-rose-600"}`}
+                                    >
+                                        Registrati
+                                    </button>
+                                </span>
                             </div>
-
-                            <div className={`text-center text-sm mt-4 ${theme === "dark" ? "text-neutral-500" : "text-black"}`}>
-                                Non hai un account?{" "}
-                                <button
-                                    type="button"
-                                    onClick={() => navigate("/register")}
-                                    className={`${theme === "dark" ? "text-neutral-300 hover:text-white" : "text-black hover:text-neutral-400"}  transition cursor-pointer`}
-                                >
-                                    Registrati
-                                </button>
-                            </div>
-
                         </form>
                     </div>
-                </div>
-
+                </motion.div>
             </div>
         </main>
-    )
-}
-
-function Input({
-                   label,
-                   type,
-                   value,
-                   onChange,
-               }: {
-    label: string
-    type: string
-    value: string
-    onChange: React.ChangeEventHandler<HTMLInputElement>
-}) {
-    return (
-        <div className="flex flex-col gap-2">
-            <label className="text-sm text-neutral-400">{label}</label>
-            <input
-                type={type}
-                value={value}
-                onChange={onChange}
-                required
-                className="px-4 py-3 rounded-xl bg-neutral-800 border border-neutral-700 focus:border-white focus:ring-1 focus:ring-white outline-none transition text-white placeholder-neutral-500"
-            />
-        </div>
-    )
+    );
 }

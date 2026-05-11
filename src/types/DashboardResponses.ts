@@ -56,4 +56,18 @@ export type UsersDashboardStats = {
         month: string;
         count: number;
     }[];
+
+    retentionRate7Days: number;
+    churnRate: number;
+    dau: number;
+    wau: number;
+    mau: number;
+    stickiness: number;
+    vipConversionRate: number;
+    socialAdoptionRate: number;
+    favoriteAdoptionRate: number;
+    networkDensity: number;
+    deletionRate: number;
+    suspendedRate: number;
+    avgTimeToFirstLogin: number;
 };

@@ -1,48 +1,43 @@
-import {useAuth} from "../auth/AuthContext.tsx";
-import {useEffect, useRef, useState} from "react";
+import { useAuth } from "../auth/AuthContext.tsx";
+import { useState } from "react";
 
-export function useInitSurvey(
-    templateId: string,
-    locale: "it" | "en",
-    enabled: boolean
-) {
+export function useInitSurvey() {
     const { id, token } = useAuth();
 
-    const [surveyId, setSurveyId] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const hasInitialized = useRef(false);
+    const initSurvey = async (
+        templateId: string,
+        locale: "it" | "en"
+    ): Promise<string | undefined> => {
+        if (!id || !token) return undefined;
 
-    useEffect(() => {
-        if (!enabled) return;
-        if (!id || !token) return;
-        if (hasInitialized.current) return;
-
-        hasInitialized.current = true;
         setLoading(true);
+        setError(null);
 
-        fetch(
-            `${import.meta.env.VITE_SURVEY_BASE_URL}/v1/survey/init/${id}/${templateId}/${locale}`,
-            {
-                headers: { Authorization: `Bearer ${token}` },
+        try {
+            const res = await fetch(
+                `${import.meta.env.VITE_SURVEY_BASE_URL}/v1/survey/init/${id}/${templateId}/${locale}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+
+            if (!res.ok) {
+                throw new Error(`Init failed: ${res.status}`);
             }
-        )
-            .then(res => {
-                if (!res.ok) throw new Error(`Init failed: ${res.status}`);
-                return res.json();
-            })
-            .then(data => {
-                setSurveyId(data._id ?? null);
-            })
-            .catch(err => {
-                hasInitialized.current = false; // allow retry if needed
-                setError(err.message);
-            })
-            .finally(() => setLoading(false));
 
-    }, [enabled, id, token, templateId, locale]);
+            const data = await res.json();
+            return data._id ?? null;
 
-    return { surveyId, loading, error };
+        } catch (err: any) {
+            setError(err.message);
+            return undefined;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { initSurvey, loading, error };
 }
-

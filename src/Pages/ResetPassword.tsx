@@ -1,127 +1,111 @@
-import {type ChangeEventHandler, useState} from "react";
+import { type ChangeEventHandler, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { useConfirmPasswordReset } from "../hooks/useConfirmPasswordReset";
 
 export function ResetPassword() {
     const { token } = useParams<{ token: string }>();
     const navigate = useNavigate();
-    const { confirmReset, loading, error, success } =
-        useConfirmPasswordReset();
-
+    const { confirmReset, loading, error, success } = useConfirmPasswordReset();
     const [password, setPassword] = useState("");
     const [confirm, setConfirm] = useState("");
 
     if (!token) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-neutral-950 text-white">
-                Link non valido
+            <div className="min-h-screen flex items-center justify-center bg-[#111110] text-slate-400">
+                Link non valido o scaduto.
             </div>
         );
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        if (password !== confirm) {
-            return;
-        }
-
+        if (password !== confirm) return;
         await confirmReset(token, password);
     };
 
     return (
-        <main className="min-h-screen flex items-center justify-center bg-neutral-950 text-white px-6">
-            <div className="w-full max-w-md rounded-3xl border border-neutral-800 bg-neutral-900/70 backdrop-blur-xl p-10 shadow-2xl">
+        <main className="min-h-screen flex items-center justify-center bg-[#111110] px-6">
+            <div
+                className="absolute inset-0 opacity-[0.08]"
+                style={{
+                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='%23F59E0B' stroke-width='0.5'/%3E%3C/svg%3E\")",
+                    backgroundSize: "40px 40px",
+                }}
+            />
 
-                <h1 className="text-2xl font-semibold text-center">
-                    Nuova password
-                </h1>
+            <motion.div
+                className="relative z-10 w-full max-w-md"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+                <div className="rounded-2xl border border-stone-800/20 bg-[#1C1C1A]/80 backdrop-blur-xl p-8 sm:p-10 shadow-[0_24px_80px_rgba(0,0,0,0.5)]">
+                    <h1 className="text-2xl font-semibold text-center text-slate-100">Nuova password</h1>
+                    <p className="text-sm text-slate-500 text-center mt-2">
+                        Inserisci una nuova password per il tuo account
+                    </p>
 
-                <p className="text-sm text-neutral-400 text-center mt-2">
-                    Inserisci una nuova password per il tuo account
-                </p>
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-8">
+                        {error && (
+                            <div className="text-sm px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400">
+                                {error}
+                            </div>
+                        )}
+                        {success && (
+                            <div className="text-sm px-4 py-3 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400">
+                                Password aggiornata con successo.
+                            </div>
+                        )}
 
-                <form onSubmit={handleSubmit} className="flex flex-col gap-6 mt-8">
+                        {!success && (
+                            <>
+                                <FieldInput label="Nuova password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <FieldInput label="Conferma password" type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} />
 
-                    {error && (
-                        <div className="text-sm px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400">
-                            {error}
-                        </div>
-                    )}
+                                {password && confirm && password !== confirm && (
+                                    <p className="text-xs text-red-400">Le password non coincidono.</p>
+                                )}
 
-                    {success && (
-                        <div className="text-sm px-4 py-3 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400">
-                            Password aggiornata con successo.
-                        </div>
-                    )}
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className="w-full py-2.5 rounded-xl bg-rose-700 hover:bg-rose-600 disabled:opacity-50
+                                        text-white text-sm font-semibold transition-colors duration-200 mt-1"
+                                >
+                                    {loading ? "Aggiornamento…" : "Aggiorna password"}
+                                </button>
+                            </>
+                        )}
 
-                    {!success && (
-                        <>
-                            <Input
-                                label="Nuova password"
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-
-                            <Input
-                                label="Conferma password"
-                                type="password"
-                                value={confirm}
-                                onChange={(e) => setConfirm(e.target.value)}
-                            />
-
+                        {success && (
                             <button
-                                type="submit"
-                                disabled={loading}
-                                className={`mt-4 px-6 py-4 rounded-full font-medium transition ${
-                                    loading
-                                        ? "bg-neutral-700 text-neutral-400 cursor-not-allowed"
-                                        : "bg-white text-neutral-900 hover:scale-105 active:scale-95"
-                                }`}
+                                type="button"
+                                onClick={() => navigate("/login")}
+                                className="text-sm text-rose-500 hover:text-rose-400 transition text-center"
                             >
-                                {loading ? "Aggiornamento…" : "Aggiorna password"}
+                                Torna al login
                             </button>
-                        </>
-                    )}
-
-                    {success && (
-                        <button
-                            type="button"
-                            onClick={() => navigate("/login")}
-                            className="mt-4 text-sm text-neutral-400 hover:text-white transition"
-                        >
-                            Torna al login
-                        </button>
-                    )}
-
-                </form>
-            </div>
+                        )}
+                    </form>
+                </div>
+            </motion.div>
         </main>
     );
 }
 
-function Input({
-                   label,
-                   type,
-                   value,
-                   onChange,
-               }: {
-    label: string;
-    type: string;
-    value: string;
-    onChange: ChangeEventHandler<HTMLInputElement>;
+function FieldInput({ label, type, value, onChange }: {
+    label: string; type: string; value: string; onChange: ChangeEventHandler<HTMLInputElement>;
 }) {
     return (
         <div className="flex flex-col gap-2">
-            <label className="text-sm text-neutral-400">{label}</label>
+            <label className="text-sm font-medium text-slate-400">{label}</label>
             <input
-                type={type}
-                value={value}
-                onChange={onChange}
-                required
-                minLength={8}
-                className="px-4 py-3 rounded-xl bg-neutral-800 border border-neutral-700 focus:border-white focus:ring-1 focus:ring-white outline-none transition text-white"
+                type={type} value={value} onChange={onChange}
+                required minLength={8}
+                className="px-4 py-2.5 rounded-lg border border-stone-800/30 bg-[#111110]
+                    text-slate-200 text-sm outline-none transition
+                    focus:border-rose-700 focus:ring-1 focus:ring-rose-600/30"
             />
         </div>
     );

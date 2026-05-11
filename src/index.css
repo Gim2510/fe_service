@@ -1,15 +1,74 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Recursive:wght@300..1000&display=swap');
 
 @theme {
-    --color-main-white: #f0efeb;
-    --color-green-buttons: #40916c;
-    --color-green-buttons-hover: #52b788;
-    --color-abstract-grey: #EAEAEA;
-    --color-primary-white: #F4F1F1
+    --font-fjalla: 'Recursive', sans-serif;
+
+    /* Legacy colors (kept for compatibility) */
+    --color-main-white: #FAF9F7;
+    --color-green-buttons: #E8846D;
+    --color-green-buttons-hover: #F29B85;
+    --color-abstract-grey: #EAEAE8;
+    --color-primary-white: #FAF9F7;
+    --color-secondary-white: #F0EDE8;
+    --color-primary: #E8846D;
+    --color-secondary: #D46B55;
+    --color-main-red: #E8846D;
+
+    /* Corporate design system — Charcoal + Coral Rose */
+    --color-corp-navy:    #111110;
+    --color-corp-surface: #1C1C1A;
+    --color-corp-blue:    #E8846D;
+    --color-corp-blue-dim: rgba(232, 132, 109, 0.15);
+    --color-corp-blue-glow: rgba(232, 132, 109, 0.25);
+    --color-corp-slate:   #A8A39A;
+    --color-corp-light-bg: #FAF8F4;
+    --color-corp-light-surface: #F8FAFB;
+    --color-corp-light-border: #C8D6E4;
 }
 
 html, body {
-    background-color: #000;
+    background-color: #111110;
+}
+
+/* ── Corporate animation utilities ── */
+@keyframes corporateFadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes borderGlow {
+    0%, 100% { border-color: rgba(232, 132, 109, 0.15); }
+    50%       { border-color: rgba(232, 132, 109, 0.40); }
+}
+
+@keyframes shimmer {
+    0%   { transform: translateX(-100%) skewX(-12deg); }
+    100% { transform: translateX(250%)  skewX(-12deg); }
+}
+
+.corp-fade-up {
+    animation: corporateFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.shimmer-once::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+    animation: shimmer 1.6s ease-in-out 0.4s both;
+}
+
+/* Footer hover link effect */
+.corp-link {
+    @apply relative transition-colors duration-200;
+}
+.corp-link::after {
+    content: '';
+    @apply absolute left-0 -bottom-px h-px w-0 bg-yellow-600 transition-all duration-300;
+}
+.corp-link:hover::after {
+    @apply w-full;
 }
 
 @keyframes floatSlow {
@@ -45,36 +104,76 @@ html, body {
 /* Scrollbar per container orizzontale */
 .scrollbar-theme {
     overflow-x: auto;
-    scrollbar-width: thin;           /* Firefox */
-    scrollbar-color: #c0c0c0 #f0f0f0; /* thumb track per Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #E8846D #F0EDE8; /* thumb track — coral su warm-white */
 }
 
 /* Webkit (Chrome, Edge, Safari) */
 .scrollbar-theme::-webkit-scrollbar {
-    height: 6px;                     /* altezza scrollbar orizzontale */
+    height: 4px;
 }
 
 .scrollbar-theme::-webkit-scrollbar-track {
-    background: #f0f0f0;             /* colore dello sfondo della track */
-    border-radius: 3px;
+    background: #F0EDE8;
+    border-radius: 2px;
 }
 
 .scrollbar-theme::-webkit-scrollbar-thumb {
-    background-color: #c0c0c0;       /* colore del pollice */
-    border-radius: 3px;
-    border: 2px solid #f0f0f0;       /* bordo per dare effetto "sottile" */
+    background-color: #E8846D;
+    border-radius: 2px;
 }
 
 /* Variante scura */
 .dark .scrollbar-theme {
-    scrollbar-color: #555 #2a2a2a;   /* Firefox */
+    scrollbar-color: rgba(232, 132, 109, 0.45) #1C1C1A;
 }
 
 .dark .scrollbar-theme::-webkit-scrollbar-track {
-    background: #2a2a2a;
+    background: #1C1C1A;
 }
 
 .dark .scrollbar-theme::-webkit-scrollbar-thumb {
-    background-color: #555;
-    border: 2px solid #2a2a2a;
+    background-color: rgba(232, 132, 109, 0.45);
+    border: none;
+}
+
+/* stato iniziale */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+    filter: blur(6px);
+    will-change: transform, opacity, filter;
+}
+
+.hero-line:nth-child(2) {
+    text-shadow: 0 0 20px rgba(189,30,30,0.25);
+}
+
+/* animazione */
+.reveal {
+    animation: heroReveal 1.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* delays */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.3s; }
+.delay-3 { animation-delay: 0.5s; }
+
+/* keyframes */
+@keyframes heroReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.96);
+        filter: blur(8px);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(-2px) scale(1.01);
+        filter: blur(2px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
 }

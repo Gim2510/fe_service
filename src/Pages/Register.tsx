@@ -1,340 +1,293 @@
-import {type ChangeEvent, type ChangeEventHandler, type SubmitEventHandler, useEffect, useRef, useState} from "react"
-import { useNavigate } from "react-router-dom"
-import { useRegister } from "../hooks/useRegister"
-import { LiquidGlassButton } from "../Components/Buttons/LiquidGlassButton.tsx"
-import { CompanyRoles } from "../types/CompanyRoles.ts"
-import { FallingLines } from "react-loader-spinner"
-import { useTheme } from "../Context/ThemeContext.tsx"
-import zxcvbn from "zxcvbn"
-import {getStrengthColor, getStrengthText} from "../utils/colorFunctions.ts";
-import { Check, X } from "lucide-react"
+import { type ChangeEvent, type SubmitEventHandler, useEffect, useRef, useState } from "react";
+import { validateRegisterForm, type RegisterFormErrors } from "../utils/validation.ts";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useRegister } from "../hooks/useRegister";
+import { CompanyRoles } from "../types/CompanyRoles.ts";
+import { FallingLines } from "react-loader-spinner";
+import { useTheme } from "../Context/ThemeContext.tsx";
+import zxcvbn from "zxcvbn";
+import { getStrengthColor, getStrengthText } from "../utils/colorFunctions.ts";
+import { Input } from "../Components/Inputs/Input.tsx";
+import { InputConfirm } from "../Components/Inputs/InputConfirm.tsx";
+import { GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "../hooks/useGoogleLogin";
+import { CheckCircle } from "lucide-react";
 
 export function Register() {
-    const { theme } = useTheme()
-    const navigate = useNavigate()
-    const { register, loading, error, success } = useRegister()
-
-    const successRef = useRef<HTMLDivElement | null>(null)
+    const { theme } = useTheme();
+    const navigate  = useNavigate();
+    const { register, loading, error, success }                        = useRegister();
+    const { doGoogleLogin, loading: googleLoading, error: googleError } = useGoogleLogin();
+    const isDark     = theme === "dark";
+    const successRef = useRef<HTMLDivElement | null>(null);
 
     const companyRoles: CompanyRoles[] = [
-        CompanyRoles.Founder,
-        CompanyRoles.CEO,
-        CompanyRoles.Employee,
-        CompanyRoles.CTO,
-        CompanyRoles.Manager,
-    ]
+        CompanyRoles.Founder, CompanyRoles.CEO, CompanyRoles.Employee,
+        CompanyRoles.CTO, CompanyRoles.Manager,
+    ];
 
     const [form, setForm] = useState({
-        given_name: "",
-        family_name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        fiscal_code: "",
-        partita_iva: "",
-        company_name: "",
-        company_role: CompanyRoles.Employee,
-    })
+        given_name: "", family_name: "", email: "", password: "",
+        confirmPassword: "", fiscal_code: "", partita_iva: "",
+        company_name: "", company_role: CompanyRoles.Employee,
+    });
+    const [formErrors, setFormErrors] = useState<RegisterFormErrors>({});
 
-    const passwordScore = zxcvbn(form.password).score
-    const passwordsMatch = form.password === form.confirmPassword
+    const passwordScore   = zxcvbn(form.password).score;
+    const passwordsMatch  = form.password === form.confirmPassword;
+
+    const border    = isDark ? "border-stone-800/30" : "border-slate-200";
+    const mutedText = isDark ? "text-slate-500" : "text-slate-400";
 
     useEffect(() => {
         if (success && successRef.current) {
-            successRef.current.scrollIntoView({ behavior: "smooth", block: "center" })
+            successRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
         }
-    }, [success])
+    }, [success]);
 
-    const handleChange = (
-        e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-    ) => {
-        const { name, value } = e.target
-        setForm(prev => ({ ...prev, [name]: value }))
-    }
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setForm(prev => ({ ...prev, [name]: value }));
+        if (formErrors[name as keyof RegisterFormErrors]) {
+            setFormErrors(prev => ({ ...prev, [name]: undefined }));
+        }
+    };
 
     const handleSubmit: SubmitEventHandler<HTMLFormElement> = async (e) => {
-        e.preventDefault()
-
-        if (!passwordsMatch) {
-            return
+        e.preventDefault();
+        if (!passwordsMatch || passwordScore < 2) return;
+        const errors = validateRegisterForm(form);
+        if (Object.keys(errors).length > 0) {
+            setFormErrors(errors);
+            return;
         }
-
-        if (passwordScore < 2) {
-            return
-        }
-
+        setFormErrors({});
         try {
-            await register(form)
-            setTimeout(() => navigate("/login"), 5000)
+            await register(form);
+            setTimeout(() => navigate("/login"), 5000);
         } catch (_) {}
-    }
+    };
 
+    const selectClass = `px-4 py-2.5 rounded-xl border outline-none transition text-sm appearance-none cursor-pointer
+        ${isDark
+            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-rose-700 focus:ring-1 focus:ring-rose-600/20"
+            : "bg-white border-slate-200 text-slate-900 focus:border-rose-600 focus:ring-1 focus:ring-rose-600/15"
+        }`;
 
     return (
-        <main className="relative min-h-screen flex items-center overflow-hidden">
+        <main className={`relative min-h-screen flex items-start overflow-hidden
+            ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}
+            style={{ scrollbarWidth: "none" }}>
 
-            {/* Background */}
-            <div
-                className={`absolute inset-0 ${
-                    theme === "dark"
-                        ? "bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-800"
-                        : "bg-white"
-                }`}
-            />
+            {/* grid bg */}
+            <div className="absolute inset-0 pointer-events-none">
+                <div
+                    className="absolute inset-0 opacity-[0.08]"
+                    style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%23F59E0B' : '%23B45309'}' stroke-width='0.5'/%3E%3C/svg%3E")`,
+                        backgroundSize: "40px 40px",
+                    }}
+                />
+                {isDark && (
+                    <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] rounded-full blur-[160px] opacity-[0.04] bg-rose-700" />
+                )}
+            </div>
 
-            {/* Grid texture */}
-            <div
-                className={`absolute inset-0 opacity-10 bg-[size:32px_32px] ${
-                    theme === "dark"
-                        ? "bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)]"
-                        : "bg-[radial-gradient(circle_at_1px_1px,black_1px,transparent_0)]"
-                }`}
-            />
+            <div className={`relative z-10 mx-auto w-full max-w-5xl px-6 sm:px-8 pt-28 pb-16
+                grid lg:grid-cols-2 gap-12 items-start
+                ${isDark ? "text-white" : "text-slate-900"}`}>
 
-            <div
-                className={`relative z-10 mx-auto w-full max-w-6xl px-8 py-24 grid lg:grid-cols-2 gap-20 items-start ${
-                    theme === "dark" ? "text-white" : "text-black"
-                }`}
-            >
-
-                {/* LEFT COPY */}
-                <div className="flex flex-col gap-8 mt-5">
-                    <span
-                        className={`text-sm uppercase tracking-widest ${
-                            theme === "dark" ? "text-neutral-400" : "text-black"
-                        }`}
-                    >
-                        Accesso piattaforma
-                    </span>
-
-                    <h1 className="text-5xl font-semibold leading-tight">
-                        Inizia a costruire
-                        <br />
-                        <span
-                            className={theme === "dark" ? "text-neutral-400" : "text-black"}
-                        >
-                            un sistema sotto controllo.
+                {/* Left — copy (sticky) */}
+                <motion.div
+                    className="hidden lg:flex flex-col gap-7 sticky top-28"
+                    initial={{ opacity: 0, x: -24 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                >
+                    <div className="space-y-4">
+                        <span className={`text-[10px] font-mono uppercase tracking-[0.22em]
+                            ${isDark ? "text-rose-600" : "text-rose-700"}`}>
+                            Accesso piattaforma
                         </span>
-                    </h1>
-
-                    <p
-                        className={`text-lg max-w-lg ${
-                            theme === "dark" ? "text-neutral-300" : "text-black"
-                        }`}
-                    >
-                        Registrati per accedere agli strumenti di analisi e trasformare
-                        i tuoi dati in decisioni misurabili.
-                    </p>
-
-                    <div
-                        className={`text-sm ${
-                            theme === "dark" ? "text-neutral-500" : "text-black"
-                        }`}
-                    >
-                        Nessun abbonamento automatico • Attivazione immediata
+                        <h1 className={`font-fjalla text-5xl font-semibold leading-tight
+                            ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                            Inizia a costruire
+                            <span className="block text-rose-600 mt-1">un sistema sotto controllo.</span>
+                        </h1>
+                        <p className={`text-base leading-relaxed max-w-md
+                            ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                            Registrati per accedere agli strumenti di analisi e trasformare
+                            i tuoi dati in decisioni misurabili.
+                        </p>
                     </div>
-                </div>
 
-                {/* FORM CARD */}
-                <div>
-                    <div
-                        className={`rounded-3xl backdrop-blur-xl p-10 shadow-2xl ${
-                            theme === "dark"
-                                ? "bg-neutral-900/70 border border-neutral-800"
-                                : "bg-white/40 shadow-3xl"
-                        }`}
-                    >
-                        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                    {/* mini step guide */}
+                    <div className={`rounded-xl border p-5 space-y-3 ${border}`}
+                         style={{ background: isDark ? "#111110" : "#F0EDE8" }}>
+                        <p className={`text-[10px] font-mono uppercase tracking-[0.18em] ${mutedText}`}>
+                            Come funziona
+                        </p>
+                        {["Crea il tuo account gratuito", "Compila il questionario di maturità", "Ricevi score e analisi dettagliate"].map((step, i) => (
+                            <div key={step} className="flex items-start gap-3">
+                                <span className={`text-[10px] font-mono shrink-0 mt-0.5
+                                    ${isDark ? "text-rose-700" : "text-rose-600"}`}>
+                                    {String(i + 1).padStart(2, "0")}
+                                </span>
+                                <span className={`text-xs ${isDark ? "text-slate-400" : "text-slate-600"}`}>{step}</span>
+                            </div>
+                        ))}
+                    </div>
 
-                            <div className="text-center mb-2">
-                                <h2 className="text-2xl font-semibold">Crea account</h2>
-                                <p className="text-sm text-neutral-500 mt-1">
-                                    Inserisci i tuoi dati
+                    <p className={`text-[10px] font-mono uppercase tracking-[0.18em] ${mutedText}`}>
+                        Nessun abbonamento automatico · Attivazione immediata
+                    </p>
+                </motion.div>
+
+                {/* Right — form card */}
+                <motion.div
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.08 }}
+                    className={`rounded-2xl border overflow-hidden ${border}`}
+                    style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+                >
+                    <div className="h-[2px] w-full bg-rose-700/60" />
+
+                    <div className="p-7 sm:p-8">
+                        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                            {/* header */}
+                            <div className="mb-1">
+                                <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-1 ${mutedText}`}>
+                                    Nuovo account
                                 </p>
+                                <h2 className={`text-xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                                    Crea account
+                                </h2>
                             </div>
 
-                            {error && (
-                                <div
-                                    className="text-sm px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400">
-                                    {error}
+                            {(error || googleError) && (
+                                <div className="text-xs px-4 py-3 rounded-xl border border-red-500/20 bg-red-500/8 text-red-400">
+                                    {error || googleError}
                                 </div>
                             )}
 
                             {success && (
-                                <div
-                                    ref={successRef}
-                                    className="text-sm px-4 py-3 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400"
-                                >
-                                    {success}
-                                    <p className="mt-2 text-neutral-300">
-                                        Controlla la tua email per verificare l’account.
-                                    </p>
+                                <div ref={successRef} className="flex items-start gap-3 text-xs px-4 py-3 rounded-xl border border-green-500/20 bg-green-500/8 text-green-400">
+                                    <CheckCircle size={14} className="shrink-0 mt-0.5" />
+                                    <div>
+                                        <p>{success}</p>
+                                        <p className={`mt-1 ${mutedText}`}>Controlla la tua email per verificare l'account.</p>
+                                    </div>
                                 </div>
                             )}
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                <Input theme={theme} label="Nome" name="given_name" value={form.given_name}
-                                       onChange={handleChange}/>
-                                <Input theme={theme} label="Cognome" name="family_name" value={form.family_name}
-                                       onChange={handleChange}/>
+                            {/* name */}
+                            <div className="grid grid-cols-2 gap-3">
+                                <Input theme={theme} label="Nome"    name="given_name"  value={form.given_name}  onChange={handleChange} error={formErrors.given_name} />
+                                <Input theme={theme} label="Cognome" name="family_name" value={form.family_name} onChange={handleChange} error={formErrors.family_name} />
                             </div>
 
-                            <Input theme={theme} label="Email" name="email" type="email" value={form.email}
-                                   onChange={handleChange}/>
+                            <Input theme={theme} label="Email" name="email" type="email" value={form.email} onChange={handleChange} error={formErrors.email} />
+
+                            {/* password + strength */}
                             <div className="flex flex-col gap-2">
-                                <Input
-                                    theme={theme}
-                                    label="Password"
-                                    name="password"
-                                    type="password"
-                                    value={form.password}
-                                    onChange={handleChange}
-                                />
-
+                                <Input theme={theme} label="Password" name="password" type="password" value={form.password} onChange={handleChange} error={formErrors.password} />
                                 {form.password && (
-                                    <div className="flex flex-col gap-1">
-
-                                        <div className="w-full h-2 rounded-full bg-neutral-700/30 overflow-hidden">
+                                    <div className="flex flex-col gap-1.5">
+                                        <div className={`w-full h-[3px] rounded-full overflow-hidden ${isDark ? "bg-white/6" : "bg-black/8"}`}>
                                             <div
-                                                className={`h-full transition-all duration-300 ${getStrengthColor(passwordScore)}`}
-                                                style={{width: `${(passwordScore + 1) * 20}%`}}
+                                                className={`h-full rounded-full transition-all duration-300 ${getStrengthColor(passwordScore)}`}
+                                                style={{ width: `${(passwordScore + 1) * 20}%` }}
                                             />
                                         </div>
-
-                                        <span className="text-xs text-neutral-400">
-                                            Sicurezza password: {getStrengthText(passwordScore)}
+                                        <span className={`text-[10px] font-mono uppercase tracking-[0.15em] ${mutedText}`}>
+                                            Sicurezza: {getStrengthText(passwordScore)}
                                         </span>
-
                                     </div>
                                 )}
                             </div>
-                            <div className="flex flex-col gap-2 relative">
 
-                                <label className="text-sm text-neutral-400">Conferma password</label>
+                            {/* confirm password */}
+                            <div className="flex flex-col gap-1.5">
+                                <label className={`text-[10px] font-mono uppercase tracking-[0.15em] ${mutedText}`}>
+                                    Conferma password
+                                </label>
+                                <InputConfirm form={form} handleChange={handleChange} theme={theme} passwordsMatch={passwordsMatch} />
+                            </div>
 
-                                <div className="relative">
-
-                                    <input
-                                        name="confirmPassword"
-                                        type="password"
-                                        value={form.confirmPassword}
-                                        onChange={handleChange}
-                                        required
-                                        className={`w-full px-4 py-3 pr-10 rounded-xl border outline-none transition
-                ${
-                                            theme === "dark"
-                                                ? "bg-neutral-800 text-white"
-                                                : "bg-white text-black"
-                                        }
-                ${
-                                            form.confirmPassword
-                                                ? passwordsMatch
-                                                    ? "border-green-500"
-                                                    : "border-red-500"
-                                                : theme === "dark"
-                                                    ? "border-neutral-700"
-                                                    : "border-neutral-300"
-                                        }
-            `}
-                                    />
-
-                                    {form.confirmPassword && (
-                                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                                            {passwordsMatch ? (
-                                                <Check className="w-5 h-5 text-green-500"/>
-                                            ) : (
-                                                <X className="w-5 h-5 text-red-500"/>
-                                            )}
-                                        </div>
-                                    )}
-
+                            {/* company */}
+                            <div className="grid grid-cols-2 gap-3">
+                                <Input theme={theme} label="Nome azienda" name="company_name" value={form.company_name} onChange={handleChange} error={formErrors.company_name} />
+                                <div className="flex flex-col gap-1.5">
+                                    <label className={`text-[10px] font-mono uppercase tracking-[0.15em] ${mutedText}`}>
+                                        Ruolo aziendale
+                                    </label>
+                                    <select name="company_role" value={form.company_role} onChange={handleChange} className={selectClass}>
+                                        {companyRoles.map(role => (
+                                            <option key={role} value={role}>{role}</option>
+                                        ))}
+                                    </select>
                                 </div>
-
-                            </div>
-                            <Input theme={theme} label="Company name" name="company_name" value={form.company_name}
-                                   onChange={handleChange}/>
-
-                            <div className="flex flex-col gap-2">
-                                <label className="text-sm text-neutral-400">Company role</label>
-                                <select
-                                    name="company_role"
-                                    value={form.company_role}
-                                    onChange={handleChange}
-                                    className={`px-4 py-3 rounded-xl border outline-none transition ${
-                                        theme === "dark"
-                                            ? "bg-neutral-800 border-neutral-700 text-white focus:border-white focus:ring-white"
-                                            : "bg-white border-neutral-300 text-black focus:border-black focus:ring-black"
-                                    } focus:ring-1`}
-                                >
-                                    {companyRoles.map(role => (
-                                        <option key={role} value={role}>
-                                            {role}
-                                        </option>
-                                    ))}
-                                </select>
                             </div>
 
-                            <Input theme={theme} label="Codice fiscale" name="fiscal_code"
-                                   value={form.fiscal_code.toUpperCase()} onChange={handleChange}/>
-                            <Input theme={theme} label="Partita IVA" name="partita_iva" value={form.partita_iva}
-                                   onChange={handleChange}/>
+                            {/* fiscal */}
+                            <div className="grid grid-cols-2 gap-3">
+                                <Input theme={theme} label="Codice fiscale" name="fiscal_code"  value={form.fiscal_code.toUpperCase()} onChange={handleChange} error={formErrors.fiscal_code} />
+                                <Input theme={theme} label="Partita IVA"    name="partita_iva"  value={form.partita_iva}               onChange={handleChange} error={formErrors.partita_iva} />
+                            </div>
 
-                            <LiquidGlassButton type="submit" disabled={loading || !passwordsMatch || passwordScore < 2} className='mt-5'>
-                                {loading ? (
-                                    <FallingLines width="30" color="#fff" visible/>
-                                ) : (
-                                    "Crea account"
-                                )}
-                            </LiquidGlassButton>
+                            <button
+                                type="submit"
+                                disabled={loading || !passwordsMatch || passwordScore < 2}
+                                className="mt-2 w-full py-2.5 rounded-xl bg-rose-700 hover:bg-rose-600
+                                    disabled:opacity-40 disabled:cursor-not-allowed
+                                    text-white text-sm font-semibold transition-all hover:-translate-y-0.5 duration-200
+                                    shadow-lg shadow-rose-700/20 flex items-center justify-center"
+                            >
+                                {loading
+                                    ? <FallingLines width="20" color="white" visible />
+                                    : "Crea account"
+                                }
+                            </button>
 
-                            <div className="text-center text-sm text-neutral-500 mt-4">
+                            {/* divider */}
+                            <div className="flex items-center gap-3">
+                                <div className={`flex-1 h-px ${isDark ? "bg-stone-800/40" : "bg-slate-200"}`} />
+                                <span className={`text-[10px] font-mono uppercase tracking-[0.15em] ${mutedText}`}>oppure</span>
+                                <div className={`flex-1 h-px ${isDark ? "bg-stone-800/40" : "bg-slate-200"}`} />
+                            </div>
+
+                            {googleLoading ? (
+                                <div className="flex justify-center py-1">
+                                    <FallingLines color={isDark ? "white" : "#B45309"} width="20" visible ariaLabel="loading" />
+                                </div>
+                            ) : (
+                                <GoogleLogin
+                                    onSuccess={async cr => { await doGoogleLogin(cr.credential!); navigate("/"); }}
+                                    onError={() => console.log("Google login failed")}
+                                    theme={isDark ? "filled_black" : "outline"}
+                                    size="large"
+                                    width="100%"
+                                    text="continue_with"
+                                />
+                            )}
+
+                            <p className={`text-center text-xs mt-1 ${mutedText}`}>
                                 Hai già un account?{" "}
                                 <button
                                     type="button"
                                     onClick={() => navigate("/login")}
-                                    className={`transition cursor-pointer ${
-                                        theme === "dark"
-                                            ? "text-neutral-300 hover:text-white"
-                                            : "text-black hover:text-neutral-400"
-                                    }`}
+                                    className={`font-semibold transition
+                                        ${isDark ? "text-rose-500 hover:text-rose-400" : "text-rose-700 hover:text-rose-600"}`}
                                 >
                                     Accedi
                                 </button>
-                            </div>
-
+                            </p>
                         </form>
                     </div>
-                </div>
-
+                </motion.div>
             </div>
         </main>
-    )
-}
-
-/* Input */
-function Input({label, name, type = "text", value, onChange, theme,}: {
-    label: string,
-    name: string,
-    type?: string,
-    value: string,
-    onChange: ChangeEventHandler<HTMLInputElement>,
-    theme: string
-}) {
-    return (
-        <div className="flex flex-col gap-2">
-            <label className="text-sm text-neutral-400">{label}</label>
-            <input
-                name={name}
-                type={type}
-                value={value}
-                onChange={onChange}
-                required
-                className={`px-4 py-3 rounded-xl border outline-none transition ${
-                    theme === "dark"
-                        ? "bg-neutral-800 border-neutral-700 text-white focus:border-white focus:ring-white"
-                        : "bg-white border-neutral-300 text-black focus:border-black focus:ring-black"
-                } focus:ring-1`}
-            />
-        </div>
-    )
+    );
 }

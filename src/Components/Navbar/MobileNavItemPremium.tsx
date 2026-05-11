@@ -2,13 +2,14 @@ import {NavLink} from "react-router-dom";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 
 type Props = {
+    theme: string;
     to: string;
     label: string;
     isPremium: boolean | null;
     closeMenu: () => void;
 };
 
-export function MobileNavItemPremium({to, label, isPremium, closeMenu,}: Props) {
+export function MobileNavItemPremium({theme, to, label, isPremium, closeMenu,}: Props) {
     return (
         <NavLink
             to={to}
@@ -23,8 +24,8 @@ export function MobileNavItemPremium({to, label, isPremium, closeMenu,}: Props) 
                             text-white border-red-700/40
                           `
                     : `
-                            bg-gradient-to-r from-indigo-500/20 via-cyan-500/20 to-blue-500/20
-                            text-white border-indigo-500/30
+                            bg-gradient-to-r 
+                            border-indigo-500/30 ${theme === "dark" ? "text-white from-indigo-500/20 via-cyan-500/20 to-rose-600/20" : "text-black from-indigo-500/50 via-cyan-500/50 to-rose-600/50"}
                           `
             }
             `}

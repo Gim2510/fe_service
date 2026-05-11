@@ -1,45 +1,37 @@
-type DeleteUserSectionProps = {
-    selectedUserToDelete: string,
-    setSelectedUserToDelete: (selectedUserToDelete: string) => void,
-    allUsers: any[],
-    setShowDeleteUserModal: (showDeleteUserModal: boolean) => void,
-    success: boolean
-}
+type Props = {
+    selectedUserToDelete: string;
+    setSelectedUserToDelete: (v: string) => void;
+    allUsers: any[];
+    setShowDeleteUserModal: (show: boolean) => void;
+    success: boolean;
+    theme?: string;
+};
 
-export function DeleteUserSection({selectedUserToDelete, setSelectedUserToDelete, allUsers, setShowDeleteUserModal, success}: DeleteUserSectionProps) {
+export function DeleteUserSection({ selectedUserToDelete, setSelectedUserToDelete, allUsers, setShowDeleteUserModal, success, theme }: Props) {
+    const isDark = theme === "dark";
+    const card = isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200";
+    const selectClass = `w-full sm:w-80 h-11 px-4 rounded-xl border text-sm appearance-none cursor-pointer focus:outline-none
+        ${isDark ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-rose-700" : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-rose-600"}`;
+
     return (
-        <>
-            <div className="rounded-3xl border border-neutral-700 bg-neutral-900/70 p-8 backdrop-blur">
-                <h2 className="text-2xl mb-6">Elimina utente</h2>
-                <div className='flex items-center gap-5'>
-                    <select
-                        value={selectedUserToDelete}
-                        onChange={(e) => setSelectedUserToDelete(e.target.value)}
-                        className=" border border-white/[0.1] rounded-lg px-5 py-3 text-black backdrop-blur-xl
-                                focus:outline-none focus:border-white/[0.2] transition w-full sm:w-96 bg-white">
-                        <option value="">Seleziona utente</option>
-                        {allUsers
-                            .filter((u) => u.role !== "ADMIN")
-                            .map((user) => (
-                                <option key={user._id} value={user._id}>
-                                    {user.email}
-                                </option>
-                            ))}
-                    </select>
-
-                    <button
-                        disabled={!selectedUserToDelete}
-                        onClick={() => setShowDeleteUserModal(true)}
-                        className="w-40 h-12 flex items-center justify-center cursor-pointer rounded-lg bg-red-400 text-black font-medium transition-all hover:scale-105 active:scale-95 disabled:opacity-30">                        Elimina
-                    </button>
-
-                    {success &&
-                        <div className='bg-green-200/40 p-2 rounded-xl border-2 border-green-600'>
-                            <p className='font-bold text-green-400'>Utente eliminato con successo</p>
-                        </div>
-                    }
-                </div>
+        <div className={`rounded-2xl border p-7 ${card}`}>
+            <h2 className={`text-base font-semibold mb-5 ${isDark ? "text-slate-200" : "text-slate-800"}`}>Elimina utente</h2>
+            <div className="flex flex-wrap items-center gap-4">
+                <select value={selectedUserToDelete} onChange={e => setSelectedUserToDelete(e.target.value)} className={selectClass}>
+                    <option value="">Seleziona utente</option>
+                    {allUsers.filter(u => u.role !== "ADMIN").map(user => (
+                        <option key={user._id} value={user._id}>{user.email}</option>
+                    ))}
+                </select>
+                <button
+                    disabled={!selectedUserToDelete}
+                    onClick={() => setShowDeleteUserModal(true)}
+                    className="h-11 px-5 rounded-xl bg-red-600 hover:bg-red-500 disabled:opacity-40 text-white text-sm font-semibold transition-colors"
+                >
+                    Elimina
+                </button>
+                {success && <span className="text-sm text-green-400">Utente eliminato con successo</span>}
             </div>
-        </>
-    )
+        </div>
+    );
 }

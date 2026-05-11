@@ -1,31 +1,42 @@
-import { DashboardCard } from "./DashboardCard.tsx";
+import { motion } from "framer-motion";
+import { KPISection } from "./KPISection";
+import { GrowthSection } from "./GrowthSection";
+import { SurveySection } from "./SurveySection";
+import { InsightsSection } from "./InsightsSection";
+import { AdvancedStats } from "./AdvancedStats";
 
-type Props = {
-    users: any;
-    surveys: any;
-    theme: string;
-};
+export function DashboardHeader({ users, surveys, theme }: any) {
+    const isDark = theme === "dark";
 
-export function DashboardHeader({ users, surveys, theme }: Props) {
     return (
-        <>
-            <div>
-                <h1 className={`text-4xl font-semibold ${theme === "dark" ? "text-white" : "text-gray-900"}`}>
+        <div className="space-y-8">
+            {/* page title */}
+            <motion.div
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            >
+                <span className={`text-[10px] font-mono uppercase tracking-[0.22em]
+                    ${isDark ? "text-rose-600" : "text-rose-700"}`}>
+                    Pannello amministrativo
+                </span>
+                <h1 className={`text-2xl font-semibold mt-1.5 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                     Admin Dashboard
                 </h1>
-                <p className={`${theme === "dark" ? "text-neutral-400" : "text-gray-600"} mt-2`}>
-                    System monitoring & user control center
+                <p className={`mt-1 text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>
+                    Monitor growth, engagement and system health
                 </p>
+            </motion.div>
+
+            <KPISection users={users} surveys={surveys} theme={theme} />
+
+            <div className="grid lg:grid-cols-2 gap-4">
+                <GrowthSection users={users} theme={theme} />
+                <SurveySection surveys={surveys} theme={theme} />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 mt-10">
-                <DashboardCard title="Users" value={users?.totalUsers} theme={theme} />
-                <DashboardCard title="Active" value={users?.activeUsers} theme={theme} />
-                <DashboardCard title="VIP" value={users?.vipActive} theme={theme} />
-                <DashboardCard title="Surveys" value={surveys?.totalResponses} theme={theme} />
-                <DashboardCard title="Published" value={surveys?.publishedResponses} theme={theme} />
-                <DashboardCard title="Avg Score" value={surveys?.averageScore?.toFixed(2)} theme={theme} />
-            </div>
-        </>
+            <InsightsSection users={users} surveys={surveys} theme={theme} />
+            <AdvancedStats data={users} theme={theme} />
+        </div>
     );
 }

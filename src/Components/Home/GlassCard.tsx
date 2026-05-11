@@ -1,19 +1,26 @@
 import type { ReactNode } from "react";
+import { motion } from "framer-motion";
 
-export function GlassCard({ children, className = "", theme }: { children: ReactNode; className?: string, theme: string }) {
+interface GlassCardProps {
+    children: ReactNode;
+    className?: string;
+    theme: string;
+    hover?: boolean;
+}
+
+export function GlassCard({ children, className = "", theme, hover = true }: GlassCardProps) {
     const isDark = theme === "dark";
 
+    const base = isDark
+        ? "bg-[#1C1C1A]/80 border border-stone-800/20 hover:border-rose-800/30"
+        : "bg-white border border-slate-200 hover:border-rose-400";
+
     return (
-        <div
-            className={`relative rounded-3xl transition-all duration-500
-                backdrop-blur-xl
-                ${isDark
-                ? "bg-white/[0.04] border border-white/10 hover:border-white/20"
-                : "bg-black/[0.04] border border-black/10 hover:border-black/20"
-            } 
-                ${className}`}
+        <motion.div
+            className={`relative rounded-2xl transition-colors duration-300 ${base} ${className}`}
+            whileHover={hover ? { y: -4, transition: { duration: 0.2, ease: "easeOut" } } : {}}
         >
             {children}
-        </div>
+        </motion.div>
     );
 }

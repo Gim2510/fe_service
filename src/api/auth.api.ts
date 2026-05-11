@@ -21,3 +21,14 @@ export async function registerApi(payload: any) {
     if (!res.ok) throw new Error(await res.text());
     return res.json();
 }
+
+export async function oauthLoginApi(idToken: string) {
+    const res = await fetch(`${BASE_URL}/v1/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken }),
+    });
+
+    if (!res.ok) throw new Error(await res.text());
+    return res.json() as Promise<{ token: string }>;
+}

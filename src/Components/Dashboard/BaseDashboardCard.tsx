@@ -1,21 +1,20 @@
-import type {ReactNode} from "react";
+import type { ReactNode } from "react";
 
-export function BaseDashboardCard({title,children}: {title: string; children?: ReactNode }) {
+export function BaseDashboardCard({ title, children, theme }: { title: string; children?: ReactNode; theme?: string }) {
+    const isDark = theme === "dark";
+
     return (
-        <div className="group relative overflow-hidden rounded-[28px] bg-white/[0.04] border border-white/[0.08] backdrop-blur-2xl
-        p-8 transition-all duration-500 hover:scale-[1.03] hover:border-white/[0.15] ">
-
-            {/* Inner glow */}
-            <div className="absolute inset-0 rounded-[28px] bg-gradient-to-br from-white/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-            <p className="text-neutral-400 text-sm tracking-wide uppercase">
+        <div className={`group relative overflow-hidden rounded-2xl border p-7 transition-all duration-300 hover:-translate-y-0.5
+            ${isDark
+                ? "bg-[#1C1C1A]/80 border-stone-800/20 hover:border-rose-800/30"
+                : "bg-[#F8FAFB] border-slate-200 hover:border-rose-400 shadow-sm"
+            }`}
+        >
+            <p className={`text-xs font-semibold uppercase tracking-widest mb-4 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
                 {title}
             </p>
-
             {children}
-
-            {/* subtle animated line */}
-            <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-white/40 group-hover:w-full transition-all duration-700" />
+            <div className={`absolute bottom-0 left-0 h-[1px] w-0 group-hover:w-full transition-all duration-500 ${isDark ? "bg-rose-600/30" : "bg-rose-500/30"}`} />
         </div>
     );
 }
