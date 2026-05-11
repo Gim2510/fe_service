@@ -30,7 +30,7 @@ export function PaymentCancel() {
 
                     <button
                         onClick={() => navigate("/")}
-                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-stone-800/30 text-slate-300 hover:text-white hover:border-amber-800/40 text-sm font-medium transition-colors"
+                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-stone-800/30 text-slate-300 hover:text-white hover:border-rose-800/40 text-sm font-medium transition-colors"
                     >
                         <ArrowLeft size={14} />
                         Torna alla Home

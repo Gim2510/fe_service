@@ -22,7 +22,7 @@ function FloatingParticles({ isDark }: { isDark: boolean }) {
             {particles.map((p) => (
                 <motion.div
                     key={p.id}
-                    className={`absolute rounded-full ${isDark ? "bg-amber-500" : "bg-amber-600"}`}
+                    className={`absolute rounded-full ${isDark ? "bg-rose-500" : "bg-rose-600"}`}
                     style={{
                         left: `${p.x}%`,
                         top: `${p.y}%`,
@@ -70,15 +70,15 @@ export function CTASection({ theme }: { theme: string }) {
                     <>
                         {/* Blue gradient accent */}
                         <div className="absolute inset-0 bg-gradient-to-br from-stone-800/30 via-transparent to-stone-800/10" />
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full blur-[100px] opacity-10 bg-amber-600" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full blur-[100px] opacity-10 bg-rose-600" />
                         {/* Top border glow */}
-                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-800/60 to-transparent" />
+                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-rose-800/60 to-transparent" />
                     </>
                 )}
                 {!isDark && (
                     <>
-                        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-20 bg-amber-300" />
-                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent" />
+                        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-20 bg-rose-300" />
+                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-rose-400/60 to-transparent" />
                     </>
                 )}
             </div>
@@ -89,15 +89,15 @@ export function CTASection({ theme }: { theme: string }) {
                 <motion.span
                     className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border mb-8 ${
                         isDark
-                            ? "text-amber-500 border-stone-700/40 bg-stone-800/20"
-                            : "text-amber-800 border-amber-300 bg-amber-50"
+                            ? "text-rose-500 border-stone-700/40 bg-stone-800/20"
+                            : "text-rose-800 border-rose-300 bg-rose-50"
                     }`}
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
                 >
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
                     Assessment gratuito
                 </motion.span>
 
@@ -112,7 +112,7 @@ export function CTASection({ theme }: { theme: string }) {
                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
                 >
                     Scopri esattamente dove la tua azienda{" "}
-                    <span className={isDark ? "text-amber-500" : "text-amber-700"}>
+                    <span className={isDark ? "text-rose-500" : "text-rose-700"}>
                         perde efficienza — e come recuperarla.
                     </span>
                 </motion.h2>
@@ -145,7 +145,7 @@ export function CTASection({ theme }: { theme: string }) {
                                 isDark ? "text-slate-500" : "text-stone-500"
                             }`}
                         >
-                            <CheckCircle size={13} className={isDark ? "text-amber-700" : "text-amber-600"} />
+                            <CheckCircle size={13} className={isDark ? "text-rose-700" : "text-rose-600"} />
                             {item}
                         </span>
                     ))}
@@ -165,8 +165,8 @@ export function CTASection({ theme }: { theme: string }) {
                             text-sm font-semibold transition-all duration-200
                             shadow-xl hover:-translate-y-0.5
                             ${isDark
-                                ? "bg-amber-700 hover:bg-amber-600 text-white shadow-stone-800/40 hover:shadow-stone-800/60"
-                                : "bg-[#F8FAFB] hover:bg-amber-50 text-amber-800 shadow-stone-800/20 hover:shadow-stone-800/30"
+                                ? "bg-rose-700 hover:bg-rose-600 text-white shadow-stone-800/40 hover:shadow-stone-800/60"
+                                : "bg-[#F8FAFB] hover:bg-rose-50 text-rose-800 shadow-stone-800/20 hover:shadow-stone-800/30"
                             }
                         `}
                     >

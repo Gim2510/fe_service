@@ -21,7 +21,7 @@ export function VideoSection({ theme }: { theme: string }) {
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
                 <span className={`text-xs font-semibold uppercase tracking-widest ${
-                    isDark ? "text-amber-500" : "text-amber-700"
+                    isDark ? "text-rose-500" : "text-rose-700"
                 }`}>
                     Come funziona
                 </span>
@@ -29,7 +29,7 @@ export function VideoSection({ theme }: { theme: string }) {
                     isDark ? "text-slate-100" : "text-slate-900"
                 }`}>
                     Dal problema al risultato.{" "}
-                    <span className={isDark ? "text-amber-500" : "text-amber-700"}>
+                    <span className={isDark ? "text-rose-500" : "text-rose-700"}>
                         In tre passi.
                     </span>
                 </h2>
@@ -51,7 +51,7 @@ export function VideoSection({ theme }: { theme: string }) {
             >
                 {/* Glow behind player */}
                 {isDark && (
-                    <div className="absolute -inset-4 rounded-3xl blur-2xl opacity-20 bg-amber-600 pointer-events-none" />
+                    <div className="absolute -inset-4 rounded-3xl blur-2xl opacity-20 bg-rose-600 pointer-events-none" />
                 )}
 
                 <div className={`relative rounded-2xl overflow-hidden border aspect-video ${
@@ -73,11 +73,11 @@ export function VideoSection({ theme }: { theme: string }) {
                             <div className={`absolute inset-0 flex items-center justify-center ${
                                 isDark
                                     ? "bg-gradient-to-br from-[#1C1C1A] via-[#222220] to-[#161614]"
-                                    : "bg-gradient-to-br from-slate-100 via-amber-50 to-slate-100"
+                                    : "bg-gradient-to-br from-slate-100 via-rose-50 to-slate-100"
                             }`}>
-                                {/* Amber glow rings */}
+                                {/* rose glow rings */}
                                 <div className={`absolute w-64 h-64 rounded-full blur-3xl pointer-events-none ${
-                                    isDark ? "bg-amber-700/15" : "bg-amber-300/25"
+                                    isDark ? "bg-rose-700/15" : "bg-rose-300/25"
                                 }`} />
 
                                 {/* Play button */}
@@ -85,21 +85,21 @@ export function VideoSection({ theme }: { theme: string }) {
                                     onClick={() => VIDEO_URL ? setPlaying(true) : undefined}
                                     className={`relative z-10 group flex items-center justify-center w-20 h-20 rounded-full border-2 transition-all duration-300 ${
                                         isDark
-                                            ? "border-amber-600/60 bg-amber-700/20 hover:bg-amber-700/40 hover:border-amber-500"
-                                            : "border-amber-500/60 bg-amber-50 hover:bg-amber-100 hover:border-amber-600"
+                                            ? "border-rose-600/60 bg-rose-700/20 hover:bg-rose-700/40 hover:border-rose-500"
+                                            : "border-rose-500/60 bg-rose-50 hover:bg-rose-100 hover:border-rose-600"
                                     } hover:scale-110 shadow-xl`}
                                     aria-label="Guarda il video"
                                 >
                                     <Play
                                         size={28}
                                         className={`ml-1 transition-colors duration-200 ${
-                                            isDark ? "text-amber-400 group-hover:text-amber-300" : "text-amber-700 group-hover:text-amber-800"
+                                            isDark ? "text-rose-400 group-hover:text-rose-300" : "text-rose-700 group-hover:text-rose-800"
                                         }`}
                                         fill="currentColor"
                                     />
                                     {/* Pulse ring */}
                                     <span className={`absolute inset-0 rounded-full border-2 animate-ping opacity-30 ${
-                                        isDark ? "border-amber-500" : "border-amber-400"
+                                        isDark ? "border-rose-500" : "border-rose-400"
                                     }`} />
                                 </button>
 

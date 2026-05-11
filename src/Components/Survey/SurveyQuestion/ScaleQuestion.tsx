@@ -21,11 +21,11 @@ export const ScaleQuestion: FC<PropsScaleQuestion> = ({ min = 1, max = 5, answer
                                 transition-all duration-200 cursor-pointer
                                 ${isSelected
                                     ? isDark
-                                        ? "bg-amber-700/15 border-amber-600/40 text-amber-400"
-                                        : "bg-amber-50 border-amber-500 text-amber-800"
+                                        ? "bg-rose-700/15 border-rose-600/40 text-rose-400"
+                                        : "bg-rose-50 border-rose-500 text-rose-800"
                                     : isDark
-                                        ? "bg-[#1C1C1A]/60 border-stone-800/20 text-slate-400 hover:border-amber-800/30 hover:text-slate-200"
-                                        : "bg-[#F8FAFB] border-slate-200 text-slate-600 hover:border-amber-400 hover:bg-amber-50/50"
+                                        ? "bg-[#1C1C1A]/60 border-stone-800/20 text-slate-400 hover:border-rose-800/30 hover:text-slate-200"
+                                        : "bg-[#F8FAFB] border-slate-200 text-slate-600 hover:border-rose-400 hover:bg-rose-50/50"
                                 }`}
                         >
                             {n}

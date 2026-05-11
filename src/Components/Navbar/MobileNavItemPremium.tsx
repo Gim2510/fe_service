@@ -25,7 +25,7 @@ export function MobileNavItemPremium({theme, to, label, isPremium, closeMenu,}: 
                           `
                     : `
                             bg-gradient-to-r 
-                            border-indigo-500/30 ${theme === "dark" ? "text-white from-indigo-500/20 via-cyan-500/20 to-amber-600/20" : "text-black from-indigo-500/50 via-cyan-500/50 to-amber-600/50"}
+                            border-indigo-500/30 ${theme === "dark" ? "text-white from-indigo-500/20 via-cyan-500/20 to-rose-600/20" : "text-black from-indigo-500/50 via-cyan-500/50 to-rose-600/50"}
                           `
             }
             `}

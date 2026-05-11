@@ -41,13 +41,13 @@ function FAQItem({ faq, isDark, isOpen, onToggle }: {
             <button
                 onClick={onToggle}
                 className={`w-full flex items-start justify-between gap-4 py-6 text-left transition-colors duration-200 group ${
-                    isDark ? "hover:text-amber-400" : "hover:text-amber-700"
+                    isDark ? "hover:text-rose-400" : "hover:text-rose-700"
                 }`}
                 aria-expanded={isOpen}
             >
                 <span className={`text-base font-semibold leading-snug transition-colors duration-200 ${
                     isOpen
-                        ? isDark ? "text-amber-400" : "text-amber-700"
+                        ? isDark ? "text-rose-400" : "text-rose-700"
                         : isDark ? "text-slate-200" : "text-slate-800"
                 }`}>
                     {faq.q}
@@ -57,7 +57,7 @@ function FAQItem({ faq, isDark, isOpen, onToggle }: {
                     transition={{ duration: 0.2, ease: "easeInOut" }}
                     className={`shrink-0 mt-0.5 transition-colors duration-200 ${
                         isOpen
-                            ? isDark ? "text-amber-400" : "text-amber-600"
+                            ? isDark ? "text-rose-400" : "text-rose-600"
                             : isDark ? "text-stone-600" : "text-slate-400"
                     }`}
                 >
@@ -103,7 +103,7 @@ export function FAQSection({ theme }: { theme: string }) {
                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 >
                     <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-amber-500" : "text-amber-700"
+                        isDark ? "text-rose-500" : "text-rose-700"
                     }`}>
                         Domande frequenti
                     </span>
@@ -111,7 +111,7 @@ export function FAQSection({ theme }: { theme: string }) {
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Hai dubbi?{" "}
-                        <span className={`block mt-1 ${isDark ? "text-amber-500" : "text-amber-700"}`}>
+                        <span className={`block mt-1 ${isDark ? "text-rose-500" : "text-rose-700"}`}>
                             Rispondiamo.
                         </span>
                     </h2>

@@ -49,8 +49,8 @@ function AnimatedStat({ stat, delay, isDark }: { stat: StatConfig; delay: number
             ref={ref}
             className={`rounded-2xl border p-6 flex flex-col gap-2 ${
                 isDark
-                    ? "bg-[#1C1C1A]/80 border-stone-800/20 hover:border-amber-800/30"
-                    : "bg-white border-slate-200 hover:border-amber-400"
+                    ? "bg-[#1C1C1A]/80 border-stone-800/20 hover:border-rose-800/30"
+                    : "bg-white border-slate-200 hover:border-rose-400"
             } transition-colors duration-300`}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -58,7 +58,7 @@ function AnimatedStat({ stat, delay, isDark }: { stat: StatConfig; delay: number
             transition={{ duration: 0.45, delay }}
         >
             <span className={`text-3xl font-bold tracking-tight font-fjalla ${
-                isDark ? "text-amber-500" : "text-amber-700"
+                isDark ? "text-rose-500" : "text-rose-700"
             }`}>
                 {stat.prefix}{display}{stat.suffix}
             </span>
@@ -87,7 +87,7 @@ export function AboutSection({ theme }: { theme: string }) {
                 >
                     <div>
                         <span className={`text-xs font-semibold uppercase tracking-widest ${
-                            isDark ? "text-amber-500" : "text-amber-700"
+                            isDark ? "text-rose-500" : "text-rose-700"
                         }`}>
                             Chi siamo
                         </span>
@@ -95,7 +95,7 @@ export function AboutSection({ theme }: { theme: string }) {
                             isDark ? "text-slate-100" : "text-slate-900"
                         }`}>
                             Nati per colmare il gap
-                            <span className={`block mt-1 ${isDark ? "text-amber-500" : "text-amber-700"}`}>
+                            <span className={`block mt-1 ${isDark ? "text-rose-500" : "text-rose-700"}`}>
                                 tra enterprise e PMI.
                             </span>
                         </h2>
@@ -116,7 +116,7 @@ export function AboutSection({ theme }: { theme: string }) {
                     <button
                         onClick={() => navigate("/about")}
                         className={`inline-flex items-center gap-2 text-sm font-semibold w-fit transition-all duration-200 hover:-translate-y-0.5 group ${
-                            isDark ? "text-amber-500 hover:text-amber-400" : "text-amber-700 hover:text-amber-600"
+                            isDark ? "text-rose-500 hover:text-rose-400" : "text-rose-700 hover:text-rose-600"
                         }`}
                     >
                         Scopri la nostra storia

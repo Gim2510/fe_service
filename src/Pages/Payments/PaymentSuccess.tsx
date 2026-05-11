@@ -48,7 +48,7 @@ export function PaymentSuccess() {
 
                     <button
                         onClick={() => navigate("/dashboard")}
-                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-sm font-semibold transition-colors shadow-lg shadow-amber-700/20"
+                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-rose-700 hover:bg-rose-600 text-white text-sm font-semibold transition-colors shadow-lg shadow-rose-700/20"
                     >
                         Vai alla Dashboard
                         <ArrowRight size={14} />

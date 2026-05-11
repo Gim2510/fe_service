@@ -47,8 +47,8 @@ export function CheckoutConfirmModal({ open, onConfirm, onCancel, loading, varia
 
                         {/* Icon */}
                         <div className={`w-12 h-12 rounded-xl flex items-center justify-center
-                            ${isDark ? "bg-amber-700/15 border border-amber-700/20" : "bg-amber-50 border border-amber-300"}`}>
-                            <CreditCard size={20} className="text-amber-600" />
+                            ${isDark ? "bg-rose-700/15 border border-rose-700/20" : "bg-rose-50 border border-rose-300"}`}>
+                            <CreditCard size={20} className="text-rose-600" />
                         </div>
 
                         {/* Content */}
@@ -79,9 +79,9 @@ export function CheckoutConfirmModal({ open, onConfirm, onCancel, loading, varia
                             <button
                                 onClick={onConfirm}
                                 disabled={loading}
-                                className="flex-1 px-4 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600
+                                className="flex-1 px-4 py-2.5 rounded-xl bg-rose-700 hover:bg-rose-600
                                     disabled:opacity-40 text-white text-sm font-semibold transition-colors
-                                    shadow-lg shadow-amber-700/25"
+                                    shadow-lg shadow-rose-700/25"
                             >
                                 {loading
                                     ? <span className="flex justify-center"><FallingLines color="#fff" width="20" visible /></span>
@@ -92,7 +92,7 @@ export function CheckoutConfirmModal({ open, onConfirm, onCancel, loading, varia
 
                         {/* Trust */}
                         <p className={`flex items-center justify-center gap-1.5 text-xs ${isDark ? "text-slate-600" : "text-slate-400"}`}>
-                            <ShieldCheck size={12} className="text-amber-600" />
+                            <ShieldCheck size={12} className="text-rose-600" />
                             Pagamento sicuro · Nessun vincolo annuale · Disattiva quando vuoi
                         </p>
                     </motion.div>

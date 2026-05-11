@@ -19,7 +19,7 @@ export function NavItem({ to, label, theme }: { to: string; label: string; theme
                         relative px-1 py-1 text-sm font-medium tracking-wide
                         transition-colors duration-200
                         ${isActive
-                            ? isDark ? "text-amber-500" : "text-amber-700"
+                            ? isDark ? "text-rose-500" : "text-rose-700"
                             : isDark
                                 ? "text-slate-400 hover:text-slate-100"
                                 : "text-slate-500 hover:text-slate-800"
@@ -31,7 +31,7 @@ export function NavItem({ to, label, theme }: { to: string; label: string; theme
                         className={`
                             absolute left-0 -bottom-0.5 h-[2px] w-full origin-left rounded-full
                             transition-transform duration-300 ease-out
-                            bg-amber-600
+                            bg-rose-600
                             ${isActive ? "scale-x-100" : "scale-x-0"}
                         `}
                     />
@@ -43,18 +43,18 @@ export function NavItem({ to, label, theme }: { to: string; label: string; theme
 
 export function NavItemPremium({ to, label, isPremium = false, theme }: Props) {
     const activeBg = theme === "dark"
-        ? "bg-gradient-to-r from-indigo-400 via-cyan-400 to-amber-600 text-black border-transparent shadow-lg shadow-indigo-500/40"
-        : "bg-gradient-to-r from-indigo-300 via-cyan-300 to-amber-500 text-black border-transparent shadow-lg shadow-indigo-400/40";
+        ? "bg-gradient-to-r from-indigo-400 via-cyan-400 to-rose-600 text-black border-transparent shadow-lg shadow-indigo-500/40"
+        : "bg-gradient-to-r from-indigo-300 via-cyan-300 to-rose-500 text-black border-transparent shadow-lg shadow-indigo-400/40";
 
     const inactiveBg = theme === "dark"
-        ? "bg-gradient-to-r from-indigo-500/20 via-cyan-500/20 to-amber-600/20 text-white border-indigo-500/30 hover:shadow-md hover:shadow-indigo-500/30 hover:scale-[1.03]"
-        : "bg-gradient-to-r from-indigo-200/20 via-cyan-200/20 to-amber-300/20 text-black border-indigo-300/30 hover:shadow-md hover:shadow-indigo-300/30 hover:scale-[1.03]";
+        ? "bg-gradient-to-r from-indigo-500/20 via-cyan-500/20 to-rose-600/20 text-white border-indigo-500/30 hover:shadow-md hover:shadow-indigo-500/30 hover:scale-[1.03]"
+        : "bg-gradient-to-r from-indigo-200/20 via-cyan-200/20 to-rose-300/20 text-black border-indigo-300/30 hover:shadow-md hover:shadow-indigo-300/30 hover:scale-[1.03]";
 
     const premiumBg = "bg-gradient-to-r from-red-900 via-red-700 to-red-800 text-white border-red-700/40 shadow-lg shadow-red-900/40";
     const premiumGlow = "bg-gradient-to-r from-red-900/40 via-red-700/40 to-red-800/40";
     const normalGlow = theme === "dark"
-        ? "bg-gradient-to-r from-indigo-500/10 via-cyan-500/10 to-amber-600/10"
-        : "bg-gradient-to-r from-indigo-200/10 via-cyan-200/10 to-amber-300/10";
+        ? "bg-gradient-to-r from-indigo-500/10 via-cyan-500/10 to-rose-600/10"
+        : "bg-gradient-to-r from-indigo-200/10 via-cyan-200/10 to-rose-300/10";
 
     return (
         <NavLink

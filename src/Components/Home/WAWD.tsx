@@ -5,7 +5,7 @@ import { GlassCard } from "./GlassCard.tsx";
 
 function ConsultingIllustration({ isDark }: { isDark: boolean }) {
     const surface  = isDark ? "#1C1C1A" : "#FFFFFF";
-    const gold     = "#C9A84C";
+    const gold     = "#E8846D";
     const goldGlow = isDark ? "rgba(201,168,76,0.18)" : "rgba(201,168,76,0.22)";
     const text2    = isDark ? "#78716C" : "#7C6F60";
     const green    = "#4ADE80";
@@ -240,7 +240,7 @@ export function WAWD({ theme }: { theme: string }) {
                 >
                     <div>
                         <span className={`text-xs font-semibold uppercase tracking-widest ${
-                            isDark ? "text-amber-500" : "text-amber-700"
+                            isDark ? "text-rose-500" : "text-rose-700"
                         }`}>
                             Soluzioni su misura
                         </span>
@@ -269,7 +269,7 @@ export function WAWD({ theme }: { theme: string }) {
                                 viewport={{ once: true, amount: 0.2 }}
                                 transition={{ duration: 0.4, delay: 0.1 + i * 0.07 }}
                             >
-                                <CheckCircle2 size={15} className="text-amber-600 shrink-0 mt-0.5" />
+                                <CheckCircle2 size={15} className="text-rose-600 shrink-0 mt-0.5" />
                                 <span>{item}</span>
                             </motion.div>
                         ))}

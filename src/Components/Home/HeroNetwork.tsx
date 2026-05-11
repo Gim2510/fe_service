@@ -423,8 +423,8 @@ export function HeroNetwork() {
             const aM = isDark ? 1.0 : 2.4;
             const clamp = (v: number) => Math.min(1, v);
 
-            // Amber — exact Tailwind values used in text/CTAs across the page
-            const Gw   = isDark ? [245, 158,  11] : [180,  83,   9]; // amber-500 / amber-700
+            // rose — exact Tailwind values used in text/CTAs across the page
+            const Gw   = isDark ? [245, 158,  11] : [180,  83,   9]; // rose-500 / rose-700
             const ga   = (a: number) => `rgba(${Gw[0]},${Gw[1]},${Gw[2]},${clamp(a * aM).toFixed(3)})`;
             const gHex = isDark ? "#F59E0B"       : "#B45309";
             const gBrt = isDark ? "#FCD34D"       : "#F59E0B";
@@ -440,7 +440,7 @@ export function HeroNetwork() {
             const eBrt = isDark ? "#6EE7B7"       : "#10B981";
             // Shared
             const gBg  = isDark ? "rgba(22,20,14,0.90)" : "rgba(255,251,235,0.95)";
-            const tCol = isDark ? "#FCD34D"       : "#1C1917"; // amber-300 / stone-900
+            const tCol = isDark ? "#FCD34D"       : "#1C1917"; // rose-300 / stone-900
             const tCo2 = isDark ? "#94BAD8"       : "#0F172A"; // / slate-900
 
             // Edge color helpers

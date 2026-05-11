@@ -18,12 +18,12 @@ export function Footer({ theme }: { theme: string }) {
         <footer className={`relative overflow-hidden ${
             isDark
                 ? "bg-[#111110] text-slate-400 border-t border-stone-800/20"
-                : "bg-gradient-to-b from-[#FAF8F4] to-[#F0EAE0] text-stone-500 border-t border-amber-200/60"
+                : "bg-gradient-to-b from-[#FAF8F4] to-[#F0EAE0] text-stone-500 border-t border-rose-200/60"
         }`}>
 
             {/* Background decoration */}
             {!isDark && (
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent" />
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-rose-400/50 to-transparent" />
             )}
 
             <div className="relative mx-auto max-w-7xl px-8 pt-20 pb-12">
@@ -48,7 +48,7 @@ export function Footer({ theme }: { theme: string }) {
                             </div>
                             <div>
                                 <h3 className={`text-base font-bold tracking-tight leading-none ${isDark ? "text-white" : "text-stone-900"}`}>
-                                    TechBridge<span className="text-amber-600">Group</span>
+                                    TechBridge<span className="text-rose-600">Group</span>
                                 </h3>
                                 <p className={`text-xs mt-1 uppercase tracking-widest ${isDark ? "text-slate-600" : "text-stone-400"}`}>
                                     Digital Consulting
@@ -66,7 +66,7 @@ export function Footer({ theme }: { theme: string }) {
                             <a
                                 href="mailto:service@techbridgegroup.it"
                                 className={`flex items-center gap-2.5 transition-colors duration-200 ${
-                                    isDark ? "text-slate-500 hover:text-amber-500" : "text-stone-500 hover:text-amber-700"
+                                    isDark ? "text-slate-500 hover:text-rose-500" : "text-stone-500 hover:text-rose-700"
                                 }`}
                             >
                                 <Mail size={14} className="shrink-0" />
@@ -166,7 +166,7 @@ export function Footer({ theme }: { theme: string }) {
                         <Link
                             to="/survey/start"
                             className={`inline-flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${
-                                isDark ? "text-amber-500 hover:text-amber-400" : "text-amber-700 hover:text-amber-600"
+                                isDark ? "text-rose-500 hover:text-rose-400" : "text-rose-700 hover:text-rose-600"
                             }`}
                         >
                             Avvia l'analisi
@@ -186,7 +186,7 @@ export function Footer({ theme }: { theme: string }) {
 
                 {/* Bottom strip */}
                 <div className={`border-t pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 ${
-                    isDark ? "border-stone-800/20" : "border-amber-200/50"
+                    isDark ? "border-stone-800/20" : "border-rose-200/50"
                 }`}>
                     <span className={`text-xs ${isDark ? "text-slate-700" : "text-stone-400"}`}>
                         © {new Date().getFullYear()} TechBridgeGroup — Tutti i diritti riservati
