@@ -44,7 +44,7 @@ export function VerifyEmailPage() {
                 <div className="rounded-2xl border border-stone-800/20 bg-[#1C1C1A]/80 backdrop-blur-xl p-10 shadow-[0_24px_80px_rgba(0,0,0,0.5)] flex flex-col items-center gap-6">
                     {status === "loading" && (
                         <>
-                            <Loader2 size={40} className="text-rose-500 animate-spin" />
+                            <Loader2 size={40} className="text-emerald-500 animate-spin" />
                             <p className="text-slate-400 text-sm">Verifica in corso…</p>
                         </>
                     )}
@@ -59,7 +59,7 @@ export function VerifyEmailPage() {
                             </div>
                             <button
                                 onClick={() => navigate("/login")}
-                                className="px-6 py-2.5 rounded-xl bg-rose-700 hover:bg-rose-600 text-white text-sm font-semibold transition-colors"
+                                className="px-6 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold transition-colors"
                             >
                                 Vai al login
                             </button>

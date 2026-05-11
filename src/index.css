@@ -6,21 +6,21 @@
 
     /* Legacy colors (kept for compatibility) */
     --color-main-white: #FAF9F7;
-    --color-green-buttons: #E8846D;
-    --color-green-buttons-hover: #F29B85;
+    --color-green-buttons: #6B8E7B;
+    --color-green-buttons-hover: #7DA08D;
     --color-abstract-grey: #EAEAE8;
     --color-primary-white: #FAF9F7;
     --color-secondary-white: #F0EDE8;
-    --color-primary: #E8846D;
-    --color-secondary: #D46B55;
-    --color-main-red: #E8846D;
+    --color-primary: #6B8E7B;
+    --color-secondary: #5A7D6A;
+    --color-main-red: #6B8E7B;
 
-    /* Corporate design system — Charcoal + Coral Rose */
+    /* Corporate design system — Charcoal + Sage Green */
     --color-corp-navy:    #111110;
     --color-corp-surface: #1C1C1A;
-    --color-corp-blue:    #E8846D;
-    --color-corp-blue-dim: rgba(232, 132, 109, 0.15);
-    --color-corp-blue-glow: rgba(232, 132, 109, 0.25);
+    --color-corp-blue:    #6B8E7B;
+    --color-corp-blue-dim: rgba(107, 142, 123, 0.15);
+    --color-corp-blue-glow: rgba(107, 142, 123, 0.25);
     --color-corp-slate:   #A8A39A;
     --color-corp-light-bg: #FAF8F4;
     --color-corp-light-surface: #F8FAFB;
@@ -38,8 +38,8 @@ html, body {
 }
 
 @keyframes borderGlow {
-    0%, 100% { border-color: rgba(232, 132, 109, 0.15); }
-    50%       { border-color: rgba(232, 132, 109, 0.40); }
+    0%, 100% { border-color: rgba(107, 142, 123, 0.15); }
+    50%       { border-color: rgba(107, 142, 123, 0.40); }
 }
 
 @keyframes shimmer {
@@ -105,7 +105,7 @@ html, body {
 .scrollbar-theme {
     overflow-x: auto;
     scrollbar-width: thin;
-    scrollbar-color: #E8846D #F0EDE8; /* thumb track — coral su warm-white */
+    scrollbar-color: #6B8E7B #F0EDE8; /* thumb track — sage su warm-white */
 }
 
 /* Webkit (Chrome, Edge, Safari) */
@@ -119,13 +119,13 @@ html, body {
 }
 
 .scrollbar-theme::-webkit-scrollbar-thumb {
-    background-color: #E8846D;
+    background-color: #6B8E7B;
     border-radius: 2px;
 }
 
 /* Variante scura */
 .dark .scrollbar-theme {
-    scrollbar-color: rgba(232, 132, 109, 0.45) #1C1C1A;
+    scrollbar-color: rgba(107, 142, 123, 0.45) #1C1C1A;
 }
 
 .dark .scrollbar-theme::-webkit-scrollbar-track {
@@ -133,7 +133,7 @@ html, body {
 }
 
 .dark .scrollbar-theme::-webkit-scrollbar-thumb {
-    background-color: rgba(232, 132, 109, 0.45);
+    background-color: rgba(107, 142, 123, 0.45);
     border: none;
 }
 

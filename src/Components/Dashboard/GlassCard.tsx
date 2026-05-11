@@ -13,7 +13,7 @@ export function GlassCard({ title, children, theme, index = 0 }: { title?: strin
             className={`rounded-2xl border overflow-hidden ${border}`}
             style={{ background: isDark ? "#161614" : "#FAFAF8" }}
         >
-            <div className="h-[2px] w-full bg-rose-700/35" />
+            <div className="h-[2px] w-full bg-emerald-700/35" />
             <div className="p-6">
                 {title && (
                     <h3 className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-5

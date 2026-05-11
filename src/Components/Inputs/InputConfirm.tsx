@@ -19,8 +19,8 @@ export function InputConfirm({ form, handleChange, theme, passwordsMatch }: Inpu
                             ? "border-green-500/60 focus:ring-green-500/15"
                             : "border-red-500/60 focus:ring-red-500/15"
                         : isDark
-                            ? "border-stone-800/30 focus:border-rose-700"
-                            : "border-slate-200 focus:border-rose-600"
+                            ? "border-stone-800/30 focus:border-emerald-700"
+                            : "border-slate-200 focus:border-emerald-600"
                     } focus:ring-1 focus:outline-none`}
             />
             {form.confirmPassword && (

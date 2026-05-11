@@ -34,8 +34,8 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                     flex items-center justify-center border transition-all duration-200
                     hover:scale-105 active:scale-95 shadow-lg
                     ${isDark
-                        ? "bg-[#1C1C1A] border-stone-800/30 text-rose-500 shadow-black/40 hover:border-rose-800/40"
-                        : "bg-[#F8FAFB] border-slate-200 text-rose-700 shadow-slate-200 hover:border-rose-400"
+                        ? "bg-[#1C1C1A] border-stone-800/30 text-emerald-500 shadow-black/40 hover:border-emerald-800/40"
+                        : "bg-[#F8FAFB] border-slate-200 text-emerald-700 shadow-slate-200 hover:border-emerald-400"
                     }`}
             >
                 {open
@@ -65,7 +65,7 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                                 <circle cx="50" cy="50" r="40" fill={isDark ? "white" : "#1e3a5f"} opacity="0.08">
                                     <animate attributeName="r" values="38;42;38" dur="2.5s" repeatCount="indefinite" />
                                 </circle>
-                                <rect x="25" y="30" width="50" height="40" rx="14" fill={isDark ? "white" : "#E8846D"} opacity="0.9" />
+                                <rect x="25" y="30" width="50" height="40" rx="14" fill={isDark ? "white" : "#6B8E7B"} opacity="0.9" />
                                 <g>
                                     <circle cx="42" cy="50" r="4" fill={isDark ? "black" : "white"}>
                                         <animate attributeName="ry" values="4;0.5;4" dur="3s" repeatCount="indefinite" />
@@ -75,8 +75,8 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                                     </circle>
                                 </g>
                                 <rect x="42" y="62" width="16" height="3" rx="2" fill={isDark ? "black" : "white"} opacity="0.7" />
-                                <line x1="50" y1="30" x2="50" y2="18" stroke={isDark ? "white" : "#E8846D"} strokeWidth="2.5" />
-                                <circle cx="50" cy="15" r="2.5" fill={isDark ? "white" : "#E8846D"}>
+                                <line x1="50" y1="30" x2="50" y2="18" stroke={isDark ? "white" : "#6B8E7B"} strokeWidth="2.5" />
+                                <circle cx="50" cy="15" r="2.5" fill={isDark ? "white" : "#6B8E7B"}>
                                     <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" />
                                 </circle>
                             </svg>
@@ -101,8 +101,8 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                                 <div className={`max-w-[78%] px-4 py-2.5 rounded-2xl text-xs leading-relaxed
                                     ${msg.role === "user"
                                         ? isDark
-                                            ? "bg-rose-700 text-white"
-                                            : "bg-rose-700 text-white"
+                                            ? "bg-emerald-700 text-white"
+                                            : "bg-emerald-700 text-white"
                                         : isDark
                                             ? "bg-[#111110] border border-stone-800/20 text-slate-300"
                                             : "bg-[#EDF2F7] text-slate-700"
@@ -138,15 +138,15 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                             className={`flex-1 text-xs px-4 py-2.5 rounded-xl border outline-none transition-colors
                                 focus:ring-2 placeholder:text-slate-500
                                 ${isDark
-                                    ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-rose-700 focus:ring-rose-600/20"
-                                    : "bg-[#EDF2F7] border-slate-200 text-slate-900 focus:border-rose-600 focus:ring-rose-600/10"
+                                    ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-emerald-700 focus:ring-emerald-600/20"
+                                    : "bg-[#EDF2F7] border-slate-200 text-slate-900 focus:border-emerald-600 focus:ring-emerald-600/10"
                                 }`}
                         />
                         <button
                             onClick={handleSend}
                             disabled={loading || !input.trim()}
                             className="shrink-0 w-9 h-9 rounded-xl flex items-center justify-center
-                                bg-rose-700 hover:bg-rose-600 disabled:opacity-40
+                                bg-emerald-700 hover:bg-emerald-600 disabled:opacity-40
                                 text-white transition-colors"
                         >
                             <Send size={13} />

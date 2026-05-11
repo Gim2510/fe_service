@@ -39,7 +39,7 @@ export function BridgeHero({ theme }: BridgeHeroProps) {
         if (!ctx) return;
 
         const isDark = theme === "dark";
-        const GOLD = "#E8846D";
+        const GOLD = "#6B8E7B";
         const GOLD_GLOW = "rgba(201,168,76,";
         const TOWER_FILL_A = isDark ? "#2A2820" : "#1E1C14";
         const TOWER_FILL_B = isDark ? "#3A3830" : "#2E2C20";

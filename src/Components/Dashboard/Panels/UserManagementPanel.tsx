@@ -65,7 +65,7 @@ export function UserManagementPanel({ allUsers, refreshUsers, theme }: Props) {
                 className={`relative rounded-2xl border overflow-hidden p-7 ${border}`}
                 style={{ background: isDark ? "#161614" : "#FAFAF8" }}
             >
-                <div className="absolute top-0 left-0 right-0 h-[2px] bg-rose-700/40" />
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-emerald-700/40" />
 
                 <AdminActionsSection
                     allUsers={allUsers}

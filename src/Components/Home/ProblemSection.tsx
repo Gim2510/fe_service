@@ -8,12 +8,12 @@ const cardVariants: Variants = {
 };
 
 const problemi = [
-    { title: "«I dati ci sono, ma non li usiamo»", text: "Ogni reparto lavora in silos: Excel, CRM parziali, gestionali non integrati. Le decisioni si prendono a intuizione — e il costo di ogni errore si accumula in silenzio." },
-    { title: "«Sprechiamo ore in attività manuali»", text: "Processi ripetitivi che sottraggono tempo alle persone chiave. Ogni ora persa in inserimento dati o riconciliazioni manuali è un'ora sottratta alla crescita." },
-    { title: "«Non sappiamo dove andremo a fine mese»", text: "Pipeline commerciale opaca, forecast inaffidabili, opportunità che sfuggono. Senza visibilità sul funnel, il fatturato diventa una sorpresa anziché un obiettivo." },
-    { title: "«Reagiamo sempre, non anticipiamo mai»", text: "La relazione con i clienti è gestita a emergenza. Chi se ne occupa non ha gli strumenti per prevedere i bisogni e agire prima che diventino problemi." },
-    { title: "«I costi operativi crescono, i margini no»", text: "Senza controllo sui dati di produzione, acquisti e logistica, è impossibile capire dove si perde margine — e quindi impossibile recuperarlo." },
-    { title: "«Abbiamo software ovunque, integrazione zero»", text: "Ogni strumento aggiunto nel tempo ha creato un ecosistema frammentato. Nessuno parla con nessuno, i dati si duplicano, e l'unico collante è il lavoro manuale." },
+    { title: "«I dati ci sono, ma non li usiamo»", text: "Ogni reparto lavora per conto suo: Excel, CRM parziali, gestionali non collegati. Le decisioni si prendono a sensazione — e il costo di ogni errore si accumula in silenzio." },
+    { title: "«Sprechiamo ore in attività manuali»", text: "Processi ripetitivi che tolgono tempo alle persone chiave. Ogni ora persa a inserire dati o riconciliare fogli è un'ora tolta alla crescita." },
+    { title: "«Non sappiamo dove andremo a fine mese»", text: "Pipeline commerciale opaca, previsioni inaffidabili, opportunità che scivolano via. Senza visibilità, il fatturato diventa una sorpresa." },
+    { title: "«Reagiamo sempre, non anticipiamo mai»", text: "La relazione con i clienti è gestita a emergenza. Manca un sistema che ti dica cosa succederà prima che succeda." },
+    { title: "«I costi crescono, i margini no»", text: "Senza controllo su produzione, acquisti e logistica, è impossibile capire dove si perde margine — e quindi impossibile recuperarlo." },
+    { title: "«Abbiamo software ovunque, integrazione zero»", text: "Ogni strumento aggiunto ha creato un ecosistema frammentato. Nessuno parla con nessuno, e l'unico collante è il lavoro manuale." },
 ];
 
 export function ProblemiSection({ theme }: { theme: string }) {
@@ -30,7 +30,7 @@ export function ProblemiSection({ theme }: { theme: string }) {
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
                 <span className={`text-xs font-semibold uppercase tracking-widest ${
-                    isDark ? "text-rose-500" : "text-rose-700"
+                    isDark ? "text-emerald-500" : "text-emerald-700"
                 }`}>
                     Ti riconosci?
                 </span>
@@ -38,7 +38,7 @@ export function ProblemiSection({ theme }: { theme: string }) {
                     isDark ? "text-slate-100" : "text-slate-900"
                 }`}>
                     Non sono problemi tecnici.
-                    <span className={`block mt-1 ${isDark ? "text-rose-500" : "text-rose-700"}`}>
+                    <span className={`block mt-1 ${isDark ? "text-emerald-500" : "text-emerald-700"}`}>
                         Sono problemi di business.
                     </span>
                 </h2>
@@ -61,7 +61,7 @@ export function ProblemiSection({ theme }: { theme: string }) {
                         <GlassCard theme={theme} className="p-7 h-full">
                             {/* Number badge */}
                             <span className={`text-xs font-mono font-medium mb-4 block ${
-                                isDark ? "text-rose-700" : "text-rose-500"
+                                isDark ? "text-emerald-700" : "text-emerald-500"
                             }`}>
                                 {String(index + 1).padStart(2, "0")}
                             </span>

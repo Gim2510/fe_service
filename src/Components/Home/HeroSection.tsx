@@ -46,8 +46,8 @@ export function HeroSection({ theme }: { theme: string }) {
                 {/* Corporate blue glow */}
                 {isDark && (
                     <>
-                        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] opacity-[0.06] bg-rose-700 pointer-events-none" />
-                        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full blur-[120px] opacity-[0.04] bg-rose-500 pointer-events-none" />
+                        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] opacity-[0.06] bg-emerald-700 pointer-events-none" />
+                        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full blur-[120px] opacity-[0.04] bg-emerald-500 pointer-events-none" />
                     </>
                 )}
             </div>
@@ -61,12 +61,12 @@ export function HeroSection({ theme }: { theme: string }) {
                         inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest
                         px-3 py-1.5 rounded-full border
                         ${isDark
-                            ? "text-rose-500 border-stone-700/40 bg-stone-800/20"
-                            : "text-rose-700 border-rose-300 bg-rose-50"
+                            ? "text-emerald-500 border-stone-700/40 bg-stone-800/20"
+                            : "text-emerald-700 border-emerald-300 bg-emerald-50"
                         }
                     `}>
-                        <span className="w-1.5 h-1.5 rounded-full bg-rose-600 animate-pulse" />
-                        Consulenza digitale per PMI italiane
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                        Consulenza digitale per PMI
                     </span>
                 </motion.div>
 
@@ -80,7 +80,7 @@ export function HeroSection({ theme }: { theme: string }) {
                     <span className="hero-line reveal delay-1 block">
                         La tua azienda
                     </span>
-                    <span className="hero-line reveal delay-2 block text-rose-600">
+                    <span className="hero-line reveal delay-2 block text-emerald-600">
                         perde margine
                     </span>
                     <span className="hero-line reveal delay-3 block text-4xl sm:text-5xl mt-2">
@@ -95,21 +95,21 @@ export function HeroSection({ theme }: { theme: string }) {
                         isDark ? "text-slate-400" : "text-slate-600"
                     }`}
                 >
-                    Progettiamo sistemi su misura che eliminano sprechi operativi,
-                    aumentano la visibilità sui dati e accelerano le decisioni
-                    che contano davvero per il tuo business.
+                    Due fratelli, un metodo. Analizziamo i tuoi processi, progettiamo
+                    automazioni su misura e le attiviamo senza stravolgere
+                    quello che già funziona.
                 </motion.p>
 
                 {/* Trust signals */}
                 <motion.div {...fadeUp(0.35)} className="mt-6 flex flex-wrap gap-4">
-                    {["Report personalizzato incluso", "Nessun impegno iniziale", "Risultati verificabili"].map((item) => (
+                    {["Report personalizzato incluso", "Nessun impegno iniziale", "ROI misurabile"].map((item) => (
                         <span
                             key={item}
                             className={`flex items-center gap-1.5 text-sm ${
                                 isDark ? "text-slate-500" : "text-slate-500"
                             }`}
                         >
-                            <CheckCircle size={14} className="text-rose-600 shrink-0" />
+                            <CheckCircle size={14} className="text-emerald-600 shrink-0" />
                             {item}
                         </span>
                     ))}
@@ -120,9 +120,9 @@ export function HeroSection({ theme }: { theme: string }) {
                     <button
                         onClick={goToSurvey}
                         className="inline-flex items-center gap-2 px-6 py-3 rounded-xl
-                            bg-rose-700 hover:bg-rose-600 text-white text-sm font-semibold
-                            transition-all duration-200 shadow-lg shadow-rose-700/25
-                            hover:shadow-rose-600/35 hover:-translate-y-0.5"
+                            bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold
+                            transition-all duration-200 shadow-lg shadow-emerald-700/25
+                            hover:shadow-emerald-600/35 hover:-translate-y-0.5"
                     >
                         Misura il tuo gap digitale
                         <ArrowRight size={16} />

@@ -22,7 +22,7 @@ export function SurveySection({ surveys, theme }: any) {
             className={`rounded-2xl border overflow-hidden ${border}`}
             style={{ background: isDark ? "#161614" : "#FAFAF8" }}
         >
-            <div className="h-[2px] w-full bg-rose-700/40" />
+            <div className="h-[2px] w-full bg-emerald-700/40" />
             <div className="p-7">
                 <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-6
                     ${isDark ? "text-slate-500" : "text-slate-400"}`}>
@@ -55,7 +55,7 @@ export function SurveySection({ surveys, theme }: any) {
                     </div>
                     <div className={`h-[3px] rounded-full overflow-hidden ${isDark ? "bg-white/6" : "bg-black/8"}`}>
                         <motion.div
-                            className="h-full rounded-full bg-rose-600"
+                            className="h-full rounded-full bg-emerald-600"
                             initial={{ width: 0 }}
                             animate={{ width: `${publishRate}%` }}
                             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}

@@ -13,7 +13,7 @@ export function ActionCard({ title, children, theme, index = 0 }: { title: strin
             className={`rounded-2xl border overflow-hidden transition-all duration-300 hover:-translate-y-0.5 ${border}`}
             style={{ background: isDark ? "#161614" : "#FAFAF8" }}
         >
-            <div className="h-[2px] w-full bg-rose-700/40" />
+            <div className="h-[2px] w-full bg-emerald-700/40" />
             <div className="p-7">
                 <h3 className={`text-xs font-semibold uppercase tracking-widest mb-6
                     ${isDark ? "text-slate-400" : "text-slate-600"}`}>

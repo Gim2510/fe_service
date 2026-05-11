@@ -39,29 +39,29 @@ export function PrivacyPolicy() {
 
             <div className="relative max-w-3xl mx-auto px-6 py-32">
                 <div className="mb-10 space-y-3">
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-rose-500" : "text-rose-700"}`}>
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-emerald-500" : "text-emerald-700"}`}>
                         Legale
                     </span>
                     <h1 className={`text-3xl sm:text-4xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         Privacy Policy
                     </h1>
                     <p className={`text-sm leading-relaxed max-w-xl ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                        Questa informativa descrive come TechBridgeGroup SRL raccoglie, utilizza e protegge
+                        Questa informativa descrive come AxiomLab raccoglie, utilizza e protegge
                         i dati personali degli utenti nell'ambito dei propri servizi digitali.
                     </p>
                 </div>
 
                 <div className={`rounded-2xl border p-7 ${card} space-y-0`}>
                     <PolicySection isDark={isDark} title="1. Titolare del trattamento">
-                        <p>Il titolare del trattamento è TechBridgeGroup SRL, responsabile delle decisioni relative alle finalità e modalità del trattamento dei dati personali.</p>
-                        <p>Email di contatto: guglielmino2510@gmail.com</p>
+                        <p>Il titolare del trattamento è AxiomLab, responsabile delle decisioni relative alle finalità e modalità del trattamento dei dati personali.</p>
+                        <p>Email di contatto: service@axiomlab.it</p>
                     </PolicySection>
 
                     <PolicySection isDark={isDark} title="2. Tipologie di dati raccolti">
                         <p>Raccogliamo dati personali forniti direttamente dagli utenti e dati generati durante l'utilizzo della piattaforma.</p>
                         <ul className="space-y-1">
                             {["Dati identificativi (nome, cognome, email)", "Informazioni aziendali e ruolo professionale", "Risposte a questionari e contenuti inseriti", "Dati di clienti inseriti dagli utenti", "Dati di fatturazione e pagamento", "Dati tecnici e di utilizzo (log, IP, device)"].map(item => (
-                                <li key={item} className="flex items-start gap-2"><span className="text-rose-500 mt-0.5">•</span>{item}</li>
+                                <li key={item} className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
                     </PolicySection>
@@ -70,7 +70,7 @@ export function PrivacyPolicy() {
                         <p>I dati sono trattati per finalità strettamente connesse al servizio:</p>
                         <ul className="space-y-1">
                             {["Creazione e gestione account utente", "Generazione di report avanzati tramite AI", "Analisi e miglioramento dei processi aziendali", "Gestione pagamenti e abbonamenti", "Supporto tecnico e assistenza", "Comunicazioni operative e marketing (previo consenso)"].map(item => (
-                                <li key={item} className="flex items-start gap-2"><span className="text-rose-500 mt-0.5">•</span>{item}</li>
+                                <li key={item} className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
                     </PolicySection>
@@ -84,7 +84,7 @@ export function PrivacyPolicy() {
                         <p>Il trattamento si basa su diverse basi giuridiche, tra cui:</p>
                         <ul className="space-y-1">
                             {["Esecuzione di un contratto", "Consenso dell'interessato", "Obblighi legali", "Legittimo interesse del titolare"].map(item => (
-                                <li key={item} className="flex items-start gap-2"><span className="text-rose-500 mt-0.5">•</span>{item}</li>
+                                <li key={item} className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
                     </PolicySection>
@@ -93,7 +93,7 @@ export function PrivacyPolicy() {
                         <p>I dati possono essere condivisi con fornitori esterni che supportano l'erogazione del servizio:</p>
                         <ul className="space-y-1">
                             {["Stripe (pagamenti)", "SendGrid (email)", "Calendly (prenotazioni)", "Hosting cloud (Vercel, Railway)", "Database (MongoDB, Redis)", "AI providers (DeepSeek)"].map(item => (
-                                <li key={item} className="flex items-start gap-2"><span className="text-rose-500 mt-0.5">•</span>{item}</li>
+                                <li key={item} className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
                     </PolicySection>

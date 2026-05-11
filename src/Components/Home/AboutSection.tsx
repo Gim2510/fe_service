@@ -13,10 +13,10 @@ interface StatConfig {
 }
 
 const stats: StatConfig[] = [
-    { prefix: "",  number: 47,  suffix: "+",  label: "PMI seguite"        },
-    { prefix: "",  number: 12,  suffix: "",   label: "Settori presidiati"  },
-    { prefix: "€", number: 4.1, suffix: "M",  label: "Margine recuperato", decimals: 1 },
-    { prefix: "",  number: 96,  suffix: "%",  label: "Clienti fidelizzati" },
+    { prefix: "",  number: 100, suffix: "%",  label: "Progetti su misura"       },
+    { prefix: "",  number: 0,   suffix: "",   label: "Template generici"        },
+    { prefix: "",  number: 24,  suffix: "h",  label: "Tempo di risposta"        },
+    { prefix: "",  number: 100, suffix: "%",  label: "Affiancamento post-lancio"},
 ];
 
 function AnimatedStat({ stat, delay, isDark }: { stat: StatConfig; delay: number; isDark: boolean }) {
@@ -49,8 +49,8 @@ function AnimatedStat({ stat, delay, isDark }: { stat: StatConfig; delay: number
             ref={ref}
             className={`rounded-2xl border p-6 flex flex-col gap-2 ${
                 isDark
-                    ? "bg-[#1C1C1A]/80 border-stone-800/20 hover:border-rose-800/30"
-                    : "bg-white border-slate-200 hover:border-rose-400"
+                    ? "bg-[#1C1C1A]/80 border-stone-800/20 hover:border-emerald-800/30"
+                    : "bg-white border-slate-200 hover:border-emerald-400"
             } transition-colors duration-300`}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -58,7 +58,7 @@ function AnimatedStat({ stat, delay, isDark }: { stat: StatConfig; delay: number
             transition={{ duration: 0.45, delay }}
         >
             <span className={`text-3xl font-bold tracking-tight font-fjalla ${
-                isDark ? "text-rose-500" : "text-rose-700"
+                isDark ? "text-emerald-500" : "text-emerald-700"
             }`}>
                 {stat.prefix}{display}{stat.suffix}
             </span>
@@ -87,36 +87,39 @@ export function AboutSection({ theme }: { theme: string }) {
                 >
                     <div>
                         <span className={`text-xs font-semibold uppercase tracking-widest ${
-                            isDark ? "text-rose-500" : "text-rose-700"
+                            isDark ? "text-emerald-500" : "text-emerald-700"
                         }`}>
                             Chi siamo
                         </span>
-                        <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold leading-tight mt-3 ${
-                            isDark ? "text-slate-100" : "text-slate-900"
-                        }`}>
-                            Nati per colmare il gap
-                            <span className={`block mt-1 ${isDark ? "text-rose-500" : "text-rose-700"}`}>
-                                tra enterprise e PMI.
-                            </span>
-                        </h2>
+                    <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold leading-tight mt-3 ${
+                        isDark ? "text-slate-100" : "text-slate-900"
+                    }`}>
+                        Due fratelli. Un'idea precisa.
+                        <span className={`block mt-1 ${isDark ? "text-emerald-500" : "text-emerald-700"}`}>
+                            Tecnologia enterprise per PMI.
+                        </span>
+                    </h2>
                     </div>
 
                     <p className={`text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                        TechBridgeGroup nasce da una constatazione precisa: le PMI italiane affrontano
-                        gli stessi problemi operativi delle grandi aziende, ma non hanno accesso alle
-                        stesse soluzioni. Metodologie enterprise rigide, costi proibitivi, consulenti
-                        che spariscono dopo la consegna.
+                        AxiomLab nasce da una constatazione semplice: le PMI italiane affrontano
+                        gli stessi problemi delle grandi aziende, ma senza le stesse risorse.
+                        Da una parte c'è chi costruisce sistemi enterprise per clienti come Eni
+                        e lavora in startup ad alto ritmo. Dall'altra c'è chi studia AI e
+                        automazioni con i provider più avanzati e le applica ai processi reali.
+                        In mezzo c'è il gap — e quello è il nostro spazio.
                     </p>
                     <p className={`text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                        La nostra risposta è un modello diverso: diagnosi reale dei processi,
-                        soluzioni progettate sul contesto specifico, tecnologie scalabili — e un
-                        affiancamento che non finisce con l'implementazione.
+                        Il nostro modello è diverso: diagnosi reale dei processi, soluzioni
+                        cucite sul contesto, tecnologie scalabili e un affiancamento che non
+                        finisce con il rilascio. Perché il successo di un progetto digitale
+                        non si misura al go-live, si misura dopo sei mesi.
                     </p>
 
                     <button
                         onClick={() => navigate("/about")}
                         className={`inline-flex items-center gap-2 text-sm font-semibold w-fit transition-all duration-200 hover:-translate-y-0.5 group ${
-                            isDark ? "text-rose-500 hover:text-rose-400" : "text-rose-700 hover:text-rose-600"
+                            isDark ? "text-emerald-500 hover:text-emerald-400" : "text-emerald-700 hover:text-emerald-600"
                         }`}
                     >
                         Scopri la nostra storia
