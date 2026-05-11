@@ -56,14 +56,14 @@ export function PasswordResetRequest() {
                                 required
                                 className="px-4 py-2.5 rounded-lg border border-stone-800/30 bg-[#111110]
                                     text-slate-200 text-sm outline-none transition
-                                    focus:border-amber-700 focus:ring-1 focus:ring-amber-600/30"
+                                    focus:border-rose-700 focus:ring-1 focus:ring-rose-600/30"
                             />
                         </div>
 
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 disabled:opacity-50
+                            className="w-full py-2.5 rounded-xl bg-rose-700 hover:bg-rose-600 disabled:opacity-50
                                 text-white text-sm font-semibold transition-colors duration-200 mt-1"
                         >
                             {loading ? "Invio in corso…" : "Invia link di reset"}

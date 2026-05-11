@@ -14,7 +14,7 @@ const tecnologie = [
     {
         category: "CRM & Sales",
         items: ["HubSpot", "Salesforce", "CRM custom su misura"],
-        color: "#C9A84C",
+        color: "#E8846D",
     },
     {
         category: "ERP & Gestionali",
@@ -39,7 +39,7 @@ const tecnologie = [
     {
         category: "Infrastruttura",
         items: ["AWS", "Azure", "Docker & CI/CD", "Architetture serverless"],
-        color: "#C9A84C",
+        color: "#E8846D",
     },
 ];
 
@@ -123,12 +123,12 @@ export function About() {
                 {/* ── Hero ── */}
                 <section className="max-w-3xl">
                     <motion.div {...fadeUp(0)}>
-                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
+                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-rose-500" : "text-rose-700"}`}>
                             Chi siamo
                         </span>
                         <h1 className={`font-fjalla text-5xl sm:text-6xl font-semibold leading-tight mt-4 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                             Colmiamo il gap tra
-                            <span className={` block ${isDark ? "text-amber-500" : "text-amber-700"}`}>
+                            <span className={` block ${isDark ? "text-rose-500" : "text-rose-700"}`}>
                                 tecnologia enterprise e PMI.
                             </span>
                         </h1>
@@ -145,7 +145,7 @@ export function About() {
                 {/* ── La nostra storia ── */}
                 <section>
                     <motion.div {...fadeUp(0)} className="mb-12">
-                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
+                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-rose-500" : "text-rose-700"}`}>
                             La nostra storia
                         </span>
                         <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -192,7 +192,7 @@ export function About() {
                 {/* ── Metodo in dettaglio ── */}
                 <section>
                     <motion.div {...fadeUp(0)} className="mb-12">
-                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
+                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-rose-500" : "text-rose-700"}`}>
                             Il metodo
                         </span>
                         <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -214,7 +214,7 @@ export function About() {
                                 <div className="flex flex-col sm:flex-row sm:items-start gap-6">
                                     <div className="shrink-0">
                                         <span className={`font-mono text-5xl font-bold tracking-tight ${
-                                            isDark ? "text-stone-800/60" : "text-amber-300"
+                                            isDark ? "text-stone-800/60" : "text-rose-300"
                                         }`}>
                                             {m.step}
                                         </span>
@@ -227,7 +227,7 @@ export function About() {
                                             <span className={`text-xs font-medium px-2.5 py-1 rounded-full border ${
                                                 isDark
                                                     ? "border-stone-700/40 text-slate-500 bg-stone-800/20"
-                                                    : "border-amber-200 text-amber-700 bg-amber-50"
+                                                    : "border-rose-200 text-rose-700 bg-rose-50"
                                             }`}>
                                                 {m.duration}
                                             </span>
@@ -236,7 +236,7 @@ export function About() {
                                             {m.description}
                                         </p>
                                         <div className={`flex items-start gap-2 pt-1`}>
-                                            <CheckCircle2 size={14} className="text-amber-600 shrink-0 mt-0.5" />
+                                            <CheckCircle2 size={14} className="text-rose-600 shrink-0 mt-0.5" />
                                             <span className={`text-sm font-medium ${isDark ? "text-slate-300" : "text-slate-700"}`}>
                                                 Output: {m.output}
                                             </span>
@@ -251,7 +251,7 @@ export function About() {
                 {/* ── Tecnologie ── */}
                 <section>
                     <motion.div {...fadeUp(0)} className="mb-12">
-                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
+                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-rose-500" : "text-rose-700"}`}>
                             Stack tecnologico
                         </span>
                         <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -298,7 +298,7 @@ export function About() {
                 {/* ── Valori ── */}
                 <section>
                     <motion.div {...fadeUp(0)} className="mb-12">
-                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
+                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-rose-500" : "text-rose-700"}`}>
                             I nostri principi
                         </span>
                         <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -316,9 +316,9 @@ export function About() {
                                     className={`rounded-2xl border p-8 space-y-4 ${card}`}
                                 >
                                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                                        isDark ? "bg-amber-700/10" : "bg-amber-50"
+                                        isDark ? "bg-rose-700/10" : "bg-rose-50"
                                     }`}>
-                                        <Icon size={18} className={isDark ? "text-amber-500" : "text-amber-700"} />
+                                        <Icon size={18} className={isDark ? "text-rose-500" : "text-rose-700"} />
                                     </div>
                                     <h3 className={`text-base font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                                         {v.title}
@@ -338,10 +338,10 @@ export function About() {
                     className={`rounded-2xl border p-10 sm:p-14 text-center flex flex-col items-center gap-6 ${
                         isDark
                             ? "bg-gradient-to-br from-[#0C0C0B] via-[#161410] to-[#0C0C0B] border-stone-800/20"
-                            : "bg-gradient-to-br from-[#FDFAF4] via-[#F2E8D5] to-[#FDFAF4] border-amber-200/60"
+                            : "bg-gradient-to-br from-[#FDFAF4] via-[#F2E8D5] to-[#FDFAF4] border-rose-200/60"
                     }`}
                 >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-rose-500" : "text-rose-700"}`}>
                         Inizia da qui
                     </span>
                     <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold max-w-xl leading-tight ${isDark ? "text-slate-100" : "text-stone-900"}`}>
@@ -353,7 +353,7 @@ export function About() {
                     </p>
                     <button
                         onClick={() => navigate("/survey/start")}
-                        className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-sm font-semibold transition-all duration-200 shadow-lg shadow-amber-700/25 hover:-translate-y-0.5 group"
+                        className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-rose-700 hover:bg-rose-600 text-white text-sm font-semibold transition-all duration-200 shadow-lg shadow-rose-700/25 hover:-translate-y-0.5 group"
                     >
                         Ottieni il tuo report gratuito
                         <ArrowRight size={16} className="transition-transform duration-200 group-hover:translate-x-1" />

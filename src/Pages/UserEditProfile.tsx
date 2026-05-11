@@ -88,7 +88,7 @@ export function UserEditProfile() {
             <div className={`min-h-screen flex justify-center items-center ${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"}`}>
                 <div className="text-center">
                     <p className="text-red-400 mb-4">{error}</p>
-                    <button onClick={refetch} className="px-5 py-2 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-sm">Riprova</button>
+                    <button onClick={refetch} className="px-5 py-2 rounded-xl bg-rose-700 hover:bg-rose-600 text-white text-sm">Riprova</button>
                 </div>
             </div>
         );
@@ -98,7 +98,7 @@ export function UserEditProfile() {
         <main className={`${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"} min-h-screen px-6 sm:px-8 pt-28 pb-24`}>
             <div className="max-w-2xl mx-auto space-y-10">
                 <motion.header initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-rose-500" : "text-rose-700"}`}>
                         Profilo
                     </span>
                     <h1 className={`text-3xl font-semibold mt-2 ${isDark ? "text-slate-100" : "text-slate-900"}`}>Modifica profilo</h1>
@@ -150,7 +150,7 @@ export function UserEditProfile() {
                     <button
                         type="submit"
                         disabled={loadingUpdate}
-                        className="w-full py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 disabled:opacity-50 text-white text-sm font-semibold transition-colors shadow-lg shadow-amber-700/20"
+                        className="w-full py-2.5 rounded-xl bg-rose-700 hover:bg-rose-600 disabled:opacity-50 text-white text-sm font-semibold transition-colors shadow-lg shadow-rose-700/20"
                     >
                         Salva modifiche
                     </button>
@@ -177,7 +177,7 @@ export function UserEditProfile() {
                             <button
                                 onClick={confirmUpdate}
                                 disabled={loadingUpdate}
-                                className="flex-1 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-sm font-semibold transition-colors flex items-center justify-center"
+                                className="flex-1 py-2.5 rounded-xl bg-rose-700 hover:bg-rose-600 text-white text-sm font-semibold transition-colors flex items-center justify-center"
                             >
                                 {loadingUpdate
                                     ? <FallingLines color="white" width="20" visible ariaLabel="loading" />

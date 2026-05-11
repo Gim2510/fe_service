@@ -39,7 +39,7 @@ export function CookiePolicy() {
 
             <div className="relative max-w-3xl mx-auto px-6 py-32">
                 <div className="mb-10 space-y-3">
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-rose-500" : "text-rose-700"}`}>
                         Legale
                     </span>
                     <h1 className={`text-3xl sm:text-4xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -60,7 +60,7 @@ export function CookiePolicy() {
                         <p>Attualmente utilizziamo esclusivamente cookie tecnici, necessari al funzionamento della piattaforma.</p>
                         <ul className="space-y-1">
                             {["Cookie di sessione", "Cookie di autenticazione", "Cookie per preferenze utente (es. tema dark/light)"].map(item => (
-                                <li key={item} className="flex items-start gap-2"><span className="text-amber-500 mt-0.5">•</span>{item}</li>
+                                <li key={item} className="flex items-start gap-2"><span className="text-rose-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
                     </PolicySection>
@@ -68,7 +68,7 @@ export function CookiePolicy() {
                     <PolicySection isDark={isDark} title="3. Finalità dei cookie">
                         <ul className="space-y-1">
                             {["Garantire il corretto funzionamento del sito", "Gestire l'accesso e l'autenticazione", "Salvare preferenze dell'utente", "Migliorare stabilità e sicurezza"].map(item => (
-                                <li key={item} className="flex items-start gap-2"><span className="text-amber-500 mt-0.5">•</span>{item}</li>
+                                <li key={item} className="flex items-start gap-2"><span className="text-rose-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
                     </PolicySection>

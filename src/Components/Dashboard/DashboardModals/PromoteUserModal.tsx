@@ -16,8 +16,8 @@ export function PromoteUserModal({ onConfirm, onClose, loading = false, userEmai
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-50 p-4">
             <div className={`rounded-2xl border p-8 w-full max-w-sm space-y-5 ${card}`}>
-                <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${isDark ? "bg-amber-700/15 border border-amber-700/20" : "bg-amber-50 border border-amber-300"}`}>
-                    <ShieldCheck size={18} className="text-amber-600" />
+                <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${isDark ? "bg-rose-700/15 border border-rose-700/20" : "bg-rose-50 border border-rose-300"}`}>
+                    <ShieldCheck size={18} className="text-rose-600" />
                 </div>
                 <div className="space-y-2">
                     <h3 className={`text-lg font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>Confirm Promotion</h3>
@@ -39,7 +39,7 @@ export function PromoteUserModal({ onConfirm, onClose, loading = false, userEmai
                     <button
                         onClick={onConfirm}
                         disabled={loading}
-                        className="flex-1 px-4 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 disabled:opacity-40 text-white text-sm font-semibold transition-colors"
+                        className="flex-1 px-4 py-2.5 rounded-xl bg-rose-700 hover:bg-rose-600 disabled:opacity-40 text-white text-sm font-semibold transition-colors"
                     >
                         {loading
                             ? <span className="flex justify-center"><FallingLines color="#fff" width="15" visible ariaLabel="loading" /></span>

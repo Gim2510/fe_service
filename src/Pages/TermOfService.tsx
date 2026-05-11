@@ -39,7 +39,7 @@ export function TermsOfService() {
 
             <div className="relative max-w-3xl mx-auto px-6 py-32">
                 <div className="mb-10 space-y-3">
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-amber-500" : "text-amber-700"}`}>
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-rose-500" : "text-rose-700"}`}>
                         Legale
                     </span>
                     <h1 className={`text-3xl sm:text-4xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -69,7 +69,7 @@ export function TermsOfService() {
                     <PolicySection isDark={isDark} title="4. Utilizzo consentito">
                         <ul className="space-y-1">
                             {["Utilizzare il servizio solo per scopi leciti", "Non violare diritti di terzi", "Non introdurre dati illegali o non autorizzati"].map(item => (
-                                <li key={item} className="flex items-start gap-2"><span className="text-amber-500 mt-0.5">•</span>{item}</li>
+                                <li key={item} className="flex items-start gap-2"><span className="text-rose-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
                     </PolicySection>

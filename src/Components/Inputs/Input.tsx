@@ -18,8 +18,8 @@ export function Input({ label, name, type = "text", value, onChange, theme, erro
                     ${error
                         ? "border-red-500/60 focus:ring-1 focus:ring-red-500/15"
                         : isDark
-                            ? "bg-[#111110] border-stone-800/30 text-slate-200 placeholder:text-slate-700 focus:border-amber-700 focus:ring-1 focus:ring-amber-600/20"
-                            : "bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-amber-600 focus:ring-1 focus:ring-amber-600/15"
+                            ? "bg-[#111110] border-stone-800/30 text-slate-200 placeholder:text-slate-700 focus:border-rose-700 focus:ring-1 focus:ring-rose-600/20"
+                            : "bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-rose-600 focus:ring-1 focus:ring-rose-600/15"
                     }
                     ${isDark ? "bg-[#111110] text-slate-200" : "bg-white text-slate-900"}`}
             />
