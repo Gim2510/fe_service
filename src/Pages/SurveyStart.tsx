@@ -63,7 +63,7 @@ export function SurveyStart() {
 
             {/* Grid bg */}
             <div className="absolute inset-0 opacity-[0.08] pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%23F59E0B' : '%23B45309'}' stroke-width='0.5'/%3E%3C/svg%3E")`, backgroundSize: "40px 40px" }} />
-            {isDark && <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-[140px] opacity-[0.05] bg-rose-700 pointer-events-none" />}
+            {isDark && <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-[140px] opacity-[0.05] bg-emerald-700 pointer-events-none" />}
 
             {/* Hero */}
             <motion.section
@@ -72,12 +72,12 @@ export function SurveyStart() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
             >
-                <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-rose-500" : "text-rose-700"}`}>
+                <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-emerald-500" : "text-emerald-700"}`}>
                     Survey digitale
                 </span>
                 <h1 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                     Struttura la tua{" "}
-                    <span className="text-rose-600">crescita digitale</span>
+                    <span className="text-emerald-600">crescita digitale</span>
                 </h1>
                 <p className={`text-lg leading-relaxed max-w-2xl mx-auto ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                     Compila il questionario per analizzare processi, strumenti e criticità della tua azienda.
@@ -95,9 +95,9 @@ export function SurveyStart() {
                         onClick={handleStart}
                         disabled={initLoading || loadingSurvey || loadingSurveyId}
                         className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
-                            bg-rose-700 hover:bg-rose-600 disabled:opacity-50 disabled:cursor-not-allowed
+                            bg-emerald-700 hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed
                             text-white text-sm font-semibold transition-colors
-                            shadow-lg shadow-rose-700/25 hover:-translate-y-0.5 duration-200"
+                            shadow-lg shadow-emerald-700/25 hover:-translate-y-0.5 duration-200"
                     >
                         {initLoading
                             ? <FallingLines width="20" color="#fff" visible />
@@ -111,7 +111,7 @@ export function SurveyStart() {
                     <button
                         disabled
                         className="inline-flex items-center gap-2 px-7 py-3 rounded-xl border
-                            border-rose-500/30 bg-rose-500/10 text-rose-400 text-sm font-medium cursor-not-allowed"
+                            border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-sm font-medium cursor-not-allowed"
                     >
                         Verifica prima la tua email
                     </button>
@@ -129,7 +129,7 @@ export function SurveyStart() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: i * 0.1 }}
                     >
-                        <span className={`font-mono text-xs font-medium ${isDark ? "text-rose-700" : "text-rose-500"}`}>{s.n}</span>
+                        <span className={`font-mono text-xs font-medium ${isDark ? "text-emerald-700" : "text-emerald-500"}`}>{s.n}</span>
                         <h3 className={`font-semibold mt-2 mb-1 text-sm ${isDark ? "text-slate-200" : "text-slate-800"}`}>{s.title}</h3>
                         <p className={`text-xs leading-relaxed ${isDark ? "text-slate-500" : "text-slate-500"}`}>{s.desc}</p>
                     </motion.div>
@@ -147,7 +147,7 @@ export function SurveyStart() {
                     <ul className="space-y-1.5">
                         {["Analisi dei processi aziendali", "Identificazione delle inefficienze operative", "Prioritizzazione delle esigenze software", "Preparazione di un confronto consulenziale mirato"].map(item => (
                             <li key={item} className={`flex items-start gap-2 text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>
-                                <CheckCircle size={13} className="text-rose-600 mt-0.5 shrink-0" />
+                                <CheckCircle size={13} className="text-emerald-600 mt-0.5 shrink-0" />
                                 {item}
                             </li>
                         ))}
@@ -159,7 +159,7 @@ export function SurveyStart() {
                     <div className="space-y-2.5">
                         {["Visione chiara dello stato attuale", "Identificazione delle criticità principali", "Linee guida per evoluzione digitale", "Base concreta per confronto consulenziale"].map(item => (
                             <p key={item} className={`flex items-start gap-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                                <ArrowRight size={13} className="text-rose-600 mt-0.5 shrink-0" />
+                                <ArrowRight size={13} className="text-emerald-600 mt-0.5 shrink-0" />
                                 {item}
                             </p>
                         ))}
@@ -179,7 +179,7 @@ export function SurveyStart() {
                 transition={{ duration: 0.5 }}
             >
                 <div className="flex items-center gap-2 mb-5">
-                    <ShieldCheck size={16} className="text-rose-500" />
+                    <ShieldCheck size={16} className="text-emerald-500" />
                     <h2 className={`text-base font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>Protezione dei dati</h2>
                 </div>
                 <div className="space-y-0">

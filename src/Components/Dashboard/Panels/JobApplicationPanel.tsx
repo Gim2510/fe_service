@@ -16,8 +16,8 @@ export function CreateJobApplicationPanel({ theme, token }: {
 
     const inputStyle = `w-full rounded-xl border px-3 py-2 text-sm focus:outline-none transition-colors ${
         isDark
-            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-rose-700"
-            : "bg-white border-slate-200 text-slate-900 focus:border-rose-600"
+            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-emerald-700"
+            : "bg-white border-slate-200 text-slate-900 focus:border-emerald-600"
     }`;
 
     const { createJobApplication, loading, error, success } = useCreateJobApplication();
@@ -91,7 +91,7 @@ export function CreateJobApplicationPanel({ theme, token }: {
                 className={`rounded-2xl border overflow-hidden ${border}`}
                 style={{ background: isDark ? "#161614" : "#FAFAF8" }}
             >
-            <div className="h-[2px] w-full bg-rose-700/40" />
+            <div className="h-[2px] w-full bg-emerald-700/40" />
             <div className="p-7">
                 <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-6
                     ${isDark ? "text-slate-500" : "text-slate-400"}`}>
@@ -282,7 +282,7 @@ export function CreateJobApplicationPanel({ theme, token }: {
                             type="submit"
                             disabled={loading}
                             className="inline-flex items-center px-6 py-2.5 rounded-xl
-                                bg-rose-700 hover:bg-rose-600 disabled:opacity-40
+                                bg-emerald-700 hover:bg-emerald-600 disabled:opacity-40
                                 text-white text-sm font-semibold transition-all hover:-translate-y-0.5 duration-200"
                         >
                             Create Job

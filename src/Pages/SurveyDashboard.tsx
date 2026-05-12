@@ -35,7 +35,7 @@ const TABS: { id: DashboardTab; label: string; icon: React.ReactNode }[] = [
 
 function scoreGrade(pct: number): { label: string; color: string; barColor: string } {
     if (pct >= 70) return { label: "Avanzato",    color: "#4ade80", barColor: "bg-green-500" };
-    if (pct >= 40) return { label: "In sviluppo", color: "#f59e0b", barColor: "bg-rose-500" };
+    if (pct >= 40) return { label: "In sviluppo", color: "#f59e0b", barColor: "bg-emerald-500" };
     return             { label: "Iniziale",       color: "#f87171", barColor: "bg-red-400" };
 }
 
@@ -147,7 +147,7 @@ export function SurveyDashboard() {
                     style={{ background: isDark ? "#161614" : "#FAFAF8" }}
                 >
                     {/* rose accent line */}
-                    <div className="h-[2px] w-full bg-rose-700/60" />
+                    <div className="h-[2px] w-full bg-emerald-700/60" />
 
                     <div className="flex flex-col lg:flex-row min-h-[320px]">
 
@@ -169,7 +169,7 @@ export function SurveyDashboard() {
                             {/* top label */}
                             <div className="relative">
                                 <div className="flex items-center gap-2">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shadow-[0_0_6px_#f59e0b]" />
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#f59e0b]" />
                                     <span className={`text-[10px] font-mono uppercase tracking-[0.2em] ${mutedText}`}>
                                         Report completo
                                     </span>
@@ -317,8 +317,8 @@ export function SurveyDashboard() {
                                 whitespace-nowrap transition-colors border
                                 ${activeTab === tab.id
                                     ? isDark
-                                        ? "bg-rose-700/15 border-rose-600/30 text-rose-400"
-                                        : "bg-rose-50 border-rose-400 text-rose-800"
+                                        ? "bg-emerald-700/15 border-emerald-600/30 text-emerald-400"
+                                        : "bg-emerald-50 border-emerald-400 text-emerald-800"
                                     : isDark
                                         ? "border-stone-800/20 text-slate-500 hover:text-slate-300 hover:border-stone-800/40"
                                         : "border-slate-200 text-slate-500 hover:text-slate-700 hover:bg-[#EDF2F7]"
@@ -346,7 +346,7 @@ export function SurveyDashboard() {
                                 {byCategory.length > 0 && (
                                     <div className={`rounded-2xl border overflow-hidden ${border}`}
                                          style={{ background: isDark ? "#161614" : "#FAFAF8" }}>
-                                        <div className="h-[2px] w-full bg-rose-700/40" />
+                                        <div className="h-[2px] w-full bg-emerald-700/40" />
                                         <div className="p-7 space-y-5">
                                             <p className={`text-[10px] font-mono uppercase tracking-[0.18em] ${mutedText}`}>
                                                 Analisi per area
@@ -443,7 +443,7 @@ export function SurveyDashboard() {
                                                 className="w-full flex justify-between items-center p-5 text-left"
                                             >
                                                 <div className="flex items-center gap-4">
-                                                    <span className={`font-mono text-[10px] uppercase tracking-[0.15em] ${isDark ? "text-rose-600" : "text-rose-500"}`}>
+                                                    <span className={`font-mono text-[10px] uppercase tracking-[0.15em] ${isDark ? "text-emerald-600" : "text-emerald-500"}`}>
                                                         {String(index + 1).padStart(2, "0")}
                                                     </span>
                                                     <span className={`text-sm font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>
@@ -491,7 +491,7 @@ export function SurveyDashboard() {
                                                                     <ul className="space-y-1.5">
                                                                         {detail.actions.map((action, i) => (
                                                                             <li key={i} className={`flex items-start gap-2 text-sm ${bodyText}`}>
-                                                                                <span className="text-rose-500 mt-0.5">•</span>
+                                                                                <span className="text-emerald-500 mt-0.5">•</span>
                                                                                 {action}
                                                                             </li>
                                                                         ))}
@@ -523,7 +523,7 @@ export function SurveyDashboard() {
                                             onClick={() => goTo(idx)}
                                             className={`w-8 h-8 rounded-lg text-xs font-mono font-semibold border transition-colors shrink-0
                                                 ${currentIndex === idx
-                                                    ? "bg-rose-700 border-rose-600 text-white"
+                                                    ? "bg-emerald-700 border-emerald-600 text-white"
                                                     : isDark
                                                         ? "border-stone-800/20 text-slate-500 hover:text-slate-300 hover:border-stone-700/40"
                                                         : "border-slate-200 text-slate-500 hover:bg-[#EDF2F7]"
@@ -539,9 +539,9 @@ export function SurveyDashboard() {
                                     className={`rounded-2xl border overflow-hidden ${border}`}
                                     style={{ background: isDark ? "#161614" : "#FAFAF8" }}
                                 >
-                                    <div className="h-[2px] w-full bg-rose-700/40" />
+                                    <div className="h-[2px] w-full bg-emerald-700/40" />
                                     <div className="p-7">
-                                        <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-3 ${isDark ? "text-rose-600" : "text-rose-700"}`}>
+                                        <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-3 ${isDark ? "text-emerald-600" : "text-emerald-700"}`}>
                                             Domanda {currentIndex + 1}
                                         </p>
                                         <h3 className={`text-base font-semibold mb-4 ${isDark ? "text-slate-100" : "text-slate-800"}`}>
@@ -589,11 +589,11 @@ export function SurveyDashboard() {
                                 className={`rounded-2xl border overflow-hidden ${border}`}
                                 style={{ background: isDark ? "#161614" : "#FAFAF8" }}
                             >
-                                <div className="h-[2px] w-full bg-rose-700/60" />
+                                <div className="h-[2px] w-full bg-emerald-700/60" />
                                 <div className="p-10 text-center space-y-6">
                                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center mx-auto
-                                        ${isDark ? "bg-rose-700/15 border border-rose-700/20" : "bg-rose-50 border border-rose-300"}`}>
-                                        <TrendingUp size={20} className="text-rose-600" />
+                                        ${isDark ? "bg-emerald-700/15 border border-emerald-700/20" : "bg-emerald-50 border border-emerald-300"}`}>
+                                        <TrendingUp size={20} className="text-emerald-600" />
                                     </div>
                                     <div className="space-y-2">
                                         <h2 className={`text-2xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -609,8 +609,8 @@ export function SurveyDashboard() {
                                             navigate("/survey");
                                         }}
                                         className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
-                                            bg-rose-700 hover:bg-rose-600 text-white text-sm font-semibold
-                                            transition-all shadow-lg shadow-rose-700/25 hover:-translate-y-0.5 duration-200"
+                                            bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold
+                                            transition-all shadow-lg shadow-emerald-700/25 hover:-translate-y-0.5 duration-200"
                                     >
                                         <Calendar size={14} />
                                         Richiedi consulenza strategica

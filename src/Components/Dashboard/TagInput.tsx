@@ -7,8 +7,8 @@ export function TagInput({ label, values, setValues, theme }: any) {
 
     const inputStyle = `flex-1 rounded-xl border px-3 py-2 text-sm focus:outline-none transition-colors
         ${isDark
-            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-rose-700"
-            : "bg-white border-slate-200 text-slate-900 focus:border-rose-600"
+            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-emerald-700"
+            : "bg-white border-slate-200 text-slate-900 focus:border-emerald-600"
         }`;
 
     const addTag = () => {
@@ -39,7 +39,7 @@ export function TagInput({ label, values, setValues, theme }: any) {
                     type="button"
                     onClick={addTag}
                     className="inline-flex items-center gap-1 px-4 py-2 rounded-xl
-                        bg-rose-700 hover:bg-rose-600 text-white text-sm font-semibold transition-colors"
+                        bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold transition-colors"
                 >
                     <Plus size={13} />
                 </button>
@@ -52,8 +52,8 @@ export function TagInput({ label, values, setValues, theme }: any) {
                             key={i}
                             className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border
                                 ${isDark
-                                    ? "bg-rose-700/10 border-stone-800/30 text-rose-500"
-                                    : "bg-rose-50 border-rose-300 text-rose-800"
+                                    ? "bg-emerald-700/10 border-stone-800/30 text-emerald-500"
+                                    : "bg-emerald-50 border-emerald-300 text-emerald-800"
                                 }`}
                         >
                             {tag}

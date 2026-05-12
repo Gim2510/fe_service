@@ -46,9 +46,9 @@ export function Home() {
                         "Diagnosi in 48h",
                         "ROI misurabile dal primo mese",
                         "Zero template generici",
-                        "Integrazione con i tuoi sistemi esistenti",
+                        "Integrazione con i tuoi sistemi",
                         "Affiancamento fino ai risultati",
-                        "Soluzioni su misura per PMI italiane",
+                        "Soluzioni su misura per PMI",
                         "KPI definiti prima di iniziare",
                         "Nessun impegno iniziale",
                     ]}

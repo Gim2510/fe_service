@@ -6,27 +6,27 @@ import { SectionBase } from "./SectionBase.tsx";
 const faqs = [
     {
         q: "Quanto costa un progetto?",
-        a: "Non esiste un listino fisso: ogni progetto dipende dalla complessità dei processi, dal numero di sistemi da integrare e dagli obiettivi. Il punto di partenza è sempre l'assessment gratuito, che ci permette di darti una stima precisa prima di qualsiasi impegno.",
+        a: "Non esiste un listino fisso. Ogni progetto dipende dalla complessità dei processi e dagli obiettivi. Il punto di partenza è l'assessment gratuito: con i dati del tuo report ti diamo una stima precisa prima di qualsiasi impegno.",
     },
     {
-        q: "Quanto tempo ci vuole per vedere i primi risultati?",
-        a: "I primi risultati misurabili arrivano in media entro 4–8 settimane dall'avvio. Non promettiamo trasformazioni overnight, ma definiamo KPI chiari prima di iniziare — così sai esattamente cosa aspettarti e quando.",
+        q: "Quanto tempo per vedere i primi risultati?",
+        a: "I primi risultati misurabili arrivano in 4–8 settimane dall'avvio. Non promettiamo miracoli overnight, ma definiamo KPI chiari prima di iniziare — così sai cosa aspettarti e quando.",
     },
     {
         q: "Dobbiamo sostituire i software che già usiamo?",
-        a: "Quasi mai. Il nostro approccio parte da ciò che hai già: ERP, CRM, gestionali, fogli Excel. Integriamo, ottimizziamo e aggiungiamo solo dove c'è un gap reale. Cambiare tutto non è quasi mai la soluzione giusta.",
+        a: "Quasi mai. Partiamo da ciò che hai già: ERP, CRM, gestionali, fogli Excel. Integriamo, ottimizziamo e aggiungiamo solo dove c'è un gap reale. Cambiare tutto non è quasi mai la soluzione giusta.",
     },
     {
         q: "Cosa succede dopo l'implementazione?",
-        a: "Non spariremo dopo la consegna. Affianchiamo il team durante l'adozione, monitoriamo i KPI concordati e rimaniamo disponibili per aggiustamenti. Il progetto si chiude solo quando i risultati sono consolidati, non quando il codice è in produzione.",
+        a: "Non spariremo dopo la consegna. Affianchiamo il team durante l'adozione, monitoriamo i KPI e restiamo disponibili per aggiustamenti. Il progetto si chiude quando i risultati sono consolidati.",
     },
     {
-        q: "Avete esperienza nel nostro settore specifico?",
-        a: "Operiamo su 12 settori — manifatturiero, distribuzione, servizi professionali, retail, impiantistica e altri. Prima di proporti qualsiasi soluzione, facciamo un'analisi dei tuoi processi specifici: il metodo è collaudato, l'implementazione è sempre contestualizzata.",
+        q: "Chi siete?",
+        a: "Due fratelli: uno sviluppatore fullstack con esperienza in startup e come consulente backend/DevOps per progetti enterprise (Eni Open-ES), l'altro specializzato in AI e automazioni complesse con formazione diretta dai migliori provider del settore. Costruiamo, integriamo, automatizziamo.",
     },
     {
         q: "Come funziona l'assessment gratuito?",
-        a: "Completi il questionario online in 10–15 minuti: domande sui tuoi processi, strumenti usati, KPI monitorati e principali punti di attrito. Ricevi un report personalizzato con il tuo score di maturità digitale, le aree critiche e un piano d'azione prioritizzato — senza impegno di acquisto.",
+        a: "Compili il questionario in 10–15 minuti. Ricevi un report con il tuo score di maturità digitale, le aree critiche e un piano d'azione prioritizzato. Senza impegno, senza carta di credito.",
     },
 ];
 
@@ -41,13 +41,13 @@ function FAQItem({ faq, isDark, isOpen, onToggle }: {
             <button
                 onClick={onToggle}
                 className={`w-full flex items-start justify-between gap-4 py-6 text-left transition-colors duration-200 group ${
-                    isDark ? "hover:text-rose-400" : "hover:text-rose-700"
+                    isDark ? "hover:text-emerald-400" : "hover:text-emerald-700"
                 }`}
                 aria-expanded={isOpen}
             >
                 <span className={`text-base font-semibold leading-snug transition-colors duration-200 ${
                     isOpen
-                        ? isDark ? "text-rose-400" : "text-rose-700"
+                        ? isDark ? "text-emerald-400" : "text-emerald-700"
                         : isDark ? "text-slate-200" : "text-slate-800"
                 }`}>
                     {faq.q}
@@ -57,7 +57,7 @@ function FAQItem({ faq, isDark, isOpen, onToggle }: {
                     transition={{ duration: 0.2, ease: "easeInOut" }}
                     className={`shrink-0 mt-0.5 transition-colors duration-200 ${
                         isOpen
-                            ? isDark ? "text-rose-400" : "text-rose-600"
+                            ? isDark ? "text-emerald-400" : "text-emerald-600"
                             : isDark ? "text-stone-600" : "text-slate-400"
                     }`}
                 >
@@ -103,7 +103,7 @@ export function FAQSection({ theme }: { theme: string }) {
                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 >
                     <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-rose-500" : "text-rose-700"
+                        isDark ? "text-emerald-500" : "text-emerald-700"
                     }`}>
                         Domande frequenti
                     </span>
@@ -111,7 +111,7 @@ export function FAQSection({ theme }: { theme: string }) {
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Hai dubbi?{" "}
-                        <span className={`block mt-1 ${isDark ? "text-rose-500" : "text-rose-700"}`}>
+                        <span className={`block mt-1 ${isDark ? "text-emerald-500" : "text-emerald-700"}`}>
                             Rispondiamo.
                         </span>
                     </h2>

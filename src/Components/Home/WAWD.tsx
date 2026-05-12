@@ -5,7 +5,7 @@ import { GlassCard } from "./GlassCard.tsx";
 
 function ConsultingIllustration({ isDark }: { isDark: boolean }) {
     const surface  = isDark ? "#1C1C1A" : "#FFFFFF";
-    const gold     = "#E8846D";
+    const gold     = "#6B8E7B";
     const goldGlow = isDark ? "rgba(201,168,76,0.18)" : "rgba(201,168,76,0.22)";
     const text2    = isDark ? "#78716C" : "#7C6F60";
     const green    = "#4ADE80";
@@ -199,12 +199,13 @@ function ConsultingIllustration({ isDark }: { isDark: boolean }) {
 }
 
 const punti = [
-    "CRM progettati sul tuo processo di vendita reale",
-    "Automazione che elimina il lavoro ripetitivo ad alto costo",
-    "Integrazione dei tuoi software esistenti senza sostituire tutto",
-    "Dashboard operative con i KPI che contano davvero",
+    "CRM costruiti sul tuo processo di vendita reale",
+    "Automazioni che eliminano il lavoro ripetitivo",
+    "Integrazione dei tuoi software senza sostituire tutto",
+    "Dashboard operative con i KPI che contano",
     "AI applicata dove genera ROI misurabile",
-    "Soluzioni che scalano con la tua crescita, senza rilavorare",
+    "Data warehouse e data lake per dati centralizzati",
+    "Soluzioni che scalano con la tua crescita",
 ];
 
 export function WAWD({ theme }: { theme: string }) {
@@ -240,19 +241,19 @@ export function WAWD({ theme }: { theme: string }) {
                 >
                     <div>
                         <span className={`text-xs font-semibold uppercase tracking-widest ${
-                            isDark ? "text-rose-500" : "text-rose-700"
+                            isDark ? "text-emerald-500" : "text-emerald-700"
                         }`}>
                             Soluzioni su misura
                         </span>
                         <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold leading-tight mt-3 ${
                             isDark ? "text-slate-100" : "text-slate-900"
                         }`}>
-                            Non vendiamo software. Risolviamo i problemi specifici della tua azienda.
+                            Non vendiamo software. Risolviamo problemi.
                         </h2>
                         <p className={`mt-4 text-base leading-relaxed ${
                             isDark ? "text-slate-400" : "text-slate-600"
                         }`}>
-                            Partiamo dall'analisi dei tuoi processi reali — non da un template. Ogni soluzione è progettata per il tuo contesto, integrata con ciò che già usi e misurabile fin dal primo giorno.
+                            Partiamo dai tuoi processi reali — non da un catalogo. Ogni soluzione è progettata per il tuo contesto, integrata con ciò che già usi e misurabile dal primo giorno.
                         </p>
                     </div>
 
@@ -269,7 +270,7 @@ export function WAWD({ theme }: { theme: string }) {
                                 viewport={{ once: true, amount: 0.2 }}
                                 transition={{ duration: 0.4, delay: 0.1 + i * 0.07 }}
                             >
-                                <CheckCircle2 size={15} className="text-rose-600 shrink-0 mt-0.5" />
+                                <CheckCircle2 size={15} className="text-emerald-600 shrink-0 mt-0.5" />
                                 <span>{item}</span>
                             </motion.div>
                         ))}

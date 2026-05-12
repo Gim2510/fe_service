@@ -15,7 +15,7 @@ export function OverviewPanel({ users, surveys, theme }: any) {
                 className={`rounded-2xl border overflow-hidden ${border}`}
                 style={{ background: isDark ? "#161614" : "#FAFAF8" }}
             >
-                <div className="h-[2px] w-full bg-rose-700/40" />
+                <div className="h-[2px] w-full bg-emerald-700/40" />
                 <div className="p-7">
                     <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-5 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
                         User Distribution
@@ -37,7 +37,7 @@ export function OverviewPanel({ users, surveys, theme }: any) {
                 className={`rounded-2xl border overflow-hidden ${border}`}
                 style={{ background: isDark ? "#161614" : "#FAFAF8" }}
             >
-                <div className="h-[2px] w-full bg-rose-700/40" />
+                <div className="h-[2px] w-full bg-emerald-700/40" />
                 <div className="p-7">
                     <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-5 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
                         Survey Trend

@@ -11,7 +11,7 @@ export function DeleteUserSection({ selectedUserToDelete, setSelectedUserToDelet
     const isDark = theme === "dark";
     const card = isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200";
     const selectClass = `w-full sm:w-80 h-11 px-4 rounded-xl border text-sm appearance-none cursor-pointer focus:outline-none
-        ${isDark ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-rose-700" : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-rose-600"}`;
+        ${isDark ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-emerald-700" : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-emerald-600"}`;
 
     return (
         <div className={`rounded-2xl border p-7 ${card}`}>

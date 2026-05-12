@@ -43,9 +43,9 @@ export function NavbarActions({ closeMenu }: NavbarActionsProps) {
                         to="/register"
                         onClick={closeMenu}
                         className="text-sm font-medium px-4 py-1.5 rounded-lg
-                            bg-rose-700 hover:bg-rose-600 text-white
+                            bg-emerald-700 hover:bg-emerald-600 text-white
                             transition-colors duration-200 shadow-sm
-                            shadow-rose-700/30 hover:shadow-rose-600/40"
+                            shadow-emerald-700/30 hover:shadow-emerald-600/40"
                     >
                         Registrati
                     </Link>

@@ -6,17 +6,17 @@ const steps = [
     {
         step: "01",
         title: "Diagnosi",
-        text: "Analizziamo i tuoi processi, flussi di dati e strumenti esistenti. Identifichiamo dove perdi margine, tempo e controllo — con dati, non supposizioni.",
+        text: "Mappiamo i tuoi processi, analizziamo i flussi di dati e gli strumenti in uso. Identifichiamo dove perdi tempo, margine e controllo — con dati concreti, non supposizioni.",
     },
     {
         step: "02",
         title: "Progettazione",
-        text: "Progettiamo un'architettura digitale su misura: integrata con ciò che già hai, scalabile, e con KPI definiti prima ancora di iniziare a costruire.",
+        text: "Disegniamo l'architettura della soluzione: cosa integrare, cosa costruire, cosa eliminare. Ogni scelta è guidata dal ROI atteso e validata con te prima di procedere.",
     },
     {
         step: "03",
         title: "Attivazione",
-        text: "Implementiamo, formiamo il team e misuriamo i risultati. Non consegniamo un sistema — affiancamo l'azienda finché il cambiamento è consolidato.",
+        text: "Implementiamo, formiamo il team e misuriamo i risultati. Non consegniamo e spariremo: restiamo finché il cambiamento è consolidato e i numeri parlano da soli.",
     },
 ];
 
@@ -34,7 +34,7 @@ export function MetodSection({ theme }: { theme: string }) {
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
                 <span className={`text-xs font-semibold uppercase tracking-widest ${
-                    isDark ? "text-rose-500" : "text-rose-700"
+                    isDark ? "text-emerald-500" : "text-emerald-700"
                 }`}>
                     Il nostro metodo
                 </span>
@@ -42,12 +42,12 @@ export function MetodSection({ theme }: { theme: string }) {
                     isDark ? "text-slate-100" : "text-slate-900"
                 }`}>
                     Tre fasi. Zero improvvisazione.
-                    <span className={`block mt-1 ${isDark ? "text-rose-500" : "text-rose-700"}`}>
+                    <span className={`block mt-1 ${isDark ? "text-emerald-500" : "text-emerald-700"}`}>
                         Risultati misurabili dal giorno uno.
                     </span>
                 </h2>
                 <p className={`mt-5 text-lg ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                    Lavoriamo con un metodo collaudato su decine di PMI italiane. Ogni fase ha deliverable chiari, tempi definiti e un obiettivo verificabile — così sai sempre dove siamo e cosa aspettarti.
+                    Ogni progetto segue un percorso chiaro. Deliverable definiti, tempi trasparenti, un obiettivo verificabile — così sai sempre dove siamo e cosa aspettarti.
                 </p>
             </motion.div>
 
@@ -65,12 +65,12 @@ export function MetodSection({ theme }: { theme: string }) {
                             {/* Step number */}
                             <div className="flex items-start justify-between mb-6">
                                 <span className={`font-mono text-4xl font-bold tracking-tight ${
-                                    isDark ? "text-rose-700" : "text-rose-300"
+                                    isDark ? "text-emerald-700" : "text-emerald-300"
                                 }`}>
                                     {item.step}
                                 </span>
                                 {/* Accent line */}
-                                <div className="w-8 h-0.5 bg-rose-600/60 mt-3" />
+                                <div className="w-8 h-0.5 bg-emerald-600/60 mt-3" />
                             </div>
 
                             <h3 className={`text-xl font-semibold mb-3 ${

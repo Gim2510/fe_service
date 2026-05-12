@@ -39,7 +39,7 @@ export function TermsOfService() {
 
             <div className="relative max-w-3xl mx-auto px-6 py-32">
                 <div className="mb-10 space-y-3">
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-rose-500" : "text-rose-700"}`}>
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-emerald-500" : "text-emerald-700"}`}>
                         Legale
                     </span>
                     <h1 className={`text-3xl sm:text-4xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -47,7 +47,7 @@ export function TermsOfService() {
                     </h1>
                     <p className={`text-sm leading-relaxed max-w-xl ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                         I presenti Termini disciplinano l'accesso e l'utilizzo della piattaforma
-                        offerta da TechBridgeGroup SRL.
+                        offerta da AxiomLab.
                     </p>
                 </div>
 
@@ -69,7 +69,7 @@ export function TermsOfService() {
                     <PolicySection isDark={isDark} title="4. Utilizzo consentito">
                         <ul className="space-y-1">
                             {["Utilizzare il servizio solo per scopi leciti", "Non violare diritti di terzi", "Non introdurre dati illegali o non autorizzati"].map(item => (
-                                <li key={item} className="flex items-start gap-2"><span className="text-rose-500 mt-0.5">•</span>{item}</li>
+                                <li key={item} className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
                     </PolicySection>
@@ -86,7 +86,7 @@ export function TermsOfService() {
                     </PolicySection>
 
                     <PolicySection isDark={isDark} title="7. Proprietà intellettuale">
-                        <p>Tutti i diritti relativi alla piattaforma sono di proprietà di TechBridgeGroup SRL.</p>
+                        <p>Tutti i diritti relativi alla piattaforma sono di proprietà di AxiomLab.</p>
                         <p>È vietata la copia, distribuzione o modifica non autorizzata.</p>
                     </PolicySection>
 

@@ -17,7 +17,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 
 function scoreGrade(pct: number): { label: string; color: string; dimColor: string; barColor: string } {
     if (pct >= 70) return { label: "Avanzato",     color: "#4ade80", dimColor: "rgba(74,222,128,0.12)", barColor: "bg-green-500" };
-    if (pct >= 40) return { label: "In sviluppo",  color: "#f59e0b", dimColor: "rgba(245,158,11,0.12)", barColor: "bg-rose-500" };
+    if (pct >= 40) return { label: "In sviluppo",  color: "#f59e0b", dimColor: "rgba(245,158,11,0.12)", barColor: "bg-emerald-500" };
     return             { label: "Iniziale",        color: "#f87171", dimColor: "rgba(248,113,113,0.12)", barColor: "bg-red-400" };
 }
 
@@ -86,7 +86,7 @@ export function SurveyConfirmation({ survey_id }: { survey_id: string }) {
                 style={{ background: isDark ? "#161614" : "#FAFAF8" }}
             >
                 {/* rose accent line */}
-                <div className="h-[2px] w-full bg-rose-700/60" />
+                <div className="h-[2px] w-full bg-emerald-700/60" />
 
                 <div className="flex flex-col lg:flex-row min-h-[340px]">
 
@@ -241,7 +241,7 @@ export function SurveyConfirmation({ survey_id }: { survey_id: string }) {
                                     className={`flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5
                                         rounded-xl border text-xs font-medium transition-all
                                         ${isDark
-                                            ? "border-stone-800/40 text-slate-400 hover:text-slate-200 hover:border-rose-800/40"
+                                            ? "border-stone-800/40 text-slate-400 hover:text-slate-200 hover:border-emerald-800/40"
                                             : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7] hover:border-slate-300"
                                         }`}
                                 >
@@ -256,7 +256,7 @@ export function SurveyConfirmation({ survey_id }: { survey_id: string }) {
                                         rounded-xl text-xs font-semibold transition-all duration-200
                                         ${consultationBooked
                                             ? isDark ? "bg-green-500/10 border border-green-500/20 text-green-400 cursor-default" : "bg-green-50 border border-green-200 text-green-600 cursor-default"
-                                            : "bg-rose-700 hover:bg-rose-600 text-white shadow-lg shadow-rose-700/20 hover:-translate-y-0.5"
+                                            : "bg-emerald-700 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-700/20 hover:-translate-y-0.5"
                                         }`}
                                 >
                                     {consultationBooked
@@ -308,8 +308,8 @@ export function SurveyConfirmation({ survey_id }: { survey_id: string }) {
                             </button>
 
                             <div className={`w-11 h-11 rounded-xl flex items-center justify-center
-                                ${isDark ? "bg-rose-500/10 border border-rose-500/20" : "bg-rose-50 border border-rose-200"}`}>
-                                <AlertCircle size={20} className="text-rose-400" />
+                                ${isDark ? "bg-emerald-500/10 border border-emerald-500/20" : "bg-emerald-50 border border-emerald-200"}`}>
+                                <AlertCircle size={20} className="text-emerald-400" />
                             </div>
 
                             <div className="space-y-1.5">
@@ -332,7 +332,7 @@ export function SurveyConfirmation({ survey_id }: { survey_id: string }) {
                                 </button>
                                 <button
                                     onClick={handleProceedAnyway}
-                                    className="flex-1 px-4 py-2.5 rounded-xl bg-rose-700 hover:bg-rose-600
+                                    className="flex-1 px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600
                                         text-white text-sm font-semibold transition-colors"
                                 >
                                     Procedi comunque

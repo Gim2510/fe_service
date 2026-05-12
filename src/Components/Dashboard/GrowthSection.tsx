@@ -14,7 +14,7 @@ export function GrowthSection({ users, theme }: any) {
             <div className={`rounded-xl border px-3 py-2 text-xs shadow-lg
                 ${isDark ? "bg-[#1C1C1A] border-stone-800/40 text-slate-300" : "bg-white border-slate-200 text-slate-700"}`}>
                 <p className={`font-mono uppercase tracking-widest mb-1 ${isDark ? "text-slate-500" : "text-slate-400"}`}>{label}</p>
-                <p className="font-semibold tabular-nums text-rose-500">{payload[0].value} users</p>
+                <p className="font-semibold tabular-nums text-emerald-500">{payload[0].value} users</p>
             </div>
         );
     };
@@ -27,7 +27,7 @@ export function GrowthSection({ users, theme }: any) {
             className={`rounded-2xl border overflow-hidden ${border}`}
             style={{ background: isDark ? "#161614" : "#FAFAF8" }}
         >
-            <div className="h-[2px] w-full bg-rose-700/40" />
+            <div className="h-[2px] w-full bg-emerald-700/40" />
             <div className="p-7">
                 <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-6
                     ${isDark ? "text-slate-500" : "text-slate-400"}`}>

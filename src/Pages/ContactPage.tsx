@@ -21,7 +21,7 @@ export function ContactPage() {
                     }}
                 />
                 {isDark && (
-                    <div className="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.05] bg-rose-700" />
+                    <div className="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.05] bg-emerald-700" />
                 )}
             </div>
 
@@ -36,12 +36,12 @@ export function ContactPage() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-rose-500" : "text-rose-700"}`}>
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-emerald-500" : "text-emerald-700"}`}>
                         Contatti
                     </span>
                     <h1 className={`font-fjalla text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         Parliamo del tuo
-                        <span className="block text-rose-600 mt-1">prossimo passo digitale.</span>
+                        <span className="block text-emerald-600 mt-1">prossimo passo digitale.</span>
                     </h1>
                     <p className={`text-lg leading-relaxed max-w-md ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                         Se hai domande, vuoi approfondire una soluzione o capire
@@ -67,16 +67,16 @@ export function ContactPage() {
                             I nostri riferimenti
                         </h2>
 
-                        <ContactItem isDark={isDark} icon={<Mail size={16} />} label="Email" value="service@techbridgegroup.it"
-                            href="mailto:service@techbridgegroup.it" />
+                        <ContactItem isDark={isDark} icon={<Mail size={16} />} label="Email" value="service@axiomlab.it"
+                            href="mailto:service@axiomlab.it" />
                         <ContactItem isDark={isDark} icon={<Phone size={16} />} label="Telefono" value="+39 331 5338917" />
                         <ContactItem isDark={isDark} icon={<MapPin size={16} />} label="Sede" value="Milano, Italia" />
 
                         <a
-                            href="mailto:service@techbridgegroup.it"
+                            href="mailto:service@axiomlab.it"
                             className="mt-2 inline-flex items-center gap-2 px-6 py-2.5 rounded-xl
-                                bg-rose-700 hover:bg-rose-600 text-white text-sm font-semibold
-                                transition-colors duration-200 shadow-lg shadow-rose-700/20 self-start"
+                                bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold
+                                transition-colors duration-200 shadow-lg shadow-emerald-700/20 self-start"
                         >
                             Scrivici ora
                             <ArrowRight size={14} />
@@ -95,16 +95,16 @@ function ContactItem({ icon, label, value, href, isDark }: {
         <div className={`flex items-start gap-4 p-4 rounded-xl border transition-colors duration-200 ${
             isDark
                 ? "bg-[#F8FAFB]/3 border-stone-800/20 hover:border-stone-700/30"
-                : "bg-[#EDF2F7] border-slate-200 hover:border-rose-400"
+                : "bg-[#EDF2F7] border-slate-200 hover:border-emerald-400"
         }`}>
-            <div className={`mt-0.5 ${isDark ? "text-rose-500" : "text-rose-600"}`}>{icon}</div>
+            <div className={`mt-0.5 ${isDark ? "text-emerald-500" : "text-emerald-600"}`}>{icon}</div>
             <div className="flex flex-col gap-0.5">
                 <span className={`text-xs font-medium uppercase tracking-wide ${isDark ? "text-slate-500" : "text-slate-400"}`}>
                     {label}
                 </span>
                 {href ? (
                     <a href={href} className={`text-sm font-medium transition-colors ${
-                        isDark ? "text-slate-200 hover:text-rose-500" : "text-slate-800 hover:text-rose-700"
+                        isDark ? "text-slate-200 hover:text-emerald-500" : "text-slate-800 hover:text-emerald-700"
                     }`}>{value}</a>
                 ) : (
                     <span className={`text-sm font-medium ${isDark ? "text-slate-200" : "text-slate-800"}`}>{value}</span>

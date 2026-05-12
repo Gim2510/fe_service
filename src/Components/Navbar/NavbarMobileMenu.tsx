@@ -122,7 +122,7 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
                         {/* Footer */}
                         <div className="mt-auto px-6 py-6">
                             <span className={`text-xs ${isDark ? "text-slate-700" : "text-slate-400"}`}>
-                                © {new Date().getFullYear()} TechBridgeGroup
+                                © {new Date().getFullYear()} AxiomLab
                             </span>
                         </div>
                     </motion.div>

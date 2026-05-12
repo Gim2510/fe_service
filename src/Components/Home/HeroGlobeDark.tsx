@@ -233,7 +233,7 @@ function GlobeArcs() {
             uTime:  { value: 0 },
             uSpeed: { value: arc.speed },
             uPhase: { value: arc.phase },
-            uColor: { value: new THREE.Color("#E8846D") },
+            uColor: { value: new THREE.Color("#6B8E7B") },
         }))
     );
 

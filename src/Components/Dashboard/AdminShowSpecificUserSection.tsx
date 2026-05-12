@@ -21,11 +21,11 @@ export function AdminShowSpecificUserSection({ allUsers, selectedUserIdToShow, s
     const innerBorder = isDark ? "border-stone-800/30" : "border-slate-200";
 
     const selectClass = `w-full sm:w-80 h-11 px-4 rounded-xl border text-sm appearance-none cursor-pointer focus:outline-none
-        ${isDark ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-rose-700"
-                 : "bg-white border-slate-200 text-slate-900 focus:border-rose-600"}`;
+        ${isDark ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-emerald-700"
+                 : "bg-white border-slate-200 text-slate-900 focus:border-emerald-600"}`;
 
     const badgeBg = {
-        VIP:       isDark ? "bg-rose-500/15 text-rose-400 border-rose-500/30"   : "bg-rose-50 text-rose-700 border-rose-200",
+        VIP:       isDark ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"   : "bg-emerald-50 text-emerald-700 border-emerald-200",
         Verified:  isDark ? "bg-green-500/15 text-green-400 border-green-500/30"   : "bg-green-50 text-green-700 border-green-200",
         Suspended: isDark ? "bg-red-500/15 text-red-400 border-red-500/30"         : "bg-red-50 text-red-700 border-red-200",
     };
@@ -38,7 +38,7 @@ export function AdminShowSpecificUserSection({ allUsers, selectedUserIdToShow, s
             className={`rounded-2xl border overflow-hidden ${border}`}
             style={{ background: isDark ? "#161614" : "#FAFAF8" }}
         >
-            <div className="h-[2px] w-full bg-rose-700/40" />
+            <div className="h-[2px] w-full bg-emerald-700/40" />
             <div className="p-7 space-y-7">
                 <div>
                     <h2 className={`text-sm font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -78,7 +78,7 @@ export function AdminShowSpecificUserSection({ allUsers, selectedUserIdToShow, s
                             <img
                                 src={user.user_image || "https://via.placeholder.com/150"}
                                 alt="User profile"
-                                className="w-20 h-20 rounded-full object-cover mb-4 border-2 border-rose-600/20"
+                                className="w-20 h-20 rounded-full object-cover mb-4 border-2 border-emerald-600/20"
                             />
                             <h3 className={`text-sm font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                                 {user.given_name} {user.family_name}

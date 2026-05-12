@@ -71,8 +71,8 @@ export function Register() {
 
     const selectClass = `px-4 py-2.5 rounded-xl border outline-none transition text-sm appearance-none cursor-pointer
         ${isDark
-            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-rose-700 focus:ring-1 focus:ring-rose-600/20"
-            : "bg-white border-slate-200 text-slate-900 focus:border-rose-600 focus:ring-1 focus:ring-rose-600/15"
+            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-emerald-700 focus:ring-1 focus:ring-emerald-600/20"
+            : "bg-white border-slate-200 text-slate-900 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600/15"
         }`;
 
     return (
@@ -90,7 +90,7 @@ export function Register() {
                     }}
                 />
                 {isDark && (
-                    <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] rounded-full blur-[160px] opacity-[0.04] bg-rose-700" />
+                    <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] rounded-full blur-[160px] opacity-[0.04] bg-emerald-700" />
                 )}
             </div>
 
@@ -107,13 +107,13 @@ export function Register() {
                 >
                     <div className="space-y-4">
                         <span className={`text-[10px] font-mono uppercase tracking-[0.22em]
-                            ${isDark ? "text-rose-600" : "text-rose-700"}`}>
+                            ${isDark ? "text-emerald-600" : "text-emerald-700"}`}>
                             Accesso piattaforma
                         </span>
                         <h1 className={`font-fjalla text-5xl font-semibold leading-tight
                             ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                             Inizia a costruire
-                            <span className="block text-rose-600 mt-1">un sistema sotto controllo.</span>
+                            <span className="block text-emerald-600 mt-1">un sistema sotto controllo.</span>
                         </h1>
                         <p className={`text-base leading-relaxed max-w-md
                             ${isDark ? "text-slate-400" : "text-slate-600"}`}>
@@ -131,7 +131,7 @@ export function Register() {
                         {["Crea il tuo account gratuito", "Compila il questionario di maturità", "Ricevi score e analisi dettagliate"].map((step, i) => (
                             <div key={step} className="flex items-start gap-3">
                                 <span className={`text-[10px] font-mono shrink-0 mt-0.5
-                                    ${isDark ? "text-rose-700" : "text-rose-600"}`}>
+                                    ${isDark ? "text-emerald-700" : "text-emerald-600"}`}>
                                     {String(i + 1).padStart(2, "0")}
                                 </span>
                                 <span className={`text-xs ${isDark ? "text-slate-400" : "text-slate-600"}`}>{step}</span>
@@ -152,7 +152,7 @@ export function Register() {
                     className={`rounded-2xl border overflow-hidden ${border}`}
                     style={{ background: isDark ? "#161614" : "#FAFAF8" }}
                 >
-                    <div className="h-[2px] w-full bg-rose-700/60" />
+                    <div className="h-[2px] w-full bg-emerald-700/60" />
 
                     <div className="p-7 sm:p-8">
                         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -240,10 +240,10 @@ export function Register() {
                             <button
                                 type="submit"
                                 disabled={loading || !passwordsMatch || passwordScore < 2}
-                                className="mt-2 w-full py-2.5 rounded-xl bg-rose-700 hover:bg-rose-600
+                                className="mt-2 w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600
                                     disabled:opacity-40 disabled:cursor-not-allowed
                                     text-white text-sm font-semibold transition-all hover:-translate-y-0.5 duration-200
-                                    shadow-lg shadow-rose-700/20 flex items-center justify-center"
+                                    shadow-lg shadow-emerald-700/20 flex items-center justify-center"
                             >
                                 {loading
                                     ? <FallingLines width="20" color="white" visible />
@@ -279,7 +279,7 @@ export function Register() {
                                     type="button"
                                     onClick={() => navigate("/login")}
                                     className={`font-semibold transition
-                                        ${isDark ? "text-rose-500 hover:text-rose-400" : "text-rose-700 hover:text-rose-600"}`}
+                                        ${isDark ? "text-emerald-500 hover:text-emerald-400" : "text-emerald-700 hover:text-emerald-600"}`}
                                 >
                                     Accedi
                                 </button>

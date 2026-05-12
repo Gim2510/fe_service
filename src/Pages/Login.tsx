@@ -60,7 +60,7 @@ export function Login() {
                     }}
                 />
                 {isDark && (
-                    <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] rounded-full blur-[160px] opacity-[0.04] bg-rose-700" />
+                    <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] rounded-full blur-[160px] opacity-[0.04] bg-emerald-700" />
                 )}
             </div>
 
@@ -77,13 +77,13 @@ export function Login() {
                 >
                     <div className="space-y-4">
                         <span className={`text-[10px] font-mono uppercase tracking-[0.22em]
-                            ${isDark ? "text-rose-600" : "text-rose-700"}`}>
+                            ${isDark ? "text-emerald-600" : "text-emerald-700"}`}>
                             Bentornato
                         </span>
                         <h1 className={`font-fjalla text-5xl font-semibold leading-tight
                             ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                             Accedi al tuo
-                            <span className="block text-rose-600 mt-1">spazio di controllo.</span>
+                            <span className="block text-emerald-600 mt-1">spazio di controllo.</span>
                         </h1>
                         <p className={`text-base leading-relaxed max-w-md
                             ${isDark ? "text-slate-400" : "text-slate-600"}`}>
@@ -103,8 +103,8 @@ export function Login() {
                                 className={`flex items-center gap-3 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}
                             >
                                 <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0
-                                    ${isDark ? "bg-rose-700/10 border border-rose-700/20" : "bg-rose-50 border border-rose-200"}`}>
-                                    <Icon size={13} className={isDark ? "text-rose-600" : "text-rose-700"} />
+                                    ${isDark ? "bg-emerald-700/10 border border-emerald-700/20" : "bg-emerald-50 border border-emerald-200"}`}>
+                                    <Icon size={13} className={isDark ? "text-emerald-600" : "text-emerald-700"} />
                                 </div>
                                 {text}
                             </motion.div>
@@ -124,7 +124,7 @@ export function Login() {
                     className={`rounded-2xl border overflow-hidden ${border}`}
                     style={{ background: isDark ? "#161614" : "#FAFAF8" }}
                 >
-                    <div className="h-[2px] w-full bg-rose-700/60" />
+                    <div className="h-[2px] w-full bg-emerald-700/60" />
 
                     <div className="p-7 sm:p-8">
                         {/* Restore banner */}
@@ -169,9 +169,9 @@ export function Login() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="mt-1 w-full py-2.5 rounded-xl bg-rose-700 hover:bg-rose-600 disabled:opacity-50
+                                className="mt-1 w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 disabled:opacity-50
                                     text-white text-sm font-semibold transition-all hover:-translate-y-0.5 duration-200
-                                    shadow-lg shadow-rose-700/20 flex items-center justify-center"
+                                    shadow-lg shadow-emerald-700/20 flex items-center justify-center"
                             >
                                 {loading
                                     ? <FallingLines color="white" width="20" visible ariaLabel="loading" />
@@ -216,7 +216,7 @@ export function Login() {
                                         type="button"
                                         onClick={() => navigate("/register")}
                                         className={`font-semibold transition
-                                            ${isDark ? "text-rose-500 hover:text-rose-400" : "text-rose-700 hover:text-rose-600"}`}
+                                            ${isDark ? "text-emerald-500 hover:text-emerald-400" : "text-emerald-700 hover:text-emerald-600"}`}
                                     >
                                         Registrati
                                     </button>
