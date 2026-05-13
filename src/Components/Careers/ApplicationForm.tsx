@@ -4,6 +4,7 @@ import { CheckCircle, Upload } from "lucide-react";
 import { useSendApplication } from "../../hooks/useSendApplication";
 import type { JobApplicationInput } from "../../types/JobApplicationTypes";
 import { useTheme } from "../../Context/ThemeContext.tsx";
+import { useAuth } from "../../auth/AuthContext.tsx";
 
 type Props = {
     jobId: string;
@@ -14,6 +15,7 @@ export function ApplicationForm({ jobId, jobTitle }: Props) {
     const { sendApplication, loading, error, success } = useSendApplication();
     const { theme } = useTheme();
     const isDark = theme === "dark";
+    const { token } = useAuth();
 
     const [form, setForm] = useState<JobApplicationInput>({
         name: "",
@@ -29,7 +31,6 @@ export function ApplicationForm({ jobId, jobTitle }: Props) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const token = localStorage.getItem("token");
         await sendApplication(jobId, token, form);
     };
 
