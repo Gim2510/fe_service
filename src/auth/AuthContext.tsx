@@ -7,6 +7,7 @@ import {
     type ReactNode,
 } from "react";
 import { jwtDecode } from "jwt-decode";
+import { restoreSessionApi, logoutApi } from "../api/auth.api.ts";
 
 type JwtPayload = {
     sub: string;
@@ -25,14 +26,14 @@ type AuthContextType = {
     logout: () => void;
     isAuthenticated: boolean;
     isPremium: boolean | null;
+    sessionRestored: boolean;
 };
 
 export const AuthContext = createContext<AuthContextType>(null!);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-    const [token, setToken] = useState<string | null>(() =>
-        localStorage.getItem("token")
-    );
+    const [token, setToken] = useState<string | null>(null);
+    const [sessionRestored, setSessionRestored] = useState(false);
 
     const logoutTimer = useRef<number | null>(null);
 
@@ -46,6 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const logout = () => {
         clearLogoutTimer();
         setToken(null);
+        logoutApi().catch(() => {});
     };
 
     const login = (newToken: string) => {
@@ -53,18 +55,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setToken(newToken);
     };
 
-    // Persist token
+    // Ripristina sessione da cookie HttpOnly al mount
     useEffect(() => {
-        if (token) {
-            localStorage.setItem("token", token);
-        } else {
-            localStorage.removeItem("token");
-        }
-    }, [token]);
+        restoreSessionApi().then((data) => {
+            if (data?.accessToken) {
+                setToken(data.accessToken);
+            }
+            setSessionRestored(true);
+        });
+    }, []);
 
     let role: string | null = null;
     let id: string | null = null;
-    let emailVer: boolean | null = null
+    let emailVer: boolean | null = null;
     let isPremium: boolean | null = null;
 
     // ⏱️ Auto logout su scadenza token
@@ -75,8 +78,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const decoded = jwtDecode<JwtPayload>(token);
             role = decoded.role;
             id = decoded.sub;
-            emailVer = decoded.emailVer
-            isPremium = decoded.isPremium
+            emailVer = decoded.emailVer;
+            isPremium = decoded.isPremium;
 
             const expiresAt = decoded.exp * 1000;
             const timeout = expiresAt - Date.now();
@@ -119,7 +122,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 login,
                 logout,
                 isAuthenticated: !!token,
-                isPremium
+                isPremium,
+                sessionRestored,
             }}
         >
             {children}

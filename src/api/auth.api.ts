@@ -4,6 +4,7 @@ export async function loginApi(email: string, password: string) {
     const res = await fetch(`${BASE_URL}v1/user/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ email, password }),
     });
 
@@ -26,9 +27,31 @@ export async function oauthLoginApi(idToken: string) {
     const res = await fetch(`${BASE_URL}/v1/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ idToken }),
     });
 
     if (!res.ok) throw new Error(await res.text());
     return res.json() as Promise<{ token: string }>;
+}
+
+export async function restoreSessionApi(): Promise<{ accessToken: string; expiresIn: number } | null> {
+    try {
+        const res = await fetch(`${BASE_URL}v1/user/session`, {
+            method: "GET",
+            credentials: "include",
+        });
+
+        if (!res.ok) return null;
+        return res.json();
+    } catch {
+        return null;
+    }
+}
+
+export async function logoutApi(): Promise<void> {
+    await fetch(`${BASE_URL}v1/user/logout`, {
+        method: "POST",
+        credentials: "include",
+    });
 }
