@@ -78,13 +78,13 @@ export function HeroSection({ theme }: { theme: string }) {
                     }`}
                 >
                     <span className="hero-line reveal delay-1 block">
-                        La tua azienda
+                        Il digitale nelle PMI
                     </span>
                     <span className="hero-line reveal delay-2 block text-emerald-600">
-                        perde margine
+                        non è un problema di tecnologia.
                     </span>
                     <span className="hero-line reveal delay-3 block text-4xl sm:text-5xl mt-2">
-                        ogni giorno che non è digitale.
+                        È un problema di metodo.
                     </span>
                 </motion.h1>
 
@@ -95,9 +95,7 @@ export function HeroSection({ theme }: { theme: string }) {
                         isDark ? "text-slate-400" : "text-slate-600"
                     }`}
                 >
-                    Due fratelli, un metodo. Analizziamo i tuoi processi, progettiamo
-                    automazioni su misura e le attiviamo senza stravolgere
-                    quello che già funziona.
+                    Portiamo nelle PMI l'approccio che funziona nei grandi clienti: analisi, metodo, automazione mirata. Senza stravolgere quello che già funziona.
                 </motion.p>
 
                 {/* Trust signals */}
