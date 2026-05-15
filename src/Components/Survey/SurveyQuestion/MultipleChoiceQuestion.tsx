@@ -31,17 +31,17 @@ export const MultipleChoiceQuestion: FC<PropsMultipleChoiceQuestion> = ({ option
                             transition-all duration-200 cursor-pointer
                             ${isSelected
                                 ? isDark
-                                    ? "bg-emerald-700/15 border-emerald-600/40 text-emerald-400"
-                                    : "bg-emerald-50 border-emerald-500 text-emerald-800"
+                                    ? "bg-sky-700/15 border-sky-600/40 text-sky-400"
+                                    : "bg-sky-50 border-sky-500 text-sky-800"
                                 : isDark
-                                    ? "bg-[#1C1C1A]/60 border-stone-800/20 text-slate-300 hover:border-emerald-800/30 hover:bg-[#1C1C1A]"
-                                    : "bg-[#F8FAFB] border-slate-200 text-slate-700 hover:border-emerald-400 hover:bg-emerald-50/50"
+                                    ? "bg-[#1C1C1A]/60 border-stone-800/20 text-slate-300 hover:border-sky-800/30 hover:bg-[#1C1C1A]"
+                                    : "bg-[#F8FAFB] border-slate-200 text-slate-700 hover:border-sky-400 hover:bg-sky-50/50"
                             }`}
                     >
                         <span className="flex items-center gap-3">
                             <span className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center
                                 ${isSelected
-                                    ? "border-emerald-600 bg-emerald-600"
+                                    ? "border-sky-600 bg-sky-600"
                                     : isDark ? "border-stone-800/40" : "border-slate-300"
                                 }`}
                             >

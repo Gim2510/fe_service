@@ -13,7 +13,7 @@ export function ThemeToggle() {
             className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium
                 border transition-all duration-300 cursor-pointer
                 ${isDark
-                    ? "bg-[#F8FAFB]/5 border-stone-800/30 text-slate-400 hover:text-slate-200 hover:border-emerald-800/40"
+                    ? "bg-[#F8FAFB]/5 border-stone-800/30 text-slate-400 hover:text-slate-200 hover:border-sky-800/40"
                     : "bg-[#EDF2F7] border-slate-200 text-slate-500 hover:text-slate-700 hover:bg-slate-200"
                 }
             `}
@@ -25,8 +25,8 @@ export function ThemeToggle() {
                 transition={{ duration: 0.25 }}
             >
                 {isDark
-                    ? <Moon size={13} className="text-emerald-500" />
-                    : <Sun size={13} className="text-emerald-500" />
+                    ? <Moon size={13} className="text-sky-500" />
+                    : <Sun size={13} className="text-sky-500" />
                 }
             </motion.span>
             <span>{isDark ? "Dark" : "Light"}</span>

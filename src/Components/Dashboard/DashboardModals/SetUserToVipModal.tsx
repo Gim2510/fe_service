@@ -15,8 +15,8 @@ export function SetUserToVipModal({ setShowUpdateUserToVipModal, handleUpdateUse
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-50 p-4">
             <div className={`rounded-2xl border p-8 w-full max-w-sm space-y-5 ${card}`}>
-                <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${isDark ? "bg-emerald-500/15 border border-emerald-500/30" : "bg-emerald-50 border border-emerald-200"}`}>
-                    <Star size={18} className="text-emerald-400" />
+                <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${isDark ? "bg-sky-500/15 border border-sky-500/30" : "bg-sky-50 border border-sky-200"}`}>
+                    <Star size={18} className="text-sky-400" />
                 </div>
                 <div className="space-y-2">
                     <h3 className={`text-lg font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>Assign VIP Status</h3>
@@ -36,7 +36,7 @@ export function SetUserToVipModal({ setShowUpdateUserToVipModal, handleUpdateUse
                     <button
                         onClick={handleUpdateUserToVip}
                         disabled={loadingUpdateToVip}
-                        className="flex-1 px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 disabled:opacity-40 text-white text-sm font-semibold transition-colors"
+                        className="flex-1 px-4 py-2.5 rounded-xl bg-sky-700 hover:bg-sky-600 disabled:opacity-40 text-white text-sm font-semibold transition-colors"
                     >
                         {loadingUpdateToVip
                             ? <span className="flex justify-center"><FallingLines color="#fff" width="15" visible ariaLabel="loading" /></span>

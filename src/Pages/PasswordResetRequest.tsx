@@ -18,7 +18,7 @@ export function PasswordResetRequest() {
             <div
                 className="absolute inset-0 opacity-[0.08]"
                 style={{
-                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='%23F59E0B' stroke-width='0.5'/%3E%3C/svg%3E\")",
+                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='%230EA5E9' stroke-width='0.5'/%3E%3C/svg%3E\")",
                     backgroundSize: "40px 40px",
                 }}
             />
@@ -56,14 +56,14 @@ export function PasswordResetRequest() {
                                 required
                                 className="px-4 py-2.5 rounded-lg border border-stone-800/30 bg-[#111110]
                                     text-slate-200 text-sm outline-none transition
-                                    focus:border-emerald-700 focus:ring-1 focus:ring-emerald-600/30"
+                                    focus:border-sky-700 focus:ring-1 focus:ring-sky-600/30"
                             />
                         </div>
 
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 disabled:opacity-50
+                            className="w-full py-2.5 rounded-xl bg-sky-700 hover:bg-sky-600 disabled:opacity-50
                                 text-white text-sm font-semibold transition-colors duration-200 mt-1"
                         >
                             {loading ? "Invio in corso…" : "Invia link di reset"}

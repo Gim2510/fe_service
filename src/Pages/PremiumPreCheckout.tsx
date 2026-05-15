@@ -45,10 +45,10 @@ export function PremiumPreCheckout() {
         <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"}`}>
             {/* Grid bg */}
             <div className="absolute inset-0 opacity-[0.08] pointer-events-none"
-                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%23F59E0B' : '%23B45309'}' stroke-width='0.5'/%3E%3C/svg%3E")`, backgroundSize: "40px 40px" }} />
+                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%230EA5E9' : '%230369A1'}' stroke-width='0.5'/%3E%3C/svg%3E")`, backgroundSize: "40px 40px" }} />
             {isDark && (
                 <>
-                    <div className="absolute -top-60 -left-60 w-[600px] h-[600px] rounded-full blur-[140px] opacity-[0.06] bg-emerald-700 pointer-events-none" />
+                    <div className="absolute -top-60 -left-60 w-[600px] h-[600px] rounded-full blur-[140px] opacity-[0.06] bg-sky-700 pointer-events-none" />
                     <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.04] bg-indigo-600 pointer-events-none" />
                 </>
             )}
@@ -60,7 +60,7 @@ export function PremiumPreCheckout() {
                     <div className="space-y-7">
                         <motion.span
                             {...fadeUp(0)}
-                            className={`block text-xs font-semibold uppercase tracking-widest ${isDark ? "text-emerald-500" : "text-emerald-700"}`}
+                            className={`block text-xs font-semibold uppercase tracking-widest ${isDark ? "text-sky-500" : "text-sky-700"}`}
                         >
                             Abbonamento Premium
                         </motion.span>
@@ -70,7 +70,7 @@ export function PremiumPreCheckout() {
                             className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}
                         >
                             Trasforma il tuo questionario in un{" "}
-                            <span className="text-emerald-600">report strategico.</span>
+                            <span className="text-sky-600">report strategico.</span>
                         </motion.h1>
 
                         <motion.p {...fadeUp(0.16)} className={`text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
@@ -82,8 +82,8 @@ export function PremiumPreCheckout() {
                             <button
                                 onClick={() => setShowModal(true)}
                                 className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
-                                    bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold
-                                    transition-colors shadow-lg shadow-emerald-700/25 hover:-translate-y-0.5 duration-200"
+                                    bg-sky-700 hover:bg-sky-600 text-white text-sm font-semibold
+                                    transition-colors shadow-lg shadow-sky-700/25 hover:-translate-y-0.5 duration-200"
                             >
                                 Attiva Premium — 15€/mese
                                 <ArrowRight size={14} />
@@ -117,7 +117,7 @@ export function PremiumPreCheckout() {
                                 "Roadmap suggerita a breve e medio termine",
                             ].map(item => (
                                 <li key={item} className={`flex items-start gap-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                                    <ArrowRight size={12} className="text-emerald-600 mt-0.5 shrink-0" />
+                                    <ArrowRight size={12} className="text-sky-600 mt-0.5 shrink-0" />
                                     {item}
                                 </li>
                             ))}
@@ -141,7 +141,7 @@ export function PremiumPreCheckout() {
                         <ul className="space-y-3">
                             {FEATURES.map(({ icon, text }) => (
                                 <li key={text} className={`flex items-center gap-3 text-sm ${isDark ? "text-slate-300" : "text-slate-700"}`}>
-                                    <span className={`shrink-0 ${isDark ? "text-emerald-500" : "text-emerald-600"}`}>{icon}</span>
+                                    <span className={`shrink-0 ${isDark ? "text-sky-500" : "text-sky-600"}`}>{icon}</span>
                                     {text}
                                 </li>
                             ))}
@@ -172,7 +172,7 @@ export function PremiumPreCheckout() {
                     className="flex justify-center"
                 >
                     <div className={`w-full max-w-lg rounded-2xl border p-10 text-center space-y-6 ${card}`}>
-                        <div className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-emerald-500" : "text-emerald-700"}`}>
+                        <div className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-sky-500" : "text-sky-700"}`}>
                             Premium
                         </div>
                         <div className={`text-6xl font-semibold tabular-nums ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -187,8 +187,8 @@ export function PremiumPreCheckout() {
                         <button
                             onClick={() => setShowModal(true)}
                             className="w-full inline-flex items-center justify-center gap-2 px-7 py-3 rounded-xl
-                                bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold
-                                transition-colors shadow-lg shadow-emerald-700/25 hover:-translate-y-0.5 duration-200"
+                                bg-sky-700 hover:bg-sky-600 text-white text-sm font-semibold
+                                transition-colors shadow-lg shadow-sky-700/25 hover:-translate-y-0.5 duration-200"
                         >
                             Attiva ora
                             <ArrowRight size={14} />

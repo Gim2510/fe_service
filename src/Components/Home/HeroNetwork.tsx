@@ -424,23 +424,23 @@ export function HeroNetwork() {
             const clamp = (v: number) => Math.min(1, v);
 
             // rose — exact Tailwind values used in text/CTAs across the page
-            const Gw   = isDark ? [245, 158,  11] : [180,  83,   9]; // emerald-500 / emerald-700
+            const Gw   = isDark ? [14, 165, 233] : [2, 132, 199]; // sky-500 / sky-700
             const ga   = (a: number) => `rgba(${Gw[0]},${Gw[1]},${Gw[2]},${clamp(a * aM).toFixed(3)})`;
-            const gHex = isDark ? "#F59E0B"       : "#B45309";
-            const gBrt = isDark ? "#FCD34D"       : "#F59E0B";
+            const gHex = isDark ? "#0EA5E9"       : "#0369A1";
+            const gBrt = isDark ? "#7DD3FC"       : "#0EA5E9";
             // Steel blue (tier2)
-            const Gs   = isDark ? [ 91, 155, 213] : [ 43, 108, 176];
+            const Gs   = isDark ? [56, 189, 248] : [2, 132, 199];
             const sa   = (a: number) => `rgba(${Gs[0]},${Gs[1]},${Gs[2]},${clamp(a * aM).toFixed(3)})`;
             const sHex = isDark ? "#5B9BD5"       : "#2B6CB0";
             const sBrt = isDark ? "#A8D4FF"       : "#5B9BD5";
             // Emerald green (tier3)
-            const Ge   = isDark ? [ 52, 211, 153] : [ 4, 120,  87];
+            const Ge   = isDark ? [56, 189, 248] : [3, 105, 161];
             const ea   = (a: number) => `rgba(${Ge[0]},${Ge[1]},${Ge[2]},${clamp(a * aM).toFixed(3)})`;
-            const eHex = isDark ? "#34D399"       : "#047857";
-            const eBrt = isDark ? "#6EE7B7"       : "#10B981";
+            const eHex = isDark ? "#38BDF8"       : "#0369A1";
+            const eBrt = isDark ? "#7DD3FC"       : "#0EA5E9";
             // Shared
             const gBg  = isDark ? "rgba(22,20,14,0.90)" : "rgba(255,251,235,0.95)";
-            const tCol = isDark ? "#FCD34D"       : "#1C1917"; // emerald-300 / stone-900
+            const tCol = isDark ? "#7DD3FC"       : "#1C1917"; // sky-300 / stone-900
             const tCo2 = isDark ? "#94BAD8"       : "#0F172A"; // / slate-900
 
             // Edge color helpers
@@ -761,7 +761,7 @@ export function HeroNetwork() {
                     ctx.letterSpacing = "0px";
                 } else {
                     const sz = isTier3 ? 7.0 : n.label.length > 7 ? 7.5 : isTier2 ? 8.5 : 9.0;
-                    ctx.fillStyle = isTier3 ? (isDark ? eBrt : "#065F46") : isTier2 ? tCo2 : tCol;
+                    ctx.fillStyle = isTier3 ? (isDark ? eBrt : "#075985") : isTier2 ? tCo2 : tCol;
                     ctx.font      = `600 ${sz}px system-ui, -apple-system, sans-serif`;
                     ctx.fillText(n.label, x, y);
                 }
@@ -846,7 +846,7 @@ export function HeroNetwork() {
                 ctx.textBaseline = "middle";
 
                 // Node label (small, dimmed)
-                ctx.fillStyle = isTier3 ? (isDark ? eBrt : "#065F46") : isTier2 ? tCo2 : tCol;
+                ctx.fillStyle = isTier3 ? (isDark ? eBrt : "#075985") : isTier2 ? tCo2 : tCol;
                 ctx.font      = `500 9px system-ui, -apple-system, sans-serif`;
                 ctx.globalAlpha *= 0.65;
                 ctx.fillText(n.label.toUpperCase(), x, y - r * 0.44);
@@ -859,7 +859,7 @@ export function HeroNetwork() {
                 ctx.fillText(info.metric, x, y - r * 0.08);
 
                 // Description (small, muted)
-                ctx.fillStyle = isTier3 ? (isDark ? eBrt : "#065F46") : isTier2 ? tCo2 : tCol;
+                ctx.fillStyle = isTier3 ? (isDark ? eBrt : "#075985") : isTier2 ? tCo2 : tCol;
                 ctx.font      = `400 8.5px system-ui, -apple-system, sans-serif`;
                 ctx.globalAlpha *= 0.70;
                 ctx.fillText(info.desc, x, y + r * 0.35);

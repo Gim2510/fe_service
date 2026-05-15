@@ -40,8 +40,8 @@ export function AdminActionsSection({
 
     const selectClass = `w-full h-11 px-4 rounded-xl border text-sm appearance-none cursor-pointer focus:outline-none transition-colors
         ${isDark
-            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-emerald-700"
-            : "bg-white border-slate-200 text-slate-900 focus:border-emerald-600"
+            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-sky-700"
+            : "bg-white border-slate-200 text-slate-900 focus:border-sky-600"
         }`;
 
     return (
@@ -71,7 +71,7 @@ export function AdminActionsSection({
                     <button
                         disabled={!selectedUserId}
                         onClick={() => setShowPromoteModal(true)}
-                        className="h-11 px-5 rounded-xl bg-emerald-700 hover:bg-emerald-600 disabled:opacity-40
+                        className="h-11 px-5 rounded-xl bg-sky-700 hover:bg-sky-600 disabled:opacity-40
                             text-white text-sm font-semibold transition-all hover:-translate-y-0.5 duration-200"
                     >
                         Promote
@@ -106,7 +106,7 @@ export function AdminActionsSection({
                     <button
                         disabled={!selectedUserToVip}
                         onClick={() => setShowVipModal(true)}
-                        className="h-11 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 disabled:opacity-40
+                        className="h-11 px-5 rounded-xl bg-sky-500 hover:bg-sky-400 disabled:opacity-40
                             text-white text-sm font-semibold transition-all hover:-translate-y-0.5 duration-200"
                     >
                         Upgrade

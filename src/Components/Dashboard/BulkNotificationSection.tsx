@@ -21,8 +21,8 @@ export function BulkNotificationSection({ theme }: { theme: string }) {
 
     const inputClass = `w-full px-4 py-2.5 rounded-xl border text-sm focus:outline-none focus:ring-2 transition-colors
         ${isDark
-            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-emerald-700 focus:ring-emerald-600/20"
-            : "bg-white border-slate-200 text-slate-900 focus:border-emerald-600 focus:ring-emerald-600/10"
+            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-sky-700 focus:ring-sky-600/20"
+            : "bg-white border-slate-200 text-slate-900 focus:border-sky-600 focus:ring-sky-600/10"
         }`;
 
     return (
@@ -33,7 +33,7 @@ export function BulkNotificationSection({ theme }: { theme: string }) {
             className={`rounded-2xl border overflow-hidden ${border}`}
             style={{ background: isDark ? "#161614" : "#FAFAF8" }}
         >
-            <div className="h-[2px] w-full bg-emerald-700/40" />
+            <div className="h-[2px] w-full bg-sky-700/40" />
             <div className="p-7">
                 <div className="flex items-center justify-between mb-7">
                     <h2 className={`text-sm font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -71,7 +71,7 @@ export function BulkNotificationSection({ theme }: { theme: string }) {
                             disabled={loading || !subject || !html}
                             onClick={async () => { if (token) await sendBulkNotification(type as any, subject, html, token); }}
                             className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl
-                                bg-emerald-700 hover:bg-emerald-600 disabled:opacity-40
+                                bg-sky-700 hover:bg-sky-600 disabled:opacity-40
                                 text-white text-sm font-semibold transition-all hover:-translate-y-0.5 duration-200"
                         >
                             {loading

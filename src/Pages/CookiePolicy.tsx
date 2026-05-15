@@ -35,11 +35,11 @@ export function CookiePolicy() {
     return (
         <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"}`}>
             <div className="absolute inset-0 opacity-[0.08] pointer-events-none"
-                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%23F59E0B' : '%23B45309'}' stroke-width='0.5'/%3E%3C/svg%3E")`, backgroundSize: "40px 40px" }} />
+                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%230EA5E9' : '%230369A1'}' stroke-width='0.5'/%3E%3C/svg%3E")`, backgroundSize: "40px 40px" }} />
 
             <div className="relative max-w-3xl mx-auto px-6 py-32">
                 <div className="mb-10 space-y-3">
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-emerald-500" : "text-emerald-700"}`}>
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-sky-500" : "text-sky-700"}`}>
                         Legale
                     </span>
                     <h1 className={`text-3xl sm:text-4xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -60,7 +60,7 @@ export function CookiePolicy() {
                         <p>Attualmente utilizziamo esclusivamente cookie tecnici, necessari al funzionamento della piattaforma.</p>
                         <ul className="space-y-1">
                             {["Cookie di sessione", "Cookie di autenticazione", "Cookie per preferenze utente (es. tema dark/light)"].map(item => (
-                                <li key={item} className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5">•</span>{item}</li>
+                                <li key={item} className="flex items-start gap-2"><span className="text-sky-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
                     </PolicySection>
@@ -68,7 +68,7 @@ export function CookiePolicy() {
                     <PolicySection isDark={isDark} title="3. Finalità dei cookie">
                         <ul className="space-y-1">
                             {["Garantire il corretto funzionamento del sito", "Gestire l'accesso e l'autenticazione", "Salvare preferenze dell'utente", "Migliorare stabilità e sicurezza"].map(item => (
-                                <li key={item} className="flex items-start gap-2"><span className="text-emerald-500 mt-0.5">•</span>{item}</li>
+                                <li key={item} className="flex items-start gap-2"><span className="text-sky-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
                     </PolicySection>

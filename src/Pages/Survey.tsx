@@ -87,7 +87,7 @@ export function Survey() {
                     </div>
                     <div className={`h-0.5 rounded-full ${isDark ? "bg-stone-800/30" : "bg-slate-200"}`}>
                         <div
-                            className="h-full rounded-full bg-emerald-700 transition-all duration-500"
+                            className="h-full rounded-full bg-sky-700 transition-all duration-500"
                             style={{ width: `${progress}%` }}
                         />
                     </div>
@@ -102,7 +102,7 @@ export function Survey() {
                     {isQuestionStep && (
                         <div className="space-y-6">
                             <header className="space-y-3">
-                                <span className={`font-mono text-xs font-medium ${isDark ? "text-emerald-600" : "text-emerald-700"}`}>
+                                <span className={`font-mono text-xs font-medium ${isDark ? "text-sky-600" : "text-sky-700"}`}>
                                     {String(flow.step + 1).padStart(2, "0")}
                                 </span>
                                 <h1 className={`text-2xl md:text-3xl font-semibold leading-tight
@@ -128,7 +128,7 @@ export function Survey() {
                                         onClick={flow.prev}
                                         className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border text-sm font-medium transition-colors
                                             ${isDark
-                                                ? "border-stone-800/30 text-slate-400 hover:text-slate-200 hover:border-emerald-800/40"
+                                                ? "border-stone-800/30 text-slate-400 hover:text-slate-200 hover:border-sky-800/40"
                                                 : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"
                                             }`}
                                     >
@@ -151,9 +151,9 @@ export function Survey() {
                                     disabled={!flow.canProceed}
                                     onClick={() => flow.next(survey._id)}
                                     className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl
-                                        bg-emerald-700 hover:bg-emerald-600 disabled:opacity-40 disabled:cursor-not-allowed
+                                        bg-sky-700 hover:bg-sky-600 disabled:opacity-40 disabled:cursor-not-allowed
                                         text-white text-sm font-semibold transition-colors
-                                        shadow-lg shadow-emerald-700/20 hover:-translate-y-0.5 duration-200"
+                                        shadow-lg shadow-sky-700/20 hover:-translate-y-0.5 duration-200"
                                 >
                                     {flow.isLast ? "Completa survey" : "Continua"}
                                     <ArrowRight size={14} />

@@ -12,7 +12,7 @@ export function KPIBox({ label, value, sub, theme, index = 0 }: any) {
             className={`rounded-2xl border overflow-hidden ${border}`}
             style={{ background: isDark ? "#161614" : "#FAFAF8" }}
         >
-            <div className="h-[2px] w-full bg-emerald-700/50" />
+            <div className="h-[2px] w-full bg-sky-700/50" />
             <div className="p-6">
                 <div className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-3
                     ${isDark ? "text-slate-500" : "text-slate-400"}`}>

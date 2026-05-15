@@ -15,8 +15,8 @@ export function InsightsSection({ users, surveys, theme }: any) {
 
     const cfg = {
         high:   { icon: AlertTriangle, color: "#f87171", bg: isDark ? "bg-red-500/8 border-red-500/20"   : "bg-red-50 border-red-200" },
-        medium: { icon: AlertTriangle, color: "#f59e0b", bg: isDark ? "bg-emerald-500/8 border-emerald-500/20": "bg-emerald-50 border-emerald-200" },
-        low:    { icon: Info,          color: "#f59e0b", bg: isDark ? "bg-emerald-500/6 border-emerald-500/15": "bg-emerald-50/50 border-emerald-200/60" },
+        medium: { icon: AlertTriangle, color: "#f59e0b", bg: isDark ? "bg-sky-500/8 border-sky-500/20": "bg-sky-50 border-sky-200" },
+        low:    { icon: Info,          color: "#f59e0b", bg: isDark ? "bg-sky-500/6 border-sky-500/15": "bg-sky-50/50 border-sky-200/60" },
     };
 
     return (
@@ -27,7 +27,7 @@ export function InsightsSection({ users, surveys, theme }: any) {
             className={`rounded-2xl border overflow-hidden ${border}`}
             style={{ background: isDark ? "#161614" : "#FAFAF8" }}
         >
-            <div className="h-[2px] w-full bg-emerald-700/40" />
+            <div className="h-[2px] w-full bg-sky-700/40" />
             <div className="p-7">
                 <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-5
                     ${isDark ? "text-slate-500" : "text-slate-400"}`}>

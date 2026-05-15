@@ -1,24 +1,28 @@
-import {HeroSection} from "../Components/Home/HeroSection.tsx";
-import {ProblemiSection} from "../Components/Home/ProblemSection.tsx";
-import {DigitalMaturitySection} from "../Components/Home/DigitalMaturitySection.tsx";
-import {WAWD} from "../Components/Home/WAWD.tsx";
-import {MetodSection} from "../Components/Home/MetodSection.tsx";
-import {CTASection} from "../Components/Home/CTASection.tsx";
-import {useTheme} from "../Context/ThemeContext.tsx";
-import {LiquidTextBanner} from "../Components/Home/LiquidTextBanner.tsx";
-import {logos} from "../staticData/logos.ts";
-import {SunsetTransition} from "../Components/Home/SunsetTransition.tsx";
-import {AboutSection} from "../Components/Home/AboutSection.tsx";
-import {VideoSection} from "../Components/Home/VideoSection.tsx";
-import {TestimonialsSection} from "../Components/Home/TestimonialsSection.tsx";
-import {FAQSection} from "../Components/Home/FAQSection.tsx";
+import { useTheme } from "../Context/ThemeContext.tsx";
+import { logos } from "../staticData/logos.ts";
+
+// Cinematic parallax components
+import { CinematicHero } from "../Components/Home/CinematicHero.tsx";
+import { SunsetTransition } from "../Components/Home/SunsetTransition.tsx";
+import { ScrollProblems } from "../Components/Home/ScrollProblems.tsx";
+import { VideoSection } from "../Components/Home/VideoSection.tsx";
+import { HorizontalSolutions } from "../Components/Home/HorizontalSolutions.tsx";
+import { DepthMethod } from "../Components/Home/DepthMethod.tsx";
+import { PrivateAIFlow } from "../Components/Home/PrivateAIFlow.tsx";
+import { ParallaxTestimonials } from "../Components/Home/ParallaxTestimonials.tsx";
+import { StatsReveal } from "../Components/Home/StatsReveal.tsx";
+import { LiquidTextBanner } from "../Components/Home/LiquidTextBanner.tsx";
+import { MaturitySection } from "../Components/Home/MaturitySection.tsx";
+import { CinematicFAQ } from "../Components/Home/CinematicFAQ.tsx";
+import { CinematicCTA } from "../Components/Home/CinematicCTA.tsx";
 
 export function Home() {
-    const {theme} = useTheme()
+    const { theme } = useTheme();
     const isDark = theme === "dark";
+
     return (
-        <main className={`flex flex-col ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}>
-            {/* Fixed hex grid */}
+        <main className={`flex flex-col ${isDark ? "bg-[#0E0E0D]" : "bg-[#FAFAF8]"}`}>
+            {/* Fixed hex grid background */}
             <div
                 className={`fixed inset-0 pointer-events-none z-0 ${isDark ? "opacity-[0.05]" : "opacity-[0.10]"}`}
                 style={{
@@ -26,20 +30,45 @@ export function Home() {
                     backgroundSize: "40px 40px",
                 }}
             />
-            {/* Vignette — fades grid on left/right edges */}
+            {/* Vignette — fades grid on edges */}
             <div
                 className="fixed inset-0 pointer-events-none z-0"
-                style={{ background: `linear-gradient(to right, ${isDark ? "#111110" : "#FAF8F4"} 0%, transparent 18%, transparent 82%, ${isDark ? "#111110" : "#FAF8F4"} 100%)` }}
+                style={{
+                    background: `linear-gradient(to right, ${isDark ? "#0E0E0D" : "#FAFAF8"} 0%, transparent 18%, transparent 82%, ${isDark ? "#0E0E0D" : "#FAFAF8"} 100%)`,
+                }}
             />
-            <HeroSection theme={theme} />
+
+            {/* ── Cinematic Hero — multi-layer parallax, scales down on exit ── */}
+            <CinematicHero theme={theme} />
+
+            {/* ── Gradient transition ── */}
             <SunsetTransition theme={theme} />
-            <div className={`relative z-10 ${isDark ? "" : "bg-gradient-to-b from-[#FAF8F4] via-[#F0EAE0] to-[#E8DDD0]"}`}>
-                <ProblemiSection theme={theme} />
+
+            {/* ── Content sections — each with unique scroll effects ── */}
+            <div className={`relative z-10 ${isDark ? "" : "bg-gradient-to-b from-[#FAFAF8] via-[#F2F2EE] to-[#ECECE8]"}`}>
+
+                {/* 3D card reveals on scroll */}
+                <ScrollProblems theme={theme} />
+
+                {/* Video section (kept as-is) */}
                 <VideoSection theme={theme} />
-                <WAWD theme={theme} />
-                <MetodSection theme={theme} />
-                <TestimonialsSection theme={theme} />
-                <AboutSection theme={theme} />
+
+                {/* Horizontal scroll gallery — sticky container */}
+                <HorizontalSolutions theme={theme} />
+
+                {/* Timeline with scroll-driven fill */}
+                <DepthMethod theme={theme} />
+
+                {/* Private AI infrastructure flow — layered architecture diagram */}
+                <PrivateAIFlow theme={theme} />
+
+                {/* 3D perspective card parallax */}
+                <ParallaxTestimonials theme={theme} />
+
+                {/* Stats with different parallax speeds */}
+                <StatsReveal theme={theme} />
+
+                {/* Scrolling marquee */}
                 <LiquidTextBanner
                     theme={theme}
                     messages={[
@@ -54,10 +83,16 @@ export function Home() {
                     ]}
                     logos={logos}
                 />
-                <DigitalMaturitySection theme={theme} />
-                <FAQSection theme={theme} />
+
+                {/* Scroll-driven progress bars */}
+                <MaturitySection theme={theme} />
+
+                {/* Sticky FAQ with stagger slide-in */}
+                <CinematicFAQ theme={theme} />
             </div>
-            <CTASection theme={theme} />
+
+            {/* ── CTA — scales up from miniature on scroll ── */}
+            <CinematicCTA theme={theme} />
         </main>
     );
 }

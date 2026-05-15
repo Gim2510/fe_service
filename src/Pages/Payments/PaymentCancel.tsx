@@ -7,7 +7,7 @@ export function PaymentCancel() {
 
     return (
         <main className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#111110] px-6">
-            <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='%23F59E0B' stroke-width='0.5'/%3E%3C/svg%3E\")", backgroundSize: "40px 40px" }} />
+            <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='%230EA5E9' stroke-width='0.5'/%3E%3C/svg%3E\")", backgroundSize: "40px 40px" }} />
             <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[400px] rounded-full blur-[140px] opacity-[0.05] bg-red-500 pointer-events-none" />
 
             <motion.div
@@ -30,7 +30,7 @@ export function PaymentCancel() {
 
                     <button
                         onClick={() => navigate("/")}
-                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-stone-800/30 text-slate-300 hover:text-white hover:border-emerald-800/40 text-sm font-medium transition-colors"
+                        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-stone-800/30 text-slate-300 hover:text-white hover:border-sky-800/40 text-sm font-medium transition-colors"
                     >
                         <ArrowLeft size={14} />
                         Torna alla Home

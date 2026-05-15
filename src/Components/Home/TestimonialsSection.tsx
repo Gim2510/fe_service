@@ -20,7 +20,7 @@ const testimonials = [
         company: "Marchetti & Partners",
         sector: "Servizi professionali",
         result: "Forecast accuracy +68%",
-        resultColor: "text-emerald-500",
+        resultColor: "text-sky-500",
     },
     {
         quote: "Il nostro CRM era un cimitero di contatti. Ora il funnel è vivo, il team commerciale sa esattamente su chi lavorare e il tasso di chiusura è raddoppiato in sei mesi.",
@@ -47,7 +47,7 @@ export function TestimonialsSection({ theme }: { theme: string }) {
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
                 <span className={`text-xs font-semibold uppercase tracking-widest ${
-                    isDark ? "text-emerald-500" : "text-emerald-700"
+                    isDark ? "text-sky-500" : "text-sky-700"
                 }`}>
                     Casi reali
                 </span>
@@ -55,7 +55,7 @@ export function TestimonialsSection({ theme }: { theme: string }) {
                     isDark ? "text-slate-100" : "text-slate-900"
                 }`}>
                     PMI che hanno smesso{" "}
-                    <span className={isDark ? "text-emerald-500" : "text-emerald-700"}>
+                    <span className={isDark ? "text-sky-500" : "text-sky-700"}>
                         di perdere margine.
                     </span>
                 </h2>
@@ -81,7 +81,7 @@ export function TestimonialsSection({ theme }: { theme: string }) {
                             {/* Quote icon */}
                             <Quote
                                 size={20}
-                                className={`shrink-0 ${isDark ? "text-emerald-700/60" : "text-emerald-400"}`}
+                                className={`shrink-0 ${isDark ? "text-sky-700/60" : "text-sky-400"}`}
                             />
 
                             {/* Quote text */}
@@ -108,7 +108,7 @@ export function TestimonialsSection({ theme }: { theme: string }) {
                                     {t.role} · {t.company}
                                 </p>
                                 <span className={`mt-2 inline-block text-xs font-medium uppercase tracking-wider ${
-                                    isDark ? "text-emerald-700" : "text-emerald-500"
+                                    isDark ? "text-sky-700" : "text-sky-500"
                                 }`}>
                                     {t.sector}
                                 </span>

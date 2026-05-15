@@ -69,7 +69,7 @@ export function GDPRBanner() {
                                         ? isDark
                                             ? "border-stone-800/30 text-slate-400 hover:text-slate-200 hover:border-stone-700/40"
                                             : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"
-                                        : "bg-emerald-700 hover:bg-emerald-600 text-white border-transparent shadow-sm"
+                                        : "bg-sky-700 hover:bg-sky-600 text-white border-transparent shadow-sm"
                                 }`}
                             >
                                 {label}
@@ -91,7 +91,7 @@ export function GDPRBanner() {
                                 </div>
                                 <input
                                     type="checkbox"
-                                    className="accent-emerald-700 scale-110"
+                                    className="accent-sky-700 scale-110"
                                     checked={item.key === "necessary" ? true : tempConsent[item.key as keyof Consent]}
                                     disabled={item.disabled}
                                     onChange={(e) => setTempConsent(prev => ({ ...prev, [item.key]: e.target.checked }))}
@@ -110,7 +110,7 @@ export function GDPRBanner() {
                         </button>
                         <button
                             onClick={() => saveConsent(tempConsent)}
-                            className="px-4 py-1.5 rounded-lg text-xs font-medium bg-emerald-700 hover:bg-emerald-600 text-white transition-colors"
+                            className="px-4 py-1.5 rounded-lg text-xs font-medium bg-sky-700 hover:bg-sky-600 text-white transition-colors"
                         >
                             Salva preferenze
                         </button>

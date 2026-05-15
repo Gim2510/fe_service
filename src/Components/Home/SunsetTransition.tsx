@@ -4,8 +4,8 @@ interface SunsetTransitionProps {
 
 export function SunsetTransition({ theme }: SunsetTransitionProps) {
     const isDark = theme === "dark";
-    const bgColor = isDark ? "#111110" : "#FAF8F4";
-    const bgRgb = isDark ? "17,17,16" : "250,248,244";
+    const bgColor = isDark ? "#0E0E0D" : "#FAFAF8";
+    const bgRgb = isDark ? "14,14,13" : "250,250,248";
 
     return (
         <div className="relative z-10 h-10 sm:h-14 pointer-events-none">
