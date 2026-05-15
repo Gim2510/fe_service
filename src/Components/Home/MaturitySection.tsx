@@ -12,7 +12,7 @@ const livelli = [
     {
         level: "Base",
         score: "0\u201330%",
-        description: "Operatività prevalentemente manuale. Alto rischio di errori, dati non strutturati e decisioni prese senza dati affidabili. Potenziale di miglioramento massimo.",
+        description: "Operativit\u00E0 prevalentemente manuale. Alto rischio di errori, dati non strutturati e decisioni prese senza dati affidabili. Potenziale di miglioramento massimo.",
         accent: "#22D3EE",
         neonColor: "cyan",
         fillPercent: 25,
@@ -50,11 +50,11 @@ const pesi = [
     { label: "Automazione & AI",  weight: 0.1 },
 ];
 
-const neonMaturityMap: Record<string, { border: string; glow: string; dotBg: string; bg: string; line: string; badge: string }> = {
-    cyan:    { border: "border-cyan-500/50",    glow: "shadow-cyan-500/15",    dotBg: "bg-cyan-400",    bg: "bg-cyan-950/40",    line: "from-cyan-500 to-cyan-700",    badge: "text-cyan-400" },
-    sky:     { border: "border-sky-500/50",     glow: "shadow-sky-500/15",     dotBg: "bg-sky-400",     bg: "bg-sky-950/40",     line: "from-sky-500 to-sky-700",     badge: "text-sky-400" },
-    indigo:  { border: "border-indigo-500/50",  glow: "shadow-indigo-500/15",  dotBg: "bg-indigo-400",  bg: "bg-indigo-950/40",  line: "from-indigo-500 to-indigo-700", badge: "text-indigo-400" },
-    emerald: { border: "border-emerald-500/50", glow: "shadow-emerald-500/15", dotBg: "bg-emerald-400", bg: "bg-emerald-950/40", line: "from-emerald-500 to-emerald-700", badge: "text-emerald-400" },
+const neonMaturityMap: Record<string, { border: string; glow: string; dotBg: string; bg: string; line: string; badge: string; lightBorder: string; lightDotBg: string; lightBg: string; lightLine: string; lightBadge: string }> = {
+    cyan:    { border: "border-cyan-500/50",    glow: "shadow-cyan-500/15",    dotBg: "bg-cyan-400",    bg: "bg-cyan-950/40",    line: "from-cyan-500 to-cyan-700",    badge: "text-cyan-400",    lightBorder: "border-cyan-500/60", lightDotBg: "bg-cyan-500", lightBg: "bg-cyan-50", lightLine: "from-cyan-500 to-cyan-600", lightBadge: "text-cyan-600" },
+    sky:     { border: "border-sky-500/50",     glow: "shadow-sky-500/15",     dotBg: "bg-sky-400",     bg: "bg-sky-950/40",     line: "from-sky-500 to-sky-700",     badge: "text-sky-400",     lightBorder: "border-sky-500/60", lightDotBg: "bg-sky-500", lightBg: "bg-sky-50", lightLine: "from-sky-500 to-sky-600", lightBadge: "text-sky-600" },
+    indigo:  { border: "border-indigo-500/50",  glow: "shadow-indigo-500/15",  dotBg: "bg-indigo-400",  bg: "bg-indigo-950/40",  line: "from-indigo-500 to-indigo-700", badge: "text-indigo-400",  lightBorder: "border-indigo-500/60", lightDotBg: "bg-indigo-500", lightBg: "bg-indigo-50", lightLine: "from-indigo-500 to-indigo-600", lightBadge: "text-indigo-600" },
+    emerald: { border: "border-emerald-500/50", glow: "shadow-emerald-500/15", dotBg: "bg-emerald-400", bg: "bg-emerald-950/40", line: "from-emerald-500 to-emerald-700", badge: "text-emerald-400", lightBorder: "border-emerald-500/60", lightDotBg: "bg-emerald-500", lightBg: "bg-emerald-50", lightLine: "from-emerald-500 to-emerald-600", lightBadge: "text-emerald-600" },
 };
 
 function WeightBar({ p, index, isDark, scrollYProgress }: {
@@ -79,7 +79,7 @@ function WeightBar({ p, index, isDark, scrollYProgress }: {
                 isDark ? "bg-[#F8FAFB]/5" : "bg-[#EDF2F7]"
             }`}>
                 <motion.div
-                    className={`h-full rounded-full ${isDark ? "bg-gradient-to-r from-cyan-500 to-sky-500 shadow-sm shadow-cyan-500/30" : "bg-gradient-to-r from-sky-700 to-sky-500"}`}
+                    className={`h-full rounded-full ${isDark ? "bg-gradient-to-r from-cyan-500 to-sky-500 shadow-sm shadow-cyan-500/30" : "bg-gradient-to-r from-cyan-500 to-sky-500"}`}
                     style={{ width: barWidth }}
                 />
             </div>
@@ -114,19 +114,21 @@ function LevelCard({ lvl, index, isDark, theme: _theme, sectionProgress }: {
                 className={`relative rounded-2xl border backdrop-blur-sm p-6 h-full flex flex-col gap-3 transition-all duration-300 ${
                     isDark
                         ? `bg-[#0E0E0D]/70 ${neon.border} shadow-lg ${neon.glow}`
-                        : "bg-white border border-slate-200 hover:border-sky-400"
+                        : `bg-white ${neon.lightBorder} shadow-md shadow-stone-200/50`
                 }`}
-                whileHover={isDark ? { y: -4, borderColor: neon.border.replace("/50", "/80") } : { y: -4 }}
+                whileHover={isDark ? { y: -4, borderColor: neon.border.replace("/50", "/80") } : { y: -4, borderColor: neon.lightBorder.replace("/60", "/90") }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
             >
                 {isDark && (
                     <div className={`absolute top-0 right-0 w-12 h-12 rounded-bl-xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-15 ${neon.badge}`} />
                 )}
+                {!isDark && (
+                    <div className={`absolute top-0 right-0 w-12 h-12 rounded-bl-xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-10 ${neon.lightBadge}`} />
+                )}
 
                 <div className="flex items-center gap-2">
                     <span
-                        className={`w-2.5 h-2.5 rounded-full shrink-0 ${isDark ? neon.dotBg : ""}`}
-                        style={{ backgroundColor: isDark ? undefined : lvl.accent }}
+                        className={`w-2.5 h-2.5 rounded-full shrink-0 ${isDark ? neon.dotBg : neon.lightDotBg}`}
                     />
                     <h3 className={`text-base font-semibold ${
                         isDark ? "text-slate-100" : "text-slate-900"
@@ -154,7 +156,7 @@ function LevelCard({ lvl, index, isDark, theme: _theme, sectionProgress }: {
                 </p>
 
                 <span className={`text-xs font-mono font-medium ${
-                    isDark ? neon.badge : "text-slate-400"
+                    isDark ? neon.badge : neon.lightBadge
                 }`}>
                     Score: {lvl.score}
                 </span>
@@ -192,7 +194,7 @@ export function MaturitySection({ theme }: { theme: string }) {
                     style={{ y: headerY, opacity: headerOpacity }}
                 >
                     <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-cyan-400" : "text-sky-700"
+                        isDark ? "text-cyan-400" : "text-cyan-600"
                     }`}>
                         Dove sei oggi?
                     </span>
@@ -200,14 +202,14 @@ export function MaturitySection({ theme }: { theme: string }) {
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Ogni PMI ha un livello di{" "}
-                        <span className={isDark ? "text-cyan-400" : "text-sky-700"}>
-                            maturità digitale misurabile.
+                        <span className={isDark ? "text-cyan-400" : "text-cyan-600"}>
+                            maturit\u00E0 digitale misurabile.
                         </span>
                     </h2>
                     <p className={`mt-5 text-lg max-w-2xl mx-auto ${
                         isDark ? "text-slate-400" : "text-slate-600"
                     }`}>
-                        Il nostro assessment misura processi, tecnologia, dati e automazione con un modello strutturato. Il risultato non è un numero generico \u2014 è una mappa precisa di dove intervenire per ottenere il massimo impatto nel minor tempo.
+                        Il nostro assessment misura processi, tecnologia, dati e automazione con un modello strutturato. Il risultato non \u00E8 un numero generico \u2014 \u00E8 una mappa precisa di dove intervenire per ottenere il massimo impatto nel minor tempo.
                     </p>
                 </motion.div>
 
@@ -234,7 +236,7 @@ export function MaturitySection({ theme }: { theme: string }) {
                         className={`relative rounded-2xl border backdrop-blur-sm p-8 sm:p-10 max-w-3xl mx-auto transition-all duration-300 ${
                             isDark
                                 ? "bg-[#0E0E0D]/70 border-cyan-500/30 shadow-lg shadow-cyan-500/10"
-                                : "bg-white border border-slate-200"
+                                : "bg-white border-cyan-500/40 shadow-md shadow-stone-200/50"
                         }`}
                     >
                         <h3 className={`text-xl font-semibold mb-8 text-center ${
@@ -258,7 +260,7 @@ export function MaturitySection({ theme }: { theme: string }) {
                         <p className={`mt-8 text-xs text-center ${
                             isDark ? "text-slate-600" : "text-slate-400"
                         }`}>
-                            I pesi sono calibrati su dati reali di PMI italiane. I processi pesano di più perché è lì che si genera \u2014 o si perde \u2014 il margine operativo.
+                            I pesi sono calibrati su dati reali di PMI italiane. I processi pesano di pi\u00F9 perch\u00E9 \u00E8 l\u00EC che si genera \u2014 o si perde \u2014 il margine operativo.
                         </p>
                     </motion.div>
                 </motion.div>

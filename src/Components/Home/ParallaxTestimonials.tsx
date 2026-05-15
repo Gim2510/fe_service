@@ -43,9 +43,9 @@ const cardDepths = [0.05, -0.03, 0.07];
 const cardRotations = [-4, 0, 4];
 
 const neonTestimonialColors = [
-    { border: "border-cyan-500/50", glow: "shadow-cyan-500/15", quote: "text-cyan-400/60", badgeBg: "bg-cyan-500/10", badgeBorder: "border-cyan-500/20", dotBg: "bg-cyan-400", sector: "text-cyan-400/70" },
-    { border: "border-violet-500/50", glow: "shadow-violet-500/15", quote: "text-violet-400/60", badgeBg: "bg-violet-500/10", badgeBorder: "border-violet-500/20", dotBg: "bg-violet-400", sector: "text-violet-400/70" },
-    { border: "border-emerald-500/50", glow: "shadow-emerald-500/15", quote: "text-emerald-400/60", badgeBg: "bg-emerald-500/10", badgeBorder: "border-emerald-500/20", dotBg: "bg-emerald-400", sector: "text-emerald-400/70" },
+    { border: "border-cyan-500/50", glow: "shadow-cyan-500/15", quote: "text-cyan-400/60", badgeBg: "bg-cyan-500/10", badgeBorder: "border-cyan-500/20", dotBg: "bg-cyan-400", sector: "text-cyan-400/70", lightBorder: "border-cyan-500/60", lightQuote: "text-cyan-600/60", lightBadgeBg: "bg-cyan-50", lightBadgeBorder: "border-cyan-500/30", lightDotBg: "bg-cyan-500", lightSector: "text-cyan-600" },
+    { border: "border-violet-500/50", glow: "shadow-violet-500/15", quote: "text-violet-400/60", badgeBg: "bg-violet-500/10", badgeBorder: "border-violet-500/20", dotBg: "bg-violet-400", sector: "text-violet-400/70", lightBorder: "border-violet-500/60", lightQuote: "text-violet-600/60", lightBadgeBg: "bg-violet-50", lightBadgeBorder: "border-violet-500/30", lightDotBg: "bg-violet-500", lightSector: "text-violet-600" },
+    { border: "border-emerald-500/50", glow: "shadow-emerald-500/15", quote: "text-emerald-400/60", badgeBg: "bg-emerald-500/10", badgeBorder: "border-emerald-500/20", dotBg: "bg-emerald-400", sector: "text-emerald-400/70", lightBorder: "border-emerald-500/60", lightQuote: "text-emerald-600/60", lightBadgeBg: "bg-emerald-50", lightBadgeBorder: "border-emerald-500/30", lightDotBg: "bg-emerald-500", lightSector: "text-emerald-600" },
 ];
 
 function TestimonialCard({ t, i, isDark, theme: _theme, scrollYProgress }: {
@@ -81,18 +81,21 @@ function TestimonialCard({ t, i, isDark, theme: _theme, scrollYProgress }: {
                 className={`relative rounded-2xl border backdrop-blur-sm p-7 h-full flex flex-col gap-5 transition-all duration-300 ${
                     isDark
                         ? `bg-[#0E0E0D]/70 ${colors.border} shadow-lg ${colors.glow}`
-                        : "bg-white border border-slate-200 hover:border-sky-400"
+                        : `bg-white ${colors.lightBorder} shadow-md shadow-stone-200/50`
                 }`}
-                whileHover={isDark ? { y: -4, borderColor: colors.border.replace("/50", "/80") } : { y: -4 }}
+                whileHover={isDark ? { y: -4, borderColor: colors.border.replace("/50", "/80") } : { y: -4, borderColor: colors.lightBorder.replace("/60", "/90") }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
             >
                 {isDark && (
                     <div className={`absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-15 ${colors.quote}`} />
                 )}
+                {!isDark && (
+                    <div className={`absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-10 ${colors.lightQuote}`} />
+                )}
 
                 <Quote
                     size={20}
-                    className={`shrink-0 ${isDark ? colors.quote : "text-sky-400"}`}
+                    className={`shrink-0 ${isDark ? colors.quote : colors.lightQuote}`}
                 />
                 <p className={`text-sm leading-relaxed flex-1 italic ${
                     isDark ? "text-slate-400" : "text-slate-600"
@@ -102,12 +105,12 @@ function TestimonialCard({ t, i, isDark, theme: _theme, scrollYProgress }: {
                 <div className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full w-fit ${
                     isDark
                         ? `${colors.badgeBg} border ${colors.badgeBorder}`
-                        : "bg-slate-50 border border-slate-200"
+                        : `${colors.lightBadgeBg} border ${colors.lightBadgeBorder}`
                 }`}>
-                    <span className={`w-1.5 h-1.5 rounded-full ${isDark ? colors.dotBg : t.resultColor.replace("text-", "bg-")}`} />
+                    <span className={`w-1.5 h-1.5 rounded-full ${isDark ? colors.dotBg : colors.lightDotBg}`} />
                     <span className={isDark ? t.resultColor : t.resultColor}>{t.result}</span>
                 </div>
-                <div className={`border-t pt-5 ${isDark ? "border-stone-800/40" : "border-slate-100"}`}>
+                <div className={`border-t pt-5 ${isDark ? "border-stone-800/40" : "border-stone-200"}`}>
                     <p className={`text-sm font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>
                         {t.name}
                     </p>
@@ -115,7 +118,7 @@ function TestimonialCard({ t, i, isDark, theme: _theme, scrollYProgress }: {
                         {t.role} · {t.company}
                     </p>
                     <span className={`mt-2 inline-block text-xs font-medium uppercase tracking-wider ${
-                        isDark ? colors.sector : "text-sky-500"
+                        isDark ? colors.sector : colors.lightSector
                     }`}>
                         {t.sector}
                     </span>
@@ -154,7 +157,7 @@ export function ParallaxTestimonials({ theme }: { theme: string }) {
                     style={{ y: headerY, opacity: headerOpacity }}
                 >
                     <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-cyan-400" : "text-sky-700"
+                        isDark ? "text-cyan-400" : "text-cyan-600"
                     }`}>
                         Casi reali
                     </span>
@@ -162,7 +165,7 @@ export function ParallaxTestimonials({ theme }: { theme: string }) {
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         PMI che hanno smesso{" "}
-                        <span className={isDark ? "text-cyan-400" : "text-sky-700"}>
+                        <span className={isDark ? "text-cyan-400" : "text-cyan-600"}>
                             di perdere margine.
                         </span>
                     </h2>

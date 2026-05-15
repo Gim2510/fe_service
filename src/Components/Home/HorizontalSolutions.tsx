@@ -107,7 +107,7 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                     style={{ scale: headerScale, opacity: headerOpacity }}
                 >
                     <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-cyan-400" : "text-sky-700"
+                        isDark ? "text-cyan-400" : "text-cyan-600"
                     }`}>
                         Soluzioni su misura
                     </span>
@@ -115,7 +115,7 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Non vendiamo software.{" "}
-                        <span className={isDark ? "text-cyan-400" : "text-sky-700"}>
+                        <span className={isDark ? "text-cyan-400" : "text-cyan-600"}>
                             Risolviamo problemi.
                         </span>
                     </h2>
@@ -193,9 +193,9 @@ function SolutionCard({ item, index, isDark, theme: _theme, progress }: {
 
     // Neon glow colors per card (cycling through cyan, violet, emerald)
     const neonColors = [
-        { border: "border-cyan-500/50", glow: "shadow-cyan-500/20", icon: "text-cyan-400", bg: "bg-cyan-950/40", badge: "text-cyan-400" },
-        { border: "border-violet-500/50", glow: "shadow-violet-500/20", icon: "text-violet-400", bg: "bg-violet-950/40", badge: "text-violet-400" },
-        { border: "border-emerald-500/50", glow: "shadow-emerald-500/20", icon: "text-emerald-400", bg: "bg-emerald-950/40", badge: "text-emerald-400" },
+        { border: "border-cyan-500/50", glow: "shadow-cyan-500/20", icon: "text-cyan-400", bg: "bg-cyan-950/40", badge: "text-cyan-400", lightBorder: "border-cyan-500/60", lightIcon: "text-cyan-600", lightBg: "bg-cyan-50", lightBadge: "text-cyan-600" },
+        { border: "border-violet-500/50", glow: "shadow-violet-500/20", icon: "text-violet-400", bg: "bg-violet-950/40", badge: "text-violet-400", lightBorder: "border-violet-500/60", lightIcon: "text-violet-600", lightBg: "bg-violet-50", lightBadge: "text-violet-600" },
+        { border: "border-emerald-500/50", glow: "shadow-emerald-500/20", icon: "text-emerald-400", bg: "bg-emerald-950/40", badge: "text-emerald-400", lightBorder: "border-emerald-500/60", lightIcon: "text-emerald-600", lightBg: "bg-emerald-50", lightBadge: "text-emerald-600" },
     ];
     const colors = neonColors[index % neonColors.length];
 
@@ -212,19 +212,21 @@ function SolutionCard({ item, index, isDark, theme: _theme, progress }: {
                 className={`relative rounded-2xl border backdrop-blur-sm p-8 h-full min-h-[240px] flex flex-col gap-5 transition-all duration-300 ${
                     isDark
                         ? `bg-[#0E0E0D]/70 ${colors.border} hover:${colors.border.replace("/50", "/80")} shadow-lg ${colors.glow}`
-                        : "bg-white border border-slate-200 hover:border-sky-400"
+                        : `bg-white ${colors.lightBorder} hover:${colors.lightBorder.replace("/60", "/90")} shadow-md shadow-stone-200/50`
                 }`}
                 whileHover={{ y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
             >
-                {/* Neon corner accent */}
                 {isDark && (
                     <div className={`absolute top-0 right-0 w-16 h-16 rounded-bl-3xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-20 ${colors.icon}`} />
                 )}
+                {!isDark && (
+                    <div className={`absolute top-0 right-0 w-16 h-16 rounded-bl-3xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-10 ${colors.lightIcon}`} />
+                )}
 
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                    isDark ? colors.bg : "bg-sky-50"
+                    isDark ? colors.bg : colors.lightBg
                 }`}>
-                    <Icon size={22} className={isDark ? colors.icon : "text-sky-700"} />
+                    <Icon size={22} className={isDark ? colors.icon : colors.lightIcon} />
                 </div>
 
                 <h3 className={`text-lg font-semibold ${
@@ -240,8 +242,8 @@ function SolutionCard({ item, index, isDark, theme: _theme, progress }: {
                 </p>
 
                 <div className="flex items-center gap-2">
-                    <CheckCircle2 size={14} className={isDark ? colors.badge : "text-sky-700"} />
-                    <span className={`text-xs ${isDark ? colors.badge : "text-sky-700"}`}>
+                    <CheckCircle2 size={14} className={isDark ? colors.badge : colors.lightBadge} />
+                    <span className={`text-xs ${isDark ? colors.badge : colors.lightBadge}`}>
                         Su misura per PMI
                     </span>
                 </div>
