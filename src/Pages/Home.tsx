@@ -1,5 +1,4 @@
 import { useTheme } from "../Context/ThemeContext.tsx";
-import { logos } from "../staticData/logos.ts";
 
 // Cinematic parallax components
 import { CinematicHero } from "../Components/Home/CinematicHero.tsx";
@@ -81,10 +80,7 @@ export function Home() {
                         "KPI definiti prima di iniziare",
                         "Nessun impegno iniziale",
                     ]}
-                    logos={logos}
                 />
-
-                {/* Scroll-driven progress bars */}
                 <MaturitySection theme={theme} />
 
                 {/* Sticky FAQ with stagger slide-in */}
