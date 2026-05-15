@@ -11,12 +11,12 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useRef } from "react";
-import { GlassCard } from "./GlassCard.tsx";
 
 /* ── HorizontalSolutions ─────────────────────────────────────────────────────
    Sticky container: as the user scrolls vertically, the content scrolls
    horizontally. The section "pins" while the cards slide left.
    Each solution card scales up from 0.8 as it enters the viewport center.
+   Dark mode: futuristic neon aesthetic with glow effects.
    ────────────────────────────────────────────────────────────────────────── */
 
 const punti: { title: string; desc: string; icon: LucideIcon }[] = [
@@ -68,33 +68,46 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
 
     const sp = { stiffness: 80, damping: 28, mass: 0.8 };
 
-    // Map vertical scroll to horizontal movement — cards begin further right,
-    // delayed start (0.12) so the header settles before cards begin sliding
-    const x = useSpring(useTransform(scrollYProgress, [0.12, 1], ["30%", "-68%"]), sp);
+    // Header animation — title appears first
+    const headerScale   = useSpring(useTransform(scrollYProgress, [0, 0.08], [0.96, 1]), sp);
+    const headerOpacity = useSpring(useTransform(scrollYProgress, [0, 0.08], [0, 1]), sp);
 
-    // Header parallax — fast entrance, settled well before cards move
-    const headerScale   = useSpring(useTransform(scrollYProgress, [0, 0.06], [0.96, 1]), sp);
-    const headerOpacity = useSpring(useTransform(scrollYProgress, [0, 0.06], [0, 1]), sp);
+    // Cards hidden initially, appear after header settles
+    const cardsRevealStart = 0.08;
+    const cardsRevealEnd   = 0.18;
+    const cardsOpacity = useSpring(
+        useTransform(scrollYProgress, [cardsRevealStart, cardsRevealEnd], [0, 1]),
+        sp
+    );
+
+    // Horizontal scroll starts AFTER cards are fully visible
+    const x = useSpring(
+        useTransform(scrollYProgress, [0.22, 1], ["35%", "-72%"]),
+        sp
+    );
 
     return (
         <section
             ref={containerRef}
             className="relative"
-            // Height determines how much vertical scroll maps to horizontal distance
             style={{ height: "300vh" }}
         >
             <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
                 {isDark && (
-                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-stone-700/40 to-transparent pointer-events-none" />
+                    <>
+                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent pointer-events-none" />
+                        {/* Ambient glow background */}
+                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyan-950/20 via-transparent to-transparent pointer-events-none" />
+                    </>
                 )}
 
                 {/* Section header */}
                 <motion.div
-                    className="mx-auto max-w-7xl px-6 sm:px-8 mb-10"
+                    className="mx-auto max-w-7xl px-6 sm:px-8 mb-12"
                     style={{ scale: headerScale, opacity: headerOpacity }}
                 >
                     <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-sky-500" : "text-sky-700"
+                        isDark ? "text-cyan-400" : "text-sky-700"
                     }`}>
                         Soluzioni su misura
                     </span>
@@ -102,7 +115,7 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Non vendiamo software.{" "}
-                        <span className={isDark ? "text-sky-500" : "text-sky-700"}>
+                        <span className={isDark ? "text-cyan-400" : "text-sky-700"}>
                             Risolviamo problemi.
                         </span>
                     </h2>
@@ -114,21 +127,24 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                 </motion.div>
 
                 {/* Horizontal scroll track */}
-                <div className="relative w-full overflow-visible">
+                <motion.div
+                    className="relative w-full overflow-visible"
+                    style={{ opacity: cardsOpacity }}
+                >
                     {/* Edge fades */}
-                    <div className={`absolute inset-y-0 left-0 w-20 z-10 pointer-events-none ${
+                    <div className={`absolute inset-y-0 left-0 w-24 z-10 pointer-events-none ${
                         isDark
                             ? "bg-gradient-to-r from-[#0E0E0D] to-transparent"
                             : "bg-gradient-to-r from-[#FAFAF8] to-transparent"
                     }`} />
-                    <div className={`absolute inset-y-0 right-0 w-20 z-10 pointer-events-none ${
+                    <div className={`absolute inset-y-0 right-0 w-24 z-10 pointer-events-none ${
                         isDark
                             ? "bg-gradient-to-l from-[#0E0E0D] to-transparent"
                             : "bg-gradient-to-l from-[#FAFAF8] to-transparent"
                     }`} />
 
                     <motion.div
-                        className="flex gap-6 px-8 sm:px-16"
+                        className="flex gap-10 px-8 sm:px-20"
                         style={{ x }}
                     >
                         {punti.map((item, i) => (
@@ -142,13 +158,13 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                             />
                         ))}
                     </motion.div>
-                </div>
+                </motion.div>
 
                 {/* Scroll progress indicator */}
-                <div className="mx-auto max-w-7xl px-6 sm:px-8 mt-8">
+                <div className="mx-auto max-w-7xl px-6 sm:px-8 mt-10">
                     <div className={`h-0.5 rounded-full max-w-xs ${isDark ? "bg-stone-800" : "bg-slate-200"}`}>
                         <motion.div
-                            className="h-full rounded-full bg-sky-600"
+                            className="h-full rounded-full bg-cyan-500"
                             style={{ scaleX: scrollYProgress, transformOrigin: "left" }}
                         />
                     </div>
@@ -158,7 +174,7 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
     );
 }
 
-function SolutionCard({ item, index, isDark, theme, progress }: {
+function SolutionCard({ item, index, isDark, theme: _theme, progress }: {
     item: typeof punti[0];
     index: number;
     isDark: boolean;
@@ -166,48 +182,71 @@ function SolutionCard({ item, index, isDark, theme, progress }: {
     progress: ReturnType<typeof useScroll>["scrollYProgress"];
 }) {
     const sp = { stiffness: 80, damping: 28, mass: 0.8 };
-    // Offset card activation ranges to account for the delayed scroll start
-    const cardStart = 0.14 + index * 0.09;
-    const cardEnd   = cardStart + 0.12;
-    const scale     = useSpring(useTransform(progress, [cardStart, cardEnd], [0.94, 1]), sp);
-    const opacity   = useSpring(useTransform(progress, [cardStart, cardEnd], [0.78, 1]), sp);
-    const rotateY   = useSpring(useTransform(progress, [cardStart, cardEnd], [4, 0]), sp);
+    
+    // Card activation ranges — staggered after reveal
+    const cardStart = 0.20 + index * 0.10;
+    const cardEnd   = cardStart + 0.14;
+    const scale     = useSpring(useTransform(progress, [cardStart, cardEnd], [0.92, 1]), sp);
+    const rotateY   = useSpring(useTransform(progress, [cardStart, cardEnd], [6, 0]), sp);
 
     const Icon = item.icon;
 
+    // Neon glow colors per card (cycling through cyan, violet, emerald)
+    const neonColors = [
+        { border: "border-cyan-500/50", glow: "shadow-cyan-500/20", icon: "text-cyan-400", bg: "bg-cyan-950/40", badge: "text-cyan-400" },
+        { border: "border-violet-500/50", glow: "shadow-violet-500/20", icon: "text-violet-400", bg: "bg-violet-950/40", badge: "text-violet-400" },
+        { border: "border-emerald-500/50", glow: "shadow-emerald-500/20", icon: "text-emerald-400", bg: "bg-emerald-950/40", badge: "text-emerald-400" },
+    ];
+    const colors = neonColors[index % neonColors.length];
+
     return (
         <motion.div
-            className="shrink-0 w-[280px] sm:w-[320px]"
+            className="shrink-0 w-[300px] sm:w-[360px]"
             style={{
                 scale,
-                opacity,
                 rotateY,
                 transformStyle: "preserve-3d",
             }}
         >
-            <GlassCard theme={theme} className="p-7 h-full min-h-[220px] flex flex-col gap-4">
-                <div className={`w-11 h-11 rounded-lg flex items-center justify-center ${
-                    isDark ? "bg-sky-900/30" : "bg-sky-50"
+            <motion.div
+                className={`relative rounded-2xl border backdrop-blur-sm p-8 h-full min-h-[240px] flex flex-col gap-5 transition-all duration-300 ${
+                    isDark
+                        ? `bg-[#0E0E0D]/70 ${colors.border} hover:${colors.border.replace("/50", "/80")} shadow-lg ${colors.glow}`
+                        : "bg-white border border-slate-200 hover:border-sky-400"
+                }`}
+                whileHover={{ y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
+            >
+                {/* Neon corner accent */}
+                {isDark && (
+                    <div className={`absolute top-0 right-0 w-16 h-16 rounded-bl-3xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-20 ${colors.icon}`} />
+                )}
+
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                    isDark ? colors.bg : "bg-sky-50"
                 }`}>
-                    <Icon size={20} className={isDark ? "text-sky-400" : "text-sky-700"} />
+                    <Icon size={22} className={isDark ? colors.icon : "text-sky-700"} />
                 </div>
+
                 <h3 className={`text-lg font-semibold ${
                     isDark ? "text-slate-100" : "text-slate-800"
                 }`}>
                     {item.title}
                 </h3>
+
                 <p className={`text-sm leading-relaxed flex-1 ${
                     isDark ? "text-slate-400" : "text-slate-600"
                 }`}>
                     {item.desc}
                 </p>
+
                 <div className="flex items-center gap-2">
-                    <CheckCircle2 size={14} className="text-sky-500 shrink-0" />
-                    <span className={`text-xs ${isDark ? "text-sky-600" : "text-sky-700"}`}>
+                    <CheckCircle2 size={14} className={isDark ? colors.badge : "text-sky-700"} />
+                    <span className={`text-xs ${isDark ? colors.badge : "text-sky-700"}`}>
                         Su misura per PMI
                     </span>
                 </div>
-            </GlassCard>
+            </motion.div>
         </motion.div>
     );
 }
+

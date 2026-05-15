@@ -1,12 +1,12 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Quote } from "lucide-react";
 import { useRef } from "react";
-import { GlassCard } from "./GlassCard.tsx";
 
 /* ── ParallaxTestimonials ────────────────────────────────────────────────────
    Cards enter with 3D perspective rotation — left card rotates from left,
    center comes straight, right rotates from right. As the section scrolls,
    cards float at different vertical speeds, creating depth.
+   Dark mode: neon glow borders with glowing quote icons and result badges.
    ────────────────────────────────────────────────────────────────────────── */
 
 const testimonials = [
@@ -17,7 +17,7 @@ const testimonials = [
         company: "Ferretti Distribuzione Srl",
         sector: "Distribuzione",
         result: "\u221240% attivit\u00E0 manuali",
-        resultColor: "text-sky-500",
+        resultColor: "text-cyan-400",
     },
     {
         quote: "Avevamo dati ovunque e visibilit\u00E0 zero. Oggi ho una dashboard che mi dice ogni mattina dove siamo sul budget, il forecast e le priorit\u00E0 del team. Non torno indietro.",
@@ -26,7 +26,7 @@ const testimonials = [
         company: "Marchetti & Partners",
         sector: "Servizi professionali",
         result: "Forecast accuracy +68%",
-        resultColor: "text-sky-500",
+        resultColor: "text-violet-400",
     },
     {
         quote: "Il nostro CRM era un cimitero di contatti. Ora il funnel \u00E8 vivo, il team commerciale sa esattamente su chi lavorare e il tasso di chiusura \u00E8 raddoppiato in sei mesi.",
@@ -35,19 +35,25 @@ const testimonials = [
         company: "Bianchi Impianti SpA",
         sector: "Impiantistica industriale",
         result: "\u00D72 tasso di chiusura",
-        resultColor: "text-sky-500",
+        resultColor: "text-emerald-400",
     },
 ];
 
-// Different parallax speeds per card to create depth
 const cardDepths = [0.05, -0.03, 0.07];
-const cardRotations = [-4, 0, 4]; // Y rotation on entry
+const cardRotations = [-4, 0, 4];
 
-function TestimonialCard({ t, i, isDark, theme, scrollYProgress }: {
+const neonTestimonialColors = [
+    { border: "border-cyan-500/50", glow: "shadow-cyan-500/15", quote: "text-cyan-400/60", badgeBg: "bg-cyan-500/10", badgeBorder: "border-cyan-500/20", dotBg: "bg-cyan-400", sector: "text-cyan-400/70" },
+    { border: "border-violet-500/50", glow: "shadow-violet-500/15", quote: "text-violet-400/60", badgeBg: "bg-violet-500/10", badgeBorder: "border-violet-500/20", dotBg: "bg-violet-400", sector: "text-violet-400/70" },
+    { border: "border-emerald-500/50", glow: "shadow-emerald-500/15", quote: "text-emerald-400/60", badgeBg: "bg-emerald-500/10", badgeBorder: "border-emerald-500/20", dotBg: "bg-emerald-400", sector: "text-emerald-400/70" },
+];
+
+function TestimonialCard({ t, i, isDark, theme: _theme, scrollYProgress }: {
     t: typeof testimonials[0]; i: number; isDark: boolean; theme: string;
     scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"];
 }) {
     const cardY = useSpring(useTransform(scrollYProgress, [0, 1], [0, cardDepths[i] * 140]), { stiffness: 80, damping: 28, mass: 0.8 });
+    const colors = neonTestimonialColors[i % neonTestimonialColors.length];
 
     return (
         <motion.div
@@ -71,10 +77,22 @@ function TestimonialCard({ t, i, isDark, theme, scrollYProgress }: {
                 ease: [0.22, 1, 0.36, 1],
             }}
         >
-            <GlassCard theme={theme} className="p-7 h-full flex flex-col gap-5">
+            <motion.div
+                className={`relative rounded-2xl border backdrop-blur-sm p-7 h-full flex flex-col gap-5 transition-all duration-300 ${
+                    isDark
+                        ? `bg-[#0E0E0D]/70 ${colors.border} shadow-lg ${colors.glow}`
+                        : "bg-white border border-slate-200 hover:border-sky-400"
+                }`}
+                whileHover={isDark ? { y: -4, borderColor: colors.border.replace("/50", "/80") } : { y: -4 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+                {isDark && (
+                    <div className={`absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-15 ${colors.quote}`} />
+                )}
+
                 <Quote
                     size={20}
-                    className={`shrink-0 ${isDark ? "text-sky-700/60" : "text-sky-400"}`}
+                    className={`shrink-0 ${isDark ? colors.quote : "text-sky-400"}`}
                 />
                 <p className={`text-sm leading-relaxed flex-1 italic ${
                     isDark ? "text-slate-400" : "text-slate-600"
@@ -82,25 +100,27 @@ function TestimonialCard({ t, i, isDark, theme, scrollYProgress }: {
                     &ldquo;{t.quote}&rdquo;
                 </p>
                 <div className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full w-fit ${
-                    isDark ? "bg-stone-800/60 border border-stone-700/40" : "bg-slate-50 border border-slate-200"
+                    isDark
+                        ? `${colors.badgeBg} border ${colors.badgeBorder}`
+                        : "bg-slate-50 border border-slate-200"
                 }`}>
-                    <span className={`w-1.5 h-1.5 rounded-full ${t.resultColor.replace("text-", "bg-")}`} />
-                    <span className={t.resultColor}>{t.result}</span>
+                    <span className={`w-1.5 h-1.5 rounded-full ${isDark ? colors.dotBg : t.resultColor.replace("text-", "bg-")}`} />
+                    <span className={isDark ? t.resultColor : t.resultColor}>{t.result}</span>
                 </div>
                 <div className={`border-t pt-5 ${isDark ? "border-stone-800/40" : "border-slate-100"}`}>
                     <p className={`text-sm font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>
                         {t.name}
                     </p>
                     <p className={`text-xs mt-0.5 ${isDark ? "text-slate-500" : "text-slate-500"}`}>
-                        {t.role} · {t.company}
+                        {t.role} \u00B7 {t.company}
                     </p>
                     <span className={`mt-2 inline-block text-xs font-medium uppercase tracking-wider ${
-                        isDark ? "text-sky-700" : "text-sky-500"
+                        isDark ? colors.sector : "text-sky-500"
                     }`}>
                         {t.sector}
                     </span>
                 </div>
-            </GlassCard>
+            </motion.div>
         </motion.div>
     );
 }
@@ -121,18 +141,20 @@ export function ParallaxTestimonials({ theme }: { theme: string }) {
     return (
         <section ref={sectionRef} className="relative overflow-hidden">
             {isDark && (
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-700/40 to-transparent pointer-events-none" />
+                <>
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyan-950/10 via-transparent to-transparent pointer-events-none" />
+                </>
             )}
 
             <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-20 sm:py-32">
 
-                {/* Header */}
                 <motion.div
                     className="text-center mb-16"
                     style={{ y: headerY, opacity: headerOpacity }}
                 >
                     <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-sky-500" : "text-sky-700"
+                        isDark ? "text-cyan-400" : "text-sky-700"
                     }`}>
                         Casi reali
                     </span>
@@ -140,7 +162,7 @@ export function ParallaxTestimonials({ theme }: { theme: string }) {
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         PMI che hanno smesso{" "}
-                        <span className={isDark ? "text-sky-500" : "text-sky-700"}>
+                        <span className={isDark ? "text-cyan-400" : "text-sky-700"}>
                             di perdere margine.
                         </span>
                     </h2>
@@ -152,8 +174,7 @@ export function ParallaxTestimonials({ theme }: { theme: string }) {
                     </p>
                 </motion.div>
 
-                {/* Cards with depth parallax */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6" style={{ perspective: "1200px" }}>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8" style={{ perspective: "1200px" }}>
                     {testimonials.map((t, i) => (
                         <TestimonialCard
                             key={t.name}
