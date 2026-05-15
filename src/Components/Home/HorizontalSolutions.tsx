@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import {
     CheckCircle2,
     BarChart3,
@@ -12,12 +12,12 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { useRef } from "react";
 
-/* ── HorizontalSolutions ─────────────────────────────────────────────────────
+/* â”€â”€ HorizontalSolutions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Sticky container: as the user scrolls vertically, the content scrolls
    horizontally. The section "pins" while the cards slide left.
    Each solution card scales up from 0.8 as it enters the viewport center.
    Dark mode: futuristic neon aesthetic with glow effects.
-   ────────────────────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 const punti: { title: string; desc: string; icon: LucideIcon }[] = [
     {
@@ -68,9 +68,15 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
 
     const sp = { stiffness: 80, damping: 28, mass: 0.8 };
 
+<<<<<<< HEAD
     // Header: title appears quickly then stays visible
     const headerScale   = useSpring(useTransform(scrollYProgress, [0, 0.05], [0.96, 1]), sp);
     const headerOpacity = useSpring(useTransform(scrollYProgress, [0, 0.05], [0, 1]), sp);
+=======
+    // Header animation â€” title appears first
+    const headerScale   = useSpring(useTransform(scrollYProgress, [0, 0.08], [0.96, 1]), sp);
+    const headerOpacity = useSpring(useTransform(scrollYProgress, [0, 0.08], [0, 1]), sp);
+>>>>>>> TBDO-13
 
     // Cards appear right after header, earlier than before
     const cardsRevealStart = 0.05;
@@ -111,7 +117,7 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                     }`}>
                         Soluzioni su misura
                     </span>
-                    <h2 className={`font-fjalla text-3xl sm:text-5xl font-semibold leading-tight mt-3 ${
+                    <h2 className={`font-fjalla text-3xl font-semibold leading-tight mt-3 ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Non vendiamo software.{" "}
@@ -122,7 +128,11 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                     <p className={`mt-4 text-base leading-relaxed max-w-xl ${
                         isDark ? "text-slate-400" : "text-slate-600"
                     }`}>
+<<<<<<< HEAD
                         Partiamo dai tuoi processi reali, non da un catalogo. Ogni soluzione è progettata per il tuo contesto.
+=======
+                        Partiamo dai tuoi processi reali â€” non da un catalogo. Ogni soluzione Ã¨ progettata per il tuo contesto.
+>>>>>>> TBDO-13
                     </p>
                 </motion.div>
 
@@ -183,8 +193,13 @@ function SolutionCard({ item, index, isDark, theme: _theme, progress }: {
 }) {
     const sp = { stiffness: 80, damping: 28, mass: 0.8 };
     
+<<<<<<< HEAD
     // Card activation ranges — earlier than before
     const cardStart = 0.14 + index * 0.10;
+=======
+    // Card activation ranges â€” staggered after reveal
+    const cardStart = 0.20 + index * 0.10;
+>>>>>>> TBDO-13
     const cardEnd   = cardStart + 0.14;
     const scale     = useSpring(useTransform(progress, [cardStart, cardEnd], [0.92, 1]), sp);
     const rotateY   = useSpring(useTransform(progress, [cardStart, cardEnd], [6, 0]), sp);

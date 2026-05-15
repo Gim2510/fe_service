@@ -1,12 +1,12 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 
-/* ── ScrollProblems ──────────────────────────────────────────────────────────
+/* â”€â”€ ScrollProblems â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Each card has a unique 3D entrance: they rotate in from different angles as
    the section scrolls into view. The header text parallaxes at a different
    speed. Cards stagger in a masonry-like pattern with perspective transforms.
    Dark mode: neon glow borders with numbered badges.
-   ────────────────────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 const problemi = [
     { title: "«i dati ci sono, ma non li usiamo»", text: "Ogni reparto lavora per conto suo: Excel, CRM parziali, gestionali non collegati. Le decisioni si prendono a sensazione \u2014 e il costo di ogni errore si accumula in silenzio." },
@@ -136,7 +136,7 @@ export function ScrollProblems({ theme }: { theme: string }) {
                     }`}>
                         Ti riconosci?
                     </span>
-                    <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight mt-3 ${
+                    <h2 className={`font-fjalla text-4xl font-semibold leading-tight mt-3 ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Non sono problemi tecnici.

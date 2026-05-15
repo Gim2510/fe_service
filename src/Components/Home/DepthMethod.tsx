@@ -1,12 +1,12 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 
-/* ── DepthMethod ─────────────────────────────────────────────────────────────
+/* â”€â”€ DepthMethod â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Vertical timeline that fills with scroll progress. Each step card zooms
    in from the distance (scale + blur) as it becomes active. The active step
    has a glowing accent. The timeline connector line draws progressively.
    Dark mode: neon glow on step numbers, timeline, and card borders.
-   ────────────────────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 const steps = [
     {
@@ -149,7 +149,7 @@ export function DepthMethod({ theme }: { theme: string }) {
                     }`}>
                         Il nostro metodo
                     </span>
-                    <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight mt-3 ${
+                    <h2 className={`font-fjalla text-4xl font-semibold leading-tight mt-3 ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Tre fasi. Zero improvvisazione.

@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useInView, useSpring } from "framer-motion";
+﻿import { motion, useScroll, useTransform, useInView, useSpring } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -88,9 +88,15 @@ export function StatsReveal({ theme }: { theme: string }) {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <motion.div className="flex flex-col gap-6" style={{ x: textX, opacity: textOpacity }}>
                         <div>
+<<<<<<< HEAD
                             <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-cyan-400" : "text-cyan-600"}`}>Chi siamo</span>
                             <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold leading-tight mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                                 Due fratelli. Un&apos;idea precisa.<span className={`block mt-1 ${isDark ? "text-cyan-400" : "text-cyan-600"}`}>Tecnologia enterprise per PMI.</span>
+=======
+                            <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-cyan-400" : "text-sky-700"}`}>Chi siamo</span>
+                            <h2 className={`font-fjalla text-3xl font-semibold leading-tight mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                                Due fratelli. Un&apos;idea precisa.<span className={`block mt-1 ${isDark ? "text-cyan-400" : "text-sky-700"}`}>Tecnologia enterprise per PMI.</span>
+>>>>>>> TBDO-13
                             </h2>
                         </div>
                         <p className={`text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>AxiomLab nasce da una constatazione semplice: le PMI italiane affrontano gli stessi problemi delle grandi aziende, ma senza le stesse risorse. Da una parte c&apos;\u00E8 chi costruisce sistemi enterprise per clienti come Eni e lavora in startup ad alto ritmo. Dall&apos;altra c&apos;\u00E8 chi studia AI e automazioni con i provider pi\u00F9 avanzati e le applica ai processi reali. In mezzo c&apos;\u00E8 il gap \u2014 e quello \u00E8 il nostro spazio.</p>

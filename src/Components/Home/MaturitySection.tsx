@@ -1,12 +1,12 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 
-/* ── MaturitySection ─────────────────────────────────────────────────────────
+/* â”€â”€ MaturitySection â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Visual meter that fills as user scrolls. Level cards scale in from
    different distances. Weight progress bars animate with scroll position
    rather than intersection, creating smooth fill effect.
    Dark mode: neon glow on level cards, fill bars, and score card.
-   ────────────────────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 const livelli = [
     {
@@ -198,7 +198,7 @@ export function MaturitySection({ theme }: { theme: string }) {
                     }`}>
                         Dove sei oggi?
                     </span>
-                    <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold mt-3 ${
+                    <h2 className={`font-fjalla text-4xl font-semibold mt-3 ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Ogni PMI ha un livello di{" "}

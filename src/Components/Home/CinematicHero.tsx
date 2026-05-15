@@ -1,15 +1,15 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { useRef } from "react";
 import { HeroConstellation } from "./HeroConstellation.tsx";
 import { useNavigate } from "react-router-dom";
 
-/* ── Cinematic Hero ──────────────────────────────────────────────────────────
+/* â”€â”€ Cinematic Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Multi-layer parallax hero: background grid drifts slowly, text staggers in,
    network visualization parallaxes at a different rate, gradient overlays shift
    with scroll. On exit the entire section scales down and fades, revealing
    the next section underneath.
-   ────────────────────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 function ScrollRevealText({ text, className, delay = 0 }: {
     text: string; className?: string; delay?: number;
@@ -47,7 +47,7 @@ export function CinematicHero({ theme }: { theme: string }) {
         offset: ["start start", "end start"],
     });
 
-    // Hero exit effects — spring-smoothed for buttery scroll
+    // Hero exit effects â€” spring-smoothed for buttery scroll
     const springCfg = { stiffness: 80, damping: 28, mass: 0.8 };
 
     const scaleRaw   = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0.94]);
@@ -71,14 +71,14 @@ export function CinematicHero({ theme }: { theme: string }) {
                 opacity: smoothOpacity,
             }}
         >
-            {/* ── Parallax background layer (slowest) ── */}
+            {/* â”€â”€ Parallax background layer (slowest) â”€â”€ */}
             <motion.div
                 className="absolute inset-0 pointer-events-none z-0"
                 style={{ y: bgY }}
             >
                 <div className={`absolute inset-0 ${isDark ? "bg-[#0E0E0D]" : "bg-[#FAFAF8]"}`} />
 
-                {/* Grid texture — drifts slowly */}
+                {/* Grid texture â€” drifts slowly */}
                 <div
                     className={`absolute inset-0 ${isDark ? "opacity-[0.04]" : "opacity-[0.06]"}`}
                     style={{
@@ -87,7 +87,7 @@ export function CinematicHero({ theme }: { theme: string }) {
                     }}
                 />
 
-                {/* Ambient glows — subtle, slow-moving */}
+                {/* Ambient glows â€” subtle, slow-moving */}
                 {isDark && (
                     <>
                     <motion.div
@@ -110,7 +110,7 @@ export function CinematicHero({ theme }: { theme: string }) {
                 )}
             </motion.div>
 
-            {/* ── Network layer (medium parallax) — contained in right half ── */}
+            {/* â”€â”€ Network layer (medium parallax) â€” contained in right half â”€â”€ */}
             <motion.div
                 className="absolute inset-0 pointer-events-none z-[20]"
                 style={{ y: networkY }}
@@ -129,7 +129,7 @@ export function CinematicHero({ theme }: { theme: string }) {
                 </div>
             </motion.div>
 
-            {/* ── Readability gradient — stronger for cleaner text/network separation ── */}
+            {/* â”€â”€ Readability gradient â€” stronger for cleaner text/network separation â”€â”€ */}
             <div
                 className="absolute inset-0 pointer-events-none z-[21]"
                 style={{
@@ -139,7 +139,7 @@ export function CinematicHero({ theme }: { theme: string }) {
                 }}
             />
 
-            {/* ── Bottom fade for section transition ── */}
+            {/* â”€â”€ Bottom fade for section transition â”€â”€ */}
             <div
                 className={`absolute inset-x-0 bottom-0 h-48 z-[22] pointer-events-none ${isDark
                     ? "bg-gradient-to-t from-[#0E0E0D] via-[#0E0E0D]/60 to-transparent"
@@ -147,7 +147,7 @@ export function CinematicHero({ theme }: { theme: string }) {
                 }`}
             />
 
-            {/* ── Content layer (fastest parallax) ── */}
+            {/* â”€â”€ Content layer (fastest parallax) â”€â”€ */}
             <motion.div
                 className="relative z-[25] mx-auto max-w-7xl px-6 sm:px-8 pb-20 pt-32 sm:pt-24 w-full pointer-events-none"
                 style={{ y: textY }}
@@ -172,9 +172,9 @@ export function CinematicHero({ theme }: { theme: string }) {
                     </span>
                 </motion.div>
 
-                {/* Headline — word-by-word reveal, clean Y-only animation */}
+                {/* Headline â€” word-by-word reveal, clean Y-only animation */}
                 <div
-                    className={`font-fjalla text-5xl sm:text-7xl font-semibold leading-[1.1] max-w-2xl ${
+                    className={`font-fjalla text-5xl font-semibold leading-[1.1] max-w-2xl ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}
                 >
@@ -197,7 +197,7 @@ export function CinematicHero({ theme }: { theme: string }) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.9, ease: "easeOut" }}
                 >
-                    Metodi, automazioni e architetture dati dei grandi player, adattati alla tua scala e ai tuoi processi reali.
+                    Metodi, automazioni e architetture dati dei grandi player â€” adattati alla tua scala e ai tuoi processi reali.
                 </motion.p>
 
                 {/* Trust signals */}

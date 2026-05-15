@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Fragment, useRef } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -113,9 +113,15 @@ export function PrivateAIFlow({ theme }: { theme: string }) {
             )}
             <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-20 sm:py-32">
                 <motion.div className="mb-16 text-center max-w-3xl mx-auto" style={{ y: headerY, opacity: headerOpacity }}>
+<<<<<<< HEAD
                     <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-cyan-400" : "text-cyan-600"}`}>AI privata</span>
                     <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         I tuoi dati restano tuoi.<span className={`block mt-1 ${isDark ? "text-cyan-400" : "text-cyan-600"}`}>Sempre.</span>
+=======
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-cyan-400" : "text-sky-700"}`}>AI privata</span>
+                    <h2 className={`font-fjalla text-4xl font-semibold leading-tight mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                        I tuoi dati restano tuoi.<span className={`block mt-1 ${isDark ? "text-cyan-400" : "text-sky-700"}`}>Sempre.</span>
+>>>>>>> TBDO-13
                     </h2>
                     <p className={`mt-5 text-lg ${isDark ? "text-slate-400" : "text-slate-600"}`}>Modelli AI che girano sulla tua infrastruttura. Agenti costruiti sui tuoi processi. Nessun dato condiviso con terze parti, mai.</p>
                 </motion.div>

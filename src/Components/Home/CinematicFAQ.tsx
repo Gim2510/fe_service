@@ -1,12 +1,12 @@
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
+﻿import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
 import { useState, useRef } from "react";
 
-/* ── CinematicFAQ ────────────────────────────────────────────────────────────
+/* â”€â”€ CinematicFAQ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Left label sticks during scroll. FAQ items slide in from right with
    staggered delays. Each item has a subtle parallax offset. The accordion
    animation uses spring physics for natural feel.
-   ────────────────────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 const faqs = [
     {
@@ -128,7 +128,7 @@ export function CinematicFAQ({ theme }: { theme: string }) {
             <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-20 sm:py-32">
                 <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-16 items-start">
 
-                    {/* Left label — sticky with parallax */}
+                    {/* Left label â€” sticky with parallax */}
                     <motion.div
                         className="lg:sticky lg:top-32"
                         style={{ y: leftY, opacity: leftOpacity }}
@@ -138,7 +138,7 @@ export function CinematicFAQ({ theme }: { theme: string }) {
                         }`}>
                             Domande frequenti
                         </span>
-                        <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight mt-3 ${
+                        <h2 className={`font-fjalla text-4xl font-semibold leading-tight mt-3 ${
                             isDark ? "text-slate-100" : "text-slate-900"
                         }`}>
                             Hai dubbi?{" "}
@@ -147,11 +147,11 @@ export function CinematicFAQ({ theme }: { theme: string }) {
                             </span>
                         </h2>
                         <p className={`mt-5 text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                            Se non trovi la risposta che cerchi, scrivici — rispondiamo entro 24 ore.
+                            Se non trovi la risposta che cerchi, scrivici â€” rispondiamo entro 24 ore.
                         </p>
                     </motion.div>
 
-                    {/* Accordion — items slide in from right */}
+                    {/* Accordion â€” items slide in from right */}
                     <div className={`rounded-2xl border px-8 ${
                         isDark
                             ? "bg-[#1C1C1A]/80 border-stone-800/20"

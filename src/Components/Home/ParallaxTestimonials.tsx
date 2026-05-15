@@ -1,13 +1,13 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Quote } from "lucide-react";
 import { useRef } from "react";
 
-/* ── ParallaxTestimonials ────────────────────────────────────────────────────
-   Cards enter with 3D perspective rotation — left card rotates from left,
+/* â”€â”€ ParallaxTestimonials â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   Cards enter with 3D perspective rotation â€” left card rotates from left,
    center comes straight, right rotates from right. As the section scrolls,
    cards float at different vertical speeds, creating depth.
    Dark mode: neon glow borders with glowing quote icons and result badges.
-   ────────────────────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 const testimonials = [
     {
@@ -161,7 +161,7 @@ export function ParallaxTestimonials({ theme }: { theme: string }) {
                     }`}>
                         Casi reali
                     </span>
-                    <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold mt-3 ${
+                    <h2 className={`font-fjalla text-4xl font-semibold mt-3 ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         PMI che hanno smesso{" "}
