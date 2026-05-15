@@ -27,12 +27,12 @@ const cardTransforms = [
 ];
 
 const neonColors = [
-    { border: "border-red-500/50", glow: "shadow-red-500/15", badge: "text-red-400", bg: "bg-red-950/30", badgeBg: "bg-red-500/10" },
-    { border: "border-amber-500/50", glow: "shadow-amber-500/15", badge: "text-amber-400", bg: "bg-amber-950/30", badgeBg: "bg-amber-500/10" },
-    { border: "border-orange-500/50", glow: "shadow-orange-500/15", badge: "text-orange-400", bg: "bg-orange-950/30", badgeBg: "bg-orange-500/10" },
-    { border: "border-rose-500/50", glow: "shadow-rose-500/15", badge: "text-rose-400", bg: "bg-rose-950/30", badgeBg: "bg-rose-500/10" },
-    { border: "border-yellow-500/50", glow: "shadow-yellow-500/15", badge: "text-yellow-400", bg: "bg-yellow-950/30", badgeBg: "bg-yellow-500/10" },
-    { border: "border-pink-500/50", glow: "shadow-pink-500/15", badge: "text-pink-400", bg: "bg-pink-950/30", badgeBg: "bg-pink-500/10" },
+    { border: "border-red-500/50", glow: "shadow-red-500/15", badge: "text-red-400", bg: "bg-red-950/30", badgeBg: "bg-red-500/10", lightBorder: "border-red-500/60", lightBadge: "text-red-600", lightBg: "bg-red-50" },
+    { border: "border-amber-500/50", glow: "shadow-amber-500/15", badge: "text-amber-400", bg: "bg-amber-950/30", badgeBg: "bg-amber-500/10", lightBorder: "border-amber-500/60", lightBadge: "text-amber-600", lightBg: "bg-amber-50" },
+    { border: "border-orange-500/50", glow: "shadow-orange-500/15", badge: "text-orange-400", bg: "bg-orange-950/30", badgeBg: "bg-orange-500/10", lightBorder: "border-orange-500/60", lightBadge: "text-orange-600", lightBg: "bg-orange-50" },
+    { border: "border-rose-500/50", glow: "shadow-rose-500/15", badge: "text-rose-400", bg: "bg-rose-950/30", badgeBg: "bg-rose-500/10", lightBorder: "border-rose-500/60", lightBadge: "text-rose-600", lightBg: "bg-rose-50" },
+    { border: "border-yellow-500/50", glow: "shadow-yellow-500/15", badge: "text-yellow-400", bg: "bg-yellow-950/30", badgeBg: "bg-yellow-500/10", lightBorder: "border-yellow-500/60", lightBadge: "text-yellow-600", lightBg: "bg-yellow-50" },
+    { border: "border-pink-500/50", glow: "shadow-pink-500/15", badge: "text-pink-400", bg: "bg-pink-950/30", badgeBg: "bg-pink-500/10", lightBorder: "border-pink-500/60", lightBadge: "text-pink-600", lightBg: "bg-pink-50" },
 ];
 
 function ParallaxCard({ item, index, isDark }: {
@@ -71,17 +71,20 @@ function ParallaxCard({ item, index, isDark }: {
                 className={`relative rounded-2xl border backdrop-blur-sm p-7 h-full transition-all duration-300 ${
                     isDark
                         ? `bg-[#0E0E0D]/70 ${colors.border} shadow-lg ${colors.glow}`
-                        : "bg-white border border-slate-200 hover:border-sky-400"
+                        : `bg-white ${colors.lightBorder} shadow-md shadow-stone-200/50`
                 }`}
-                whileHover={isDark ? { y: -4, borderColor: colors.border.replace("/50", "/80") } : { y: -4 }}
+                whileHover={isDark ? { y: -4, borderColor: colors.border.replace("/50", "/80") } : { y: -4, borderColor: colors.lightBorder.replace("/60", "/90") }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
             >
                 {isDark && (
                     <div className={`absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-15 ${colors.badge}`} />
                 )}
+                {!isDark && (
+                    <div className={`absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-10 ${colors.lightBadge}`} />
+                )}
 
                 <span className={`text-xs font-mono font-medium mb-4 block ${
-                    isDark ? colors.badge : "text-sky-500"
+                    isDark ? colors.badge : colors.lightBadge
                 }`}>
                     {String(index + 1).padStart(2, "0")}
                 </span>
@@ -129,7 +132,7 @@ export function ScrollProblems({ theme }: { theme: string }) {
                     style={{ y: headerY, opacity: headerOpacity }}
                 >
                     <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-red-400" : "text-sky-600"
+                        isDark ? "text-red-400" : "text-red-600"
                     }`}>
                         Ti riconosci?
                     </span>
@@ -137,7 +140,7 @@ export function ScrollProblems({ theme }: { theme: string }) {
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Non sono problemi tecnici.
-                        <span className={`block mt-1 ${isDark ? "text-red-400" : "text-sky-600"}`}>
+                        <span className={`block mt-1 ${isDark ? "text-red-400" : "text-red-600"}`}>
                             Sono problemi di business.
                         </span>
                     </h2>
