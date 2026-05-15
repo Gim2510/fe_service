@@ -1,12 +1,17 @@
 import {createContext, type ReactNode, useContext, useEffect, useState} from "react"
 
-const ThemeContext = createContext({
+type Theme = "light" | "dark";
+
+const ThemeContext = createContext<{
+    theme: Theme;
+    toggleTheme: () => void;
+}>({
     theme: "light",
     toggleTheme: () => {}
 })
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-    const [theme, setTheme] = useState("light")
+    const [theme, setTheme] = useState<Theme>("light")
 
     // All’avvio, leggi dal localStorage o preferenza OS
     useEffect(() => {

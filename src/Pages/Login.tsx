@@ -163,8 +163,8 @@ export function Login() {
                                 </div>
                             )}
 
-                            <Input name="email"    type="email"    label="Email"    value={email}    onChange={e => setEmail(e.target.value)}    theme={theme} />
-                            <Input name="password" type="password" label="Password" value={password} onChange={e => setPassword(e.target.value)} theme={theme} />
+                            <Input name="email"    type="email"    label="Email"    value={email}    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}    theme={theme} />
+                            <Input name="password" type="password" label="Password" value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} theme={theme} />
 
                             <button
                                 type="submit"
