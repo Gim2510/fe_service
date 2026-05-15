@@ -40,11 +40,7 @@ export function VideoSection({ theme }: { theme: string }) {
                     isDark ? "text-slate-400" : "text-slate-600"
                 }`}>
                     Guarda come accompagniamo una PMI dalla diagnosi iniziale
-<<<<<<< HEAD
                     all'implementazione, con risultati misurabili a ogni fase.
-=======
-                    all'implementazione â€” con risultati misurabili a ogni fase.
->>>>>>> TBDO-13
                 </p>
             </motion.div>
 
@@ -72,11 +68,7 @@ export function VideoSection({ theme }: { theme: string }) {
                             className="absolute inset-0 w-full h-full"
                             allow="autoplay; fullscreen"
                             allowFullScreen
-<<<<<<< HEAD
                             title="AxiomLab - Come funziona"
-=======
-                            title="AxiomLab â€” Come funziona"
->>>>>>> TBDO-13
                         />
                     ) : (
                         <>
