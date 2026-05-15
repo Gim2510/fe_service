@@ -44,7 +44,7 @@ export function Home() {
             <SunsetTransition theme={theme} />
 
             {/* ── Content sections — each with unique scroll effects ── */}
-            <div className={`relative z-10 ${isDark ? "" : "bg-gradient-to-b from-[#FAFAF8] via-[#F2F2EE] to-[#ECECE8]"}`}>
+            <div className={`relative z-10 ${isDark ? "" : "bg-gradient-to-b from-[#FAFAF8] via-[#F7F7F5] to-[#F2F2F0]"}`}>
 
                 {/* 3D card reveals on scroll */}
                 <ScrollProblems theme={theme} />
