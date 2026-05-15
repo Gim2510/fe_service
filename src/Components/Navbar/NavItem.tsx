@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import { motion } from "framer-motion";
 
 type Props = {
     to: string;
@@ -17,23 +18,27 @@ export function NavItem({ to, label, theme }: { to: string; label: string; theme
                 <span
                     className={`
                         relative px-1 py-1 text-sm font-medium tracking-wide
-                        transition-colors duration-200
+                        transition-all duration-200
                         ${isActive
-                            ? isDark ? "text-sky-500" : "text-sky-700"
+                            ? isDark
+                                ? "text-sky-400 drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]"
+                                : "text-sky-700"
                             : isDark
-                                ? "text-slate-400 hover:text-slate-100"
-                                : "text-slate-500 hover:text-slate-800"
+                                ? "text-slate-400 hover:text-sky-400 hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.3)]"
+                                : "text-slate-500 hover:text-sky-700"
                         }
                     `}
                 >
                     {label}
-                    <span
+                    <motion.span
                         className={`
                             absolute left-0 -bottom-0.5 h-[2px] w-full origin-left rounded-full
-                            transition-transform duration-300 ease-out
                             bg-sky-600
-                            ${isActive ? "scale-x-100" : "scale-x-0"}
+                            ${isDark ? "shadow-[0_0_8px_rgba(56,189,248,0.6)]" : ""}
                         `}
+                        initial={false}
+                        animate={{ scaleX: isActive ? 1 : 0 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
                     />
                 </span>
             )}

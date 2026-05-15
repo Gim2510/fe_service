@@ -1,6 +1,7 @@
 import { useTheme } from "../Context/ThemeContext.tsx";
 import { type ReactNode, useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { Badge } from "../Components/Badge.tsx";
 
 function PolicySection({ title, children, isDark }: { title?: string; children?: ReactNode; isDark: boolean }) {
     const [open, setOpen] = useState(false);
@@ -9,12 +10,20 @@ function PolicySection({ title, children, isDark }: { title?: string; children?:
         <div className={`border-b ${isDark ? "border-stone-800/20" : "border-slate-200"}`}>
             <button
                 onClick={() => setOpen(!open)}
-                className="w-full text-left flex justify-between items-center py-4 gap-4"
+                className="w-full text-left flex justify-between items-center py-4 gap-4 group"
             >
-                <h2 className={`text-sm font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>{title}</h2>
+                <h2 className={`text-sm font-semibold transition-colors ${
+                    isDark ? "text-slate-200 group-hover:text-sky-400" : "text-slate-800 group-hover:text-sky-700"
+                }`}>{title}</h2>
                 <ChevronDown
                     size={15}
-                    className={`shrink-0 text-slate-500 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+                    className={`shrink-0 transition-all duration-300 ${
+                        open
+                            ? isDark
+                                ? "rotate-180 text-sky-500 drop-shadow-[0_0_6px_rgba(56,189,248,0.4)]"
+                                : "rotate-180 text-sky-600"
+                            : "text-slate-500"
+                    }`}
                 />
             </button>
             {open && (
@@ -39,9 +48,7 @@ export function CookiePolicy() {
 
             <div className="relative max-w-3xl mx-auto px-6 py-32">
                 <div className="mb-10 space-y-3">
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-sky-500" : "text-sky-700"}`}>
-                        Legale
-                    </span>
+                    <Badge label="Legale" color="violet" theme={theme} />
                     <h1 className={`text-3xl sm:text-4xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         Cookie Policy
                     </h1>
@@ -51,7 +58,11 @@ export function CookiePolicy() {
                     </p>
                 </div>
 
-                <div className={`rounded-2xl border p-7 ${card} space-y-0`}>
+                <div className={`rounded-2xl border backdrop-blur-sm p-7 ${
+                    isDark
+                        ? `${card} shadow-lg shadow-violet-700/5`
+                        : `${card} shadow-lg shadow-violet-700/3`
+                } space-y-0`}>
                     <PolicySection isDark={isDark} title="1. Cosa sono i cookie">
                         <p>I cookie sono piccoli file di testo memorizzati sul dispositivo dell'utente durante la navigazione e permettono al sito di funzionare correttamente e migliorare l'esperienza utente.</p>
                     </PolicySection>
