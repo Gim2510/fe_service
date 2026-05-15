@@ -9,8 +9,11 @@ export function KPIBox({ label, value, sub, theme, index = 0 }: any) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: index * 0.06 }}
-            className={`rounded-2xl border overflow-hidden ${border}`}
-            style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+            className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
+                isDark
+                    ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/5`
+                    : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/3`
+            }`}
         >
             <div className="h-[2px] w-full bg-sky-700/50" />
             <div className="p-6">

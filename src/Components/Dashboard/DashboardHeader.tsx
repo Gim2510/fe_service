@@ -4,6 +4,7 @@ import { GrowthSection } from "./GrowthSection";
 import { SurveySection } from "./SurveySection";
 import { InsightsSection } from "./InsightsSection";
 import { AdvancedStats } from "./AdvancedStats";
+import { Badge } from "../Badge.tsx";
 
 export function DashboardHeader({ users, surveys, theme }: any) {
     const isDark = theme === "dark";
@@ -16,11 +17,8 @@ export function DashboardHeader({ users, surveys, theme }: any) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             >
-                <span className={`text-[10px] font-mono uppercase tracking-[0.22em]
-                    ${isDark ? "text-sky-600" : "text-sky-700"}`}>
-                    Pannello amministrativo
-                </span>
-                <h1 className={`text-2xl font-semibold mt-1.5 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                <Badge label="Pannello amministrativo" color="sky" theme={theme} />
+                <h1 className={`text-2xl font-semibold mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                     Admin Dashboard
                 </h1>
                 <p className={`mt-1 text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>
