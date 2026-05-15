@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+﻿import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { useState } from "react";
 import { SectionBase } from "./SectionBase.tsx";
@@ -25,7 +25,7 @@ export function VideoSection({ theme }: { theme: string }) {
                     }`}>
                         Come funziona
                     </span>
-                    <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold mt-3 ${
+                    <h2 className={`font-fjalla text-4xl font-semibold mt-3 ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Dal problema al risultato.{" "}
@@ -37,7 +37,7 @@ export function VideoSection({ theme }: { theme: string }) {
                     isDark ? "text-slate-400" : "text-slate-600"
                 }`}>
                     Guarda come accompagniamo una PMI dalla diagnosi iniziale
-                    all'implementazione — con risultati misurabili a ogni fase.
+                    all'implementazione â€” con risultati misurabili a ogni fase.
                 </p>
             </motion.div>
 
@@ -65,7 +65,7 @@ export function VideoSection({ theme }: { theme: string }) {
                             className="absolute inset-0 w-full h-full"
                             allow="autoplay; fullscreen"
                             allowFullScreen
-                            title="AxiomLab — Come funziona"
+                            title="AxiomLab â€” Come funziona"
                         />
                     ) : (
                         <>
@@ -118,7 +118,7 @@ export function VideoSection({ theme }: { theme: string }) {
 
                 {/* Caption */}
                 <p className={`mt-4 text-center text-sm ${isDark ? "text-slate-600" : "text-slate-400"}`}>
-                    Durata: ~3 minuti • Nessuna registrazione richiesta
+                    Durata: ~3 minuti â€¢ Nessuna registrazione richiesta
                 </p>
             </motion.div>
         </SectionBase>

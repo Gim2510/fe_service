@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useInView, useSpring } from "framer-motion";
+﻿import { motion, useScroll, useTransform, useInView, useSpring } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -88,7 +88,7 @@ export function StatsReveal({ theme }: { theme: string }) {
                     <motion.div className="flex flex-col gap-6" style={{ x: textX, opacity: textOpacity }}>
                         <div>
                             <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-cyan-400" : "text-sky-700"}`}>Chi siamo</span>
-                            <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold leading-tight mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                            <h2 className={`font-fjalla text-3xl font-semibold leading-tight mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                                 Due fratelli. Un&apos;idea precisa.<span className={`block mt-1 ${isDark ? "text-cyan-400" : "text-sky-700"}`}>Tecnologia enterprise per PMI.</span>
                             </h2>
                         </div>

@@ -1,13 +1,13 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowRight, Clock, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useMemo, useRef } from "react";
 
-/* ── CinematicCTA ────────────────────────────────────────────────────────────
+/* â”€â”€ CinematicCTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Final call-to-action: scales up from miniature as it scrolls into view.
    Floating particles in background. Gradient border pulse. The entire
    section starts small and "opens up" creating a reveal effect.
-   ────────────────────────────────────────────────────────────────────────── */
+   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 const PARTICLE_COUNT = 22;
 
@@ -65,7 +65,7 @@ export function CinematicCTA({ theme }: { theme: string }) {
     });
 
     const sp = { stiffness: 80, damping: 28, mass: 0.8 };
-    // Section scales from 0.9 to 1 — subtler, smoother reveal
+    // Section scales from 0.9 to 1 â€” subtler, smoother reveal
     const sectionScale   = useSpring(useTransform(scrollYProgress, [0, 0.6], [0.92, 1]), sp);
     const sectionOpacity = useSpring(useTransform(scrollYProgress, [0, 0.35], [0, 1]), sp);
     const borderRadius   = useSpring(useTransform(scrollYProgress, [0, 0.6], [28, 0]), sp);
@@ -124,9 +124,9 @@ export function CinematicCTA({ theme }: { theme: string }) {
                     Assessment gratuito
                 </motion.span>
 
-                {/* Headline — words reveal */}
+                {/* Headline â€” words reveal */}
                 <motion.h2
-                    className={`font-fjalla text-4xl md:text-5xl font-semibold leading-tight max-w-3xl ${
+                    className={`font-fjalla text-4xl font-semibold leading-tight max-w-3xl ${
                         isDark ? "text-slate-100" : "text-stone-900"
                     }`}
                     initial={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -136,7 +136,7 @@ export function CinematicCTA({ theme }: { theme: string }) {
                 >
                     Scopri esattamente dove la tua azienda{" "}
                     <span className={isDark ? "text-sky-500" : "text-sky-700"}>
-                        perde efficienza — e come recuperarla.
+                        perde efficienza â€” e come recuperarla.
                     </span>
                 </motion.h2>
 
@@ -150,7 +150,7 @@ export function CinematicCTA({ theme }: { theme: string }) {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.15 }}
                 >
-                    In 10 minuti ottieni un report personalizzato sul livello di maturità digitale della tua azienda: punti critici, opportunità prioritarie e un piano d'azione concreto.
+                    In 10 minuti ottieni un report personalizzato sul livello di maturitÃ  digitale della tua azienda: punti critici, opportunitÃ  prioritarie e un piano d'azione concreto.
                 </motion.p>
 
                 {/* Micro-benefits */}
@@ -212,7 +212,7 @@ export function CinematicCTA({ theme }: { theme: string }) {
                     transition={{ duration: 0.5, delay: 0.35 }}
                 >
                     <Clock size={11} />
-                    10–15 minuti · report personalizzato · nessuna carta di credito
+                    10â€“15 minuti Â· report personalizzato Â· nessuna carta di credito
                 </motion.p>
             </div>
         </motion.section>
