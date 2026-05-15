@@ -84,7 +84,7 @@ export function CinematicCTA({ theme }: { theme: string }) {
             <div className={`absolute inset-0 ${
                 isDark
                     ? "bg-gradient-to-br from-[#0C0C0B] via-[#161410] to-[#0C0C0B]"
-                    : "bg-gradient-to-br from-[#FDFAF4] via-[#F2E8D5] to-[#FDFAF4]"
+                    : "bg-gradient-to-br from-[#FAFAF8] via-[#F5F5F2] to-[#FAFAF8]"
             }`} />
 
             <FloatingParticles isDark={isDark} />
