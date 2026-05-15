@@ -17,13 +17,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         const savedTheme = localStorage.getItem("theme")
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-        const initialTheme = savedTheme || (prefersDark ? "dark" : "light")
+        const initialTheme = (savedTheme || (prefersDark ? "dark" : "light")) as Theme
         setTheme(initialTheme)
         document.documentElement.classList.toggle("dark", initialTheme === "dark")
     }, [])
 
     const toggleTheme = () => {
-        setTheme(prev => {
+        setTheme((prev: Theme) => {
             const next = prev === "dark" ? "light" : "dark"
             document.documentElement.classList.toggle("dark", next === "dark")
             localStorage.setItem("theme", next)
