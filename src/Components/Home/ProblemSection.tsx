@@ -30,7 +30,7 @@ export function ProblemiSection({ theme }: { theme: string }) {
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
                 <span className={`text-xs font-semibold uppercase tracking-widest ${
-                    isDark ? "text-emerald-500" : "text-emerald-700"
+                    isDark ? "text-sky-500" : "text-sky-700"
                 }`}>
                     Ti riconosci?
                 </span>
@@ -38,7 +38,7 @@ export function ProblemiSection({ theme }: { theme: string }) {
                     isDark ? "text-slate-100" : "text-slate-900"
                 }`}>
                     Non sono problemi tecnici.
-                    <span className={`block mt-1 ${isDark ? "text-emerald-500" : "text-emerald-700"}`}>
+                    <span className={`block mt-1 ${isDark ? "text-sky-500" : "text-sky-700"}`}>
                         Sono problemi di business.
                     </span>
                 </h2>
@@ -61,7 +61,7 @@ export function ProblemiSection({ theme }: { theme: string }) {
                         <GlassCard theme={theme} className="p-7 h-full">
                             {/* Number badge */}
                             <span className={`text-xs font-mono font-medium mb-4 block ${
-                                isDark ? "text-emerald-700" : "text-emerald-500"
+                                isDark ? "text-sky-700" : "text-sky-500"
                             }`}>
                                 {String(index + 1).padStart(2, "0")}
                             </span>

@@ -17,7 +17,7 @@ export function DashboardHeader({ users, surveys, theme }: any) {
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             >
                 <span className={`text-[10px] font-mono uppercase tracking-[0.22em]
-                    ${isDark ? "text-emerald-600" : "text-emerald-700"}`}>
+                    ${isDark ? "text-sky-600" : "text-sky-700"}`}>
                     Pannello amministrativo
                 </span>
                 <h1 className={`text-2xl font-semibold mt-1.5 ${isDark ? "text-slate-100" : "text-slate-900"}`}>

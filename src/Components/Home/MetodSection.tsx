@@ -34,7 +34,7 @@ export function MetodSection({ theme }: { theme: string }) {
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
                 <span className={`text-xs font-semibold uppercase tracking-widest ${
-                    isDark ? "text-emerald-500" : "text-emerald-700"
+                    isDark ? "text-sky-500" : "text-sky-700"
                 }`}>
                     Il nostro metodo
                 </span>
@@ -42,7 +42,7 @@ export function MetodSection({ theme }: { theme: string }) {
                     isDark ? "text-slate-100" : "text-slate-900"
                 }`}>
                     Tre fasi. Zero improvvisazione.
-                    <span className={`block mt-1 ${isDark ? "text-emerald-500" : "text-emerald-700"}`}>
+                    <span className={`block mt-1 ${isDark ? "text-sky-500" : "text-sky-700"}`}>
                         Risultati misurabili dal giorno uno.
                     </span>
                 </h2>
@@ -65,12 +65,12 @@ export function MetodSection({ theme }: { theme: string }) {
                             {/* Step number */}
                             <div className="flex items-start justify-between mb-6">
                                 <span className={`font-mono text-4xl font-bold tracking-tight ${
-                                    isDark ? "text-emerald-700" : "text-emerald-300"
+                                    isDark ? "text-sky-700" : "text-sky-300"
                                 }`}>
                                     {item.step}
                                 </span>
                                 {/* Accent line */}
-                                <div className="w-8 h-0.5 bg-emerald-600/60 mt-3" />
+                                <div className="w-8 h-0.5 bg-sky-600/60 mt-3" />
                             </div>
 
                             <h3 className={`text-xl font-semibold mb-3 ${

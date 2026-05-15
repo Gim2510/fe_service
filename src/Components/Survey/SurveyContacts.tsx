@@ -52,23 +52,23 @@ export function SurveyContacts({ surveyId, onNext }: SurveyContactsProps) {
     const selectClass = `h-11 px-3 rounded-xl border text-sm font-medium appearance-none cursor-pointer
         transition-colors focus:outline-none focus:ring-2
         ${isDark
-            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-emerald-700 focus:ring-emerald-600/20"
-            : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-emerald-600 focus:ring-emerald-600/10"
+            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-sky-700 focus:ring-sky-600/20"
+            : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-sky-600 focus:ring-sky-600/10"
         }`;
 
     const inputClass = `h-11 flex-1 px-4 rounded-xl border text-sm
         transition-colors focus:outline-none focus:ring-2 placeholder:text-slate-500
         ${isDark
-            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-emerald-700 focus:ring-emerald-600/20"
-            : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-emerald-600 focus:ring-emerald-600/10"
+            ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-sky-700 focus:ring-sky-600/20"
+            : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-sky-600 focus:ring-sky-600/10"
         }`;
 
     return (
         <div className="flex flex-col items-center gap-8 text-center">
             <header className="space-y-3">
                 <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl
-                    ${isDark ? "bg-emerald-700/15 border border-emerald-700/20" : "bg-emerald-50 border border-emerald-300"}`}>
-                    <Phone size={20} className="text-emerald-600" />
+                    ${isDark ? "bg-sky-700/15 border border-sky-700/20" : "bg-sky-50 border border-sky-300"}`}>
+                    <Phone size={20} className="text-sky-600" />
                 </div>
                 <h2 className={`text-2xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                     Inserisci il tuo contatto
@@ -108,9 +108,9 @@ export function SurveyContacts({ surveyId, onNext }: SurveyContactsProps) {
                 disabled={!canSubmit}
                 onClick={handleSubmit}
                 className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
-                    bg-emerald-700 hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed
+                    bg-sky-700 hover:bg-sky-600 disabled:opacity-50 disabled:cursor-not-allowed
                     text-white text-sm font-semibold transition-colors
-                    shadow-lg shadow-emerald-700/25 hover:-translate-y-0.5 duration-200"
+                    shadow-lg shadow-sky-700/25 hover:-translate-y-0.5 duration-200"
             >
                 {loading
                     ? <FallingLines color="#fff" width="20" visible />

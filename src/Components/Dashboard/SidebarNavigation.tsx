@@ -33,7 +33,7 @@ export function SidebarNavigation({ activeTab, setActiveTab, theme }: {
             className={`md:w-52 h-fit sm:sticky top-24 rounded-2xl border overflow-hidden flex flex-col ${border}`}
             style={{ background: isDark ? "#161614" : "#FAFAF8" }}
         >
-            <div className="h-[2px] w-full bg-emerald-700/60" />
+            <div className="h-[2px] w-full bg-sky-700/60" />
             <div className="p-3 space-y-0.5">
                 <p className={`text-[9px] font-mono uppercase tracking-[0.22em] px-3 py-2
                     ${isDark ? "text-stone-600" : "text-slate-400"}`}>
@@ -50,8 +50,8 @@ export function SidebarNavigation({ activeTab, setActiveTab, theme }: {
                                 transition-colors border
                                 ${isActive
                                     ? isDark
-                                        ? "bg-emerald-700/15 border-emerald-600/30 text-emerald-400"
-                                        : "bg-emerald-50 border-emerald-400 text-emerald-800"
+                                        ? "bg-sky-700/15 border-sky-600/30 text-sky-400"
+                                        : "bg-sky-50 border-sky-400 text-sky-800"
                                     : isDark
                                         ? "border-transparent text-slate-500 hover:text-slate-300 hover:bg-white/4"
                                         : "border-transparent text-slate-500 hover:text-slate-700 hover:bg-[#EDF2F7]"

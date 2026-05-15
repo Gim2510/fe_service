@@ -30,7 +30,7 @@ export function VerifyEmailPage() {
             <div
                 className="absolute inset-0 opacity-[0.08]"
                 style={{
-                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='%23F59E0B' stroke-width='0.5'/%3E%3C/svg%3E\")",
+                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='%230EA5E9' stroke-width='0.5'/%3E%3C/svg%3E\")",
                     backgroundSize: "40px 40px",
                 }}
             />
@@ -44,7 +44,7 @@ export function VerifyEmailPage() {
                 <div className="rounded-2xl border border-stone-800/20 bg-[#1C1C1A]/80 backdrop-blur-xl p-10 shadow-[0_24px_80px_rgba(0,0,0,0.5)] flex flex-col items-center gap-6">
                     {status === "loading" && (
                         <>
-                            <Loader2 size={40} className="text-emerald-500 animate-spin" />
+                            <Loader2 size={40} className="text-sky-500 animate-spin" />
                             <p className="text-slate-400 text-sm">Verifica in corso…</p>
                         </>
                     )}
@@ -59,7 +59,7 @@ export function VerifyEmailPage() {
                             </div>
                             <button
                                 onClick={() => navigate("/login")}
-                                className="px-6 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold transition-colors"
+                                className="px-6 py-2.5 rounded-xl bg-sky-700 hover:bg-sky-600 text-white text-sm font-semibold transition-colors"
                             >
                                 Vai al login
                             </button>

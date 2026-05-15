@@ -12,8 +12,8 @@ export function GlassCard({ children, className = "", theme, hover = true }: Gla
     const isDark = theme === "dark";
 
     const base = isDark
-        ? "bg-[#1C1C1A]/80 border border-stone-800/20 hover:border-emerald-800/30"
-        : "bg-white border border-slate-200 hover:border-emerald-400";
+        ? "bg-[#1A1A18]/80 border border-stone-800/20 hover:border-sky-800/30"
+        : "bg-white border border-slate-200 hover:border-sky-400";
 
     return (
         <motion.div

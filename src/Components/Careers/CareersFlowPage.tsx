@@ -94,7 +94,7 @@ export function CareersFlowPage() {
             <div
                 className="absolute inset-0 opacity-[0.08] pointer-events-none"
                 style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%23F59E0B' : '%23B45309'}' stroke-width='0.5'/%3E%3C/svg%3E")`,
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%230EA5E9' : '%230369A1'}' stroke-width='0.5'/%3E%3C/svg%3E")`,
                     backgroundSize: "40px 40px",
                 }}
             />
@@ -108,11 +108,11 @@ export function CareersFlowPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <span className={`text-[10px] font-mono uppercase tracking-[0.22em] ${isDark ? "text-emerald-600" : "text-emerald-700"}`}>
+                    <span className={`text-[10px] font-mono uppercase tracking-[0.22em] ${isDark ? "text-sky-600" : "text-sky-700"}`}>
                         Carriere
                     </span>
                     <h1 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                        Lavora <span className="text-emerald-600">con noi</span>
+                        Lavora <span className="text-sky-600">con noi</span>
                     </h1>
                     <p className={`text-base leading-relaxed ${bodyText}`}>
                         Stiamo costruendo strumenti che trasformano i dati delle survey
@@ -128,7 +128,7 @@ export function CareersFlowPage() {
                     className={`rounded-2xl border overflow-hidden ${border}`}
                     style={{ background: isDark ? "#161614" : "#FAFAF8" }}
                 >
-                    <div className="h-[2px] w-full bg-emerald-700/60" />
+                    <div className="h-[2px] w-full bg-sky-700/60" />
 
                     {/* Back nav */}
                     {step !== "list" && (
@@ -209,8 +209,8 @@ export function CareersFlowPage() {
                                                         className={`shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border
                                                             text-xs font-medium transition-all hover:-translate-y-0.5 duration-200
                                                             ${isDark
-                                                                ? "border-stone-800/30 text-slate-300 hover:border-emerald-700/40 hover:text-emerald-400"
-                                                                : "border-slate-200 text-slate-700 hover:border-emerald-400 hover:bg-emerald-50/50"
+                                                                ? "border-stone-800/30 text-slate-300 hover:border-sky-700/40 hover:text-sky-400"
+                                                                : "border-slate-200 text-slate-700 hover:border-sky-400 hover:bg-sky-50/50"
                                                             }`}
                                                     >
                                                         Dettagli <ChevronRight size={12} />
@@ -263,7 +263,7 @@ export function CareersFlowPage() {
                                             <ul className="space-y-1.5">
                                                 {selectedJob.responsibilities.map(r => (
                                                     <li key={r} className={`flex items-start gap-2 text-sm ${bodyText}`}>
-                                                        <span className="text-emerald-500 mt-0.5 shrink-0">•</span>{r}
+                                                        <span className="text-sky-500 mt-0.5 shrink-0">•</span>{r}
                                                     </li>
                                                 ))}
                                             </ul>
@@ -273,7 +273,7 @@ export function CareersFlowPage() {
                                             <ul className="space-y-1.5">
                                                 {selectedJob.requirements.map(r => (
                                                     <li key={r} className={`flex items-start gap-2 text-sm ${bodyText}`}>
-                                                        <span className="text-emerald-500 mt-0.5 shrink-0">•</span>{r}
+                                                        <span className="text-sky-500 mt-0.5 shrink-0">•</span>{r}
                                                     </li>
                                                 ))}
                                                 {selectedJob.niceToHave?.map(r => (
@@ -293,7 +293,7 @@ export function CareersFlowPage() {
                                             <ul className="flex flex-wrap gap-2">
                                                 {selectedJob.benefits.map(b => (
                                                     <li key={b} className={`px-3 py-1.5 rounded-lg text-xs font-medium border
-                                                        ${isDark ? "border-stone-800/30 bg-emerald-700/10 text-emerald-400" : "border-emerald-300 bg-emerald-50 text-emerald-800"}`}>
+                                                        ${isDark ? "border-stone-800/30 bg-sky-700/10 text-sky-400" : "border-sky-300 bg-sky-50 text-sky-800"}`}>
                                                         {b}
                                                     </li>
                                                 ))}
@@ -323,7 +323,7 @@ export function CareersFlowPage() {
                                             <ol className="space-y-2">
                                                 {selectedJob.hiringProcess.steps.map((s, i) => (
                                                     <li key={i} className={`flex items-start gap-3 text-sm ${bodyText}`}>
-                                                        <span className={`font-mono text-xs mt-0.5 shrink-0 ${isDark ? "text-emerald-700" : "text-emerald-500"}`}>
+                                                        <span className={`font-mono text-xs mt-0.5 shrink-0 ${isDark ? "text-sky-700" : "text-sky-500"}`}>
                                                             {String(i + 1).padStart(2, "0")}
                                                         </span>
                                                         {s}
@@ -341,8 +341,8 @@ export function CareersFlowPage() {
                                     <button
                                         onClick={() => setStep("apply")}
                                         className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
-                                            bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold
-                                            transition-all shadow-lg shadow-emerald-700/25 hover:-translate-y-0.5 duration-200"
+                                            bg-sky-700 hover:bg-sky-600 text-white text-sm font-semibold
+                                            transition-all shadow-lg shadow-sky-700/25 hover:-translate-y-0.5 duration-200"
                                     >
                                         Candidati per questa posizione
                                         <ChevronRight size={14} />

@@ -18,12 +18,12 @@ export function Footer({ theme }: { theme: string }) {
         <footer className={`relative overflow-hidden ${
             isDark
                 ? "bg-[#111110] text-slate-400 border-t border-stone-800/20"
-                : "bg-gradient-to-b from-[#FAF8F4] to-[#F0EAE0] text-stone-500 border-t border-emerald-200/60"
+                : "bg-gradient-to-b from-[#FAF8F4] to-[#F0EAE0] text-stone-500 border-t border-sky-200/60"
         }`}>
 
             {/* Background decoration */}
             {!isDark && (
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent" />
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-400/50 to-transparent" />
             )}
 
             <div className="relative mx-auto max-w-7xl px-8 pt-20 pb-12">
@@ -48,7 +48,7 @@ export function Footer({ theme }: { theme: string }) {
                             </div>
                             <div>
                                 <h3 className={`text-base font-bold tracking-tight leading-none ${isDark ? "text-white" : "text-stone-900"}`}>
-                                    Axiom<span className="text-emerald-600">Lab</span>
+                                    Axiom<span className="text-sky-600">Lab</span>
                                 </h3>
                                 <p className={`text-xs mt-1 uppercase tracking-widest ${isDark ? "text-slate-600" : "text-stone-400"}`}>
                                     Digital Consulting
@@ -66,7 +66,7 @@ export function Footer({ theme }: { theme: string }) {
                             <a
                                 href="mailto:service@axiomlab.it"
                                 className={`flex items-center gap-2.5 transition-colors duration-200 ${
-                                    isDark ? "text-slate-500 hover:text-emerald-500" : "text-stone-500 hover:text-emerald-700"
+                                    isDark ? "text-slate-500 hover:text-sky-500" : "text-stone-500 hover:text-sky-700"
                                 }`}
                             >
                                 <Mail size={14} className="shrink-0" />
@@ -166,7 +166,7 @@ export function Footer({ theme }: { theme: string }) {
                         <Link
                             to="/survey/start"
                             className={`inline-flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${
-                                isDark ? "text-emerald-500 hover:text-emerald-400" : "text-emerald-700 hover:text-emerald-600"
+                                isDark ? "text-sky-500 hover:text-sky-400" : "text-sky-700 hover:text-sky-600"
                             }`}
                         >
                             Avvia l'analisi
@@ -186,7 +186,7 @@ export function Footer({ theme }: { theme: string }) {
 
                 {/* Bottom strip */}
                 <div className={`border-t pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 ${
-                    isDark ? "border-stone-800/20" : "border-emerald-200/50"
+                    isDark ? "border-stone-800/20" : "border-sky-200/50"
                 }`}>
                     <span className={`text-xs ${isDark ? "text-slate-700" : "text-stone-400"}`}>
                         © {new Date().getFullYear()} AxiomLab — Tutti i diritti riservati

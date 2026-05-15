@@ -16,12 +16,12 @@ export function ContactPage() {
                 <div
                     className="absolute inset-0 opacity-[0.08]"
                     style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%23F59E0B' : '%23B45309'}' stroke-width='0.5'/%3E%3C/svg%3E")`,
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%230EA5E9' : '%230369A1'}' stroke-width='0.5'/%3E%3C/svg%3E")`,
                         backgroundSize: "40px 40px",
                     }}
                 />
                 {isDark && (
-                    <div className="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.05] bg-emerald-700" />
+                    <div className="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.05] bg-sky-700" />
                 )}
             </div>
 
@@ -36,12 +36,12 @@ export function ContactPage() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-emerald-500" : "text-emerald-700"}`}>
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-sky-500" : "text-sky-700"}`}>
                         Contatti
                     </span>
                     <h1 className={`font-fjalla text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         Parliamo del tuo
-                        <span className="block text-emerald-600 mt-1">prossimo passo digitale.</span>
+                        <span className="block text-sky-600 mt-1">prossimo passo digitale.</span>
                     </h1>
                     <p className={`text-lg leading-relaxed max-w-md ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                         Se hai domande, vuoi approfondire una soluzione o capire
@@ -75,8 +75,8 @@ export function ContactPage() {
                         <a
                             href="mailto:service@axiomlab.it"
                             className="mt-2 inline-flex items-center gap-2 px-6 py-2.5 rounded-xl
-                                bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold
-                                transition-colors duration-200 shadow-lg shadow-emerald-700/20 self-start"
+                                bg-sky-700 hover:bg-sky-600 text-white text-sm font-semibold
+                                transition-colors duration-200 shadow-lg shadow-sky-700/20 self-start"
                         >
                             Scrivici ora
                             <ArrowRight size={14} />
@@ -95,16 +95,16 @@ function ContactItem({ icon, label, value, href, isDark }: {
         <div className={`flex items-start gap-4 p-4 rounded-xl border transition-colors duration-200 ${
             isDark
                 ? "bg-[#F8FAFB]/3 border-stone-800/20 hover:border-stone-700/30"
-                : "bg-[#EDF2F7] border-slate-200 hover:border-emerald-400"
+                : "bg-[#EDF2F7] border-slate-200 hover:border-sky-400"
         }`}>
-            <div className={`mt-0.5 ${isDark ? "text-emerald-500" : "text-emerald-600"}`}>{icon}</div>
+            <div className={`mt-0.5 ${isDark ? "text-sky-500" : "text-sky-600"}`}>{icon}</div>
             <div className="flex flex-col gap-0.5">
                 <span className={`text-xs font-medium uppercase tracking-wide ${isDark ? "text-slate-500" : "text-slate-400"}`}>
                     {label}
                 </span>
                 {href ? (
                     <a href={href} className={`text-sm font-medium transition-colors ${
-                        isDark ? "text-slate-200 hover:text-emerald-500" : "text-slate-800 hover:text-emerald-700"
+                        isDark ? "text-slate-200 hover:text-sky-500" : "text-slate-800 hover:text-sky-700"
                     }`}>{value}</a>
                 ) : (
                     <span className={`text-sm font-medium ${isDark ? "text-slate-200" : "text-slate-800"}`}>{value}</span>

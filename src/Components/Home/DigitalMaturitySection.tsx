@@ -14,8 +14,8 @@ const livelli = [
         level: "Intermedio",
         score: "31–60%",
         description: "Digitalizzazione parziale con isole non integrate. Alcuni KPI monitorati, ma processi ancora dipendenti da intervento manuale e riconciliazioni frequenti.",
-        accent: "#F59E0B",
-        barBg: "bg-emerald-500/70",
+        accent: "#0EA5E9",
+        barBg: "bg-sky-500/70",
     },
     {
         level: "Avanzato",
@@ -54,7 +54,7 @@ export function DigitalMaturitySection({ theme }: { theme: string }) {
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
                 <span className={`text-xs font-semibold uppercase tracking-widest ${
-                    isDark ? "text-emerald-500" : "text-emerald-700"
+                    isDark ? "text-sky-500" : "text-sky-700"
                 }`}>
                     Dove sei oggi?
                 </span>
@@ -62,7 +62,7 @@ export function DigitalMaturitySection({ theme }: { theme: string }) {
                     isDark ? "text-slate-100" : "text-slate-900"
                 }`}>
                     Ogni PMI ha un livello di{" "}
-                    <span className={isDark ? "text-emerald-500" : "text-emerald-700"}>
+                    <span className={isDark ? "text-sky-500" : "text-sky-700"}>
                         maturità digitale misurabile.
                     </span>
                 </h2>
@@ -147,7 +147,7 @@ export function DigitalMaturitySection({ theme }: { theme: string }) {
                                     isDark ? "bg-[#F8FAFB]/5" : "bg-[#EDF2F7]"
                                 }`}>
                                     <motion.div
-                                        className="h-full rounded-full bg-gradient-to-r from-emerald-700 to-emerald-500"
+                                        className="h-full rounded-full bg-gradient-to-r from-sky-700 to-sky-500"
                                         initial={{ width: 0 }}
                                         whileInView={{ width: `${p.weight * 100}%` }}
                                         viewport={{ once: true }}

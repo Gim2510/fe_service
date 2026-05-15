@@ -49,8 +49,8 @@ function AnimatedStat({ stat, delay, isDark }: { stat: StatConfig; delay: number
             ref={ref}
             className={`rounded-2xl border p-6 flex flex-col gap-2 ${
                 isDark
-                    ? "bg-[#1C1C1A]/80 border-stone-800/20 hover:border-emerald-800/30"
-                    : "bg-white border-slate-200 hover:border-emerald-400"
+                    ? "bg-[#1C1C1A]/80 border-stone-800/20 hover:border-sky-800/30"
+                    : "bg-white border-slate-200 hover:border-sky-400"
             } transition-colors duration-300`}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -58,7 +58,7 @@ function AnimatedStat({ stat, delay, isDark }: { stat: StatConfig; delay: number
             transition={{ duration: 0.45, delay }}
         >
             <span className={`text-3xl font-bold tracking-tight font-fjalla ${
-                isDark ? "text-emerald-500" : "text-emerald-700"
+                isDark ? "text-sky-500" : "text-sky-700"
             }`}>
                 {stat.prefix}{display}{stat.suffix}
             </span>
@@ -87,7 +87,7 @@ export function AboutSection({ theme }: { theme: string }) {
                 >
                     <div>
                         <span className={`text-xs font-semibold uppercase tracking-widest ${
-                            isDark ? "text-emerald-500" : "text-emerald-700"
+                            isDark ? "text-sky-500" : "text-sky-700"
                         }`}>
                             Chi siamo
                         </span>
@@ -95,7 +95,7 @@ export function AboutSection({ theme }: { theme: string }) {
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Due fratelli. Un'idea precisa.
-                        <span className={`block mt-1 ${isDark ? "text-emerald-500" : "text-emerald-700"}`}>
+                        <span className={`block mt-1 ${isDark ? "text-sky-500" : "text-sky-700"}`}>
                             Tecnologia enterprise per PMI.
                         </span>
                     </h2>
@@ -119,7 +119,7 @@ export function AboutSection({ theme }: { theme: string }) {
                     <button
                         onClick={() => navigate("/about")}
                         className={`inline-flex items-center gap-2 text-sm font-semibold w-fit transition-all duration-200 hover:-translate-y-0.5 group ${
-                            isDark ? "text-emerald-500 hover:text-emerald-400" : "text-emerald-700 hover:text-emerald-600"
+                            isDark ? "text-sky-500 hover:text-sky-400" : "text-sky-700 hover:text-sky-600"
                         }`}
                     >
                         Scopri la nostra storia

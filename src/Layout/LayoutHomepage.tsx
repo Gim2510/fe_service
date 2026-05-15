@@ -24,7 +24,7 @@ function ScrollProgressBar() {
     return (
         <div className="fixed top-0 left-0 right-0 z-[9999] h-[2px] bg-transparent pointer-events-none">
             <div
-                className="h-full bg-emerald-600 transition-none origin-left"
+                className="h-full bg-sky-600 transition-none origin-left"
                 style={{ width: `${progress}%` }}
             />
         </div>

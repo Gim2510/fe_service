@@ -20,18 +20,18 @@ export function VideoSection({ theme }: { theme: string }) {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
-                <span className={`text-xs font-semibold uppercase tracking-widest ${
-                    isDark ? "text-emerald-500" : "text-emerald-700"
-                }`}>
-                    Come funziona
-                </span>
-                <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold mt-3 ${
-                    isDark ? "text-slate-100" : "text-slate-900"
-                }`}>
-                    Dal problema al risultato.{" "}
-                    <span className={isDark ? "text-emerald-500" : "text-emerald-700"}>
-                        In tre passi.
+                    <span className={`text-xs font-semibold uppercase tracking-widest ${
+                        isDark ? "text-sky-500" : "text-sky-700"
+                    }`}>
+                        Come funziona
                     </span>
+                    <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold mt-3 ${
+                        isDark ? "text-slate-100" : "text-slate-900"
+                    }`}>
+                        Dal problema al risultato.{" "}
+                        <span className={isDark ? "text-sky-500" : "text-sky-700"}>
+                            In tre passi.
+                        </span>
                 </h2>
                 <p className={`mt-5 text-lg max-w-2xl mx-auto ${
                     isDark ? "text-slate-400" : "text-slate-600"
@@ -51,7 +51,7 @@ export function VideoSection({ theme }: { theme: string }) {
             >
                 {/* Glow behind player */}
                 {isDark && (
-                    <div className="absolute -inset-4 rounded-3xl blur-2xl opacity-20 bg-emerald-600 pointer-events-none" />
+                    <div className="absolute -inset-4 rounded-3xl blur-2xl opacity-20 bg-sky-600 pointer-events-none" />
                 )}
 
                 <div className={`relative rounded-2xl overflow-hidden border aspect-video ${
@@ -72,35 +72,35 @@ export function VideoSection({ theme }: { theme: string }) {
                             {/* Thumbnail / placeholder */}
                             <div className={`absolute inset-0 flex items-center justify-center ${
                                 isDark
-                                    ? "bg-gradient-to-br from-[#1C1C1A] via-[#222220] to-[#161614]"
-                                    : "bg-gradient-to-br from-slate-100 via-emerald-50 to-slate-100"
+                                    ? "bg-gradient-to-br from-[#1C1C1A] via-[#1E1E2A] to-[#161624]"
+                                    : "bg-gradient-to-br from-slate-100 via-sky-50 to-slate-100"
                             }`}>
                                 {/* rose glow rings */}
-                                <div className={`absolute w-64 h-64 rounded-full blur-3xl pointer-events-none ${
-                                    isDark ? "bg-emerald-700/15" : "bg-emerald-300/25"
-                                }`} />
-
-                                {/* Play button */}
-                                <button
-                                    onClick={() => VIDEO_URL ? setPlaying(true) : undefined}
-                                    className={`relative z-10 group flex items-center justify-center w-20 h-20 rounded-full border-2 transition-all duration-300 ${
-                                        isDark
-                                            ? "border-emerald-600/60 bg-emerald-700/20 hover:bg-emerald-700/40 hover:border-emerald-500"
-                                            : "border-emerald-500/60 bg-emerald-50 hover:bg-emerald-100 hover:border-emerald-600"
-                                    } hover:scale-110 shadow-xl`}
-                                    aria-label="Guarda il video"
-                                >
-                                    <Play
-                                        size={28}
-                                        className={`ml-1 transition-colors duration-200 ${
-                                            isDark ? "text-emerald-400 group-hover:text-emerald-300" : "text-emerald-700 group-hover:text-emerald-800"
-                                        }`}
-                                        fill="currentColor"
-                                    />
-                                    {/* Pulse ring */}
-                                    <span className={`absolute inset-0 rounded-full border-2 animate-ping opacity-30 ${
-                                        isDark ? "border-emerald-500" : "border-emerald-400"
+                                    <div className={`absolute w-64 h-64 rounded-full blur-3xl pointer-events-none ${
+                                        isDark ? "bg-sky-700/15" : "bg-sky-300/25"
                                     }`} />
+
+                                    {/* Play button */}
+                                    <button
+                                        onClick={() => VIDEO_URL ? setPlaying(true) : undefined}
+                                        className={`relative z-10 group flex items-center justify-center w-20 h-20 rounded-full border-2 transition-all duration-300 ${
+                                            isDark
+                                                ? "border-sky-600/60 bg-sky-700/20 hover:bg-sky-700/40 hover:border-sky-500"
+                                                : "border-sky-500/60 bg-sky-50 hover:bg-sky-100 hover:border-sky-600"
+                                        } hover:scale-110 shadow-xl`}
+                                        aria-label="Guarda il video"
+                                    >
+                                        <Play
+                                            size={28}
+                                            className={`ml-1 transition-colors duration-200 ${
+                                                isDark ? "text-sky-400 group-hover:text-sky-300" : "text-sky-700 group-hover:text-sky-800"
+                                            }`}
+                                            fill="currentColor"
+                                        />
+                                        {/* Pulse ring */}
+                                        <span className={`absolute inset-0 rounded-full border-2 animate-ping opacity-30 ${
+                                            isDark ? "border-sky-500" : "border-sky-400"
+                                        }`} />
                                 </button>
 
                                 {/* Coming soon label if no VIDEO_URL */}

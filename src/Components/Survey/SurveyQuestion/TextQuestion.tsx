@@ -15,8 +15,8 @@ export const TextQuestion: FC<PropsTextQuestion> = ({ answer, onChange, isDark }
                     focus:outline-none focus:ring-2 transition-colors duration-200
                     placeholder:text-slate-500
                     ${isDark
-                        ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-emerald-700 focus:ring-emerald-600/20"
-                        : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-emerald-600 focus:ring-emerald-600/10"
+                        ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-sky-700 focus:ring-sky-600/20"
+                        : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-sky-600 focus:ring-sky-600/10"
                     }`}
             />
             <div className={`text-xs text-right tabular-nums ${isDark ? "text-slate-600" : "text-slate-400"}`}>
