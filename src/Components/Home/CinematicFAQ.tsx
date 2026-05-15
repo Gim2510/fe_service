@@ -11,27 +11,27 @@ import { useState, useRef } from "react";
 const faqs = [
     {
         q: "Quanto costa un progetto?",
-        a: "Non esiste un listino fisso. Ogni progetto dipende dalla complessit\u00E0 dei processi e dagli obiettivi. Il punto di partenza \u00E8 l\u2019assessment gratuito: con i dati del tuo report ti diamo una stima precisa prima di qualsiasi impegno.",
+        a: "Non esiste un listino fisso. Ogni progetto dipende dalla complessità dei processi e dagli obiettivi. Il punto di partenza è l'assessment gratuito: con i dati del tuo report ti diamo una stima precisa prima di qualsiasi impegno.",
     },
     {
         q: "Quanto tempo per vedere i primi risultati?",
-        a: "I primi risultati misurabili arrivano in 4\u20138 settimane dall\u2019avvio. Non promettiamo miracoli overnight, ma definiamo KPI chiari prima di iniziare, cos\u00EC sai cosa aspettarti e quando.",
+        a: "I primi risultati misurabili arrivano in 4\u20138 settimane dall'avvio. Non promettiamo miracoli overnight, ma definiamo KPI chiari prima di iniziare \u2014 così sai cosa aspettarti e quando.",
     },
     {
-        q: "Dobbiamo sostituire i software che gi\u00E0 usiamo?",
-        a: "Quasi mai. Partiamo da ci\u00F2 che hai gi\u00E0: ERP, CRM, gestionali, fogli Excel. Integriamo, ottimizziamo e aggiungiamo solo dove c\u2019\u00E8 un gap reale. Cambiare tutto non \u00E8 quasi mai la soluzione giusta.",
+        q: "Dobbiamo sostituire i software che già usiamo?",
+        a: "Quasi mai. Partiamo da ciò che hai già: ERP, CRM, gestionali, fogli Excel. Integriamo, ottimizziamo e aggiungiamo solo dove c'è un gap reale. Cambiare tutto non è quasi mai la soluzione giusta.",
     },
     {
-        q: "Cosa succede dopo l\u2019implementazione?",
-        a: "Non spariremo dopo la consegna. Affianchiamo il team durante l\u2019adozione, monitoriamo i KPI e restiamo disponibili per aggiustamenti. Il progetto si chiude quando i risultati sono consolidati.",
+        q: "Cosa succede dopo l'implementazione?",
+        a: "Non spariremo dopo la consegna. Affianchiamo il team durante l'adozione, monitoriamo i KPI e restiamo disponibili per aggiustamenti. Il progetto si chiude quando i risultati sono consolidati.",
     },
     {
         q: "Chi siete?",
-        a: "Due fratelli: uno sviluppatore fullstack con esperienza in startup e come consulente backend/DevOps per progetti enterprise (Eni Open-ES), l\u2019altro specializzato in AI e automazioni complesse con formazione diretta dai migliori provider del settore. Costruiamo, integriamo, automatizziamo.",
+        a: "Due fratelli: uno sviluppatore fullstack con esperienza in startup e come consulente backend/DevOps per progetti enterprise (Eni Open-ES), l'altro specializzato in AI e automazioni complesse con formazione diretta dai migliori provider del settore. Costruiamo, integriamo, automatizziamo.",
     },
     {
-        q: "Come funziona l\u2019assessment gratuito?",
-        a: "Compili il questionario in 10\u201315 minuti. Ricevi un report con il tuo score di maturit\u00E0 digitale, le aree critiche e un piano d\u2019azione prioritizzato. Senza impegno, senza carta di credito.",
+        q: "Come funziona l'assessment gratuito?",
+        a: "Compili il questionario in 10\u201315 minuti. Ricevi un report con il tuo score di maturità digitale, le aree critiche e un piano d'azione prioritizzato. Senza impegno, senza carta di credito.",
     },
 ];
 
@@ -147,7 +147,7 @@ export function CinematicFAQ({ theme }: { theme: string }) {
                             </span>
                         </h2>
                         <p className={`mt-5 text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                            Se non trovi la risposta che cerchi, scrivici, rispondiamo entro 24 ore.
+                            Se non trovi la risposta che cerchi, scrivici — rispondiamo entro 24 ore.
                         </p>
                     </motion.div>
 

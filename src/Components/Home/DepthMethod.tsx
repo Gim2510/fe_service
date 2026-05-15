@@ -12,19 +12,19 @@ const steps = [
     {
         step: "01",
         title: "Diagnosi",
-        text: "Mappiamo i tuoi processi, analizziamo i flussi di dati e gli strumenti in uso. Identifichiamo dove perdi tempo, margine e controllo, con dati concreti, non supposizioni.",
+        text: "Mappiamo i tuoi processi, analizziamo i flussi di dati e gli strumenti in uso. Identifichiamo dove perdi tempo, margine e controllo \u2014 con dati concreti, non supposizioni.",
         duration: "1\u20132 settimane",
     },
     {
         step: "02",
         title: "Progettazione",
-        text: "Disegniamo l\u2019architettura della soluzione: cosa integrare, cosa costruire, cosa eliminare. Ogni scelta \u00E8 guidata dal ROI atteso e validata con te prima di procedere.",
+        text: "Disegniamo l'architettura della soluzione: cosa integrare, cosa costruire, cosa eliminare. Ogni scelta è guidata dal ROI atteso e validata con te prima di procedere.",
         duration: "2\u20134 settimane",
     },
     {
         step: "03",
         title: "Attivazione",
-        text: "Implementiamo, formiamo il team e misuriamo i risultati. Non consegniamo e spariremo: restiamo finch\u00E9 il cambiamento \u00E8 consolidato e i numeri parlano da soli.",
+        text: "Implementiamo, formiamo il team e misuriamo i risultati. Non consegniamo e spariremo: restiamo finché il cambiamento è consolidato e i numeri parlano da soli.",
         duration: "4\u20138 settimane",
     },
 ];
@@ -155,7 +155,7 @@ export function DepthMethod({ theme }: { theme: string }) {
                         </span>
                     </h2>
                     <p className={`mt-5 text-lg ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                        Ogni progetto segue un percorso chiaro. Deliverable definiti, tempi trasparenti, un obiettivo verificabile, cos\u00EC sai sempre dove siamo e cosa aspettarti.
+                        Ogni progetto segue un percorso chiaro. Deliverable definiti, tempi trasparenti, un obiettivo verificabile \u2014 così sai sempre dove siamo e cosa aspettarti.
                     </p>
                 </motion.div>
 

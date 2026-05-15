@@ -9,12 +9,12 @@ import { useRef } from "react";
    ────────────────────────────────────────────────────────────────────────── */
 
 const problemi = [
-    { title: "\u00ABi dati ci sono, ma non li usiamo\u00BB", text: "Ogni reparto lavora per conto suo: Excel, CRM parziali, gestionali non collegati. Le decisioni si prendono a sensazione, e il costo di ogni errore si accumula in silenzio." },
-    { title: "\u00ABSprechiamo ore in attivit\u00E0 manuali\u00BB", text: "Processi ripetitivi che tolgono tempo alle persone chiave. Ogni ora persa a inserire dati o riconciliare fogli \u00E8 un\u2019ora tolta alla crescita." },
-    { title: "\u00ABNon sappiamo dove andremo a fine mese\u00BB", text: "Pipeline commerciale opaca, previsioni inaffidabili, opportunit\u00E0 che scivolano via. Senza visibilit\u00E0, il fatturato diventa una sorpresa." },
-    { title: "\u00ABReagiamo sempre, non anticipiamo mai\u00BB", text: "La relazione con i clienti \u00E8 gestita a emergenza. Manca un sistema che ti dica cosa succeder\u00E0 prima che succeda." },
-    { title: "\u00ABI costi crescono, i margini no\u00BB", text: "Senza controllo su produzione, acquisti e logistica, \u00E8 impossibile capire dove si perde margine, e quindi impossibile recuperarlo." },
-    { title: "\u00ABAbbiamo software ovunque, integrazione zero\u00BB", text: "Ogni strumento aggiunto ha creato un ecosistema frammentato. Nessuno parla con nessuno, e l\u2019unico collante \u00E8 il lavoro manuale." },
+    { title: "«i dati ci sono, ma non li usiamo»", text: "Ogni reparto lavora per conto suo: Excel, CRM parziali, gestionali non collegati. Le decisioni si prendono a sensazione \u2014 e il costo di ogni errore si accumula in silenzio." },
+    { title: "«Sprechiamo ore in attività manuali»", text: "Processi ripetitivi che tolgono tempo alle persone chiave. Ogni ora persa a inserire dati o riconciliare fogli è un'ora tolta alla crescita." },
+    { title: "«Non sappiamo dove andremo a fine mese»", text: "Pipeline commerciale opaca, previsioni inaffidabili, opportunità che scivolano via. Senza visibilità, il fatturato diventa una sorpresa." },
+    { title: "«Reagiamo sempre, non anticipiamo mai»", text: "La relazione con i clienti è gestita a emergenza. Manca un sistema che ti dica cosa succederà prima che succeda." },
+    { title: "«I costi crescono, i margini no»", text: "Senza controllo su produzione, acquisti e logistica, è impossibile capire dove si perde margine \u2014 e quindi impossibile recuperarlo." },
+    { title: "«Abbiamo software ovunque, integrazione zero»", text: "Ogni strumento aggiunto ha creato un ecosistema frammentato. Nessuno parla con nessuno, e l'unico collante è il lavoro manuale." },
 ];
 
 const cardTransforms = [
@@ -142,7 +142,7 @@ export function ScrollProblems({ theme }: { theme: string }) {
                         </span>
                     </h2>
                     <p className={`mt-5 text-lg ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                        Ogni PMI che incontriamo ha una storia diversa, ma racconta sempre le stesse frustrazioni. Se almeno una ti suona familiare, hai gi\u00E0 un motivo per parlare con noi.
+                        Ogni PMI che incontriamo ha una storia diversa, ma racconta sempre le stesse frustrazioni. Se almeno una ti suona familiare, hai già un motivo per parlare con noi.
                     </p>
                 </motion.div>
 

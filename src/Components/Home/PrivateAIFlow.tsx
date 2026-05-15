@@ -38,7 +38,7 @@ const aiAgents: FlowItem[] = [
 
 const guarantees = [
     { icon: CloudOff, title: "Zero cloud esterni", desc: "Il modello gira solo sulla tua macchina. Nessun fornitore terzo tocca i tuoi dati." },
-    { icon: Lock, title: "Propriet\u00E0 assoluta", desc: "Le tue informazioni non escono mai dal tuo perimetro. Per nessun motivo." },
+    { icon: Lock, title: "Proprietà assoluta", desc: "Le tue informazioni non escono mai dal tuo perimetro. Per nessun motivo." },
     { icon: Eye, title: "Controllo totale", desc: "Accesso, audit e configurazione: sempre e solo in mano tua." },
 ];
 
@@ -130,7 +130,7 @@ export function PrivateAIFlow({ theme }: { theme: string }) {
                         </motion.div>
 
                         <div className="relative z-10">
-                            <LayerLabel label="Le tue fonti dati" sublabel="Sistemi gi\u00E0 in uso nella tua azienda" isDark={isDark} />
+                            <LayerLabel label="Le tue fonti dati" sublabel="Sistemi già in uso nella tua azienda" isDark={isDark} />
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">{dataSources.map((item, i) => (<FlowChip key={item.label} item={item} isDark={isDark} delay={i * 0.08} />))}</div>
                         </div>
                         <FlowConnector isDark={isDark} />
