@@ -5,6 +5,7 @@ import { ArrowLeft, MapPin, Clock, Briefcase, DollarSign, ChevronRight } from "l
 import { useTheme } from "../../Context/ThemeContext.tsx";
 import { useGetAllJobOffers } from "../../hooks/useGetJobOffers.ts";
 import { ApplicationForm } from "./ApplicationForm.tsx";
+import { Badge } from "../Badge.tsx";
 
 export type CreateJobPositionDTO = {
     _id: string;
@@ -108,9 +109,7 @@ export function CareersFlowPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <span className={`text-[10px] font-mono uppercase tracking-[0.22em] ${isDark ? "text-sky-600" : "text-sky-700"}`}>
-                        Carriere
-                    </span>
+                    <Badge label="Carriere" color="violet" theme={theme} />
                     <h1 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         Lavora <span className="text-sky-600">con noi</span>
                     </h1>
@@ -125,8 +124,11 @@ export function CareersFlowPage() {
                     initial={{ opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-                    className={`rounded-2xl border overflow-hidden ${border}`}
-                    style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+                    className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
+                        isDark
+                            ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/10`
+                            : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/5`
+                    }`}
                 >
                     <div className="h-[2px] w-full bg-sky-700/60" />
 
