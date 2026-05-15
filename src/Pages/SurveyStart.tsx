@@ -33,7 +33,7 @@ export function SurveyStart() {
     const templateId = import.meta.env.VITE_SURVEY_TEMPLATE_ID;
     const locale: "it" = "it";
 
-    const { surveyId, loading: loadingSurveyId } = useUserSurvey();
+    const { surveyId, loading: loadingSurveyId, refetch } = useUserSurvey();
     const { survey, loading: loadingSurvey } = useSurvey(surveyId);
     const { initSurvey, loading: initLoading } = useInitSurvey();
 
@@ -46,7 +46,10 @@ export function SurveyStart() {
                 return;
             }
             const newSurveyId = await initSurvey(templateId, locale);
-            navigate(newSurveyId ? `/survey` : "/survey");
+            if (newSurveyId) {
+                await refetch();
+                navigate(`/survey`);
+            }
         } catch (e) { console.error("Errore avvio survey:", e); }
     };
 

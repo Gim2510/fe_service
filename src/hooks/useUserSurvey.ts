@@ -6,6 +6,7 @@ export function useUserSurvey() {
     const [surveyId, setSurveyId] = useState<string | undefined>(undefined);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [retry, setRetry] = useState(0);
 
     useEffect(() => {
         if (!id || !token) return;
@@ -24,7 +25,7 @@ export function useUserSurvey() {
             })
             .catch(err => setError(err.message))
             .finally(() => setLoading(false));
-    }, [id, token]);
+    }, [id, token, retry]);
 
-    return { surveyId, loading, error };
+    return { surveyId, loading, error, refetch: () => setRetry(r => r + 1) };
 }
