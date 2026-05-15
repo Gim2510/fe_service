@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import {
     CheckCircle2,
     BarChart3,
@@ -106,9 +106,12 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                     className="mx-auto max-w-7xl px-6 sm:px-8 mb-12"
                     style={{ scale: headerScale, opacity: headerOpacity }}
                 >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-cyan-400" : "text-sky-700"
+                    <span className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
+                        isDark
+                            ? "text-cyan-400 border-stone-700/40 bg-stone-800/20"
+                            : "text-cyan-600 border-cyan-300 bg-cyan-50"
                     }`}>
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
                         Soluzioni su misura
                     </span>
                     <h2 className={`font-fjalla text-3xl sm:text-5xl font-semibold leading-tight mt-3 ${

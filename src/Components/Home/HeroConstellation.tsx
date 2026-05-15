@@ -142,10 +142,10 @@ export function HeroConstellation() {
         }));
 
         const resize = () => {
-            const r = canvas.getBoundingClientRect();
-            canvas.width = r.width * window.devicePixelRatio;
-            canvas.height = r.height * window.devicePixelRatio;
-            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+            const dpr = window.devicePixelRatio;
+            canvas.width = canvas.clientWidth * dpr;
+            canvas.height = canvas.clientHeight * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         };
         resize();
         const ro = new ResizeObserver(resize);
@@ -189,8 +189,8 @@ export function HeroConstellation() {
             const dt = Math.min((now - last) / 1000, 0.05);
             last = now;
 
-            const W = canvas.getBoundingClientRect().width;
-            const H = canvas.getBoundingClientRect().height;
+            const W = canvas.clientWidth;
+            const H = canvas.clientHeight;
             ctx.clearRect(0, 0, W, H);
 
             // Convert % coords to pixel coords

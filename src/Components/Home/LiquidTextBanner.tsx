@@ -3,11 +3,10 @@ import { useEffect, useRef } from "react";
 interface LiquidTextBannerProps {
     theme: string;
     messages: string[];
-    logos?: string[];
     speed?: number;
 }
 
-export function LiquidTextBanner({ theme, messages, logos = [], speed = 50 }: LiquidTextBannerProps) {
+export function LiquidTextBanner({ theme, messages, speed = 50 }: LiquidTextBannerProps) {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const isDark = theme === "dark";
 
@@ -28,14 +27,9 @@ export function LiquidTextBanner({ theme, messages, logos = [], speed = 50 }: Li
         rafId = requestAnimationFrame(animate);
 
         return () => cancelAnimationFrame(rafId);
-    }, [speed, messages, logos]);
+    }, [speed, messages]);
 
-    const items = [
-        ...messages.map((msg) => ({ type: "text", content: msg })),
-        ...logos.map((logo) => ({ type: "logo", content: logo })),
-    ];
-
-    const scrollItems = [...items, ...items];
+    const scrollItems = [...messages, ...messages];
 
     return (
         <div className={`relative overflow-hidden border-y py-5 ${
@@ -43,7 +37,6 @@ export function LiquidTextBanner({ theme, messages, logos = [], speed = 50 }: Li
                 ? "bg-[#1A1A18]/60 border-stone-800/20"
                 : "bg-white/60 border-white/80 backdrop-blur-sm"
         }`}>
-            {/* Fade edges */}
             <div className={`absolute inset-y-0 left-0 w-20 z-10 pointer-events-none ${
                 isDark
                     ? "bg-gradient-to-r from-[#0E0E0D] to-transparent"
@@ -61,25 +54,16 @@ export function LiquidTextBanner({ theme, messages, logos = [], speed = 50 }: Li
                     isDark ? "text-slate-600" : "text-slate-400"
                 }`}
             >
-                {scrollItems.map((item, idx) =>
-                    item.type === "text" ? (
-                        <span
-                            key={idx}
-                            className={`px-6 text-sm font-semibold uppercase tracking-widest ${
-                                isDark ? "text-slate-700" : "text-slate-400"
-                            }`}
-                        >
-                            {item.content}
-                        </span>
-                    ) : (
-                        <img
-                            key={idx}
-                            src={item.content}
-                            alt="Tech logo"
-                            className="h-8 object-contain opacity-40"
-                        />
-                    )
-                )}
+                {scrollItems.map((msg, idx) => (
+                    <span
+                        key={idx}
+                        className={`px-6 text-sm font-semibold uppercase tracking-widest ${
+                            isDark ? "text-slate-700" : "text-slate-400"
+                        }`}
+                    >
+                        {msg}
+                    </span>
+                ))}
             </div>
         </div>
     );
