@@ -2,6 +2,7 @@ import { Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Badge } from "./Badge.tsx";
+import type { Theme } from "../types/InputTypes.ts";
 
 const fadeUp = {
     hidden: { opacity: 0, y: 24 },
@@ -12,7 +13,7 @@ const fadeUp = {
     }),
 };
 
-export function Footer({ theme }: { theme: string }) {
+export function Footer({ theme }: { theme: Theme }) {
     const isDark = theme === "dark";
 
     return (

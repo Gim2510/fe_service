@@ -1,4 +1,4 @@
-import type { InputProps } from "../types/InputTypes.ts";
+import type { InputProps } from "../../types/InputTypes.ts";
 
 export function Input({ label, name, type = "text", value, onChange, theme, error }: InputProps) {
     const isDark = theme === "dark";
