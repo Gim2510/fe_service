@@ -7,7 +7,7 @@ import {
     type ReactNode,
 } from "react";
 import { jwtDecode } from "jwt-decode";
-import { restoreSessionApi, logoutApi } from "../api/auth.api.ts";
+import { logoutApi } from "../api/auth.api.ts";
 
 type JwtPayload = {
     sub: string;
@@ -47,22 +47,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const logout = () => {
         clearLogoutTimer();
         setToken(null);
+        localStorage.removeItem("auth_token");
         logoutApi().catch(() => {});
     };
 
     const login = (newToken: string) => {
         clearLogoutTimer();
         setToken(newToken);
+        localStorage.setItem("auth_token", newToken);
     };
 
-    // Ripristina sessione da cookie HttpOnly al mount
+    // Ripristina sessione da localStorage al mount
     useEffect(() => {
-        restoreSessionApi().then((data) => {
-            if (data?.accessToken) {
-                setToken(data.accessToken);
-            }
-            setSessionRestored(true);
-        });
+        const stored = localStorage.getItem("auth_token");
+        if (stored) {
+            setToken(stored);
+        }
+        setSessionRestored(true);
     }, []);
 
     let role: string | null = null;
