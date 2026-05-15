@@ -15,7 +15,7 @@ const faqs = [
     },
     {
         q: "Quanto tempo per vedere i primi risultati?",
-        a: "I primi risultati misurabili arrivano in 4\u20138 settimane dall'avvio. Non promettiamo miracoli overnight, ma definiamo KPI chiari prima di iniziare \u2014 così sai cosa aspettarti e quando.",
+        a: "I primi risultati misurabili arrivano in 4-8 settimane dall'avvio. Non promettiamo miracoli overnight, ma definiamo KPI chiari prima di iniziare , così sai cosa aspettarti e quando.",
     },
     {
         q: "Dobbiamo sostituire i software che già usiamo?",
@@ -31,7 +31,7 @@ const faqs = [
     },
     {
         q: "Come funziona l'assessment gratuito?",
-        a: "Compili il questionario in 10\u201315 minuti. Ricevi un report con il tuo score di maturità digitale, le aree critiche e un piano d'azione prioritizzato. Senza impegno, senza carta di credito.",
+        a: "Compili il questionario in 10-15 minuti. Ricevi un report con il tuo score di maturità digitale, le aree critiche e un piano d'azione prioritizzato. Senza impegno, senza carta di credito.",
     },
 ];
 

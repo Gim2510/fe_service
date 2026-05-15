@@ -11,15 +11,15 @@ import { useRef } from "react";
 const livelli = [
     {
         level: "Base",
-        score: "0\u201330%",
-        description: "Operativit\u00E0 prevalentemente manuale. Alto rischio di errori, dati non strutturati e decisioni prese senza dati affidabili. Potenziale di miglioramento massimo.",
+        score: "0-30%",
+        description: "Operatività prevalentemente manuale. Alto rischio di errori, dati non strutturati e decisioni prese senza dati affidabili. Potenziale di miglioramento massimo.",
         accent: "#22D3EE",
         neonColor: "cyan",
         fillPercent: 25,
     },
     {
         level: "Intermedio",
-        score: "31\u201360%",
+        score: "31-60%",
         description: "Digitalizzazione parziale con isole non integrate. Alcuni KPI monitorati, ma processi ancora dipendenti da intervento manuale e riconciliazioni frequenti.",
         accent: "#38BDF8",
         neonColor: "sky",
@@ -27,7 +27,7 @@ const livelli = [
     },
     {
         level: "Avanzato",
-        score: "61\u201385%",
+        score: "61-85%",
         description: "Processi chiave digitalizzati e dati centralizzati. Dashboard operative attive. Margini di ottimizzazione su automazione avanzata e AI applicata.",
         accent: "#818CF8",
         neonColor: "indigo",
@@ -35,7 +35,7 @@ const livelli = [
     },
     {
         level: "Eccellente",
-        score: "86\u2013100%",
+        score: "86-100%",
         description: "Ecosistema digitale integrato, KPI predittivi e automazione intelligente su processi core. Competitive advantage sostenibile nel tempo.",
         accent: "#34D399",
         neonColor: "emerald",
@@ -204,13 +204,13 @@ export function MaturitySection({ theme }: { theme: string }) {
                     }`}>
                         Ogni PMI ha un livello di{" "}
                         <span className={isDark ? "text-cyan-400" : "text-sky-700"}>
-                            maturit\u00E0 digitale misurabile.
+                            maturità digitale misurabile.
                         </span>
                     </h2>
                     <p className={`mt-5 text-lg max-w-2xl mx-auto ${
                         isDark ? "text-slate-400" : "text-slate-600"
                     }`}>
-                        Il nostro assessment misura processi, tecnologia, dati e automazione con un modello strutturato. Il risultato non \u00E8 un numero generico \u2014 \u00E8 una mappa precisa di dove intervenire per ottenere il massimo impatto nel minor tempo.
+                        Il nostro assessment misura processi, tecnologia, dati e automazione con un modello strutturato. Il risultato non è un numero generico , è una mappa precisa di dove intervenire per ottenere il massimo impatto nel minor tempo.
                     </p>
                 </motion.div>
 
@@ -261,7 +261,7 @@ export function MaturitySection({ theme }: { theme: string }) {
                         <p className={`mt-8 text-xs text-center ${
                             isDark ? "text-slate-600" : "text-slate-400"
                         }`}>
-                            I pesi sono calibrati su dati reali di PMI italiane. I processi pesano di pi\u00F9 perch\u00E9 \u00E8 l\u00EC che si genera \u2014 o si perde \u2014 il margine operativo.
+                            I pesi sono calibrati su dati reali di PMI italiane. I processi pesano di più perché è lì che si genera , o si perde , il margine operativo.
                         </p>
                     </motion.div>
                 </motion.div>

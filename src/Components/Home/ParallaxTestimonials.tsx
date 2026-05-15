@@ -11,16 +11,16 @@ import { useRef } from "react";
 
 const testimonials = [
     {
-        quote: "In tre mesi abbiamo eliminato il 40% delle attivit\u00E0 manuali nel reparto logistica. I dati ora fluiscono in automatico e il mio team si concentra su ci\u00F2 che conta davvero.",
+        quote: "In tre mesi abbiamo eliminato il 40% delle attività manuali nel reparto logistica. I dati ora fluiscono in automatico e il mio team si concentra su ciò che conta davvero.",
         name: "Marco Ferretti",
         role: "Operations Director",
         company: "Ferretti Distribuzione Srl",
         sector: "Distribuzione",
-        result: "\u221240% attivit\u00E0 manuali",
+        result: "−40% attività manuali",
         resultColor: "text-cyan-400",
     },
     {
-        quote: "Avevamo dati ovunque e visibilit\u00E0 zero. Oggi ho una dashboard che mi dice ogni mattina dove siamo sul budget, il forecast e le priorit\u00E0 del team. Non torno indietro.",
+        quote: "Avevamo dati ovunque e visibilità zero. Oggi ho una dashboard che mi dice ogni mattina dove siamo sul budget, il forecast e le priorità del team. Non torno indietro.",
         name: "Giulia Marchetti",
         role: "CFO",
         company: "Marchetti & Partners",
@@ -29,12 +29,12 @@ const testimonials = [
         resultColor: "text-violet-400",
     },
     {
-        quote: "Il nostro CRM era un cimitero di contatti. Ora il funnel \u00E8 vivo, il team commerciale sa esattamente su chi lavorare e il tasso di chiusura \u00E8 raddoppiato in sei mesi.",
+        quote: "Il nostro CRM era un cimitero di contatti. Ora il funnel è vivo, il team commerciale sa esattamente su chi lavorare e il tasso di chiusura è raddoppiato in sei mesi.",
         name: "Luca Bianchi",
         role: "CEO",
         company: "Bianchi Impianti SpA",
         sector: "Impiantistica industriale",
-        result: "\u00D72 tasso di chiusura",
+        result: "×2 tasso di chiusura",
         resultColor: "text-emerald-400",
     },
 ];
@@ -112,7 +112,7 @@ function TestimonialCard({ t, i, isDark, theme: _theme, scrollYProgress }: {
                         {t.name}
                     </p>
                     <p className={`text-xs mt-0.5 ${isDark ? "text-slate-500" : "text-slate-500"}`}>
-                        {t.role} \u00B7 {t.company}
+                        {t.role} · {t.company}
                     </p>
                     <span className={`mt-2 inline-block text-xs font-medium uppercase tracking-wider ${
                         isDark ? colors.sector : "text-sky-500"
