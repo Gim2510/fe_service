@@ -13,6 +13,7 @@ import {
     ChevronDown, ChevronRight, ArrowLeft, ArrowRight,
     Calendar, RotateCcw, Check,
 } from "lucide-react";
+import { Badge } from "../Components/Badge.tsx";
 
 const CATEGORY_LABELS: Record<string, string> = {
     leadership:   "Leadership",
@@ -126,16 +127,12 @@ export function SurveyDashboard() {
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4 }}
-                    className="flex items-center justify-between"
+                    className="space-y-3"
                 >
-                    <div className="space-y-0.5">
-                        <span className={`text-[10px] font-mono uppercase tracking-[0.2em] ${mutedText}`}>
-                            Digital Maturity Dashboard
-                        </span>
-                        <h1 className={`text-2xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                            Analisi dettagliata
-                        </h1>
-                    </div>
+                    <Badge label="Digital Maturity Dashboard" color="sky" theme={theme} />
+                    <h1 className={`text-2xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                        Analisi dettagliata
+                    </h1>
                 </motion.div>
 
                 {/* ── Hero card — split layout ── */}
@@ -143,8 +140,11 @@ export function SurveyDashboard() {
                     initial={{ opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                    className={`w-full rounded-2xl border overflow-hidden ${border}`}
-                    style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+                    className={`w-full rounded-2xl border overflow-hidden backdrop-blur-sm ${
+                        isDark
+                            ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/10`
+                            : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/5`
+                    }`}
                 >
                     {/* rose accent line */}
                     <div className="h-[2px] w-full bg-sky-700/60" />
@@ -302,7 +302,7 @@ export function SurveyDashboard() {
                     </div>
                 </motion.div>
 
-                {/* ── Tabs ── */}
+                {/* ── Tabs ─ */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -313,19 +313,22 @@ export function SurveyDashboard() {
                         <button
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
-                            className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-medium
-                                whitespace-nowrap transition-colors border
+                            className={`relative inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-medium
+                                whitespace-nowrap transition-all border overflow-hidden
                                 ${activeTab === tab.id
                                     ? isDark
-                                        ? "bg-sky-700/15 border-sky-600/30 text-sky-400"
+                                        ? "bg-sky-700/15 border-sky-600/30 text-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.15)]"
                                         : "bg-sky-50 border-sky-400 text-sky-800"
                                     : isDark
-                                        ? "border-stone-800/20 text-slate-500 hover:text-slate-300 hover:border-stone-800/40"
-                                        : "border-slate-200 text-slate-500 hover:text-slate-700 hover:bg-[#EDF2F7]"
+                                        ? "border-stone-800/20 text-slate-500 hover:text-sky-400 hover:border-stone-800/40"
+                                        : "border-slate-200 text-slate-500 hover:text-sky-700 hover:bg-[#EDF2F7]"
                                 }`}
                         >
                             {tab.icon}
                             {tab.label}
+                            {activeTab === tab.id && isDark && (
+                                <span className="absolute inset-x-0 bottom-0 h-[2px] bg-sky-500 shadow-[0_0_8px_rgba(56,189,248,0.6)]" />
+                            )}
                         </button>
                     ))}
                 </motion.div>
@@ -344,8 +347,11 @@ export function SurveyDashboard() {
                             <div className="space-y-4">
                                 {/* category detail cards */}
                                 {byCategory.length > 0 && (
-                                    <div className={`rounded-2xl border overflow-hidden ${border}`}
-                                         style={{ background: isDark ? "#161614" : "#FAFAF8" }}>
+                                    <div className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
+                                    isDark
+                                        ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/5`
+                                        : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/3`
+                                }`}>
                                         <div className="h-[2px] w-full bg-sky-700/40" />
                                         <div className="p-7 space-y-5">
                                             <p className={`text-[10px] font-mono uppercase tracking-[0.18em] ${mutedText}`}>
@@ -435,8 +441,11 @@ export function SurveyDashboard() {
                                     return (
                                         <div
                                             key={index}
-                                            className={`rounded-2xl border overflow-hidden ${border}`}
-                                            style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+                                            className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
+                                                isDark
+                                                    ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/5`
+                                                    : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/3`
+                                            }`}
                                         >
                                             <button
                                                 onClick={() => toggleAction(index)}
@@ -536,8 +545,11 @@ export function SurveyDashboard() {
 
                                 {/* question card */}
                                 <div
-                                    className={`rounded-2xl border overflow-hidden ${border}`}
-                                    style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+                                    className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
+                                        isDark
+                                            ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/5`
+                                            : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/3`
+                                    }`}
                                 >
                                     <div className="h-[2px] w-full bg-sky-700/40" />
                                     <div className="p-7">
@@ -586,8 +598,11 @@ export function SurveyDashboard() {
                         {/* CTA */}
                         {activeTab === "cta" && (
                             <div
-                                className={`rounded-2xl border overflow-hidden ${border}`}
-                                style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+                                className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
+                                    isDark
+                                        ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/5`
+                                        : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/3`
+                                }`}
                             >
                                 <div className="h-[2px] w-full bg-sky-700/60" />
                                 <div className="p-10 text-center space-y-6">

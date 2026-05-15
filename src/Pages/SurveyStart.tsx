@@ -9,6 +9,7 @@ import { FallingLines } from "react-loader-spinner";
 import { useTheme } from "../Context/ThemeContext.tsx";
 import SecurityItem from "../Components/Survey/SecurityItem.tsx";
 import { SurveyIntro } from "../Components/Survey/SurveyIntro.tsx";
+import { Badge } from "../Components/Badge.tsx";
 
 const steps = [
     { n: "01", title: "Raccolta informazioni", desc: "Inserisci dati su processi, strumenti e organizzazione aziendale." },
@@ -72,9 +73,7 @@ export function SurveyStart() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
             >
-                <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-sky-500" : "text-sky-700"}`}>
-                    Survey digitale
-                </span>
+                <Badge label="Survey digitale" color="sky" theme={theme} />
                 <h1 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                     Struttura la tua{" "}
                     <span className="text-sky-600">crescita digitale</span>
@@ -96,7 +95,7 @@ export function SurveyStart() {
                         disabled={initLoading || loadingSurvey || loadingSurveyId}
                         className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
                             bg-sky-700 hover:bg-sky-600 disabled:opacity-50 disabled:cursor-not-allowed
-                            text-white text-sm font-semibold transition-colors
+                            text-white text-sm font-semibold transition-all
                             shadow-lg shadow-sky-700/25 hover:-translate-y-0.5 duration-200"
                     >
                         {initLoading
@@ -123,7 +122,11 @@ export function SurveyStart() {
                 {steps.map((s, i) => (
                     <motion.div
                         key={s.n}
-                        className={`rounded-2xl border p-6 ${card}`}
+                        className={`rounded-2xl border backdrop-blur-sm p-6 ${
+                            isDark
+                                ? `${card} shadow-lg shadow-sky-700/5`
+                                : `${card} shadow-lg shadow-sky-700/3`
+                        }`}
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
@@ -154,7 +157,11 @@ export function SurveyStart() {
                     </ul>
                 </div>
 
-                <div className={`rounded-2xl border p-7 ${card}`}>
+                <div className={`rounded-2xl border backdrop-blur-sm p-7 ${
+                    isDark
+                        ? `${card} shadow-lg shadow-sky-700/5`
+                        : `${card} shadow-lg shadow-sky-700/3`
+                }`}>
                     <h3 className={`text-lg font-semibold mb-4 ${isDark ? "text-slate-100" : "text-slate-900"}`}>Cosa otterrai</h3>
                     <div className="space-y-2.5">
                         {["Visione chiara dello stato attuale", "Identificazione delle criticità principali", "Linee guida per evoluzione digitale", "Base concreta per confronto consulenziale"].map(item => (
@@ -172,7 +179,11 @@ export function SurveyStart() {
 
             {/* Security */}
             <motion.section
-                className={`relative z-10 max-w-4xl mx-auto mt-12 p-7 rounded-2xl border ${card}`}
+                className={`relative z-10 max-w-4xl mx-auto mt-12 p-7 rounded-2xl border backdrop-blur-sm ${
+                    isDark
+                        ? `${card} shadow-lg shadow-sky-700/5`
+                        : `${card} shadow-lg shadow-sky-700/3`
+                }`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
