@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Badge } from "../Badge.tsx";
+import { Badge } from "../../Badge.tsx";
 
 type SectionProps = {
     title: string;
