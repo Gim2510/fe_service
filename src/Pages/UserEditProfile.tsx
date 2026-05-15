@@ -10,6 +10,7 @@ import { useAuth } from "../auth/AuthContext.tsx";
 import { useUpdateUserInfo } from "../hooks/useUpdateUserInfo.ts";
 import { FallingLines } from "react-loader-spinner";
 import { useTheme } from "../Context/ThemeContext";
+import { Badge } from "../Components/Badge.tsx";
 
 export function UserEditProfile() {
     const { theme } = useTheme();
@@ -98,30 +99,28 @@ export function UserEditProfile() {
         <main className={`${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"} min-h-screen px-6 sm:px-8 pt-28 pb-24`}>
             <div className="max-w-2xl mx-auto space-y-10">
                 <motion.header initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-sky-500" : "text-sky-700"}`}>
-                        Profilo
-                    </span>
-                    <h1 className={`text-3xl font-semibold mt-2 ${isDark ? "text-slate-100" : "text-slate-900"}`}>Modifica profilo</h1>
+                    <Badge label="Profilo" color="sky" theme={theme} />
+                    <h1 className={`text-3xl font-semibold mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>Modifica profilo</h1>
                     <p className={`mt-1 text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>Aggiorna le informazioni personali del tuo account.</p>
                 </motion.header>
 
                 <form onSubmit={(e) => { e.preventDefault(); setShowConfirmModal(true); }} className="space-y-6">
-                    <Section title="Informazioni personali" bgSection={`rounded-2xl border p-6 sm:p-8 ${card}`} textPrimary={isDark ? "text-slate-200" : "text-slate-800"} textSecondary={isDark ? "text-slate-500" : "text-slate-500"}>
+                    <Section title="Informazioni personali" bgSection={`rounded-2xl border p-6 sm:p-8 ${card} backdrop-blur-sm ${isDark ? "shadow-lg shadow-sky-700/5" : "shadow-lg shadow-sky-700/3"}`} textPrimary={isDark ? "text-slate-200" : "text-slate-800"} textSecondary={isDark ? "text-slate-500" : "text-slate-500"} theme={theme} badgeColor="sky">
                         <Input theme={theme} label="Nome" value={form.given_name} onChange={(v) => setForm((f) => ({ ...f, given_name: v }))} />
                         <Input theme={theme} label="Cognome" value={form.family_name} onChange={(v) => setForm((f) => ({ ...f, family_name: v }))} />
                     </Section>
 
-                    <Section title="Dati fiscali" bgSection={`rounded-2xl border p-6 sm:p-8 ${card}`} textPrimary={isDark ? "text-slate-200" : "text-slate-800"} textSecondary={isDark ? "text-slate-500" : "text-slate-500"}>
+                    <Section title="Dati fiscali" bgSection={`rounded-2xl border p-6 sm:p-8 ${card} backdrop-blur-sm ${isDark ? "shadow-lg shadow-sky-700/5" : "shadow-lg shadow-sky-700/3"}`} textPrimary={isDark ? "text-slate-200" : "text-slate-800"} textSecondary={isDark ? "text-slate-500" : "text-slate-500"} theme={theme} badgeColor="amber">
                         <Input theme={theme} label="Codice fiscale" value={form.fiscal_code} onChange={(v) => setForm((f) => ({ ...f, fiscal_code: v }))} />
                         <Input theme={theme} label="Partita IVA" value={form.partita_iva} onChange={(v) => setForm((f) => ({ ...f, partita_iva: v }))} />
                     </Section>
 
-                    <Section title="Email" bgSection={`rounded-2xl border p-6 sm:p-8 ${card}`} textPrimary={isDark ? "text-slate-200" : "text-slate-800"} textSecondary={isDark ? "text-slate-500" : "text-slate-500"}>
+                    <Section title="Email" bgSection={`rounded-2xl border p-6 sm:p-8 ${card} backdrop-blur-sm ${isDark ? "shadow-lg shadow-sky-700/5" : "shadow-lg shadow-sky-700/3"}`} textPrimary={isDark ? "text-slate-200" : "text-slate-800"} textSecondary={isDark ? "text-slate-500" : "text-slate-500"} theme={theme} badgeColor="cyan">
                         <Input theme={theme} label="Email" value={form.email} onChange={(v) => setForm((f) => ({ ...f, email: v }))} />
                         <p className={`text-xs ${isDark ? "text-slate-500" : "text-slate-400"}`}>Cambiare email richiederà una nuova verifica.</p>
                     </Section>
 
-                    <Section title="Elimina profilo" bgSection={`rounded-2xl border p-6 sm:p-8 ${isDark ? "border-red-900/30 bg-red-900/5" : "border-red-200 bg-red-50"}`} textPrimary={isDark ? "text-slate-200" : "text-slate-800"} textSecondary={isDark ? "text-slate-500" : "text-slate-500"}>
+                    <Section title="Elimina profilo" bgSection={`rounded-2xl border p-6 sm:p-8 ${isDark ? "border-red-900/30 bg-red-900/5" : "border-red-200 bg-red-50"} backdrop-blur-sm ${isDark ? "shadow-lg shadow-red-700/5" : "shadow-lg shadow-red-700/3"}`} textPrimary={isDark ? "text-slate-200" : "text-slate-800"} textSecondary={isDark ? "text-slate-500" : "text-slate-500"} theme={theme} badgeColor="red" showBadge={false}>
                         <div className="space-y-3">
                             <p className={`text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                                 L'account verrà disattivato immediatamente. Potrai riattivarlo entro{" "}
@@ -160,15 +159,18 @@ export function UserEditProfile() {
             {/* Confirm modal */}
             {showConfirmModal && (
                 <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                    <div className={`rounded-2xl border p-8 w-full max-w-sm space-y-5 ${
-                        isDark ? "bg-[#1C1C1A] border-stone-800/20" : "bg-[#F8FAFB] border-slate-200"
+                    <div className={`rounded-2xl border overflow-hidden p-8 w-full max-w-sm space-y-5 ${
+                        isDark
+                            ? "bg-[#1C1C1A]/90 border-stone-800/20 shadow-lg shadow-sky-700/10"
+                            : "bg-[#F8FAFB] border-slate-200 shadow-lg shadow-sky-700/5"
                     }`}>
+                        {isDark && <div className="h-[2px] w-full bg-sky-700/60 -mx-8 -mt-8 mb-5" />}
                         <h2 className={`text-lg font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>Conferma aggiornamento</h2>
                         <p className={`text-sm ${isDark ? "text-slate-400" : "text-slate-500"}`}>Sei sicuro di voler salvare le modifiche?</p>
                         <div className="flex gap-3">
                             <button
                                 onClick={() => setShowConfirmModal(false)}
-                                className={`flex-1 py-2.5 rounded-xl border text-sm font-medium transition-colors ${
+                                className={`flex-1 py-2.5 rounded-xl border text-sm font-medium transition-all hover:-translate-y-0.5 duration-200 ${
                                     isDark ? "border-stone-800/30 text-slate-400 hover:text-slate-200" : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"
                                 }`}
                             >
@@ -177,7 +179,7 @@ export function UserEditProfile() {
                             <button
                                 onClick={confirmUpdate}
                                 disabled={loadingUpdate}
-                                className="flex-1 py-2.5 rounded-xl bg-sky-700 hover:bg-sky-600 text-white text-sm font-semibold transition-colors flex items-center justify-center"
+                                className="flex-1 py-2.5 rounded-xl bg-sky-700 hover:bg-sky-600 text-white text-sm font-semibold transition-all hover:-translate-y-0.5 duration-200 shadow-lg shadow-sky-700/20 flex items-center justify-center"
                             >
                                 {loadingUpdate
                                     ? <FallingLines color="white" width="20" visible ariaLabel="loading" />

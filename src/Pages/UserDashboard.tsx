@@ -7,6 +7,7 @@ import { useAuth } from "../auth/AuthContext.tsx";
 import { FallingLines } from "react-loader-spinner";
 import { useTheme } from "../Context/ThemeContext";
 import { useSetUserImage } from "../hooks/useSetUserImage";
+import { Badge } from "../Components/Badge.tsx";
 
 const TABS = [
     { id: "account",  label: "Account",   icon: User },
@@ -72,10 +73,8 @@ export function UserDashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <span className={`text-[10px] font-mono uppercase tracking-[0.22em] ${isDark ? "text-sky-600" : "text-sky-700"}`}>
-                        Pannello personale
-                    </span>
-                    <h1 className={`text-2xl font-semibold mt-1.5 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                    <Badge label="Pannello personale" color="sky" theme={theme} />
+                    <h1 className={`text-2xl font-semibold mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         Area personale
                     </h1>
                     <p className={`mt-1 text-sm ${mutedText}`}>
@@ -88,8 +87,11 @@ export function UserDashboard() {
                     initial={{ opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.06 }}
-                    className={`rounded-2xl border overflow-hidden ${border}`}
-                    style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+                    className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
+                        isDark
+                            ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/10`
+                            : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/5`
+                    }`}
                 >
                     <div className="h-[2px] w-full bg-sky-700/60" />
 
@@ -195,19 +197,22 @@ export function UserDashboard() {
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-medium
-                                    whitespace-nowrap transition-colors border
+                                className={`relative inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-medium
+                                    whitespace-nowrap transition-all border overflow-hidden
                                     ${isActive
                                         ? isDark
-                                            ? "bg-sky-700/15 border-sky-600/30 text-sky-400"
+                                            ? "bg-sky-700/15 border-sky-600/30 text-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.15)]"
                                             : "bg-sky-50 border-sky-400 text-sky-800"
                                         : isDark
-                                            ? "border-stone-800/20 text-slate-500 hover:text-slate-300 hover:border-stone-800/40"
-                                            : "border-slate-200 text-slate-500 hover:text-slate-700 hover:bg-[#EDF2F7]"
+                                            ? "border-stone-800/20 text-slate-500 hover:text-sky-400 hover:border-stone-800/40"
+                                            : "border-slate-200 text-slate-500 hover:text-sky-700 hover:bg-[#EDF2F7]"
                                     }`}
                             >
                                 <Icon size={13} />
                                 {tab.label}
+                                {isActive && isDark && (
+                                    <span className="absolute inset-x-0 bottom-0 h-[2px] bg-sky-500 shadow-[0_0_8px_rgba(56,189,248,0.6)]" />
+                                )}
                             </button>
                         );
                     })}
@@ -356,8 +361,11 @@ function InfoCard({ title, children, isDark, border }: {
 }) {
     return (
         <div
-            className={`rounded-2xl border overflow-hidden ${border}`}
-            style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+            className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
+                isDark
+                    ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/5`
+                    : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/3`
+            }`}
         >
             <div className="h-[2px] w-full bg-sky-700/40" />
             <div className="p-7">
@@ -398,12 +406,15 @@ function UserActionCard({ title, description, onClick, isDark, border, icon: Ico
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: index * 0.07 }}
             onClick={onClick}
-            className={`text-left w-full rounded-2xl border overflow-hidden transition-all duration-200
+            className={`text-left w-full rounded-2xl border overflow-hidden backdrop-blur-sm transition-all duration-200
                 hover:-translate-y-0.5 group ${danger
-                    ? isDark ? "border-red-900/30" : "border-red-200"
-                    : border
+                    ? isDark
+                        ? "border-red-900/30 bg-[#161614]/80 shadow-lg shadow-red-700/5"
+                        : "border-red-200 bg-[#FAFAF8] shadow-lg shadow-red-700/3"
+                    : isDark
+                        ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/5`
+                        : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/3`
                 }`}
-            style={{ background: isDark ? "#161614" : "#FAFAF8" }}
         >
             <div className={`h-[2px] w-full ${danger ? "bg-red-600/40" : "bg-sky-700/40"}`} />
             <div className="p-6">
