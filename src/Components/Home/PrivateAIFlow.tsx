@@ -38,7 +38,7 @@ const aiAgents: FlowItem[] = [
 
 const guarantees = [
     { icon: CloudOff, title: "Zero cloud esterni", desc: "Il modello gira solo sulla tua macchina. Nessun fornitore terzo tocca i tuoi dati." },
-    { icon: Lock, title: "Propriet\u00E0 assoluta", desc: "Le tue informazioni non escono mai dal tuo perimetro. Per nessun motivo." },
+    { icon: Lock, title: "Proprietà assoluta", desc: "Le tue informazioni non escono mai dal tuo perimetro. Per nessun motivo." },
     { icon: Eye, title: "Controllo totale", desc: "Accesso, audit e configurazione: sempre e solo in mano tua." },
 ];
 
@@ -87,7 +87,7 @@ function LayerLabel({ label, sublabel, isDark }: { label: string; sublabel: stri
         <motion.div className="flex items-center gap-3" initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, ease: "easeOut" }}>
             <div className={`h-px w-8 ${isDark ? "bg-cyan-500/30" : "bg-sky-600/20"}`} />
             <span className={`text-[11px] font-bold uppercase tracking-[0.15em] ${isDark ? "text-cyan-400/60" : "text-sky-700/50"}`}>{label}</span>
-            <span className={`text-[11px] ${isDark ? "text-slate-600" : "text-slate-400"}`}> \u2014 {sublabel}</span>
+            <span className={`text-[11px] ${isDark ? "text-slate-600" : "text-slate-400"}`}> , {sublabel}</span>
         </motion.div>
     );
 }
@@ -117,7 +117,7 @@ export function PrivateAIFlow({ theme }: { theme: string }) {
                     <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         I tuoi dati restano tuoi.<span className={`block mt-1 ${isDark ? "text-cyan-400" : "text-sky-700"}`}>Sempre.</span>
                     </h2>
-                    <p className={`mt-5 text-lg ${isDark ? "text-slate-400" : "text-slate-600"}`}>Modelli AI che girano sulla tua infrastruttura. Agenti costruiti sui tuoi processi. Nessun dato condiviso con terze parti \u2014 mai.</p>
+                    <p className={`mt-5 text-lg ${isDark ? "text-slate-400" : "text-slate-600"}`}>Modelli AI che girano sulla tua infrastruttura. Agenti costruiti sui tuoi processi. Nessun dato condiviso con terze parti , mai.</p>
                 </motion.div>
 
                 <motion.div className="relative mb-16" style={{ y: diagramY, opacity: diagramOpacity, scale: diagramScale }}>
@@ -130,7 +130,7 @@ export function PrivateAIFlow({ theme }: { theme: string }) {
                         </motion.div>
 
                         <div className="relative z-10">
-                            <LayerLabel label="Le tue fonti dati" sublabel="Sistemi gi\u00E0 in uso nella tua azienda" isDark={isDark} />
+                            <LayerLabel label="Le tue fonti dati" sublabel="Sistemi già in uso nella tua azienda" isDark={isDark} />
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">{dataSources.map((item, i) => (<FlowChip key={item.label} item={item} isDark={isDark} delay={i * 0.08} />))}</div>
                         </div>
                         <FlowConnector isDark={isDark} />

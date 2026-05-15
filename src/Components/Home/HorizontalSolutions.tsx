@@ -68,21 +68,21 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
 
     const sp = { stiffness: 80, damping: 28, mass: 0.8 };
 
-    // Header animation — title appears first
-    const headerScale   = useSpring(useTransform(scrollYProgress, [0, 0.08], [0.96, 1]), sp);
-    const headerOpacity = useSpring(useTransform(scrollYProgress, [0, 0.08], [0, 1]), sp);
+    // Header: title always visible from start
+    const headerScale   = useSpring(useTransform(scrollYProgress, [0, 0.03], [0.98, 1]), sp);
+    const headerOpacity = useSpring(useTransform(scrollYProgress, [0, 0.03], [0.95, 1]), sp);
 
-    // Cards hidden initially, appear after header settles
-    const cardsRevealStart = 0.08;
-    const cardsRevealEnd   = 0.18;
+    // Cards appear almost immediately, slightly after header
+    const cardsRevealStart = 0.03;
+    const cardsRevealEnd   = 0.10;
     const cardsOpacity = useSpring(
         useTransform(scrollYProgress, [cardsRevealStart, cardsRevealEnd], [0, 1]),
         sp
     );
 
-    // Horizontal scroll starts AFTER cards are fully visible
+    // Horizontal scroll starts earlier
     const x = useSpring(
-        useTransform(scrollYProgress, [0.22, 1], ["35%", "-72%"]),
+        useTransform(scrollYProgress, [0.13, 1], ["35%", "-72%"]),
         sp
     );
 
@@ -186,8 +186,8 @@ function SolutionCard({ item, index, isDark, theme: _theme, progress }: {
 }) {
     const sp = { stiffness: 80, damping: 28, mass: 0.8 };
     
-    // Card activation ranges — staggered after reveal
-    const cardStart = 0.20 + index * 0.10;
+    // Card activation ranges — earlier, right after cards container appears
+    const cardStart = 0.12 + index * 0.10;
     const cardEnd   = cardStart + 0.14;
     const scale     = useSpring(useTransform(progress, [cardStart, cardEnd], [0.92, 1]), sp);
     const rotateY   = useSpring(useTransform(progress, [cardStart, cardEnd], [6, 0]), sp);
