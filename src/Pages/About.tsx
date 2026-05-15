@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useTheme } from "../Context/ThemeContext.tsx";
 import { CheckCircle2, ArrowRight, Zap, Shield, BarChart2, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Badge } from "../Components/Badge.tsx";
 
 const fadeUp = (delay = 0) => ({
     initial: { opacity: 0, y: 24 },
@@ -123,9 +124,7 @@ export function About() {
                 {/* ── Hero ── */}
                 <section className="max-w-3xl">
                     <motion.div {...fadeUp(0)}>
-                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-sky-500" : "text-sky-700"}`}>
-                            Chi siamo
-                        </span>
+                        <Badge label="Chi siamo" color="sky" theme={theme} />
                         <h1 className={`font-fjalla text-5xl sm:text-6xl font-semibold leading-tight mt-4 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                             Colmiamo il gap tra
                             <span className={` block ${isDark ? "text-sky-500" : "text-sky-700"}`}>
@@ -154,7 +153,7 @@ export function About() {
                     </motion.div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <motion.div {...fadeUp(0.05)} className={`rounded-2xl border p-8 ${card}`}>
+                        <motion.div {...fadeUp(0.05)} className={`rounded-2xl border backdrop-blur-sm p-8 ${isDark ? `${card} shadow-lg shadow-sky-700/5` : `${card} shadow-lg shadow-sky-700/3`}`}>
                             <p className={`text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                                 AxiomLab nasce dall'incontro di due competenze complementari e di una
                                 frustrazione condivisa: le grandi aziende hanno accesso a metodologie,
@@ -170,7 +169,7 @@ export function About() {
                             </p>
                         </motion.div>
 
-                        <motion.div {...fadeUp(0.1)} className={`rounded-2xl border p-8 ${card}`}>
+                        <motion.div {...fadeUp(0.1)} className={`rounded-2xl border backdrop-blur-sm p-8 ${isDark ? `${card} shadow-lg shadow-sky-700/5` : `${card} shadow-lg shadow-sky-700/3`}`}>
                             <p className={`text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                                 Il risultato è un team piccolo ma estremamente efficace: niente burocrazia,
                                 niente intermediari, due persone che conoscono il tuo progetto dalla diagnosi
@@ -208,7 +207,7 @@ export function About() {
                             <motion.div
                                 key={m.step}
                                 {...fadeUp(i * 0.08)}
-                                className={`rounded-2xl border p-8 ${card}`}
+                                className={`rounded-2xl border backdrop-blur-sm p-8 ${isDark ? `${card} shadow-lg shadow-sky-700/5` : `${card} shadow-lg shadow-sky-700/3`}`}
                             >
                                 <div className="flex flex-col sm:flex-row sm:items-start gap-6">
                                     <div className="shrink-0">
@@ -267,7 +266,7 @@ export function About() {
                             <motion.div
                                 key={t.category}
                                 {...fadeUp(i * 0.07)}
-                                className={`rounded-2xl border p-6 space-y-4 ${card}`}
+                                className={`rounded-2xl border backdrop-blur-sm p-6 space-y-4 ${isDark ? `${card} shadow-lg shadow-sky-700/5` : `${card} shadow-lg shadow-sky-700/3`}`}
                             >
                                 <div className="flex items-center gap-2">
                                     <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: t.color }} />
@@ -312,7 +311,7 @@ export function About() {
                                 <motion.div
                                     key={v.title}
                                     {...fadeUp(i * 0.08)}
-                                    className={`rounded-2xl border p-8 space-y-4 ${card}`}
+                                    className={`rounded-2xl border backdrop-blur-sm p-8 space-y-4 ${isDark ? `${card} shadow-lg shadow-sky-700/5` : `${card} shadow-lg shadow-sky-700/3`}`}
                                 >
                                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
                                         isDark ? "bg-sky-700/10" : "bg-sky-50"
@@ -334,15 +333,13 @@ export function About() {
                 {/* ── CTA ── */}
                 <motion.section
                     {...fadeUp(0)}
-                    className={`rounded-2xl border p-10 sm:p-14 text-center flex flex-col items-center gap-6 ${
+                    className={`rounded-2xl border backdrop-blur-sm p-10 sm:p-14 text-center flex flex-col items-center gap-6 ${
                         isDark
-                            ? "bg-gradient-to-br from-[#0C0C0B] via-[#161410] to-[#0C0C0B] border-stone-800/20"
-                            : "bg-gradient-to-br from-[#FDFAF4] via-[#F2E8D5] to-[#FDFAF4] border-sky-200/60"
+                            ? "bg-gradient-to-br from-[#0C0C0B] via-[#161410] to-[#0C0C0B] border-stone-800/20 shadow-lg shadow-sky-700/10"
+                            : "bg-gradient-to-br from-[#FDFAF4] via-[#F2E8D5] to-[#FDFAF4] border-sky-200/60 shadow-lg shadow-sky-700/5"
                     }`}
                 >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-sky-500" : "text-sky-700"}`}>
-                        Inizia da qui
-                    </span>
+                    <Badge label="Inizia da qui" color="emerald" theme={theme} />
                     <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold max-w-xl leading-tight ${isDark ? "text-slate-100" : "text-stone-900"}`}>
                         Vuoi capire dove interveniamo sulla tua azienda?
                     </h2>

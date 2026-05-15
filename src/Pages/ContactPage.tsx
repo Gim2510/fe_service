@@ -2,6 +2,7 @@ import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTheme } from "../Context/ThemeContext.tsx";
 import type { ReactNode } from "react";
+import { Badge } from "../Components/Badge.tsx";
 
 export function ContactPage() {
     const { theme } = useTheme();
@@ -36,9 +37,7 @@ export function ContactPage() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-sky-500" : "text-sky-700"}`}>
-                        Contatti
-                    </span>
+                    <Badge label="Contatti" color="sky" theme={theme} />
                     <h1 className={`font-fjalla text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         Parliamo del tuo
                         <span className="block text-sky-600 mt-1">prossimo passo digitale.</span>
@@ -58,10 +57,10 @@ export function ContactPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.55, ease: "easeOut", delay: 0.08 }}
                 >
-                    <div className={`rounded-2xl border p-8 sm:p-10 flex flex-col gap-5 ${
+                    <div className={`rounded-2xl border backdrop-blur-sm p-8 sm:p-10 flex flex-col gap-5 ${
                         isDark
-                            ? "bg-[#1C1C1A]/80 border-stone-800/20 shadow-[0_24px_80px_rgba(0,0,0,0.5)]"
-                            : "bg-[#F8FAFB] border-slate-200 shadow-[0_8px_40px_rgba(0,0,0,0.06)]"
+                            ? "bg-[#1C1C1A]/80 border-stone-800/20 shadow-[0_24px_80px_rgba(0,0,0,0.5)] shadow-sky-700/10"
+                            : "bg-[#F8FAFB] border-slate-200 shadow-[0_8px_40px_rgba(0,0,0,0.06)] shadow-sky-700/5"
                     }`}>
                         <h2 className={`text-xl font-semibold mb-2 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                             I nostri riferimenti
