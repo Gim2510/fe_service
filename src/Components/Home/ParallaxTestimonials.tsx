@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Quote } from "lucide-react";
 import { useRef } from "react";
 
@@ -153,9 +153,12 @@ export function ParallaxTestimonials({ theme }: { theme: string }) {
                     className="text-center mb-16"
                     style={{ y: headerY, opacity: headerOpacity }}
                 >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-cyan-400" : "text-sky-700"
+                    <span className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
+                        isDark
+                            ? "text-cyan-400 border-stone-700/40 bg-stone-800/20"
+                            : "text-cyan-600 border-cyan-300 bg-cyan-50"
                     }`}>
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
                         Casi reali
                     </span>
                     <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold mt-3 ${

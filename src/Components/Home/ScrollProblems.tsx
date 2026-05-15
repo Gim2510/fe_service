@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 
 /* ── ScrollProblems ──────────────────────────────────────────────────────────
@@ -128,9 +128,12 @@ export function ScrollProblems({ theme }: { theme: string }) {
                     className="mb-16 max-w-2xl"
                     style={{ y: headerY, opacity: headerOpacity }}
                 >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-red-400" : "text-sky-600"
+                    <span className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
+                        isDark
+                            ? "text-red-400 border-stone-700/40 bg-stone-800/20"
+                            : "text-red-600 border-red-300 bg-red-50"
                     }`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-red-500" : "bg-red-500"} animate-pulse`} />
                         Ti riconosci?
                     </span>
                     <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight mt-3 ${
