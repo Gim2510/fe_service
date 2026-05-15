@@ -114,7 +114,7 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                         <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
                         Soluzioni su misura
                     </span>
-                    <h2 className={`font-fjalla text-3xl sm:text-5xl font-semibold leading-tight mt-3 ${
+                    <h2 className={`font-fjalla text-2xl sm:text-3xl md:text-5xl font-semibold leading-tight mt-3 ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Non vendiamo software.{" "}
@@ -147,7 +147,7 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                     }`} />
 
                     <motion.div
-                        className="flex gap-10 px-8 sm:px-20"
+                        className="flex gap-4 sm:gap-6 md:gap-10 px-4 sm:px-8 md:px-20 snap-x snap-mandatory overflow-x-auto md:overflow-visible scrollbar-hide"
                         style={{ x }}
                     >
                         {punti.map((item, i) => (
@@ -204,7 +204,7 @@ function SolutionCard({ item, index, isDark, theme: _theme, progress }: {
 
     return (
         <motion.div
-            className="shrink-0 w-[300px] sm:w-[360px]"
+            className="shrink-0 w-[260px] sm:w-[300px] md:w-[360px] snap-center"
             style={{
                 scale,
                 rotateY,
@@ -212,7 +212,7 @@ function SolutionCard({ item, index, isDark, theme: _theme, progress }: {
             }}
         >
             <motion.div
-                className={`relative rounded-2xl border backdrop-blur-sm p-8 h-full min-h-[240px] flex flex-col gap-5 transition-all duration-300 ${
+                className={`relative rounded-2xl border backdrop-blur-sm p-5 md:p-8 h-full min-h-[200px] md:min-h-[240px] flex flex-col gap-3 md:gap-5 transition-all duration-300 ${
                     isDark
                         ? `bg-[#0E0E0D]/70 ${colors.border} hover:${colors.border.replace("/50", "/80")} shadow-lg ${colors.glow}`
                         : "bg-white border border-slate-200 hover:border-sky-400"
@@ -224,19 +224,19 @@ function SolutionCard({ item, index, isDark, theme: _theme, progress }: {
                     <div className={`absolute top-0 right-0 w-16 h-16 rounded-bl-3xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-20 ${colors.icon}`} />
                 )}
 
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center ${
                     isDark ? colors.bg : "bg-sky-50"
                 }`}>
-                    <Icon size={22} className={isDark ? colors.icon : "text-sky-700"} />
+                    <Icon size={18} className={isDark ? colors.icon : "text-sky-700"} />
                 </div>
 
-                <h3 className={`text-lg font-semibold ${
+                <h3 className={`text-base md:text-lg font-semibold ${
                     isDark ? "text-slate-100" : "text-slate-800"
                 }`}>
                     {item.title}
                 </h3>
 
-                <p className={`text-sm leading-relaxed flex-1 ${
+                <p className={`text-xs md:text-sm leading-relaxed flex-1 ${
                     isDark ? "text-slate-400" : "text-slate-600"
                 }`}>
                     {item.desc}
