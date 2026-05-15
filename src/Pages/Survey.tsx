@@ -55,8 +55,8 @@ export function Survey() {
     }
 
     if (error) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#111110] text-slate-400" : "bg-[#FAF8F4] text-slate-600"}`}>{error}</div>;
-    if (!surveyId || !survey) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#111110] text-slate-400" : "bg-[#FAF8F4] text-slate-600"}`}>Survey non disponibile</div>;
-    if (!questions.length) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#111110] text-slate-400" : "bg-[#FAF8F4] text-slate-600"}`}>Nessuna domanda disponibile</div>;
+    if (!surveyId || !survey) return <Navigate to="/survey/start" replace />;
+    if (!questions.length) return <Navigate to="/survey/start" replace />;
 
     if (survey.status === "published") {
         return <Navigate to={`/survey/${survey._id}/recap`} replace />;

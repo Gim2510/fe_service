@@ -629,7 +629,7 @@ export function SurveyDashboard() {
                             if (!survey_id) return;
                             if (!window.confirm("Sei sicuro di voler resettare il survey?")) return;
                             await resetSurvey(survey_id, survey_template_id, locale);
-                            navigate("/survey");
+                            navigate("/survey/start");
                         }}
                         className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border text-xs font-medium
                             disabled:opacity-40 transition-colors
