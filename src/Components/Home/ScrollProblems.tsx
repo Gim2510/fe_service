@@ -103,7 +103,7 @@ function ProblemCard({ item, index, isDark, progress }: {
             }}
         >
             <div
-                className={`relative rounded-2xl border backdrop-blur-sm overflow-hidden mx-auto w-full max-w-[1100px] min-h-[280px] grid grid-cols-[1fr_340px] ${
+                className={`relative rounded-2xl border backdrop-blur-sm overflow-hidden mx-auto w-full max-w-[1100px] ${
                     isDark
                         ? `bg-[#0E0E0D]/80 ${colors.border} shadow-lg ${colors.glow}`
                         : `bg-white border-${colors.border.split("-")[1]}-500/60 shadow-md shadow-stone-200/50`
@@ -113,61 +113,63 @@ function ProblemCard({ item, index, isDark, progress }: {
                     <div className={`absolute top-0 left-0 w-full h-px bg-gradient-to-r ${colors.accent} to-transparent opacity-40`} />
                 )}
 
-                <div className="p-10 flex flex-col justify-center gap-6">
-                    <div className="flex items-start gap-6">
-                        <div className={`relative flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center ${
-                            isDark ? colors.bg : `bg-${colors.border.split("-")[1]}-50`
+                <div className="grid grid-cols-1 md:grid-cols-[1fr_340px]">
+                    <div className="p-5 md:p-10 flex flex-col justify-center gap-4 md:gap-6">
+                        <div className="flex items-start gap-3 md:gap-6">
+                            <div className={`relative flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center ${
+                                isDark ? colors.bg : `bg-${colors.border.split("-")[1]}-50`
+                            }`}>
+                                <span className={`font-mono text-2xl md:text-3xl font-bold tracking-tight ${
+                                    isDark ? colors.badge : `text-${colors.border.split("-")[1]}-600`
+                                }`}>
+                                    {String(index + 1).padStart(2, "0")}
+                                </span>
+                                {isDark && (
+                                    <motion.div
+                                        className={`absolute inset-0 rounded-2xl border-2 ${colors.border}`}
+                                        animate={{ opacity: [0.2, 0.6, 0.2] }}
+                                        transition={{ duration: 2.5, repeat: Infinity, delay: index * 0.4 }}
+                                    />
+                                )}
+                            </div>
+
+                            <div className="flex-1 min-w-0">
+                                <h3 className={`text-lg md:text-2xl font-semibold leading-snug mb-2 md:mb-3 ${
+                                    isDark ? "text-slate-100" : "text-slate-800"
+                                }`}>
+                                    {item.title}
+                                </h3>
+                                <p className={`text-sm md:text-base leading-relaxed ${
+                                    isDark ? "text-slate-400" : "text-slate-600"
+                                }`}>
+                                    {item.text}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className={`flex items-center gap-3 md:gap-4 pt-3 md:pt-4 border-t ${
+                            isDark ? "border-stone-800" : "border-slate-100"
                         }`}>
-                            <span className={`font-mono text-3xl font-bold tracking-tight ${
-                                isDark ? colors.badge : `text-${colors.border.split("-")[1]}-600`
-                            }`}>
-                                {String(index + 1).padStart(2, "0")}
+                            <span className={`text-2xl md:text-3xl font-bold font-mono ${colors.badge}`}>
+                                {item.stat}
                             </span>
-                            {isDark && (
-                                <motion.div
-                                    className={`absolute inset-0 rounded-2xl border-2 ${colors.border}`}
-                                    animate={{ opacity: [0.2, 0.6, 0.2] }}
-                                    transition={{ duration: 2.5, repeat: Infinity, delay: index * 0.4 }}
-                                />
-                            )}
-                        </div>
-
-                        <div className="flex-1 min-w-0">
-                            <h3 className={`text-2xl font-semibold leading-snug mb-3 ${
-                                isDark ? "text-slate-100" : "text-slate-800"
-                            }`}>
-                                {item.title}
-                            </h3>
-                            <p className={`text-base leading-relaxed ${
-                                isDark ? "text-slate-400" : "text-slate-600"
-                            }`}>
-                                {item.text}
-                            </p>
+                            <span className={`text-xs md:text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>
+                                {item.statLabel}
+                            </span>
                         </div>
                     </div>
 
-                    <div className={`flex items-center gap-4 pt-4 border-t ${
-                        isDark ? "border-stone-800" : "border-slate-100"
-                    }`}>
-                        <span className={`text-3xl font-bold font-mono ${colors.badge}`}>
-                            {item.stat}
-                        </span>
-                        <span className={`text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>
-                            {item.statLabel}
-                        </span>
+                    <div className="relative h-48 md:h-full min-h-[200px] md:min-h-[280px]">
+                        <img
+                            src={item.image}
+                            alt={item.title}
+                            className="absolute inset-0 w-full h-full object-cover"
+                            loading="lazy"
+                        />
+                        {isDark && (
+                            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-l from-[#0E0E0D]/60 to-transparent" />
+                        )}
                     </div>
-                </div>
-
-                <div className="relative h-full min-h-[280px]">
-                    <img
-                        src={item.image}
-                        alt={item.title}
-                        className="absolute inset-0 w-full h-full object-cover"
-                        loading="lazy"
-                    />
-                    {isDark && (
-                        <div className="absolute inset-0 bg-gradient-to-l from-[#0E0E0D]/60 to-transparent" />
-                    )}
                 </div>
             </div>
         </motion.div>
@@ -214,7 +216,7 @@ export function ScrollProblems({ theme }: { theme: string }) {
                         <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
                         Ti riconosci?
                     </span>
-                    <h2 className={`font-fjalla text-3xl sm:text-5xl font-semibold leading-tight mt-3 ${
+                    <h2 className={`font-fjalla text-2xl sm:text-3xl md:text-5xl font-semibold leading-tight mt-3 ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Non sono problemi tecnici.{" "}
@@ -229,7 +231,7 @@ export function ScrollProblems({ theme }: { theme: string }) {
                     </p>
                 </motion.div>
 
-                <div className="relative h-[320px] w-full overflow-visible" style={{ perspective: "1200px" }}>
+                <div className="relative h-[280px] md:h-[320px] w-full overflow-visible" style={{ perspective: "1200px" }}>
                     {problemi.map((item, index) => (
                         <ProblemCard
                             key={item.title}
