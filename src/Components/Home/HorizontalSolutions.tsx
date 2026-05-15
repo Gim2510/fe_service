@@ -122,7 +122,7 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                     <p className={`mt-4 text-base leading-relaxed max-w-xl ${
                         isDark ? "text-slate-400" : "text-slate-600"
                     }`}>
-                        Partiamo dai tuoi processi reali — non da un catalogo. Ogni soluzione è progettata per il tuo contesto.
+                        Partiamo dai tuoi processi reali, non da un catalogo. Ogni soluzione è progettata per il tuo contesto.
                     </p>
                 </motion.div>
 

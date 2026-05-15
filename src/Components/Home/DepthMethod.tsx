@@ -12,7 +12,7 @@ const steps = [
     {
         step: "01",
         title: "Diagnosi",
-        text: "Mappiamo i tuoi processi, analizziamo i flussi di dati e gli strumenti in uso. Identifichiamo dove perdi tempo, margine e controllo \u2014 con dati concreti, non supposizioni.",
+        text: "Mappiamo i tuoi processi, analizziamo i flussi di dati e gli strumenti in uso. Identifichiamo dove perdi tempo, margine e controllo, con dati concreti, non supposizioni.",
         duration: "1\u20132 settimane",
     },
     {
@@ -155,7 +155,7 @@ export function DepthMethod({ theme }: { theme: string }) {
                         </span>
                     </h2>
                     <p className={`mt-5 text-lg ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                        Ogni progetto segue un percorso chiaro. Deliverable definiti, tempi trasparenti, un obiettivo verificabile \u2014 cos\u00EC sai sempre dove siamo e cosa aspettarti.
+                        Ogni progetto segue un percorso chiaro. Deliverable definiti, tempi trasparenti, un obiettivo verificabile, cos\u00EC sai sempre dove siamo e cosa aspettarti.
                     </p>
                 </motion.div>
 

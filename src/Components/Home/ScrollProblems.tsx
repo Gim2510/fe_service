@@ -9,11 +9,11 @@ import { useRef } from "react";
    ────────────────────────────────────────────────────────────────────────── */
 
 const problemi = [
-    { title: "\u00ABi dati ci sono, ma non li usiamo\u00BB", text: "Ogni reparto lavora per conto suo: Excel, CRM parziali, gestionali non collegati. Le decisioni si prendono a sensazione \u2014 e il costo di ogni errore si accumula in silenzio." },
+    { title: "\u00ABi dati ci sono, ma non li usiamo\u00BB", text: "Ogni reparto lavora per conto suo: Excel, CRM parziali, gestionali non collegati. Le decisioni si prendono a sensazione, e il costo di ogni errore si accumula in silenzio." },
     { title: "\u00ABSprechiamo ore in attivit\u00E0 manuali\u00BB", text: "Processi ripetitivi che tolgono tempo alle persone chiave. Ogni ora persa a inserire dati o riconciliare fogli \u00E8 un\u2019ora tolta alla crescita." },
     { title: "\u00ABNon sappiamo dove andremo a fine mese\u00BB", text: "Pipeline commerciale opaca, previsioni inaffidabili, opportunit\u00E0 che scivolano via. Senza visibilit\u00E0, il fatturato diventa una sorpresa." },
     { title: "\u00ABReagiamo sempre, non anticipiamo mai\u00BB", text: "La relazione con i clienti \u00E8 gestita a emergenza. Manca un sistema che ti dica cosa succeder\u00E0 prima che succeda." },
-    { title: "\u00ABI costi crescono, i margini no\u00BB", text: "Senza controllo su produzione, acquisti e logistica, \u00E8 impossibile capire dove si perde margine \u2014 e quindi impossibile recuperarlo." },
+    { title: "\u00ABI costi crescono, i margini no\u00BB", text: "Senza controllo su produzione, acquisti e logistica, \u00E8 impossibile capire dove si perde margine, e quindi impossibile recuperarlo." },
     { title: "\u00ABAbbiamo software ovunque, integrazione zero\u00BB", text: "Ogni strumento aggiunto ha creato un ecosistema frammentato. Nessuno parla con nessuno, e l\u2019unico collante \u00E8 il lavoro manuale." },
 ];
 

@@ -207,7 +207,7 @@ export function MaturitySection({ theme }: { theme: string }) {
                     <p className={`mt-5 text-lg max-w-2xl mx-auto ${
                         isDark ? "text-slate-400" : "text-slate-600"
                     }`}>
-                        Il nostro assessment misura processi, tecnologia, dati e automazione con un modello strutturato. Il risultato non \u00E8 un numero generico \u2014 \u00E8 una mappa precisa di dove intervenire per ottenere il massimo impatto nel minor tempo.
+                        Il nostro assessment misura processi, tecnologia, dati e automazione con un modello strutturato. Il risultato non \u00E8 un numero generico, \u00E8 una mappa precisa di dove intervenire per ottenere il massimo impatto nel minor tempo.
                     </p>
                 </motion.div>
 
@@ -258,7 +258,7 @@ export function MaturitySection({ theme }: { theme: string }) {
                         <p className={`mt-8 text-xs text-center ${
                             isDark ? "text-slate-600" : "text-slate-400"
                         }`}>
-                            I pesi sono calibrati su dati reali di PMI italiane. I processi pesano di pi\u00F9 perch\u00E9 \u00E8 l\u00EC che si genera \u2014 o si perde \u2014 il margine operativo.
+                            I pesi sono calibrati su dati reali di PMI italiane. I processi pesano di pi\u00F9 perch\u00E9 \u00E8 l\u00EC che si genera, o si perde, il margine operativo.
                         </p>
                     </motion.div>
                 </motion.div>

@@ -136,7 +136,7 @@ export function CinematicCTA({ theme }: { theme: string }) {
                 >
                     Scopri esattamente dove la tua azienda{" "}
                     <span className={isDark ? "text-sky-500" : "text-sky-700"}>
-                        perde efficienza — e come recuperarla.
+                        perde efficienza e come recuperarla.
                     </span>
                 </motion.h2>
 

@@ -37,7 +37,7 @@ export function VideoSection({ theme }: { theme: string }) {
                     isDark ? "text-slate-400" : "text-slate-600"
                 }`}>
                     Guarda come accompagniamo una PMI dalla diagnosi iniziale
-                    all'implementazione — con risultati misurabili a ogni fase.
+                    all'implementazione, con risultati misurabili a ogni fase.
                 </p>
             </motion.div>
 
@@ -65,7 +65,7 @@ export function VideoSection({ theme }: { theme: string }) {
                             className="absolute inset-0 w-full h-full"
                             allow="autoplay; fullscreen"
                             allowFullScreen
-                            title="AxiomLab — Come funziona"
+                            title="AxiomLab - Come funziona"
                         />
                     ) : (
                         <>

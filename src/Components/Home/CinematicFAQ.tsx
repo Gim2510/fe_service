@@ -15,7 +15,7 @@ const faqs = [
     },
     {
         q: "Quanto tempo per vedere i primi risultati?",
-        a: "I primi risultati misurabili arrivano in 4\u20138 settimane dall\u2019avvio. Non promettiamo miracoli overnight, ma definiamo KPI chiari prima di iniziare \u2014 cos\u00EC sai cosa aspettarti e quando.",
+        a: "I primi risultati misurabili arrivano in 4\u20138 settimane dall\u2019avvio. Non promettiamo miracoli overnight, ma definiamo KPI chiari prima di iniziare, cos\u00EC sai cosa aspettarti e quando.",
     },
     {
         q: "Dobbiamo sostituire i software che gi\u00E0 usiamo?",
@@ -147,7 +147,7 @@ export function CinematicFAQ({ theme }: { theme: string }) {
                             </span>
                         </h2>
                         <p className={`mt-5 text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                            Se non trovi la risposta che cerchi, scrivici — rispondiamo entro 24 ore.
+                            Se non trovi la risposta che cerchi, scrivici, rispondiamo entro 24 ore.
                         </p>
                     </motion.div>
 

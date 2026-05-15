@@ -197,7 +197,7 @@ export function CinematicHero({ theme }: { theme: string }) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.9, ease: "easeOut" }}
                 >
-                    Metodi, automazioni e architetture dati dei grandi player — adattati alla tua scala e ai tuoi processi reali.
+                    Metodi, automazioni e architetture dati dei grandi player, adattati alla tua scala e ai tuoi processi reali.
                 </motion.p>
 
                 {/* Trust signals */}
