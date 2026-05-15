@@ -87,7 +87,9 @@ export function Survey() {
                     </div>
                     <div className={`h-0.5 rounded-full ${isDark ? "bg-stone-800/30" : "bg-slate-200"}`}>
                         <div
-                            className="h-full rounded-full bg-sky-700 transition-all duration-500"
+                            className={`h-full rounded-full bg-sky-700 transition-all duration-500 ${
+                                isDark ? "shadow-[0_0_8px_rgba(56,189,248,0.4)]" : ""
+                            }`}
                             style={{ width: `${progress}%` }}
                         />
                     </div>
