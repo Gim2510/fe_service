@@ -1,20 +1,22 @@
 import type {ChangeEventHandler} from "react";
 import {CompanyRoles} from "./CompanyRoles.ts";
 
+export type Theme = "light" | "dark";
+
 export type InputProps = {
     label: string,
     name: string,
     type?: string,
     value: string,
     onChange: ChangeEventHandler<HTMLInputElement>,
-    theme: string,
+    theme: Theme,
     error?: string,
 }
 
 export type InputConfirmProps = {
     form: RegisterForm,
     handleChange: ChangeEventHandler<HTMLInputElement>,
-    theme: string,
+    theme: Theme,
     passwordsMatch: boolean,
 }
 
