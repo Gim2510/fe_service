@@ -1,6 +1,8 @@
 import { Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Badge } from "./Badge.tsx";
+import type { Theme } from "../types/InputTypes.ts";
 
 const fadeUp = {
     hidden: { opacity: 0, y: 24 },
@@ -11,7 +13,7 @@ const fadeUp = {
     }),
 };
 
-export function Footer({ theme }: { theme: string }) {
+export function Footer({ theme }: { theme: Theme }) {
     const isDark = theme === "dark";
 
     return (
@@ -21,7 +23,10 @@ export function Footer({ theme }: { theme: string }) {
                 : "bg-gradient-to-b from-[#FAF8F4] to-[#F0EAE0] text-stone-500 border-t border-sky-200/60"
         }`}>
 
-            {/* Background decoration */}
+            {/* Top glow line */}
+            {isDark && (
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-500/40 to-transparent pointer-events-none" />
+            )}
             {!isDark && (
                 <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-400/50 to-transparent" />
             )}
@@ -65,8 +70,8 @@ export function Footer({ theme }: { theme: string }) {
                         <div className="flex flex-col gap-2.5 text-sm">
                             <a
                                 href="mailto:service@axiomlab.it"
-                                className={`flex items-center gap-2.5 transition-colors duration-200 ${
-                                    isDark ? "text-slate-500 hover:text-sky-500" : "text-stone-500 hover:text-sky-700"
+                                className={`flex items-center gap-2.5 transition-all duration-200 ${
+                                    isDark ? "text-slate-500 hover:text-sky-400 hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.3)]" : "text-stone-500 hover:text-sky-700"
                                 }`}
                             >
                                 <Mail size={14} className="shrink-0" />
@@ -95,9 +100,7 @@ export function Footer({ theme }: { theme: string }) {
                         viewport={{ once: true, amount: 0.2 }}
                         variants={fadeUp}
                     >
-                        <h4 className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-white" : "text-stone-800"}`}>
-                            Piattaforma
-                        </h4>
+                        <Badge label="Piattaforma" color="sky" theme={theme} pulse={false} />
                         <nav className="flex flex-col gap-2.5">
                             {[
                                 { to: "/", label: "Home" },
@@ -110,8 +113,10 @@ export function Footer({ theme }: { theme: string }) {
                                 <Link
                                     key={to}
                                     to={to}
-                                    className={`corp-link text-sm w-fit transition-colors duration-200 ${
-                                        isDark ? "text-slate-500 hover:text-slate-200" : "text-stone-500 hover:text-stone-800"
+                                    className={`text-sm w-fit transition-all duration-200 ${
+                                        isDark
+                                            ? "text-slate-500 hover:text-sky-400 hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.3)]"
+                                            : "text-stone-500 hover:text-sky-700"
                                     }`}
                                 >
                                     {label}
@@ -129,9 +134,7 @@ export function Footer({ theme }: { theme: string }) {
                         viewport={{ once: true, amount: 0.2 }}
                         variants={fadeUp}
                     >
-                        <h4 className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-white" : "text-stone-800"}`}>
-                            Legale
-                        </h4>
+                        <Badge label="Legale" color="violet" theme={theme} pulse={false} />
                         <nav className="flex flex-col gap-2.5">
                             {[
                                 { to: "/privacy", label: "Privacy Policy" },
@@ -141,8 +144,10 @@ export function Footer({ theme }: { theme: string }) {
                                 <Link
                                     key={to}
                                     to={to}
-                                    className={`corp-link text-sm w-fit transition-colors duration-200 ${
-                                        isDark ? "text-slate-500 hover:text-slate-200" : "text-stone-500 hover:text-stone-800"
+                                    className={`text-sm w-fit transition-all duration-200 ${
+                                        isDark
+                                            ? "text-slate-500 hover:text-violet-400 hover:drop-shadow-[0_0_8px_rgba(167,139,250,0.3)]"
+                                            : "text-stone-500 hover:text-violet-700"
                                     }`}
                                 >
                                     {label}
@@ -160,13 +165,11 @@ export function Footer({ theme }: { theme: string }) {
                         viewport={{ once: true, amount: 0.2 }}
                         variants={fadeUp}
                     >
-                        <h4 className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-white" : "text-stone-800"}`}>
-                            Inizia ora
-                        </h4>
+                        <Badge label="Inizia ora" color="emerald" theme={theme} pulse={false} />
                         <Link
                             to="/survey/start"
-                            className={`inline-flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${
-                                isDark ? "text-sky-500 hover:text-sky-400" : "text-sky-700 hover:text-sky-600"
+                            className={`inline-flex items-center gap-1.5 text-sm font-medium transition-all duration-200 ${
+                                isDark ? "text-sky-500 hover:text-sky-400 hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.3)]" : "text-sky-700 hover:text-sky-600"
                             }`}
                         >
                             Avvia l'analisi
@@ -174,7 +177,7 @@ export function Footer({ theme }: { theme: string }) {
                         </Link>
                         <Link
                             to="/contact"
-                            className={`inline-flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${
+                            className={`inline-flex items-center gap-1.5 text-sm font-medium transition-all duration-200 ${
                                 isDark ? "text-slate-500 hover:text-slate-200" : "text-stone-500 hover:text-stone-800"
                             }`}
                         >

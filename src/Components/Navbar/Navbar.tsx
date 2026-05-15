@@ -42,6 +42,10 @@ export function Navbar() {
             >
                 <div className="mx-auto max-w-7xl px-4 sm:px-6">
                     <div className={`mt-3 rounded-xl border backdrop-blur-2xl transition-all duration-400 ${headerBg}`}>
+                        {/* Top glow line when scrolled */}
+                        {isDark && scrolled && (
+                            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-500/30 to-transparent pointer-events-none rounded-t-xl" />
+                        )}
                         <div className="flex items-center justify-between h-16 px-4 sm:px-6">
 
                             <NavbarLogo />

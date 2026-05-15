@@ -2,10 +2,10 @@ export function DashboardCard({ title, value, theme }: { title: string; value?: 
     const isDark = theme === "dark";
 
     return (
-        <div className={`group relative overflow-hidden rounded-2xl border p-7 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer
+        <div className={`group relative overflow-hidden rounded-2xl border backdrop-blur-sm p-7 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer
             ${isDark
-                ? "bg-[#1C1C1A]/80 border-stone-800/20 hover:border-sky-800/30"
-                : "bg-[#F8FAFB] border-slate-200 hover:border-sky-400 shadow-sm"
+                ? "bg-[#1C1C1A]/80 border-stone-800/20 hover:border-sky-800/30 shadow-lg shadow-sky-700/5"
+                : "bg-[#F8FAFB] border-slate-200 hover:border-sky-400 shadow-lg shadow-sky-700/3"
             }`}
         >
             <p className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-slate-500" : "text-slate-400"}`}>{title}</p>

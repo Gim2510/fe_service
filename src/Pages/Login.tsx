@@ -8,6 +8,7 @@ import { useTheme } from "../Context/ThemeContext.tsx";
 import { Input } from "../Components/Inputs/Input.tsx";
 import { GoogleLogin } from "@react-oauth/google";
 import { BarChart2, ShieldCheck, TrendingUp } from "lucide-react";
+import { Badge } from "../Components/Badge.tsx";
 
 type RestoreInfo = {
     restored: boolean;
@@ -76,10 +77,7 @@ export function Login() {
                     transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 >
                     <div className="space-y-4">
-                        <span className={`text-[10px] font-mono uppercase tracking-[0.22em]
-                            ${isDark ? "text-sky-600" : "text-sky-700"}`}>
-                            Bentornato
-                        </span>
+                        <Badge label="Bentornato" color="sky" theme={theme} />
                         <h1 className={`font-fjalla text-5xl font-semibold leading-tight
                             ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                             Accedi al tuo
@@ -121,8 +119,11 @@ export function Login() {
                     initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.08 }}
-                    className={`rounded-2xl border overflow-hidden ${border}`}
-                    style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+                    className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
+                        isDark
+                            ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/10`
+                            : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/5`
+                    }`}
                 >
                     <div className="h-[2px] w-full bg-sky-700/60" />
 
@@ -206,7 +207,7 @@ export function Login() {
                                 <button
                                     type="button"
                                     onClick={() => navigate("/password-reset")}
-                                    className={`text-xs transition ${mutedText} hover:${isDark ? "text-slate-300" : "text-slate-700"}`}
+                                    className={`text-xs transition ${mutedText} hover:${isDark ? "text-sky-400" : "text-sky-700"}`}
                                 >
                                     Password dimenticata?
                                 </button>

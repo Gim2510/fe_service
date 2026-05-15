@@ -4,6 +4,7 @@ import { ArrowRight, CheckCircle, Zap, BarChart2, FileText, Clock } from "lucide
 import { useCreateCheckoutSession } from "../hooks/useCreateCheckoutSession.ts";
 import { CheckoutConfirmModal } from "../Components/Payments/CheckoutConfirmModal.tsx";
 import { useTheme } from "../Context/ThemeContext.tsx";
+import { Badge } from "../Components/Badge.tsx";
 
 const fadeUp = (delay = 0) => ({
     initial: { opacity: 0, y: 24 },
@@ -60,9 +61,8 @@ export function PremiumPreCheckout() {
                     <div className="space-y-7">
                         <motion.span
                             {...fadeUp(0)}
-                            className={`block text-xs font-semibold uppercase tracking-widest ${isDark ? "text-sky-500" : "text-sky-700"}`}
                         >
-                            Abbonamento Premium
+                            <Badge label="Abbonamento Premium" color="violet" theme={theme} />
                         </motion.span>
 
                         <motion.h1
@@ -97,7 +97,11 @@ export function PremiumPreCheckout() {
                     {/* Visual card */}
                     <motion.div
                         {...fadeUp(0.12)}
-                        className={`rounded-2xl border p-8 space-y-6 ${card}`}
+                        className={`rounded-2xl border backdrop-blur-sm p-8 space-y-6 ${
+                            isDark
+                                ? `${card} shadow-lg shadow-sky-700/5`
+                                : `${card} shadow-lg shadow-sky-700/3`
+                        }`}
                     >
                         <div className="flex items-center gap-2 mb-2">
                             <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
@@ -153,7 +157,11 @@ export function PremiumPreCheckout() {
                             <motion.div
                                 key={v.title}
                                 {...fadeUp(i * 0.08)}
-                                className={`rounded-2xl border p-6 ${card}`}
+                                className={`rounded-2xl border backdrop-blur-sm p-6 ${
+                                    isDark
+                                        ? `${card} shadow-lg shadow-sky-700/5`
+                                        : `${card} shadow-lg shadow-sky-700/3`
+                                }`}
                             >
                                 <h3 className={`font-semibold mb-1.5 text-sm ${isDark ? "text-slate-200" : "text-slate-800"}`}>
                                     {v.title}
@@ -171,7 +179,11 @@ export function PremiumPreCheckout() {
                     {...fadeUp(0)}
                     className="flex justify-center"
                 >
-                    <div className={`w-full max-w-lg rounded-2xl border p-10 text-center space-y-6 ${card}`}>
+                    <div className={`w-full max-w-lg rounded-2xl border backdrop-blur-sm p-10 text-center space-y-6 ${
+                        isDark
+                            ? `${card} shadow-lg shadow-sky-700/5`
+                            : `${card} shadow-lg shadow-sky-700/3`
+                    }`}>
                         <div className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-sky-500" : "text-sky-700"}`}>
                             Premium
                         </div>
