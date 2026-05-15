@@ -12,12 +12,12 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { useRef } from "react";
 
-/* â”€â”€ HorizontalSolutions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ── HorizontalSolutions ─────────────────────────────────────────────────────
    Sticky container: as the user scrolls vertically, the content scrolls
    horizontally. The section "pins" while the cards slide left.
    Each solution card scales up from 0.8 as it enters the viewport center.
    Dark mode: futuristic neon aesthetic with glow effects.
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+   ────────────────────────────────────────────────────────────────────────── */
 
 const punti: { title: string; desc: string; icon: LucideIcon }[] = [
     {
@@ -68,27 +68,21 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
 
     const sp = { stiffness: 80, damping: 28, mass: 0.8 };
 
-<<<<<<< HEAD
-    // Header: title appears quickly then stays visible
-    const headerScale   = useSpring(useTransform(scrollYProgress, [0, 0.05], [0.96, 1]), sp);
-    const headerOpacity = useSpring(useTransform(scrollYProgress, [0, 0.05], [0, 1]), sp);
-=======
-    // Header animation â€” title appears first
+    // Header animation — title appears first
     const headerScale   = useSpring(useTransform(scrollYProgress, [0, 0.08], [0.96, 1]), sp);
     const headerOpacity = useSpring(useTransform(scrollYProgress, [0, 0.08], [0, 1]), sp);
->>>>>>> TBDO-13
 
-    // Cards appear right after header, earlier than before
-    const cardsRevealStart = 0.05;
-    const cardsRevealEnd   = 0.12;
+    // Cards hidden initially, appear after header settles
+    const cardsRevealStart = 0.08;
+    const cardsRevealEnd   = 0.18;
     const cardsOpacity = useSpring(
         useTransform(scrollYProgress, [cardsRevealStart, cardsRevealEnd], [0, 1]),
         sp
     );
 
-    // Horizontal scroll starts earlier
+    // Horizontal scroll starts AFTER cards are fully visible
     const x = useSpring(
-        useTransform(scrollYProgress, [0.15, 1], ["35%", "-72%"]),
+        useTransform(scrollYProgress, [0.22, 1], ["35%", "-72%"]),
         sp
     );
 
@@ -112,27 +106,26 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                     className="mx-auto max-w-7xl px-6 sm:px-8 mb-12"
                     style={{ scale: headerScale, opacity: headerOpacity }}
                 >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-cyan-400" : "text-cyan-600"
+                    <span className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
+                        isDark
+                            ? "text-cyan-400 border-stone-700/40 bg-stone-800/20"
+                            : "text-cyan-600 border-cyan-300 bg-cyan-50"
                     }`}>
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
                         Soluzioni su misura
                     </span>
-                    <h2 className={`font-fjalla text-3xl font-semibold leading-tight mt-3 ${
+                    <h2 className={`font-fjalla text-3xl sm:text-5xl font-semibold leading-tight mt-3 ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Non vendiamo software.{" "}
-                        <span className={isDark ? "text-cyan-400" : "text-cyan-600"}>
+                        <span className={isDark ? "text-cyan-400" : "text-sky-700"}>
                             Risolviamo problemi.
                         </span>
                     </h2>
                     <p className={`mt-4 text-base leading-relaxed max-w-xl ${
                         isDark ? "text-slate-400" : "text-slate-600"
                     }`}>
-<<<<<<< HEAD
-                        Partiamo dai tuoi processi reali, non da un catalogo. Ogni soluzione è progettata per il tuo contesto.
-=======
-                        Partiamo dai tuoi processi reali â€” non da un catalogo. Ogni soluzione Ã¨ progettata per il tuo contesto.
->>>>>>> TBDO-13
+                        Partiamo dai tuoi processi reali — non da un catalogo. Ogni soluzione è progettata per il tuo contesto.
                     </p>
                 </motion.div>
 
@@ -193,13 +186,8 @@ function SolutionCard({ item, index, isDark, theme: _theme, progress }: {
 }) {
     const sp = { stiffness: 80, damping: 28, mass: 0.8 };
     
-<<<<<<< HEAD
-    // Card activation ranges — earlier than before
-    const cardStart = 0.14 + index * 0.10;
-=======
-    // Card activation ranges â€” staggered after reveal
+    // Card activation ranges — staggered after reveal
     const cardStart = 0.20 + index * 0.10;
->>>>>>> TBDO-13
     const cardEnd   = cardStart + 0.14;
     const scale     = useSpring(useTransform(progress, [cardStart, cardEnd], [0.92, 1]), sp);
     const rotateY   = useSpring(useTransform(progress, [cardStart, cardEnd], [6, 0]), sp);
@@ -208,9 +196,9 @@ function SolutionCard({ item, index, isDark, theme: _theme, progress }: {
 
     // Neon glow colors per card (cycling through cyan, violet, emerald)
     const neonColors = [
-        { border: "border-cyan-500/50", glow: "shadow-cyan-500/20", icon: "text-cyan-400", bg: "bg-cyan-950/40", badge: "text-cyan-400", lightBorder: "border-cyan-500/60", lightIcon: "text-cyan-600", lightBg: "bg-cyan-50", lightBadge: "text-cyan-600" },
-        { border: "border-violet-500/50", glow: "shadow-violet-500/20", icon: "text-violet-400", bg: "bg-violet-950/40", badge: "text-violet-400", lightBorder: "border-violet-500/60", lightIcon: "text-violet-600", lightBg: "bg-violet-50", lightBadge: "text-violet-600" },
-        { border: "border-emerald-500/50", glow: "shadow-emerald-500/20", icon: "text-emerald-400", bg: "bg-emerald-950/40", badge: "text-emerald-400", lightBorder: "border-emerald-500/60", lightIcon: "text-emerald-600", lightBg: "bg-emerald-50", lightBadge: "text-emerald-600" },
+        { border: "border-cyan-500/50", glow: "shadow-cyan-500/20", icon: "text-cyan-400", bg: "bg-cyan-950/40", badge: "text-cyan-400" },
+        { border: "border-violet-500/50", glow: "shadow-violet-500/20", icon: "text-violet-400", bg: "bg-violet-950/40", badge: "text-violet-400" },
+        { border: "border-emerald-500/50", glow: "shadow-emerald-500/20", icon: "text-emerald-400", bg: "bg-emerald-950/40", badge: "text-emerald-400" },
     ];
     const colors = neonColors[index % neonColors.length];
 
@@ -227,21 +215,19 @@ function SolutionCard({ item, index, isDark, theme: _theme, progress }: {
                 className={`relative rounded-2xl border backdrop-blur-sm p-8 h-full min-h-[240px] flex flex-col gap-5 transition-all duration-300 ${
                     isDark
                         ? `bg-[#0E0E0D]/70 ${colors.border} hover:${colors.border.replace("/50", "/80")} shadow-lg ${colors.glow}`
-                        : `bg-white ${colors.lightBorder} hover:${colors.lightBorder.replace("/60", "/90")} shadow-md shadow-stone-200/50`
+                        : "bg-white border border-slate-200 hover:border-sky-400"
                 }`}
                 whileHover={{ y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
             >
+                {/* Neon corner accent */}
                 {isDark && (
                     <div className={`absolute top-0 right-0 w-16 h-16 rounded-bl-3xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-20 ${colors.icon}`} />
                 )}
-                {!isDark && (
-                    <div className={`absolute top-0 right-0 w-16 h-16 rounded-bl-3xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-10 ${colors.lightIcon}`} />
-                )}
 
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                    isDark ? colors.bg : colors.lightBg
+                    isDark ? colors.bg : "bg-sky-50"
                 }`}>
-                    <Icon size={22} className={isDark ? colors.icon : colors.lightIcon} />
+                    <Icon size={22} className={isDark ? colors.icon : "text-sky-700"} />
                 </div>
 
                 <h3 className={`text-lg font-semibold ${
@@ -257,8 +243,8 @@ function SolutionCard({ item, index, isDark, theme: _theme, progress }: {
                 </p>
 
                 <div className="flex items-center gap-2">
-                    <CheckCircle2 size={14} className={isDark ? colors.badge : colors.lightBadge} />
-                    <span className={`text-xs ${isDark ? colors.badge : colors.lightBadge}`}>
+                    <CheckCircle2 size={14} className={isDark ? colors.badge : "text-sky-700"} />
+                    <span className={`text-xs ${isDark ? colors.badge : "text-sky-700"}`}>
                         Su misura per PMI
                     </span>
                 </div>

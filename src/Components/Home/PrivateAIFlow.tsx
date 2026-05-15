@@ -38,29 +38,29 @@ const aiAgents: FlowItem[] = [
 
 const guarantees = [
     { icon: CloudOff, title: "Zero cloud esterni", desc: "Il modello gira solo sulla tua macchina. Nessun fornitore terzo tocca i tuoi dati." },
-    { icon: Lock, title: "Proprietà assoluta", desc: "Le tue informazioni non escono mai dal tuo perimetro. Per nessun motivo." },
+    { icon: Lock, title: "Propriet\u00E0 assoluta", desc: "Le tue informazioni non escono mai dal tuo perimetro. Per nessun motivo." },
     { icon: Eye, title: "Controllo totale", desc: "Accesso, audit e configurazione: sempre e solo in mano tua." },
 ];
 
 const neonGuaranteeColors = [
-    { border: "border-cyan-500/50", glow: "shadow-cyan-500/15", badge: "text-cyan-400", bg: "bg-cyan-950/40", lightBorder: "border-cyan-500/60", lightBadge: "text-cyan-600", lightBg: "bg-cyan-50" },
-    { border: "border-violet-500/50", glow: "shadow-violet-500/15", badge: "text-violet-400", bg: "bg-violet-950/40", lightBorder: "border-violet-500/60", lightBadge: "text-violet-600", lightBg: "bg-violet-50" },
-    { border: "border-emerald-500/50", glow: "shadow-emerald-500/15", badge: "text-emerald-400", bg: "bg-emerald-950/40", lightBorder: "border-emerald-500/60", lightBadge: "text-emerald-600", lightBg: "bg-emerald-50" },
+    { border: "border-cyan-500/50", glow: "shadow-cyan-500/15", badge: "text-cyan-400", bg: "bg-cyan-950/40" },
+    { border: "border-violet-500/50", glow: "shadow-violet-500/15", badge: "text-violet-400", bg: "bg-violet-950/40" },
+    { border: "border-emerald-500/50", glow: "shadow-emerald-500/15", badge: "text-emerald-400", bg: "bg-emerald-950/40" },
 ];
 
 function FlowChip({ item, isDark, delay }: { item: FlowItem; isDark: boolean; delay: number }) {
     return (
         <motion.div
             className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-                isDark ? "bg-[#0E0E0D]/70 border border-cyan-500/30 hover:border-cyan-500/60 shadow-sm shadow-cyan-500/10" : "bg-white border border-cyan-500/40 hover:border-cyan-500/70 shadow-sm shadow-stone-200/40"
+                isDark ? "bg-[#0E0E0D]/70 border border-cyan-500/30 hover:border-cyan-500/60 shadow-sm shadow-cyan-500/10" : "bg-white/70 border border-slate-200/60 hover:border-sky-300/60"
             }`}
             initial={{ opacity: 0, y: 16, scale: 0.92 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.5, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-            <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${isDark ? "bg-cyan-950/40" : "bg-cyan-50"}`}>
-                <item.icon size={18} className={isDark ? "text-cyan-400" : "text-cyan-600"} />
+            <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${isDark ? "bg-cyan-950/40" : "bg-sky-50"}`}>
+                <item.icon size={18} className={isDark ? "text-cyan-400" : "text-sky-700"} />
             </div>
             <div className="min-w-0">
                 <div className={`text-sm font-semibold truncate ${isDark ? "text-slate-200" : "text-slate-800"}`}>{item.label}</div>
@@ -87,7 +87,7 @@ function LayerLabel({ label, sublabel, isDark }: { label: string; sublabel: stri
         <motion.div className="flex items-center gap-3" initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, ease: "easeOut" }}>
             <div className={`h-px w-8 ${isDark ? "bg-cyan-500/30" : "bg-sky-600/20"}`} />
             <span className={`text-[11px] font-bold uppercase tracking-[0.15em] ${isDark ? "text-cyan-400/60" : "text-sky-700/50"}`}>{label}</span>
-            <span className={`text-[11px] ${isDark ? "text-slate-600" : "text-slate-400"}`}> | {sublabel}</span>
+            <span className={`text-[11px] ${isDark ? "text-slate-600" : "text-slate-400"}`}> \u2014 {sublabel}</span>
         </motion.div>
     );
 }
@@ -113,17 +113,11 @@ export function PrivateAIFlow({ theme }: { theme: string }) {
             )}
             <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-20 sm:py-32">
                 <motion.div className="mb-16 text-center max-w-3xl mx-auto" style={{ y: headerY, opacity: headerOpacity }}>
-<<<<<<< HEAD
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-cyan-400" : "text-cyan-600"}`}>AI privata</span>
+                    <span className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${isDark ? "text-cyan-400 border-stone-700/40 bg-stone-800/20" : "text-cyan-600 border-cyan-300 bg-cyan-50"}`}><span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />AI privata</span>
                     <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                        I tuoi dati restano tuoi.<span className={`block mt-1 ${isDark ? "text-cyan-400" : "text-cyan-600"}`}>Sempre.</span>
-=======
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-cyan-400" : "text-sky-700"}`}>AI privata</span>
-                    <h2 className={`font-fjalla text-4xl font-semibold leading-tight mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         I tuoi dati restano tuoi.<span className={`block mt-1 ${isDark ? "text-cyan-400" : "text-sky-700"}`}>Sempre.</span>
->>>>>>> TBDO-13
                     </h2>
-                    <p className={`mt-5 text-lg ${isDark ? "text-slate-400" : "text-slate-600"}`}>Modelli AI che girano sulla tua infrastruttura. Agenti costruiti sui tuoi processi. Nessun dato condiviso con terze parti, mai.</p>
+                    <p className={`mt-5 text-lg ${isDark ? "text-slate-400" : "text-slate-600"}`}>Modelli AI che girano sulla tua infrastruttura. Agenti costruiti sui tuoi processi. Nessun dato condiviso con terze parti \u2014 mai.</p>
                 </motion.div>
 
                 <motion.div className="relative mb-16" style={{ y: diagramY, opacity: diagramOpacity, scale: diagramScale }}>
@@ -136,7 +130,7 @@ export function PrivateAIFlow({ theme }: { theme: string }) {
                         </motion.div>
 
                         <div className="relative z-10">
-                            <LayerLabel label="Le tue fonti dati" sublabel="Sistemi già in uso nella tua azienda" isDark={isDark} />
+                            <LayerLabel label="Le tue fonti dati" sublabel="Sistemi gi\u00E0 in uso nella tua azienda" isDark={isDark} />
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">{dataSources.map((item, i) => (<FlowChip key={item.label} item={item} isDark={isDark} delay={i * 0.08} />))}</div>
                         </div>
                         <FlowConnector isDark={isDark} />
@@ -172,10 +166,9 @@ export function PrivateAIFlow({ theme }: { theme: string }) {
                         const colors = neonGuaranteeColors[i % neonGuaranteeColors.length];
                         return (
                             <motion.div key={g.title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-40px" }} transition={{ duration: 0.5, delay: i * 0.12, ease: "easeOut" }}>
-                                <motion.div className={`relative rounded-2xl border backdrop-blur-sm p-6 h-full transition-all duration-300 ${isDark ? `bg-[#0E0E0D]/70 ${colors.border} shadow-lg ${colors.glow}` : `bg-white ${colors.lightBorder} shadow-md shadow-stone-200/50`}`} whileHover={isDark ? { y: -6, borderColor: colors.border.replace("/50", "/80") } : { y: -6, borderColor: colors.lightBorder.replace("/60", "/90") }} transition={{ duration: 0.25, ease: "easeOut" }}>
+                                <motion.div className={`relative rounded-2xl border backdrop-blur-sm p-6 h-full transition-all duration-300 ${isDark ? `bg-[#0E0E0D]/70 ${colors.border} shadow-lg ${colors.glow}` : "bg-white border border-slate-200 hover:border-sky-400"}`} whileHover={isDark ? { y: -6, borderColor: colors.border.replace("/50", "/80") } : { y: -6 }} transition={{ duration: 0.25, ease: "easeOut" }}>
                                     {isDark && (<div className={`absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-15 ${colors.badge}`} />)}
-                                    {!isDark && (<div className={`absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-10 ${colors.lightBadge}`} />)}
-                                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${isDark ? colors.bg : colors.lightBg}`}><g.icon size={20} className={isDark ? colors.badge : colors.lightBadge} /></div>
+                                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${isDark ? colors.bg : "bg-sky-50"}`}><g.icon size={20} className={isDark ? colors.badge : "text-sky-700"} /></div>
                                     <h3 className={`text-base font-semibold mb-2 ${isDark ? "text-slate-100" : "text-slate-900"}`}>{g.title}</h3>
                                     <p className={`text-sm leading-relaxed ${isDark ? "text-slate-400" : "text-slate-500"}`}>{g.desc}</p>
                                 </motion.div>

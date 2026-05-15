@@ -19,11 +19,11 @@ const stats: StatConfig[] = [
     { prefix: "", number: 100, suffix: "%", label: "Affiancamento post-lancio", parallaxSpeed: 0.10, neonColor: "amber" },
 ];
 
-const neonStatMap: Record<string, { border: string; glow: string; text: string; lightBorder: string; lightText: string }> = {
-    cyan: { border: "border-cyan-500/50", glow: "shadow-cyan-500/15", text: "text-cyan-400", lightBorder: "border-cyan-500/60", lightText: "text-cyan-600" },
-    violet: { border: "border-violet-500/50", glow: "shadow-violet-500/15", text: "text-violet-400", lightBorder: "border-violet-500/60", lightText: "text-violet-600" },
-    emerald: { border: "border-emerald-500/50", glow: "shadow-emerald-500/15", text: "text-emerald-400", lightBorder: "border-emerald-500/60", lightText: "text-emerald-600" },
-    amber: { border: "border-amber-500/50", glow: "shadow-amber-500/15", text: "text-amber-400", lightBorder: "border-amber-500/60", lightText: "text-amber-600" },
+const neonStatMap: Record<string, { border: string; glow: string; text: string }> = {
+    cyan: { border: "border-cyan-500/50", glow: "shadow-cyan-500/15", text: "text-cyan-400" },
+    violet: { border: "border-violet-500/50", glow: "shadow-violet-500/15", text: "text-violet-400" },
+    emerald: { border: "border-emerald-500/50", glow: "shadow-emerald-500/15", text: "text-emerald-400" },
+    amber: { border: "border-amber-500/50", glow: "shadow-amber-500/15", text: "text-amber-400" },
 };
 
 function AnimatedStat({ stat, isDark, sectionProgress }: { stat: StatConfig; isDark: boolean; sectionProgress: ReturnType<typeof useScroll>["scrollYProgress"] }) {
@@ -51,17 +51,16 @@ function AnimatedStat({ stat, isDark, sectionProgress }: { stat: StatConfig; isD
     return (
         <motion.div
             ref={ref}
-            className={`relative rounded-2xl border backdrop-blur-sm p-6 flex flex-col gap-2 transition-all duration-300 ${isDark ? `bg-[#0E0E0D]/70 ${neon.border} shadow-lg ${neon.glow}` : `bg-white ${neon.lightBorder} shadow-md shadow-stone-200/50`}`}
+            className={`relative rounded-2xl border backdrop-blur-sm p-6 flex flex-col gap-2 transition-all duration-300 ${isDark ? `bg-[#0E0E0D]/70 ${neon.border} shadow-lg ${neon.glow}` : "bg-white border border-slate-200 hover:border-sky-400"}`}
             style={{ y }}
             initial={{ opacity: 0, scale: 0.8, rotateX: 10 }}
             whileInView={{ opacity: 1, scale: 1, rotateX: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            whileHover={isDark ? { y: -4, borderColor: neon.border.replace("/50", "/80") } : { y: -4, borderColor: neon.lightBorder.replace("/60", "/90") }}
+            whileHover={isDark ? { y: -4, borderColor: neon.border.replace("/50", "/80") } : { y: -4 }}
         >
             {isDark && (<div className={`absolute top-0 right-0 w-12 h-12 rounded-bl-xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-15 ${neon.text}`} />)}
-            {!isDark && (<div className={`absolute top-0 right-0 w-12 h-12 rounded-bl-xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-10 ${neon.lightText}`} />)}
-            <span className={`text-4xl font-bold tracking-tight font-fjalla ${isDark ? neon.text : neon.lightText}`}>{stat.prefix}{Math.round(count)}{stat.suffix}</span>
+            <span className={`text-4xl font-bold tracking-tight font-fjalla ${isDark ? neon.text : "text-sky-700"}`}>{stat.prefix}{Math.round(count)}{stat.suffix}</span>
             <span className={`text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>{stat.label}</span>
         </motion.div>
     );
@@ -88,20 +87,14 @@ export function StatsReveal({ theme }: { theme: string }) {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <motion.div className="flex flex-col gap-6" style={{ x: textX, opacity: textOpacity }}>
                         <div>
-<<<<<<< HEAD
-                            <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-cyan-400" : "text-cyan-600"}`}>Chi siamo</span>
+                            <span className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${isDark ? "text-cyan-400 border-stone-700/40 bg-stone-800/20" : "text-cyan-600 border-cyan-300 bg-cyan-50"}`}><span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />Chi siamo</span>
                             <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold leading-tight mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                                Due fratelli. Un&apos;idea precisa.<span className={`block mt-1 ${isDark ? "text-cyan-400" : "text-cyan-600"}`}>Tecnologia enterprise per PMI.</span>
-=======
-                            <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-cyan-400" : "text-sky-700"}`}>Chi siamo</span>
-                            <h2 className={`font-fjalla text-3xl font-semibold leading-tight mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                                 Due fratelli. Un&apos;idea precisa.<span className={`block mt-1 ${isDark ? "text-cyan-400" : "text-sky-700"}`}>Tecnologia enterprise per PMI.</span>
->>>>>>> TBDO-13
                             </h2>
                         </div>
                         <p className={`text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>AxiomLab nasce da una constatazione semplice: le PMI italiane affrontano gli stessi problemi delle grandi aziende, ma senza le stesse risorse. Da una parte c&apos;\u00E8 chi costruisce sistemi enterprise per clienti come Eni e lavora in startup ad alto ritmo. Dall&apos;altra c&apos;\u00E8 chi studia AI e automazioni con i provider pi\u00F9 avanzati e le applica ai processi reali. In mezzo c&apos;\u00E8 il gap \u2014 e quello \u00E8 il nostro spazio.</p>
                         <p className={`text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>Il nostro modello \u00E8 diverso: diagnosi reale dei processi, soluzioni cucite sul contesto, tecnologie scalabili e un affiancamento che non finisce con il rilascio. Perch\u00E9 il successo di un progetto digitale non si misura al go-live, si misura dopo sei mesi.</p>
-                        <button onClick={() => navigate("/about")} className={`inline-flex items-center gap-2 text-sm font-semibold w-fit transition-all duration-200 hover:-translate-y-0.5 group ${isDark ? "text-cyan-400 hover:text-cyan-300" : "text-cyan-600 hover:text-cyan-700"}`}>
+                        <button onClick={() => navigate("/about")} className={`inline-flex items-center gap-2 text-sm font-semibold w-fit transition-all duration-200 hover:-translate-y-0.5 group ${isDark ? "text-cyan-400 hover:text-cyan-300" : "text-sky-700 hover:text-sky-600"}`}>
                             Scopri la nostra storia<ArrowRight size={15} className="transition-transform duration-200 group-hover:translate-x-1" />
                         </button>
                     </motion.div>

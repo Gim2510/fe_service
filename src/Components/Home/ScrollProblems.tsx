@@ -1,20 +1,20 @@
 ﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 
-/* â”€â”€ ScrollProblems â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ── ScrollProblems ──────────────────────────────────────────────────────────
    Each card has a unique 3D entrance: they rotate in from different angles as
    the section scrolls into view. The header text parallaxes at a different
    speed. Cards stagger in a masonry-like pattern with perspective transforms.
    Dark mode: neon glow borders with numbered badges.
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+   ────────────────────────────────────────────────────────────────────────── */
 
 const problemi = [
-    { title: "«i dati ci sono, ma non li usiamo»", text: "Ogni reparto lavora per conto suo: Excel, CRM parziali, gestionali non collegati. Le decisioni si prendono a sensazione \u2014 e il costo di ogni errore si accumula in silenzio." },
-    { title: "«Sprechiamo ore in attività manuali»", text: "Processi ripetitivi che tolgono tempo alle persone chiave. Ogni ora persa a inserire dati o riconciliare fogli è un'ora tolta alla crescita." },
-    { title: "«Non sappiamo dove andremo a fine mese»", text: "Pipeline commerciale opaca, previsioni inaffidabili, opportunità che scivolano via. Senza visibilità, il fatturato diventa una sorpresa." },
-    { title: "«Reagiamo sempre, non anticipiamo mai»", text: "La relazione con i clienti è gestita a emergenza. Manca un sistema che ti dica cosa succederà prima che succeda." },
-    { title: "«I costi crescono, i margini no»", text: "Senza controllo su produzione, acquisti e logistica, è impossibile capire dove si perde margine \u2014 e quindi impossibile recuperarlo." },
-    { title: "«Abbiamo software ovunque, integrazione zero»", text: "Ogni strumento aggiunto ha creato un ecosistema frammentato. Nessuno parla con nessuno, e l'unico collante è il lavoro manuale." },
+    { title: "\u00ABi dati ci sono, ma non li usiamo\u00BB", text: "Ogni reparto lavora per conto suo: Excel, CRM parziali, gestionali non collegati. Le decisioni si prendono a sensazione \u2014 e il costo di ogni errore si accumula in silenzio." },
+    { title: "\u00ABSprechiamo ore in attivit\u00E0 manuali\u00BB", text: "Processi ripetitivi che tolgono tempo alle persone chiave. Ogni ora persa a inserire dati o riconciliare fogli \u00E8 un\u2019ora tolta alla crescita." },
+    { title: "\u00ABNon sappiamo dove andremo a fine mese\u00BB", text: "Pipeline commerciale opaca, previsioni inaffidabili, opportunit\u00E0 che scivolano via. Senza visibilit\u00E0, il fatturato diventa una sorpresa." },
+    { title: "\u00ABReagiamo sempre, non anticipiamo mai\u00BB", text: "La relazione con i clienti \u00E8 gestita a emergenza. Manca un sistema che ti dica cosa succeder\u00E0 prima che succeda." },
+    { title: "\u00ABI costi crescono, i margini no\u00BB", text: "Senza controllo su produzione, acquisti e logistica, \u00E8 impossibile capire dove si perde margine \u2014 e quindi impossibile recuperarlo." },
+    { title: "\u00ABAbbiamo software ovunque, integrazione zero\u00BB", text: "Ogni strumento aggiunto ha creato un ecosistema frammentato. Nessuno parla con nessuno, e l\u2019unico collante \u00E8 il lavoro manuale." },
 ];
 
 const cardTransforms = [
@@ -27,12 +27,12 @@ const cardTransforms = [
 ];
 
 const neonColors = [
-    { border: "border-red-500/50", glow: "shadow-red-500/15", badge: "text-red-400", bg: "bg-red-950/30", badgeBg: "bg-red-500/10", lightBorder: "border-red-500/60", lightBadge: "text-red-600", lightBg: "bg-red-50" },
-    { border: "border-amber-500/50", glow: "shadow-amber-500/15", badge: "text-amber-400", bg: "bg-amber-950/30", badgeBg: "bg-amber-500/10", lightBorder: "border-amber-500/60", lightBadge: "text-amber-600", lightBg: "bg-amber-50" },
-    { border: "border-orange-500/50", glow: "shadow-orange-500/15", badge: "text-orange-400", bg: "bg-orange-950/30", badgeBg: "bg-orange-500/10", lightBorder: "border-orange-500/60", lightBadge: "text-orange-600", lightBg: "bg-orange-50" },
-    { border: "border-rose-500/50", glow: "shadow-rose-500/15", badge: "text-rose-400", bg: "bg-rose-950/30", badgeBg: "bg-rose-500/10", lightBorder: "border-rose-500/60", lightBadge: "text-rose-600", lightBg: "bg-rose-50" },
-    { border: "border-yellow-500/50", glow: "shadow-yellow-500/15", badge: "text-yellow-400", bg: "bg-yellow-950/30", badgeBg: "bg-yellow-500/10", lightBorder: "border-yellow-500/60", lightBadge: "text-yellow-600", lightBg: "bg-yellow-50" },
-    { border: "border-pink-500/50", glow: "shadow-pink-500/15", badge: "text-pink-400", bg: "bg-pink-950/30", badgeBg: "bg-pink-500/10", lightBorder: "border-pink-500/60", lightBadge: "text-pink-600", lightBg: "bg-pink-50" },
+    { border: "border-red-500/50", glow: "shadow-red-500/15", badge: "text-red-400", bg: "bg-red-950/30", badgeBg: "bg-red-500/10" },
+    { border: "border-amber-500/50", glow: "shadow-amber-500/15", badge: "text-amber-400", bg: "bg-amber-950/30", badgeBg: "bg-amber-500/10" },
+    { border: "border-orange-500/50", glow: "shadow-orange-500/15", badge: "text-orange-400", bg: "bg-orange-950/30", badgeBg: "bg-orange-500/10" },
+    { border: "border-rose-500/50", glow: "shadow-rose-500/15", badge: "text-rose-400", bg: "bg-rose-950/30", badgeBg: "bg-rose-500/10" },
+    { border: "border-yellow-500/50", glow: "shadow-yellow-500/15", badge: "text-yellow-400", bg: "bg-yellow-950/30", badgeBg: "bg-yellow-500/10" },
+    { border: "border-pink-500/50", glow: "shadow-pink-500/15", badge: "text-pink-400", bg: "bg-pink-950/30", badgeBg: "bg-pink-500/10" },
 ];
 
 function ParallaxCard({ item, index, isDark }: {
@@ -71,20 +71,17 @@ function ParallaxCard({ item, index, isDark }: {
                 className={`relative rounded-2xl border backdrop-blur-sm p-7 h-full transition-all duration-300 ${
                     isDark
                         ? `bg-[#0E0E0D]/70 ${colors.border} shadow-lg ${colors.glow}`
-                        : `bg-white ${colors.lightBorder} shadow-md shadow-stone-200/50`
+                        : "bg-white border border-slate-200 hover:border-sky-400"
                 }`}
-                whileHover={isDark ? { y: -4, borderColor: colors.border.replace("/50", "/80") } : { y: -4, borderColor: colors.lightBorder.replace("/60", "/90") }}
+                whileHover={isDark ? { y: -4, borderColor: colors.border.replace("/50", "/80") } : { y: -4 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
             >
                 {isDark && (
                     <div className={`absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-15 ${colors.badge}`} />
                 )}
-                {!isDark && (
-                    <div className={`absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-10 ${colors.lightBadge}`} />
-                )}
 
                 <span className={`text-xs font-mono font-medium mb-4 block ${
-                    isDark ? colors.badge : colors.lightBadge
+                    isDark ? colors.badge : "text-sky-500"
                 }`}>
                     {String(index + 1).padStart(2, "0")}
                 </span>
@@ -131,21 +128,24 @@ export function ScrollProblems({ theme }: { theme: string }) {
                     className="mb-16 max-w-2xl"
                     style={{ y: headerY, opacity: headerOpacity }}
                 >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-red-400" : "text-red-600"
+                    <span className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
+                        isDark
+                            ? "text-red-400 border-stone-700/40 bg-stone-800/20"
+                            : "text-red-600 border-red-300 bg-red-50"
                     }`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${isDark ? "bg-red-500" : "bg-red-500"} animate-pulse`} />
                         Ti riconosci?
                     </span>
-                    <h2 className={`font-fjalla text-4xl font-semibold leading-tight mt-3 ${
+                    <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight mt-3 ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Non sono problemi tecnici.
-                        <span className={`block mt-1 ${isDark ? "text-red-400" : "text-red-600"}`}>
+                        <span className={`block mt-1 ${isDark ? "text-red-400" : "text-sky-600"}`}>
                             Sono problemi di business.
                         </span>
                     </h2>
                     <p className={`mt-5 text-lg ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                        Ogni PMI che incontriamo ha una storia diversa, ma racconta sempre le stesse frustrazioni. Se almeno una ti suona familiare, hai già un motivo per parlare con noi.
+                        Ogni PMI che incontriamo ha una storia diversa, ma racconta sempre le stesse frustrazioni. Se almeno una ti suona familiare, hai gi\u00E0 un motivo per parlare con noi.
                     </p>
                 </motion.div>
 

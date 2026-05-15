@@ -133,9 +133,12 @@ export function CinematicFAQ({ theme }: { theme: string }) {
                         className="lg:sticky lg:top-32"
                         style={{ y: leftY, opacity: leftOpacity }}
                     >
-                        <span className={`text-xs font-semibold uppercase tracking-widest ${
-                            isDark ? "text-sky-500" : "text-sky-700"
+                        <span className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
+                            isDark
+                                ? "text-sky-400 border-stone-700/40 bg-stone-800/20"
+                                : "text-sky-700 border-sky-300 bg-sky-50"
                         }`}>
+                            <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
                             Domande frequenti
                         </span>
                         <h2 className={`font-fjalla text-4xl font-semibold leading-tight mt-3 ${

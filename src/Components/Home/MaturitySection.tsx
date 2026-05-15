@@ -1,12 +1,12 @@
 ﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 
-/* â”€â”€ MaturitySection â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ── MaturitySection ─────────────────────────────────────────────────────────
    Visual meter that fills as user scrolls. Level cards scale in from
    different distances. Weight progress bars animate with scroll position
    rather than intersection, creating smooth fill effect.
    Dark mode: neon glow on level cards, fill bars, and score card.
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+   ────────────────────────────────────────────────────────────────────────── */
 
 const livelli = [
     {
@@ -50,11 +50,11 @@ const pesi = [
     { label: "Automazione & AI",  weight: 0.1 },
 ];
 
-const neonMaturityMap: Record<string, { border: string; glow: string; dotBg: string; bg: string; line: string; badge: string; lightBorder: string; lightDotBg: string; lightBg: string; lightLine: string; lightBadge: string }> = {
-    cyan:    { border: "border-cyan-500/50",    glow: "shadow-cyan-500/15",    dotBg: "bg-cyan-400",    bg: "bg-cyan-950/40",    line: "from-cyan-500 to-cyan-700",    badge: "text-cyan-400",    lightBorder: "border-cyan-500/60", lightDotBg: "bg-cyan-500", lightBg: "bg-cyan-50", lightLine: "from-cyan-500 to-cyan-600", lightBadge: "text-cyan-600" },
-    sky:     { border: "border-sky-500/50",     glow: "shadow-sky-500/15",     dotBg: "bg-sky-400",     bg: "bg-sky-950/40",     line: "from-sky-500 to-sky-700",     badge: "text-sky-400",     lightBorder: "border-sky-500/60", lightDotBg: "bg-sky-500", lightBg: "bg-sky-50", lightLine: "from-sky-500 to-sky-600", lightBadge: "text-sky-600" },
-    indigo:  { border: "border-indigo-500/50",  glow: "shadow-indigo-500/15",  dotBg: "bg-indigo-400",  bg: "bg-indigo-950/40",  line: "from-indigo-500 to-indigo-700", badge: "text-indigo-400",  lightBorder: "border-indigo-500/60", lightDotBg: "bg-indigo-500", lightBg: "bg-indigo-50", lightLine: "from-indigo-500 to-indigo-600", lightBadge: "text-indigo-600" },
-    emerald: { border: "border-emerald-500/50", glow: "shadow-emerald-500/15", dotBg: "bg-emerald-400", bg: "bg-emerald-950/40", line: "from-emerald-500 to-emerald-700", badge: "text-emerald-400", lightBorder: "border-emerald-500/60", lightDotBg: "bg-emerald-500", lightBg: "bg-emerald-50", lightLine: "from-emerald-500 to-emerald-600", lightBadge: "text-emerald-600" },
+const neonMaturityMap: Record<string, { border: string; glow: string; dotBg: string; bg: string; line: string; badge: string }> = {
+    cyan:    { border: "border-cyan-500/50",    glow: "shadow-cyan-500/15",    dotBg: "bg-cyan-400",    bg: "bg-cyan-950/40",    line: "from-cyan-500 to-cyan-700",    badge: "text-cyan-400" },
+    sky:     { border: "border-sky-500/50",     glow: "shadow-sky-500/15",     dotBg: "bg-sky-400",     bg: "bg-sky-950/40",     line: "from-sky-500 to-sky-700",     badge: "text-sky-400" },
+    indigo:  { border: "border-indigo-500/50",  glow: "shadow-indigo-500/15",  dotBg: "bg-indigo-400",  bg: "bg-indigo-950/40",  line: "from-indigo-500 to-indigo-700", badge: "text-indigo-400" },
+    emerald: { border: "border-emerald-500/50", glow: "shadow-emerald-500/15", dotBg: "bg-emerald-400", bg: "bg-emerald-950/40", line: "from-emerald-500 to-emerald-700", badge: "text-emerald-400" },
 };
 
 function WeightBar({ p, index, isDark, scrollYProgress }: {
@@ -79,7 +79,7 @@ function WeightBar({ p, index, isDark, scrollYProgress }: {
                 isDark ? "bg-[#F8FAFB]/5" : "bg-[#EDF2F7]"
             }`}>
                 <motion.div
-                    className={`h-full rounded-full ${isDark ? "bg-gradient-to-r from-cyan-500 to-sky-500 shadow-sm shadow-cyan-500/30" : "bg-gradient-to-r from-cyan-500 to-sky-500"}`}
+                    className={`h-full rounded-full ${isDark ? "bg-gradient-to-r from-cyan-500 to-sky-500 shadow-sm shadow-cyan-500/30" : "bg-gradient-to-r from-sky-700 to-sky-500"}`}
                     style={{ width: barWidth }}
                 />
             </div>
@@ -114,21 +114,19 @@ function LevelCard({ lvl, index, isDark, theme: _theme, sectionProgress }: {
                 className={`relative rounded-2xl border backdrop-blur-sm p-6 h-full flex flex-col gap-3 transition-all duration-300 ${
                     isDark
                         ? `bg-[#0E0E0D]/70 ${neon.border} shadow-lg ${neon.glow}`
-                        : `bg-white ${neon.lightBorder} shadow-md shadow-stone-200/50`
+                        : "bg-white border border-slate-200 hover:border-sky-400"
                 }`}
-                whileHover={isDark ? { y: -4, borderColor: neon.border.replace("/50", "/80") } : { y: -4, borderColor: neon.lightBorder.replace("/60", "/90") }}
+                whileHover={isDark ? { y: -4, borderColor: neon.border.replace("/50", "/80") } : { y: -4 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
             >
                 {isDark && (
                     <div className={`absolute top-0 right-0 w-12 h-12 rounded-bl-xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-15 ${neon.badge}`} />
                 )}
-                {!isDark && (
-                    <div className={`absolute top-0 right-0 w-12 h-12 rounded-bl-xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-10 ${neon.lightBadge}`} />
-                )}
 
                 <div className="flex items-center gap-2">
                     <span
-                        className={`w-2.5 h-2.5 rounded-full shrink-0 ${isDark ? neon.dotBg : neon.lightDotBg}`}
+                        className={`w-2.5 h-2.5 rounded-full shrink-0 ${isDark ? neon.dotBg : ""}`}
+                        style={{ backgroundColor: isDark ? undefined : lvl.accent }}
                     />
                     <h3 className={`text-base font-semibold ${
                         isDark ? "text-slate-100" : "text-slate-900"
@@ -156,7 +154,7 @@ function LevelCard({ lvl, index, isDark, theme: _theme, sectionProgress }: {
                 </p>
 
                 <span className={`text-xs font-mono font-medium ${
-                    isDark ? neon.badge : neon.lightBadge
+                    isDark ? neon.badge : "text-slate-400"
                 }`}>
                     Score: {lvl.score}
                 </span>
@@ -193,16 +191,19 @@ export function MaturitySection({ theme }: { theme: string }) {
                     className="text-center mb-16"
                     style={{ y: headerY, opacity: headerOpacity }}
                 >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-cyan-400" : "text-cyan-600"
+                    <span className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
+                        isDark
+                            ? "text-cyan-400 border-stone-700/40 bg-stone-800/20"
+                            : "text-cyan-600 border-cyan-300 bg-cyan-50"
                     }`}>
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
                         Dove sei oggi?
                     </span>
-                    <h2 className={`font-fjalla text-4xl font-semibold mt-3 ${
+                    <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold mt-3 ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Ogni PMI ha un livello di{" "}
-                        <span className={isDark ? "text-cyan-400" : "text-cyan-600"}>
+                        <span className={isDark ? "text-cyan-400" : "text-sky-700"}>
                             maturit\u00E0 digitale misurabile.
                         </span>
                     </h2>
@@ -236,7 +237,7 @@ export function MaturitySection({ theme }: { theme: string }) {
                         className={`relative rounded-2xl border backdrop-blur-sm p-8 sm:p-10 max-w-3xl mx-auto transition-all duration-300 ${
                             isDark
                                 ? "bg-[#0E0E0D]/70 border-cyan-500/30 shadow-lg shadow-cyan-500/10"
-                                : "bg-white border-cyan-500/40 shadow-md shadow-stone-200/50"
+                                : "bg-white border border-slate-200"
                         }`}
                     >
                         <h3 className={`text-xl font-semibold mb-8 text-center ${

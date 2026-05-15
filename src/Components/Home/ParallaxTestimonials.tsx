@@ -2,25 +2,25 @@
 import { Quote } from "lucide-react";
 import { useRef } from "react";
 
-/* â”€â”€ ParallaxTestimonials â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   Cards enter with 3D perspective rotation â€” left card rotates from left,
+/* ── ParallaxTestimonials ────────────────────────────────────────────────────
+   Cards enter with 3D perspective rotation — left card rotates from left,
    center comes straight, right rotates from right. As the section scrolls,
    cards float at different vertical speeds, creating depth.
    Dark mode: neon glow borders with glowing quote icons and result badges.
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+   ────────────────────────────────────────────────────────────────────────── */
 
 const testimonials = [
     {
-        quote: "In tre mesi abbiamo eliminato il 40% delle attività manuali nel reparto logistica. I dati ora fluiscono in automatico e il mio team si concentra su ciò che conta davvero.",
+        quote: "In tre mesi abbiamo eliminato il 40% delle attivit\u00E0 manuali nel reparto logistica. I dati ora fluiscono in automatico e il mio team si concentra su ci\u00F2 che conta davvero.",
         name: "Marco Ferretti",
         role: "Operations Director",
         company: "Ferretti Distribuzione Srl",
         sector: "Distribuzione",
-        result: "−40% attività manuali",
+        result: "\u221240% attivit\u00E0 manuali",
         resultColor: "text-cyan-400",
     },
     {
-        quote: "Avevamo dati ovunque e visibilità zero. Oggi ho una dashboard che mi dice ogni mattina dove siamo sul budget, il forecast e le priorità del team. Non torno indietro.",
+        quote: "Avevamo dati ovunque e visibilit\u00E0 zero. Oggi ho una dashboard che mi dice ogni mattina dove siamo sul budget, il forecast e le priorit\u00E0 del team. Non torno indietro.",
         name: "Giulia Marchetti",
         role: "CFO",
         company: "Marchetti & Partners",
@@ -29,12 +29,12 @@ const testimonials = [
         resultColor: "text-violet-400",
     },
     {
-        quote: "Il nostro CRM era un cimitero di contatti. Ora il funnel è vivo, il team commerciale sa esattamente su chi lavorare e il tasso di chiusura è raddoppiato in sei mesi.",
+        quote: "Il nostro CRM era un cimitero di contatti. Ora il funnel \u00E8 vivo, il team commerciale sa esattamente su chi lavorare e il tasso di chiusura \u00E8 raddoppiato in sei mesi.",
         name: "Luca Bianchi",
         role: "CEO",
         company: "Bianchi Impianti SpA",
         sector: "Impiantistica industriale",
-        result: "×2 tasso di chiusura",
+        result: "\u00D72 tasso di chiusura",
         resultColor: "text-emerald-400",
     },
 ];
@@ -43,9 +43,9 @@ const cardDepths = [0.05, -0.03, 0.07];
 const cardRotations = [-4, 0, 4];
 
 const neonTestimonialColors = [
-    { border: "border-cyan-500/50", glow: "shadow-cyan-500/15", quote: "text-cyan-400/60", badgeBg: "bg-cyan-500/10", badgeBorder: "border-cyan-500/20", dotBg: "bg-cyan-400", sector: "text-cyan-400/70", lightBorder: "border-cyan-500/60", lightQuote: "text-cyan-600/60", lightBadgeBg: "bg-cyan-50", lightBadgeBorder: "border-cyan-500/30", lightDotBg: "bg-cyan-500", lightSector: "text-cyan-600" },
-    { border: "border-violet-500/50", glow: "shadow-violet-500/15", quote: "text-violet-400/60", badgeBg: "bg-violet-500/10", badgeBorder: "border-violet-500/20", dotBg: "bg-violet-400", sector: "text-violet-400/70", lightBorder: "border-violet-500/60", lightQuote: "text-violet-600/60", lightBadgeBg: "bg-violet-50", lightBadgeBorder: "border-violet-500/30", lightDotBg: "bg-violet-500", lightSector: "text-violet-600" },
-    { border: "border-emerald-500/50", glow: "shadow-emerald-500/15", quote: "text-emerald-400/60", badgeBg: "bg-emerald-500/10", badgeBorder: "border-emerald-500/20", dotBg: "bg-emerald-400", sector: "text-emerald-400/70", lightBorder: "border-emerald-500/60", lightQuote: "text-emerald-600/60", lightBadgeBg: "bg-emerald-50", lightBadgeBorder: "border-emerald-500/30", lightDotBg: "bg-emerald-500", lightSector: "text-emerald-600" },
+    { border: "border-cyan-500/50", glow: "shadow-cyan-500/15", quote: "text-cyan-400/60", badgeBg: "bg-cyan-500/10", badgeBorder: "border-cyan-500/20", dotBg: "bg-cyan-400", sector: "text-cyan-400/70" },
+    { border: "border-violet-500/50", glow: "shadow-violet-500/15", quote: "text-violet-400/60", badgeBg: "bg-violet-500/10", badgeBorder: "border-violet-500/20", dotBg: "bg-violet-400", sector: "text-violet-400/70" },
+    { border: "border-emerald-500/50", glow: "shadow-emerald-500/15", quote: "text-emerald-400/60", badgeBg: "bg-emerald-500/10", badgeBorder: "border-emerald-500/20", dotBg: "bg-emerald-400", sector: "text-emerald-400/70" },
 ];
 
 function TestimonialCard({ t, i, isDark, theme: _theme, scrollYProgress }: {
@@ -81,21 +81,18 @@ function TestimonialCard({ t, i, isDark, theme: _theme, scrollYProgress }: {
                 className={`relative rounded-2xl border backdrop-blur-sm p-7 h-full flex flex-col gap-5 transition-all duration-300 ${
                     isDark
                         ? `bg-[#0E0E0D]/70 ${colors.border} shadow-lg ${colors.glow}`
-                        : `bg-white ${colors.lightBorder} shadow-md shadow-stone-200/50`
+                        : "bg-white border border-slate-200 hover:border-sky-400"
                 }`}
-                whileHover={isDark ? { y: -4, borderColor: colors.border.replace("/50", "/80") } : { y: -4, borderColor: colors.lightBorder.replace("/60", "/90") }}
+                whileHover={isDark ? { y: -4, borderColor: colors.border.replace("/50", "/80") } : { y: -4 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
             >
                 {isDark && (
                     <div className={`absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-15 ${colors.quote}`} />
                 )}
-                {!isDark && (
-                    <div className={`absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-10 ${colors.lightQuote}`} />
-                )}
 
                 <Quote
                     size={20}
-                    className={`shrink-0 ${isDark ? colors.quote : colors.lightQuote}`}
+                    className={`shrink-0 ${isDark ? colors.quote : "text-sky-400"}`}
                 />
                 <p className={`text-sm leading-relaxed flex-1 italic ${
                     isDark ? "text-slate-400" : "text-slate-600"
@@ -105,20 +102,20 @@ function TestimonialCard({ t, i, isDark, theme: _theme, scrollYProgress }: {
                 <div className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full w-fit ${
                     isDark
                         ? `${colors.badgeBg} border ${colors.badgeBorder}`
-                        : `${colors.lightBadgeBg} border ${colors.lightBadgeBorder}`
+                        : "bg-slate-50 border border-slate-200"
                 }`}>
-                    <span className={`w-1.5 h-1.5 rounded-full ${isDark ? colors.dotBg : colors.lightDotBg}`} />
+                    <span className={`w-1.5 h-1.5 rounded-full ${isDark ? colors.dotBg : t.resultColor.replace("text-", "bg-")}`} />
                     <span className={isDark ? t.resultColor : t.resultColor}>{t.result}</span>
                 </div>
-                <div className={`border-t pt-5 ${isDark ? "border-stone-800/40" : "border-stone-200"}`}>
+                <div className={`border-t pt-5 ${isDark ? "border-stone-800/40" : "border-slate-100"}`}>
                     <p className={`text-sm font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>
                         {t.name}
                     </p>
                     <p className={`text-xs mt-0.5 ${isDark ? "text-slate-500" : "text-slate-500"}`}>
-                        {t.role} · {t.company}
+                        {t.role} \u00B7 {t.company}
                     </p>
                     <span className={`mt-2 inline-block text-xs font-medium uppercase tracking-wider ${
-                        isDark ? colors.sector : colors.lightSector
+                        isDark ? colors.sector : "text-sky-500"
                     }`}>
                         {t.sector}
                     </span>
@@ -156,16 +153,19 @@ export function ParallaxTestimonials({ theme }: { theme: string }) {
                     className="text-center mb-16"
                     style={{ y: headerY, opacity: headerOpacity }}
                 >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-cyan-400" : "text-cyan-600"
+                    <span className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
+                        isDark
+                            ? "text-cyan-400 border-stone-700/40 bg-stone-800/20"
+                            : "text-cyan-600 border-cyan-300 bg-cyan-50"
                     }`}>
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
                         Casi reali
                     </span>
-                    <h2 className={`font-fjalla text-4xl font-semibold mt-3 ${
+                    <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold mt-3 ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         PMI che hanno smesso{" "}
-                        <span className={isDark ? "text-cyan-400" : "text-cyan-600"}>
+                        <span className={isDark ? "text-cyan-400" : "text-sky-700"}>
                             di perdere margine.
                         </span>
                     </h2>
