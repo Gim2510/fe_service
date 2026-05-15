@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Fragment, useRef } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -113,7 +113,7 @@ export function PrivateAIFlow({ theme }: { theme: string }) {
             )}
             <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-20 sm:py-32">
                 <motion.div className="mb-16 text-center max-w-3xl mx-auto" style={{ y: headerY, opacity: headerOpacity }}>
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-cyan-400" : "text-sky-700"}`}>AI privata</span>
+                    <span className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${isDark ? "text-cyan-400 border-stone-700/40 bg-stone-800/20" : "text-cyan-600 border-cyan-300 bg-cyan-50"}`}><span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />AI privata</span>
                     <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         I tuoi dati restano tuoi.<span className={`block mt-1 ${isDark ? "text-cyan-400" : "text-sky-700"}`}>Sempre.</span>
                     </h2>

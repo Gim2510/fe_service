@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+﻿import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { useState } from "react";
 import { SectionBase } from "./SectionBase.tsx";
@@ -20,9 +20,12 @@ export function VideoSection({ theme }: { theme: string }) {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
-                    <span className={`text-xs font-semibold uppercase tracking-widest ${
-                        isDark ? "text-sky-500" : "text-sky-700"
+                    <span className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
+                        isDark
+                            ? "text-sky-400 border-stone-700/40 bg-stone-800/20"
+                            : "text-sky-700 border-sky-300 bg-sky-50"
                     }`}>
+                        <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
                         Come funziona
                     </span>
                     <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold mt-3 ${
@@ -105,7 +108,7 @@ export function VideoSection({ theme }: { theme: string }) {
 
                                 {/* Coming soon label if no VIDEO_URL */}
                                 {!VIDEO_URL && (
-                                    <span className={`absolute bottom-6 text-xs font-semibold uppercase tracking-widest ${
+                                    <span className={`absolute bottom-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
                                         isDark ? "text-stone-700" : "text-slate-400"
                                     }`}>
                                         Video in arrivo
