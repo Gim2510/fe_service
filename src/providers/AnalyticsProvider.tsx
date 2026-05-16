@@ -53,7 +53,7 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
         });
     };
 
-    const trackEvent = (name: string, properties?: Record<string, unknown>) => {
+    const trackEvent = (name: string, properties?: Record<string, string | number | boolean>) => {
         if (!consent?.analytics) return;
         posthog.capture(name, properties);
         track(name, properties);
