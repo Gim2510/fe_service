@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "../../Context/ThemeContext.tsx";
 import { useAuth } from "../../auth/AuthContext.tsx";
-import { DashboardCard } from "../DashboardCard.tsx";
+import { DashboardCard } from "./DashboardCard.tsx";
 import { BarChart3, Monitor, Smartphone, Tablet, TrendingUp } from "lucide-react";
 
 const DASHBOARD_BASE = import.meta.env.VITE_DASHBOARD_BASE_URL || "http://localhost:3006";
