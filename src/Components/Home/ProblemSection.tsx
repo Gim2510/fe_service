@@ -18,7 +18,7 @@ const problemi = [
 
 export function ProblemiSection({ theme }: { theme: string }) {
     const isDark = theme === "dark";
-    const reduceMotion = useReducedMotion();
+    const reduceMotion = useReducedMotion() ?? false;
     const variants = cardVariants(reduceMotion);
 
     return (
