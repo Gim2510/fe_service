@@ -149,7 +149,7 @@ export function DepthMethod({ theme }: { theme: string }) {
                         <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
                         Il nostro metodo
                     </span>
-                    <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight mt-3 ${
+                    <h2 className={`font-fjalla text-xl sm:text-3xl md:text-4xl font-semibold leading-tight mt-3 ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Tre fasi. Zero improvvisazione.

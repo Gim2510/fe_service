@@ -127,7 +127,7 @@ export function CinematicCTA({ theme }: { theme: string }) {
 
                 {/* Headline â€” words reveal */}
                 <motion.h2
-                    className={`font-fjalla text-4xl font-semibold leading-tight max-w-3xl ${
+                    className={`font-fjalla text-xl sm:text-3xl md:text-4xl font-semibold leading-tight max-w-3xl ${
                         isDark ? "text-slate-100" : "text-stone-900"
                     }`}
                     initial={{ opacity: 0, y: 20, scale: 0.95 }}
