@@ -1,17 +1,17 @@
 import { motion } from "framer-motion";
+import { Badge } from "../Badge.tsx";
 import { KPISection } from "./KPISection";
 import { GrowthSection } from "./GrowthSection";
 import { SurveySection } from "./SurveySection";
 import { InsightsSection } from "./InsightsSection";
 import { AdvancedStats } from "./AdvancedStats";
-import { Badge } from "../Badge.tsx";
 
 export function DashboardHeader({ users, surveys, theme }: any) {
     const isDark = theme === "dark";
 
     return (
-        <div className="space-y-8">
-            {/* page title */}
+        <div className="space-y-6">
+            {/* Page title */}
             <motion.div
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -22,18 +22,23 @@ export function DashboardHeader({ users, surveys, theme }: any) {
                     Admin Dashboard
                 </h1>
                 <p className={`mt-1 text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>
-                    Monitor growth, engagement and system health
+                    Monitora crescita, engagement e salute del sistema
                 </p>
             </motion.div>
 
+            {/* KPI Cards */}
             <KPISection users={users} surveys={surveys} theme={theme} />
 
-            <div className="grid lg:grid-cols-2 gap-4">
+            {/* Growth + Survey charts */}
+            <div className="grid lg:grid-cols-2 gap-6">
                 <GrowthSection users={users} theme={theme} />
                 <SurveySection surveys={surveys} theme={theme} />
             </div>
 
+            {/* Insights */}
             <InsightsSection users={users} surveys={surveys} theme={theme} />
+
+            {/* Advanced Stats */}
             <AdvancedStats data={users} theme={theme} />
         </div>
     );
