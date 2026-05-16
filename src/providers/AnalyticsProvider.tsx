@@ -11,7 +11,7 @@ type Consent = {
 
 interface AnalyticsContextType {
     consent: Consent | null;
-    trackEvent: (name: string, properties?: Record<string, unknown>) => void;
+    trackEvent: (name: string, properties?: Record<string, string | number | boolean>) => void;
     trackPageview: (path: string) => void;
 }
 
