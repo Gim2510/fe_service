@@ -29,6 +29,7 @@ import {PrivacyPolicy} from "./Pages/PrivacyPolicy.tsx";
 import {TermsOfService} from "./Pages/TermOfService.tsx";
 import {CookiePolicy} from "./Pages/CookiePolicy.tsx";
 import {About} from "./Pages/About.tsx";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
     return (
@@ -63,6 +64,7 @@ function App() {
                     </PremiumProvider>
                 </AuthProvider>
             </ThemeProvider>
+            <Analytics />
         </div>
     );
 }
