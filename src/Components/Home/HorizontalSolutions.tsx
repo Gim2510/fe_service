@@ -215,7 +215,7 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                         Soluzioni su misura
                     </span>
                     <h2
-                        className={`font-fjalla text-2xl sm:text-3xl md:text-5xl font-semibold leading-tight mt-3 ${
+                        className={`font-fjalla text-xl sm:text-3xl md:text-4xl font-semibold leading-tight mt-3 ${
                             isDark ? "text-slate-100" : "text-slate-900"
                         }`}
                     >

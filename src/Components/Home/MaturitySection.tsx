@@ -199,7 +199,7 @@ export function MaturitySection({ theme }: { theme: string }) {
                         <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
                         Dove sei oggi?
                     </span>
-                    <h2 className={`font-fjalla text-4xl sm:text-5xl font-semibold mt-3 ${
+                    <h2 className={`font-fjalla text-xl sm:text-3xl md:text-4xl font-semibold mt-3 ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Ogni PMI ha un livello di{" "}
