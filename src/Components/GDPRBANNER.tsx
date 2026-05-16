@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "../Context/ThemeContext";
+import { updateAnalyticsConsent } from "../providers/AnalyticsProvider.tsx";
 
 type Consent = {
     necessary: true;
@@ -31,6 +32,7 @@ export function GDPRBanner() {
 
     const saveConsent = (consent: Consent) => {
         localStorage.setItem("gdprConsent", JSON.stringify(consent));
+        updateAnalyticsConsent(consent);
         setSavedConsent(consent);
     };
 
@@ -38,9 +40,9 @@ export function GDPRBanner() {
 
     const consentItems = [
         { key: "necessary", label: "Necessari", desc: "Essenziali per il funzionamento del sito", disabled: true },
-        { key: "preferences", label: "Preferenze", desc: "Salvano impostazioni come tema" },
-        { key: "analytics", label: "Analytics", desc: "Misurano traffico e utilizzo" },
-        { key: "marketing", label: "Marketing", desc: "Personalizzazione contenuti" },
+        { key: "preferences", label: "Preferenze", desc: "Salvano impostazioni come tema e lingua", disabled: false },
+        { key: "analytics", label: "Analytics", desc: "Vercel Analytics (cookie-less) e PostHog per statistiche di navigazione", disabled: false },
+        { key: "marketing", label: "Marketing", desc: "Personalizzazione contenuti e campagne", disabled: false },
     ];
 
     return (
