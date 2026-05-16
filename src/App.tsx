@@ -29,15 +29,18 @@ import {PrivacyPolicy} from "./Pages/PrivacyPolicy.tsx";
 import {TermsOfService} from "./Pages/TermOfService.tsx";
 import {CookiePolicy} from "./Pages/CookiePolicy.tsx";
 import {About} from "./Pages/About.tsx";
+import { Analytics } from "@vercel/analytics/react";
+import { AnalyticsProvider } from "./providers/AnalyticsProvider.tsx";
 
 function App() {
     return (
         <div className='bg-[#111110]'>
             <ThemeProvider>
-                <AuthProvider>
-                    <PremiumProvider>
-                        <ScrollProvider />
-                        <Routes>
+                <AnalyticsProvider>
+                    <AuthProvider>
+                        <PremiumProvider>
+                            <ScrollProvider />
+                            <Routes>
                             <Route path="/" element={<LayoutHomepage><Home/></LayoutHomepage>}></Route>
                             <Route path="/survey/start" element={<LayoutHomepage><SurveyStart /></LayoutHomepage>} />
                             <Route path="/login" element={<LayoutHomepage><Login /></LayoutHomepage>} />
@@ -62,7 +65,9 @@ function App() {
                         </Routes>
                     </PremiumProvider>
                 </AuthProvider>
+                </AnalyticsProvider>
             </ThemeProvider>
+            <Analytics />
         </div>
     );
 }
