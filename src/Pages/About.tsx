@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { useTheme } from "../Context/ThemeContext.tsx";
-import { CheckCircle2, ArrowRight, Zap, Shield, BarChart2, Users } from "lucide-react";
+import { CheckCircle2, Zap, Shield, BarChart2, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "../Components/Badge.tsx";
+import { GlowButton } from "../Components/Home/GlowButton.tsx";
 
 const fadeUp = (delay = 0) => ({
     initial: { opacity: 0, y: 24 },
@@ -347,13 +348,9 @@ export function About() {
                         Completa il nostro assessment gratuito in 10 minuti. Ricevi un report
                         personalizzato con le priorità di intervento per il tuo contesto specifico.
                     </p>
-                    <button
-                        onClick={() => navigate("/survey/start")}
-                        className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-sky-700 hover:bg-sky-600 text-white text-sm font-semibold transition-all duration-200 shadow-lg shadow-sky-700/25 hover:-translate-y-0.5 group"
-                    >
+                    <GlowButton onClick={() => navigate("/survey/start")}>
                         Ottieni il tuo report gratuito
-                        <ArrowRight size={16} className="transition-transform duration-200 group-hover:translate-x-1" />
-                    </button>
+                    </GlowButton>
                     <span className={`text-xs ${isDark ? "text-slate-600" : "text-stone-400"}`}>
                         10–15 minuti · nessun impegno · nessuna carta di credito
                     </span>

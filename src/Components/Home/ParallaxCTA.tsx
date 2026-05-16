@@ -1,8 +1,9 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
-import { ArrowRight, Clock, CheckCircle } from "lucide-react";
+import { Clock, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../Context/ThemeContext.tsx";
+import { GlowButton } from "./GlowButton.tsx";
 
 const PARTICLE_COUNT = 30;
 
@@ -191,23 +192,9 @@ export function ParallaxCTA() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.55, delay: 0.28 }}
                 >
-                    <button
-                        onClick={goToSurvey}
-                        className={`group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl
-                            text-sm font-semibold transition-all duration-200
-                            shadow-xl hover:-translate-y-0.5
-                            ${isDark
-                                ? "bg-sky-700 hover:bg-sky-600 text-white shadow-stone-800/40 hover:shadow-stone-800/60"
-                                : "bg-[#F8FAFB] hover:bg-sky-50 text-sky-800 shadow-stone-800/20 hover:shadow-stone-800/30"
-                            }
-                        `}
-                    >
+                    <GlowButton onClick={goToSurvey}>
                         Ottieni il tuo report gratuito
-                        <ArrowRight
-                            size={16}
-                            className="transition-transform duration-200 group-hover:translate-x-1"
-                        />
-                    </button>
+                    </GlowButton>
                 </motion.div>
 
                 {/* Trust note */}
