@@ -103,7 +103,7 @@ function ProblemCard({ item, index, isDark, progress }: {
             }}
         >
             <div
-                className={`relative rounded-2xl border backdrop-blur-sm overflow-hidden mx-auto w-full max-w-[1100px] ${
+                className={`relative rounded-2xl border backdrop-blur-sm overflow-hidden mx-auto w-[calc(100%-24px)] md:w-full max-w-[1100px] ${
                     isDark
                         ? `bg-[#0E0E0D]/80 ${colors.border} shadow-lg ${colors.glow}`
                         : `bg-white border-${colors.border.split("-")[1]}-500/60 shadow-md shadow-stone-200/50`
