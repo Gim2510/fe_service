@@ -1,6 +1,7 @@
 import { UserRoles } from "../../types/userRoles";
 import type { UserType } from "../../types/userTypes";
 import { ActionCard } from "./ActionCard";
+import { Shield, Trash2, Crown, Send } from "lucide-react";
 
 type Props = {
     allUsers: UserType[];
@@ -61,7 +62,11 @@ export function AdminActionsSection({
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <ActionCard title="Promote to Admin" theme={theme} index={0}>
+                <ActionCard title="Promote to Admin" theme={theme} index={0} glow="sky">
+                    <div className="flex items-center gap-2 mb-1">
+                        <Shield size={14} className={isDark ? "text-sky-400" : "text-sky-600"} />
+                        <span className={`text-xs ${isDark ? "text-slate-400" : "text-slate-500"}`}>Select user to promote</span>
+                    </div>
                     <select value={selectedUserId} onChange={e => setSelectedUserId(e.target.value)} className={selectClass}>
                         <option value="">Select user</option>
                         {allUsers.filter(u => u.role !== UserRoles.Admin).map(u => (
@@ -71,14 +76,24 @@ export function AdminActionsSection({
                     <button
                         disabled={!selectedUserId}
                         onClick={() => setShowPromoteModal(true)}
-                        className="h-11 px-5 rounded-xl bg-sky-700 hover:bg-sky-600 disabled:opacity-40
-                            text-white text-sm font-semibold transition-all hover:-translate-y-0.5 duration-200"
+                        className={`group relative h-9 px-4 rounded-lg text-xs font-semibold transition-all duration-300 overflow-hidden
+                            ${isDark
+                                ? "bg-gradient-to-r from-sky-700 via-sky-600 to-sky-700 hover:from-sky-600 hover:via-sky-500 hover:to-sky-600 text-white shadow-md shadow-sky-500/20 hover:shadow-sky-500/30"
+                                : "bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-white shadow-sm hover:shadow-md"
+                            } disabled:opacity-40 disabled:cursor-not-allowed hover:-translate-y-0.5`}
                     >
-                        Promote
+                        <span className="relative z-10 flex items-center justify-center gap-1.5">
+                            Promote
+                            <Shield size={12} />
+                        </span>
                     </button>
                 </ActionCard>
 
-                <ActionCard title="Delete User" theme={theme} index={1}>
+                <ActionCard title="Delete User" theme={theme} index={1} glow="red">
+                    <div className="flex items-center gap-2 mb-1">
+                        <Trash2 size={14} className={isDark ? "text-red-400" : "text-red-600"} />
+                        <span className={`text-xs ${isDark ? "text-slate-400" : "text-slate-500"}`}>Select user to delete</span>
+                    </div>
                     <select value={selectedUserToDelete} onChange={e => setSelectedUserToDelete(e.target.value)} className={selectClass}>
                         <option value="">Select user</option>
                         {allUsers.filter(u => u.role !== UserRoles.Admin).map(u => (
@@ -88,15 +103,25 @@ export function AdminActionsSection({
                     <button
                         disabled={!selectedUserToDelete}
                         onClick={() => setShowDeleteModal(true)}
-                        className="h-11 px-5 rounded-xl bg-red-600 hover:bg-red-500 disabled:opacity-40
-                            text-white text-sm font-semibold transition-all hover:-translate-y-0.5 duration-200"
+                        className={`group relative h-9 px-4 rounded-lg text-xs font-semibold transition-all duration-300 overflow-hidden
+                            ${isDark
+                                ? "bg-gradient-to-r from-red-700 via-red-600 to-red-700 hover:from-red-600 hover:via-red-500 hover:to-red-600 text-white shadow-md shadow-red-500/20 hover:shadow-red-500/30"
+                                : "bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white shadow-sm hover:shadow-md"
+                            } disabled:opacity-40 disabled:cursor-not-allowed hover:-translate-y-0.5`}
                     >
-                        Delete
+                        <span className="relative z-10 flex items-center justify-center gap-1.5">
+                            Delete
+                            <Trash2 size={12} />
+                        </span>
                     </button>
-                    {deleteSuccess && <p className="text-green-400 text-xs mt-1">User deleted successfully</p>}
+                    {deleteSuccess && <p className="text-emerald-400 text-xs mt-1">User deleted successfully</p>}
                 </ActionCard>
 
-                <ActionCard title="Assign VIP Status" theme={theme} index={2}>
+                <ActionCard title="Assign VIP Status" theme={theme} index={2} glow="amber">
+                    <div className="flex items-center gap-2 mb-1">
+                        <Crown size={14} className={isDark ? "text-amber-400" : "text-amber-600"} />
+                        <span className={`text-xs ${isDark ? "text-slate-400" : "text-slate-500"}`}>Select user to upgrade</span>
+                    </div>
                     <select value={selectedUserToVip} onChange={e => setSelectedUserToVip(e.target.value)} className={selectClass}>
                         <option value="">Select user</option>
                         {allUsers.filter(u => !u.vip).map(u => (
@@ -106,15 +131,27 @@ export function AdminActionsSection({
                     <button
                         disabled={!selectedUserToVip}
                         onClick={() => setShowVipModal(true)}
-                        className="h-11 px-5 rounded-xl bg-sky-500 hover:bg-sky-400 disabled:opacity-40
-                            text-white text-sm font-semibold transition-all hover:-translate-y-0.5 duration-200"
+                        className={`group relative h-9 px-4 rounded-lg text-xs font-semibold transition-all duration-300 overflow-hidden
+                            ${isDark
+                                ? "bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700 hover:from-amber-600 hover:via-amber-500 hover:to-amber-600 text-white shadow-md shadow-amber-500/20 hover:shadow-amber-500/30"
+                                : "bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white shadow-sm hover:shadow-md"
+                            } disabled:opacity-40 disabled:cursor-not-allowed hover:-translate-y-0.5`}
                     >
-                        Upgrade
+                        <span className="relative z-10 flex items-center justify-center gap-1.5">
+                            Upgrade
+                            <Crown size={12} />
+                        </span>
                     </button>
-                    {vipSuccess && <p className="text-green-400 text-xs mt-1">User upgraded successfully</p>}
+                    {vipSuccess && <p className="text-emerald-400 text-xs mt-1">User upgraded successfully</p>}
                 </ActionCard>
 
-                <div className="col-span-1 lg:col-span-2">{BulkEmailComponent}</div>
+                <ActionCard title="Bulk Notifications" theme={theme} index={3} glow="violet">
+                    <div className="flex items-center gap-2 mb-1">
+                        <Send size={14} className={isDark ? "text-violet-400" : "text-violet-600"} />
+                        <span className={`text-xs ${isDark ? "text-slate-400" : "text-slate-500"}`}>Send notifications to users</span>
+                    </div>
+                    {BulkEmailComponent}
+                </ActionCard>
             </div>
         </>
     );

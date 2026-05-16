@@ -3,19 +3,18 @@ import { AlertTriangle, Info, CheckCircle } from "lucide-react";
 
 export function InsightsSection({ users, surveys, theme }: any) {
     const isDark = theme === "dark";
-    const border = isDark ? "border-stone-800/30" : "border-slate-200";
 
     const insights: { level: "high" | "medium" | "low"; text: string }[] = [];
     if (users.churnRate > 8)
-        insights.push({ level: "high",   text: "High churn rate — users are leaving the platform" });
+        insights.push({ level: "high",   text: "Alto churn rate — gli utenti stanno abbandonando la piattaforma" });
     if (users.retentionRate7Days < 30)
-        insights.push({ level: "medium", text: "Low 7-day retention — onboarding may be weak" });
+        insights.push({ level: "medium", text: "Bassa retention a 7 giorni — l'onboarding potrebbe essere debole" });
     if (surveys.publishedResponses < surveys.totalResponses * 0.5)
-        insights.push({ level: "low",    text: "Many surveys are not being published" });
+        insights.push({ level: "low",    text: "Molti survey non vengono pubblicati" });
 
     const cfg = {
         high:   { icon: AlertTriangle, color: "#f87171", bg: isDark ? "bg-red-500/8 border-red-500/20"   : "bg-red-50 border-red-200" },
-        medium: { icon: AlertTriangle, color: "#f59e0b", bg: isDark ? "bg-sky-500/8 border-sky-500/20": "bg-sky-50 border-sky-200" },
+        medium: { icon: AlertTriangle, color: "#f59e0b", bg: isDark ? "bg-amber-500/8 border-amber-500/20": "bg-amber-50 border-amber-200" },
         low:    { icon: Info,          color: "#f59e0b", bg: isDark ? "bg-sky-500/6 border-sky-500/15": "bg-sky-50/50 border-sky-200/60" },
     };
 
@@ -24,21 +23,24 @@ export function InsightsSection({ users, surveys, theme }: any) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.28 }}
-            className={`rounded-2xl border overflow-hidden ${border}`}
-            style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+            className={`group relative rounded-2xl border backdrop-blur-sm overflow-hidden transition-all duration-300 ${
+                isDark
+                    ? "bg-[#161614]/80 border-stone-800/30 hover:border-stone-700/50 shadow-lg shadow-amber-500/10 hover:shadow-amber-500/20"
+                    : "bg-white/80 border-slate-200 hover:border-slate-300 shadow-md hover:shadow-lg"
+            }`}
         >
-            <div className="h-[2px] w-full bg-sky-700/40" />
-            <div className="p-7">
-                <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-5
+            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-amber-500/50 to-transparent group-hover:via-amber-400/70 transition-all" />
+            <div className="p-5">
+                <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-4
                     ${isDark ? "text-slate-500" : "text-slate-400"}`}>
                     System Insights
                 </p>
 
                 {insights.length === 0 ? (
                     <div className={`flex items-center gap-3 rounded-xl border px-4 py-3
-                        ${isDark ? "bg-green-500/8 border-green-500/20" : "bg-green-50 border-green-200"}`}>
-                        <CheckCircle size={14} className="text-green-400 shrink-0" />
-                        <span className="text-sm text-green-400">All systems healthy</span>
+                        ${isDark ? "bg-emerald-500/8 border-emerald-500/20" : "bg-emerald-50 border-emerald-200"}`}>
+                        <CheckCircle size={14} className="text-emerald-400 shrink-0" />
+                        <span className="text-sm text-emerald-400">Tutti i sistemi sono operativi</span>
                     </div>
                 ) : (
                     <div className="space-y-2.5">

@@ -1,4 +1,4 @@
-export function DetailItem({ label, value, theme }: { label: string; value?: number; theme: string }) {
+export function DetailItem({ label, value, theme }: { label: string; value?: number | string; theme: string }) {
     const isDark = theme === "dark";
     return (
         <div className={`flex justify-between items-center py-3 border-b last:border-none
