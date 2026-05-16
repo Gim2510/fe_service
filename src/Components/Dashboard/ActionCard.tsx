@@ -4,15 +4,6 @@ import { motion } from "framer-motion";
 export function ActionCard({ title, children, theme, index = 0, glow = "sky" }: { title: string; children: ReactNode; theme: string; index?: number; glow?: "sky" | "emerald" | "violet" | "amber" | "rose" | "red" }) {
     const isDark = theme === "dark";
 
-    const glowColors: Record<string, string> = {
-        sky: "from-sky-600 via-sky-500 to-sky-600",
-        emerald: "from-emerald-600 via-emerald-500 to-emerald-600",
-        violet: "from-violet-600 via-violet-500 to-violet-600",
-        amber: "from-amber-600 via-amber-500 to-amber-600",
-        rose: "from-rose-600 via-rose-500 to-rose-600",
-        red: "from-red-600 via-red-500 to-red-600",
-    };
-
     const glowShadows: Record<string, string> = {
         sky: "shadow-sky-500/10 hover:shadow-sky-500/20",
         emerald: "shadow-emerald-500/10 hover:shadow-emerald-500/20",
