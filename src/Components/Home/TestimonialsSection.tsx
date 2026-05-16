@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Quote } from "lucide-react";
 import { SectionBase } from "./SectionBase.tsx";
 import { GlassCard } from "./GlassCard.tsx";
@@ -35,6 +35,7 @@ const testimonials = [
 
 export function TestimonialsSection({ theme }: { theme: string }) {
     const isDark = theme === "dark";
+    const reduceMotion = useReducedMotion();
 
     return (
         <SectionBase theme={theme}>
@@ -44,7 +45,8 @@ export function TestimonialsSection({ theme }: { theme: string }) {
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: reduceMotion ? 0.3 : 0.6, ease: [0.22, 1, 0.36, 1] }}
+                style={{ willChange: "transform, opacity" }}
             >
                 <span className={`text-xs font-semibold uppercase tracking-widest ${
                     isDark ? "text-sky-500" : "text-sky-700"
@@ -72,10 +74,11 @@ export function TestimonialsSection({ theme }: { theme: string }) {
                 {testimonials.map((t, i) => (
                     <motion.div
                         key={t.name}
-                        initial={{ opacity: 0, y: 36 }}
+                        initial={{ opacity: 0, y: reduceMotion ? 12 : 36 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.15 }}
-                        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: i * 0.12 }}
+                        transition={{ duration: reduceMotion ? 0.3 : 0.55, ease: [0.22, 1, 0.36, 1], delay: i * (reduceMotion ? 0.05 : 0.12) }}
+                        style={{ willChange: "transform, opacity" }}
                     >
                         <GlassCard theme={theme} className="p-7 h-full flex flex-col gap-5">
                             {/* Quote icon */}

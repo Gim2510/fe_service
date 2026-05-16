@@ -1,6 +1,6 @@
 import { SectionBase } from "./SectionBase.tsx";
 import { GlassCard } from "./GlassCard.tsx";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 const steps = [
     {
@@ -22,6 +22,7 @@ const steps = [
 
 export function MetodSection({ theme }: { theme: string }) {
     const isDark = theme === "dark";
+    const reduceMotion = useReducedMotion();
 
     return (
         <SectionBase theme={theme}>
@@ -31,7 +32,8 @@ export function MetodSection({ theme }: { theme: string }) {
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: reduceMotion ? 0.3 : 0.6, ease: [0.22, 1, 0.36, 1] }}
+                style={{ willChange: "transform, opacity" }}
             >
                 <span className={`text-xs font-semibold uppercase tracking-widest ${
                     isDark ? "text-sky-500" : "text-sky-700"
@@ -56,10 +58,11 @@ export function MetodSection({ theme }: { theme: string }) {
                 {steps.map((item, index) => (
                     <motion.div
                         key={item.step}
-                        initial={{ opacity: 0, y: 36 }}
+                        initial={{ opacity: 0, y: reduceMotion ? 12 : 36 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.2 }}
-                        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: index * 0.12 }}
+                        transition={{ duration: reduceMotion ? 0.3 : 0.55, ease: [0.22, 1, 0.36, 1], delay: index * (reduceMotion ? 0.05 : 0.12) }}
+                        style={{ willChange: "transform, opacity" }}
                     >
                         <GlassCard theme={theme} className="p-8 h-full">
                             {/* Step number */}

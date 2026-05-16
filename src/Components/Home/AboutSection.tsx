@@ -1,4 +1,4 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { SectionBase } from "./SectionBase.tsx";
 import { useNavigate } from "react-router-dom";
@@ -22,23 +22,32 @@ const stats: StatConfig[] = [
 function AnimatedStat({ stat, delay, isDark }: { stat: StatConfig; delay: number; isDark: boolean }) {
     const ref = useRef<HTMLDivElement>(null);
     const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
+    const reduceMotion = useReducedMotion();
     const [count, setCount] = useState(0);
 
     useEffect(() => {
         if (!isInView) return;
+        if (reduceMotion) {
+            setCount(stat.number);
+            return;
+        }
         const duration = 1400;
-        const steps = 60;
-        const increment = stat.number / steps;
-        let current = 0;
-        let step = 0;
-        const timer = setInterval(() => {
-            step++;
-            current = Math.min(increment * step, stat.number);
-            setCount(current);
-            if (step >= steps) clearInterval(timer);
-        }, duration / steps);
-        return () => clearInterval(timer);
-    }, [isInView, stat.number]);
+        const startTime = performance.now();
+        let rafId: number;
+
+        const animate = (currentTime: number) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(eased * stat.number);
+            if (progress < 1) {
+                rafId = requestAnimationFrame(animate);
+            }
+        };
+
+        rafId = requestAnimationFrame(animate);
+        return () => cancelAnimationFrame(rafId);
+    }, [isInView, stat.number, reduceMotion]);
 
     const display = stat.decimals != null
         ? count.toFixed(stat.decimals)
@@ -56,6 +65,7 @@ function AnimatedStat({ stat, delay, isDark }: { stat: StatConfig; delay: number
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.45, delay }}
+            style={{ willChange: "transform, opacity" }}
         >
             <span className={`text-3xl font-bold tracking-tight font-fjalla ${
                 isDark ? "text-sky-500" : "text-sky-700"
@@ -84,6 +94,7 @@ export function AboutSection({ theme }: { theme: string }) {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ willChange: "transform, opacity" }}
                 >
                     <div>
                         <span className={`text-xs font-semibold uppercase tracking-widest ${
@@ -134,6 +145,7 @@ export function AboutSection({ theme }: { theme: string }) {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+                    style={{ willChange: "transform, opacity" }}
                 >
                     {stats.map((s, i) => (
                         <AnimatedStat key={s.label} stat={s} delay={0.1 + i * 0.08} isDark={isDark} />
