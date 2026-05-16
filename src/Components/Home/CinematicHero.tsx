@@ -1,8 +1,9 @@
 ﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { ArrowRight, CheckCircle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { useRef } from "react";
 import { HeroConstellation } from "./HeroConstellation.tsx";
 import { useNavigate } from "react-router-dom";
+import { GlowButton } from "./GlowButton.tsx";
 
 /* â”€â”€ Cinematic Hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Multi-layer parallax hero: background grid drifts slowly, text staggers in,
@@ -230,19 +231,9 @@ export function CinematicHero({ theme }: { theme: string }) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 1.3 }}
                 >
-                    <button
-                        onClick={goToSurvey}
-                        className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl
-                            bg-sky-700 hover:bg-sky-600 text-white text-sm font-semibold
-                            transition-all duration-200 shadow-lg shadow-sky-700/25
-                            hover:shadow-sky-600/35 hover:-translate-y-0.5"
-                    >
+                    <GlowButton onClick={goToSurvey}>
                         Misura il tuo gap digitale
-                        <ArrowRight
-                            size={16}
-                            className="transition-transform duration-200 group-hover:translate-x-1"
-                        />
-                    </button>
+                    </GlowButton>
                     <span className={`text-sm ${isDark ? "text-slate-500" : "text-slate-400"}`}>
                         Circa 10-15 minuti
                     </span>
