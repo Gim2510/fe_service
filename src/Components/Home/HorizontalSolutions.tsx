@@ -147,7 +147,7 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                     }`} />
 
                     <motion.div
-                        className="flex gap-4 sm:gap-6 md:gap-10 px-4 sm:px-8 md:px-20 snap-x snap-mandatory overflow-x-auto md:overflow-visible scrollbar-hide"
+                        className="flex gap-4 sm:gap-6 md:gap-10 px-4 sm:px-8 md:px-20 snap-x snap-mandatory overflow-x-auto md:overflow-visible scrollbar-hide [-webkit-overflow-scrolling:_touch]"
                         style={{ x }}
                     >
                         {punti.map((item, i) => (
@@ -204,7 +204,7 @@ function SolutionCard({ item, index, isDark, theme: _theme, progress }: {
 
     return (
         <motion.div
-            className="shrink-0 w-[260px] sm:w-[300px] md:w-[360px] snap-center"
+            className="shrink-0 w-[280px] sm:w-[300px] md:w-[360px] snap-center"
             style={{
                 scale,
                 rotateY,
@@ -212,7 +212,7 @@ function SolutionCard({ item, index, isDark, theme: _theme, progress }: {
             }}
         >
             <motion.div
-                className={`relative rounded-2xl border backdrop-blur-sm p-5 md:p-8 h-full min-h-[200px] md:min-h-[240px] flex flex-col gap-3 md:gap-5 transition-all duration-300 ${
+                className={`relative rounded-2xl border backdrop-blur-sm p-5 md:p-8 h-full min-h-[220px] md:min-h-[240px] flex flex-col gap-3 md:gap-5 transition-all duration-300 ${
                     isDark
                         ? `bg-[#0E0E0D]/70 ${colors.border} hover:${colors.border.replace("/50", "/80")} shadow-lg ${colors.glow}`
                         : "bg-white border border-slate-200 hover:border-sky-400"
@@ -236,7 +236,7 @@ function SolutionCard({ item, index, isDark, theme: _theme, progress }: {
                     {item.title}
                 </h3>
 
-                <p className={`text-xs md:text-sm leading-relaxed flex-1 ${
+                <p className={`text-xs md:text-sm leading-relaxed flex-1 break-words ${
                     isDark ? "text-slate-400" : "text-slate-600"
                 }`}>
                     {item.desc}
