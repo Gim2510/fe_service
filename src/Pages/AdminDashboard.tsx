@@ -11,6 +11,7 @@ import { DashboardHeader } from "../Components/Dashboard/DashboardHeader.tsx";
 import { DashboardContent } from "../Components/Dashboard/DashboardContent.tsx";
 import { useTheme } from "../Context/ThemeContext.tsx";
 import { useAuth } from "../auth/AuthContext.tsx";
+import { AnalyticsContent } from "../Components/Dashboard/AnalyticsContent.tsx";
 
 export function AdminDashboard() {
     const { theme } = useTheme();
@@ -74,15 +75,19 @@ export function AdminDashboard() {
                                 exit={{ opacity: 0, y: -8 }}
                                 transition={{ duration: 0.2, ease: "easeOut" as const }}
                             >
-                                <DashboardContent
-                                    activeTab={activeTab}
-                                    users={users}
-                                    surveys={surveys}
-                                    allUsers={allUsers}
-                                    refreshUsers={refreshUsers}
-                                    theme={theme}
-                                    token={token}
-                                />
+                                {activeTab === "analytics" ? (
+                                    <AnalyticsContent />
+                                ) : (
+                                    <DashboardContent
+                                        activeTab={activeTab}
+                                        users={users}
+                                        surveys={surveys}
+                                        allUsers={allUsers}
+                                        refreshUsers={refreshUsers}
+                                        theme={theme}
+                                        token={token}
+                                    />
+                                )}
                             </motion.div>
                         </AnimatePresence>
                     </div>
