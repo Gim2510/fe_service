@@ -103,7 +103,7 @@ export function PrivacyPolicy() {
                     <PolicySection isDark={isDark} title="6. Condivisione dei dati">
                         <p>I dati possono essere condivisi con fornitori esterni che supportano l'erogazione del servizio:</p>
                         <ul className="space-y-1">
-                            {["Stripe (pagamenti)", "SendGrid (email)", "Calendly (prenotazioni)", "Hosting cloud (Vercel, Railway)", "Database (MongoDB, Redis)", "AI providers (DeepSeek)"].map(item => (
+                            {["Stripe (pagamenti)", "SendGrid (email)", "Calendly (prenotazioni)", "Hosting cloud (Vercel, Railway)", "Database (MongoDB, Redis)", "AI providers (DeepSeek)", "Vercel Analytics (statistiche cookie-less)", "PostHog (product analytics, server EU)"].map(item => (
                                 <li key={item} className="flex items-start gap-2"><span className="text-sky-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
@@ -126,7 +126,13 @@ export function PrivacyPolicy() {
                     </PolicySection>
 
                     <PolicySection isDark={isDark} title="11. Cookie">
-                        <p>Il sito utilizza esclusivamente cookie tecnici necessari al funzionamento della piattaforma e alla gestione delle preferenze utente.</p>
+                        <p>Il sito utilizza cookie tecnici necessari al funzionamento della piattaforma e alla gestione delle preferenze utente.</p>
+                        <p>Per le statistiche di navigazione utilizziamo:</p>
+                        <ul className="space-y-1">
+                            <li><strong>Vercel Analytics</strong> — non utilizza cookie, non richiede consenso</li>
+                            <li><strong>PostHog</strong> — utilizza cookie di analytics, attivato solo previo consenso esplicito</li>
+                        </ul>
+                        <p>L'utente può gestire le proprie preferenze cookie in qualsiasi tramite il banner in fondo alla pagina.</p>
                     </PolicySection>
 
                     <PolicySection isDark={isDark} title="12. Modifiche alla policy">

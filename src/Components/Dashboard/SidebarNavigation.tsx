@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { LayoutGrid, Users, Search, Mail, Briefcase } from "lucide-react";
+import { LayoutGrid, Users, Search, Mail, Briefcase, BarChart3 } from "lucide-react";
 
 export type AdminTab =
     | "overview"
@@ -7,7 +7,8 @@ export type AdminTab =
     | "inspect"
     | "messaging"
     | "careers"
-    | "update job offers";
+    | "update job offers"
+    | "analytics";
 
 const TABS = [
     { key: "overview",  label: "Overview",         icon: LayoutGrid },
@@ -15,6 +16,7 @@ const TABS = [
     { key: "inspect",   label: "Inspect User",      icon: Search },
     { key: "messaging", label: "Messaging",         icon: Mail },
     { key: "careers",   label: "Careers",           icon: Briefcase },
+    { key: "analytics", label: "Analytics",         icon: BarChart3 },
 ];
 
 export function SidebarNavigation({ activeTab, setActiveTab, theme }: {

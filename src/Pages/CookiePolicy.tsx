@@ -68,9 +68,9 @@ export function CookiePolicy() {
                     </PolicySection>
 
                     <PolicySection isDark={isDark} title="2. Tipologie di cookie utilizzati">
-                        <p>Attualmente utilizziamo esclusivamente cookie tecnici, necessari al funzionamento della piattaforma.</p>
+                        <p>Utilizziamo diverse tipologie di cookie e tecnologie simili:</p>
                         <ul className="space-y-1">
-                            {["Cookie di sessione", "Cookie di autenticazione", "Cookie per preferenze utente (es. tema dark/light)"].map(item => (
+                            {["Cookie tecnici di sessione", "Cookie di autenticazione", "Cookie per preferenze utente (es. tema dark/light)", "Vercel Analytics — tecnologia cookie-less per statistiche aggregate", "PostHog — cookie di analytics per analisi approfondite (solo con consenso)"].map(item => (
                                 <li key={item} className="flex items-start gap-2"><span className="text-sky-500 mt-0.5">•</span>{item}</li>
                             ))}
                         </ul>
@@ -85,8 +85,12 @@ export function CookiePolicy() {
                     </PolicySection>
 
                     <PolicySection isDark={isDark} title="4. Cookie di terze parti">
-                        <p>Al momento non utilizziamo cookie di profilazione o tracciamento di terze parti.</p>
-                        <p>Eventuali integrazioni future (es. analytics o marketing) saranno comunicate aggiornando questa policy.</p>
+                        <p>Utilizziamo i seguenti servizi di terze parti per l'analisi del traffico:</p>
+                        <ul className="space-y-2">
+                            <li><strong>Vercel Analytics</strong> — strumento di analisi cookie-less che non installa cookie sul dispositivo dell'utente. I dati sono aggregati e anonimi. Esente da consenso ai sensi del Garante Privacy italiano.</li>
+                            <li><strong>PostHog</strong> — piattaforma di product analytics che utilizza cookie tecnici per il tracciamento delle sessioni. Viene attivato solo previo consenso esplicito dell'utente tramite il banner cookie. I dati sono conservati su server EU (Francoforte).</li>
+                        </ul>
+                        <p className="mt-2">Entrambi i servizi rispettano il Regolamento GDPR e non condividono dati con terze parti a scopo di profilazione.</p>
                     </PolicySection>
 
                     <PolicySection isDark={isDark} title="5. Base giuridica">
