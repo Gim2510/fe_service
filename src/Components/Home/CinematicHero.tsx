@@ -175,7 +175,7 @@ export function CinematicHero({ theme }: { theme: string }) {
 
                 {/* Headline â€” word-by-word reveal, clean Y-only animation */}
                 <div
-                    className={`font-fjalla text-5xl font-semibold leading-[1.1] max-w-2xl ${
+                    className={`font-fjalla text-3xl sm:text-4xl md:text-5xl font-semibold leading-[1.1] max-w-2xl ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}
                 >
