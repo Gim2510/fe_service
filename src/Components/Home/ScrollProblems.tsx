@@ -113,62 +113,107 @@ function ProblemCard({ item, index, isDark, progress }: {
                     <div className={`absolute top-0 left-0 w-full h-px bg-gradient-to-r ${colors.accent} to-transparent opacity-40`} />
                 )}
 
-                <div className="grid grid-cols-1 md:grid-cols-[1fr_340px]">
-                    <div className="p-5 md:p-10 flex flex-col justify-center gap-4 md:gap-6">
-                        <div className="flex items-start gap-3 md:gap-6">
-                            <div className={`relative flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center ${
-                                isDark ? colors.bg : `bg-${colors.border.split("-")[1]}-50`
-                            }`}>
-                                <span className={`font-mono text-2xl md:text-3xl font-bold tracking-tight ${
-                                    isDark ? colors.badge : `text-${colors.border.split("-")[1]}-600`
-                                }`}>
-                                    {String(index + 1).padStart(2, "0")}
-                                </span>
-                                {isDark && (
-                                    <motion.div
-                                        className={`absolute inset-0 rounded-2xl border-2 ${colors.border}`}
-                                        animate={{ opacity: [0.2, 0.6, 0.2] }}
-                                        transition={{ duration: 2.5, repeat: Infinity, delay: index * 0.4 }}
-                                    />
-                                )}
-                            </div>
-
-                            <div className="flex-1 min-w-0">
-                                <h3 className={`text-lg md:text-2xl font-semibold leading-snug mb-2 md:mb-3 ${
-                                    isDark ? "text-slate-100" : "text-slate-800"
-                                }`}>
-                                    {item.title}
-                                </h3>
-                                <p className={`text-sm md:text-base leading-relaxed ${
-                                    isDark ? "text-slate-400" : "text-slate-600"
-                                }`}>
-                                    {item.text}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className={`flex items-center gap-3 md:gap-4 pt-3 md:pt-4 border-t ${
-                            isDark ? "border-stone-800" : "border-slate-100"
-                        }`}>
-                            <span className={`text-2xl md:text-3xl font-bold font-mono ${colors.badge}`}>
-                                {item.stat}
-                            </span>
-                            <span className={`text-xs md:text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>
-                                {item.statLabel}
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="relative h-48 md:h-full min-h-[200px] md:min-h-[280px]">
+                {/* Mobile: compact horizontal card */}
+                <div className="md:hidden">
+                    <div className="relative h-24">
                         <img
                             src={item.image}
                             alt={item.title}
                             className="absolute inset-0 w-full h-full object-cover"
                             loading="lazy"
                         />
-                        {isDark && (
-                            <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-l from-[#0E0E0D]/60 to-transparent" />
-                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                        <div className="absolute bottom-2 left-3 flex items-end gap-2">
+                            <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center ${
+                                isDark ? colors.bg : `bg-${colors.border.split("-")[1]}-50`
+                            }`}>
+                                <span className={`font-mono text-sm font-bold ${
+                                    isDark ? colors.badge : `text-${colors.border.split("-")[1]}-600`
+                                }`}>
+                                    {String(index + 1).padStart(2, "0")}
+                                </span>
+                            </div>
+                            <h3 className="text-sm font-semibold leading-tight text-white drop-shadow">
+                                {item.title}
+                            </h3>
+                        </div>
+                    </div>
+                    <div className="px-3 py-2.5">
+                        <p className={`text-xs leading-snug mb-2 ${
+                            isDark ? "text-slate-400" : "text-slate-600"
+                        }`}>
+                            {item.text}
+                        </p>
+                        <div className="flex items-center gap-2">
+                            <span className={`text-lg font-bold font-mono ${colors.badge}`}>
+                                {item.stat}
+                            </span>
+                            <span className="text-[11px] text-slate-500 leading-tight">
+                                {item.statLabel}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Desktop: full card */}
+                <div className="hidden md:block">
+                    <div className="grid grid-cols-1 md:grid-cols-[1fr_340px]">
+                        <div className="p-5 md:p-10 flex flex-col justify-center gap-4 md:gap-6">
+                            <div className="flex items-start gap-3 md:gap-6">
+                                <div className={`relative flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center ${
+                                    isDark ? colors.bg : `bg-${colors.border.split("-")[1]}-50`
+                                }`}>
+                                    <span className={`font-mono text-2xl md:text-3xl font-bold tracking-tight ${
+                                        isDark ? colors.badge : `text-${colors.border.split("-")[1]}-600`
+                                    }`}>
+                                        {String(index + 1).padStart(2, "0")}
+                                    </span>
+                                    {isDark && (
+                                        <motion.div
+                                            className={`absolute inset-0 rounded-2xl border-2 ${colors.border}`}
+                                            animate={{ opacity: [0.2, 0.6, 0.2] }}
+                                            transition={{ duration: 2.5, repeat: Infinity, delay: index * 0.4 }}
+                                        />
+                                    )}
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <h3 className={`text-lg md:text-2xl font-semibold leading-snug mb-2 md:mb-3 ${
+                                        isDark ? "text-slate-100" : "text-slate-800"
+                                    }`}>
+                                        {item.title}
+                                    </h3>
+                                    <p className={`text-sm md:text-base leading-relaxed ${
+                                        isDark ? "text-slate-400" : "text-slate-600"
+                                    }`}>
+                                        {item.text}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className={`flex items-center gap-3 md:gap-4 pt-3 md:pt-4 border-t ${
+                                isDark ? "border-stone-800" : "border-slate-100"
+                            }`}>
+                                <span className={`text-2xl md:text-3xl font-bold font-mono ${colors.badge}`}>
+                                    {item.stat}
+                                </span>
+                                <span className={`text-xs md:text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>
+                                    {item.statLabel}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className="relative h-48 md:h-full min-h-[200px] md:min-h-[280px]">
+                            <img
+                                src={item.image}
+                                alt={item.title}
+                                className="absolute inset-0 w-full h-full object-cover"
+                                loading="lazy"
+                            />
+                            {isDark && (
+                                <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-l from-[#0E0E0D]/60 to-transparent" />
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -205,18 +250,18 @@ export function ScrollProblems({ theme }: { theme: string }) {
                 )}
 
                 <motion.div
-                    className="mx-auto max-w-7xl px-6 sm:px-8 mb-12"
+                    className="mx-auto max-w-7xl px-6 sm:px-8 mb-6 md:mb-12"
                     style={{ scale: headerScale, opacity: headerOpacity }}
                 >
-                    <span className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
+                    <span className={`inline-flex items-center gap-2 text-[10px] md:text-xs font-semibold uppercase tracking-widest px-2.5 py-1 md:px-3 md:py-1.5 rounded-full border ${
                         isDark
                             ? "text-red-400 border-stone-700/40 bg-stone-800/20"
                             : "text-red-600 border-red-300 bg-red-50"
                     }`}>
-                        <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                        <span className="w-1 h-1 md:w-1.5 md:h-1.5 rounded-full bg-red-500 animate-pulse" />
                         Ti riconosci?
                     </span>
-                    <h2 className={`font-fjalla text-2xl sm:text-3xl md:text-5xl font-semibold leading-tight mt-3 ${
+                    <h2 className={`font-fjalla text-lg sm:text-3xl md:text-5xl font-semibold leading-tight mt-2 ${
                         isDark ? "text-slate-100" : "text-slate-900"
                     }`}>
                         Non sono problemi tecnici.{" "}
@@ -224,14 +269,14 @@ export function ScrollProblems({ theme }: { theme: string }) {
                             Sono problemi di business.
                         </span>
                     </h2>
-                    <p className={`mt-4 text-base leading-relaxed max-w-xl ${
+                    <p className={`mt-2 md:mt-4 text-xs md:text-base leading-relaxed max-w-xl ${
                         isDark ? "text-slate-400" : "text-slate-600"
                     }`}>
                         Ogni PMI che incontriamo ha una storia diversa, ma racconta sempre le stesse frustrazioni.
                     </p>
                 </motion.div>
 
-                <div className="relative h-[280px] md:h-[320px] w-full overflow-visible" style={{ perspective: "1200px" }}>
+                <div className="relative h-[160px] md:h-[320px] w-full overflow-visible" style={{ perspective: "1200px" }}>
                     {problemi.map((item, index) => (
                         <ProblemCard
                             key={item.title}
