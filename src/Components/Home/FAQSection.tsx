@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { SectionBase } from "./SectionBase.tsx";
@@ -36,6 +36,8 @@ function FAQItem({ faq, isDark, isOpen, onToggle }: {
     isOpen: boolean;
     onToggle: () => void;
 }) {
+    const reduceMotion = useReducedMotion();
+
     return (
         <div className={`border-b last:border-b-0 ${isDark ? "border-stone-800/40" : "border-slate-100"}`}>
             <button
@@ -54,7 +56,7 @@ function FAQItem({ faq, isDark, isOpen, onToggle }: {
                 </span>
                 <motion.span
                     animate={{ rotate: isOpen ? 45 : 0 }}
-                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                    transition={{ duration: reduceMotion ? 0.15 : 0.2, ease: "easeInOut" }}
                     className={`shrink-0 mt-0.5 transition-colors duration-200 ${
                         isOpen
                             ? isDark ? "text-sky-400" : "text-sky-600"
@@ -71,7 +73,7 @@ function FAQItem({ faq, isDark, isOpen, onToggle }: {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{ duration: reduceMotion ? 0.2 : 0.3, ease: [0.22, 1, 0.36, 1] }}
                         className="overflow-hidden"
                     >
                         <p className={`pb-6 text-sm leading-relaxed ${
@@ -89,6 +91,7 @@ function FAQItem({ faq, isDark, isOpen, onToggle }: {
 export function FAQSection({ theme }: { theme: string }) {
     const isDark = theme === "dark";
     const [openIndex, setOpenIndex] = useState<number | null>(0);
+    const reduceMotion = useReducedMotion();
 
     return (
         <SectionBase theme={theme}>
@@ -100,7 +103,8 @@ export function FAQSection({ theme }: { theme: string }) {
                     initial={{ opacity: 0, x: -24 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: reduceMotion ? 0.3 : 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ willChange: "transform, opacity" }}
                 >
                     <span className={`text-xs font-semibold uppercase tracking-widest ${
                         isDark ? "text-sky-500" : "text-sky-700"
@@ -125,12 +129,13 @@ export function FAQSection({ theme }: { theme: string }) {
                     initial={{ opacity: 0, x: 24 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, amount: 0.1 }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+                    transition={{ duration: reduceMotion ? 0.3 : 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
                     className={`rounded-2xl border px-8 ${
                         isDark
                             ? "bg-[#1C1C1A]/80 border-stone-800/20"
                             : "bg-white border-slate-200"
                     }`}
+                    style={{ willChange: "transform, opacity" }}
                 >
                     {faqs.map((faq, i) => (
                         <FAQItem

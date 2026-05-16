@@ -1,13 +1,25 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Clock, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 
-const PARTICLE_COUNT = 22;
+const PARTICLE_COUNT_DESKTOP = 22;
+const PARTICLE_COUNT_MOBILE = 8;
 
 function FloatingParticles({ isDark }: { isDark: boolean }) {
+    const reduceMotion = useReducedMotion();
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth < 768);
+        check();
+        window.addEventListener("resize", check);
+        return () => window.removeEventListener("resize", check);
+    }, []);
+
+    const particleCount = isMobile ? PARTICLE_COUNT_MOBILE : PARTICLE_COUNT_DESKTOP;
     const particles = useMemo(() =>
-        Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
+        Array.from({ length: particleCount }, (_, i) => ({
             id: i,
             x: Math.random() * 100,
             y: Math.random() * 100,
@@ -15,7 +27,9 @@ function FloatingParticles({ isDark }: { isDark: boolean }) {
             duration: 6 + Math.random() * 10,
             delay: Math.random() * 8,
             opacity: 0.08 + Math.random() * 0.18,
-        })), []);
+        })), [particleCount]);
+
+    if (reduceMotion) return null;
 
     return (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -29,6 +43,7 @@ function FloatingParticles({ isDark }: { isDark: boolean }) {
                         width: p.size,
                         height: p.size,
                         opacity: p.opacity,
+                        willChange: "transform, opacity",
                     }}
                     animate={{
                         y: [0, -28, 0],
@@ -51,6 +66,7 @@ export function CTASection({ theme }: { theme: string }) {
     const isDark = theme === "dark";
     const navigate = useNavigate();
     const goToSurvey = () => navigate("/survey/start");
+    const reduceMotion = useReducedMotion();
 
     return (
         <section className="relative overflow-hidden">
@@ -95,7 +111,8 @@ export function CTASection({ theme }: { theme: string }) {
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: reduceMotion ? 0.3 : 0.5 }}
+                    style={{ willChange: "transform, opacity" }}
                 >
                     <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
                     Assessment gratuito
@@ -109,7 +126,8 @@ export function CTASection({ theme }: { theme: string }) {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+                    transition={{ duration: reduceMotion ? 0.3 : 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+                    style={{ willChange: "transform, opacity" }}
                 >
                     Scopri esattamente dove la tua azienda{" "}
                     <span className={isDark ? "text-sky-500" : "text-sky-700"}>
@@ -125,7 +143,8 @@ export function CTASection({ theme }: { theme: string }) {
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.15 }}
+                    transition={{ duration: reduceMotion ? 0.3 : 0.6, delay: 0.15 }}
+                    style={{ willChange: "transform, opacity" }}
                 >
                     In 10 minuti ottieni un report personalizzato sul livello di maturità digitale della tua azienda: punti critici, opportunità prioritarie e un piano d'azione concreto.
                 </motion.p>
@@ -136,7 +155,7 @@ export function CTASection({ theme }: { theme: string }) {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.22 }}
+                    transition={{ duration: reduceMotion ? 0.3 : 0.5, delay: 0.22 }}
                 >
                     {["Report personalizzato incluso", "Nessun impegno o costo", "Piano d'azione concreto"].map((item) => (
                         <span
@@ -157,7 +176,8 @@ export function CTASection({ theme }: { theme: string }) {
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.55, delay: 0.28 }}
+                    transition={{ duration: reduceMotion ? 0.3 : 0.55, delay: 0.28 }}
+                    style={{ willChange: "transform, opacity" }}
                 >
                     <button
                         onClick={goToSurvey}
@@ -186,7 +206,7 @@ export function CTASection({ theme }: { theme: string }) {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.35 }}
+                    transition={{ duration: reduceMotion ? 0.3 : 0.5, delay: 0.35 }}
                 >
                     <Clock size={11} />
                     10–15 minuti • report personalizzato • nessuna carta di credito

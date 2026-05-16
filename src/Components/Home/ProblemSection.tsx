@@ -1,11 +1,11 @@
 import { GlassCard } from "./GlassCard.tsx";
 import { SectionBase } from "./SectionBase.tsx";
-import { motion, type Variants } from "framer-motion";
+import { motion, type Variants, useReducedMotion } from "framer-motion";
 
-const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 36 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
-};
+const cardVariants = (reduceMotion: boolean): Variants => ({
+    hidden: { opacity: 0, y: reduceMotion ? 12 : 36 },
+    visible: { opacity: 1, y: 0, transition: { duration: reduceMotion ? 0.3 : 0.55, ease: [0.22, 1, 0.36, 1] } },
+});
 
 const problemi = [
     { title: "«I dati ci sono, ma non li usiamo»", text: "Ogni reparto lavora per conto suo: Excel, CRM parziali, gestionali non collegati. Le decisioni si prendono a sensazione — e il costo di ogni errore si accumula in silenzio." },
@@ -18,6 +18,8 @@ const problemi = [
 
 export function ProblemiSection({ theme }: { theme: string }) {
     const isDark = theme === "dark";
+    const reduceMotion = useReducedMotion() ?? false;
+    const variants = cardVariants(reduceMotion);
 
     return (
         <SectionBase theme={theme}>
@@ -27,7 +29,8 @@ export function ProblemiSection({ theme }: { theme: string }) {
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: reduceMotion ? 0.3 : 0.6, ease: [0.22, 1, 0.36, 1] }}
+                style={{ willChange: "transform, opacity" }}
             >
                 <span className={`text-xs font-semibold uppercase tracking-widest ${
                     isDark ? "text-sky-500" : "text-sky-700"
@@ -55,8 +58,9 @@ export function ProblemiSection({ theme }: { theme: string }) {
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.15 }}
-                        variants={cardVariants}
-                        transition={{ delay: index * 0.1 }}
+                        variants={variants}
+                        transition={{ delay: index * (reduceMotion ? 0.05 : 0.1) }}
+                        style={{ willChange: "transform, opacity" }}
                     >
                         <GlassCard theme={theme} className="p-7 h-full">
                             {/* Number badge */}
