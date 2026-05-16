@@ -76,15 +76,15 @@ export function AdminActionsSection({
                     <button
                         disabled={!selectedUserId}
                         onClick={() => setShowPromoteModal(true)}
-                        className={`group relative h-11 px-5 rounded-xl text-sm font-semibold transition-all duration-300 overflow-hidden
+                        className={`group relative h-9 px-4 rounded-lg text-xs font-semibold transition-all duration-300 overflow-hidden
                             ${isDark
-                                ? "bg-gradient-to-r from-sky-700 via-sky-600 to-sky-700 hover:from-sky-600 hover:via-sky-500 hover:to-sky-600 text-white shadow-lg shadow-sky-500/20 hover:shadow-sky-500/30"
-                                : "bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-white shadow-md hover:shadow-lg"
+                                ? "bg-gradient-to-r from-sky-700 via-sky-600 to-sky-700 hover:from-sky-600 hover:via-sky-500 hover:to-sky-600 text-white shadow-md shadow-sky-500/20 hover:shadow-sky-500/30"
+                                : "bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-white shadow-sm hover:shadow-md"
                             } disabled:opacity-40 disabled:cursor-not-allowed hover:-translate-y-0.5`}
                     >
-                        <span className="relative z-10 flex items-center justify-center gap-2">
+                        <span className="relative z-10 flex items-center justify-center gap-1.5">
                             Promote
-                            <Shield size={14} />
+                            <Shield size={12} />
                         </span>
                     </button>
                 </ActionCard>
@@ -103,15 +103,15 @@ export function AdminActionsSection({
                     <button
                         disabled={!selectedUserToDelete}
                         onClick={() => setShowDeleteModal(true)}
-                        className={`group relative h-11 px-5 rounded-xl text-sm font-semibold transition-all duration-300 overflow-hidden
+                        className={`group relative h-9 px-4 rounded-lg text-xs font-semibold transition-all duration-300 overflow-hidden
                             ${isDark
-                                ? "bg-gradient-to-r from-red-700 via-red-600 to-red-700 hover:from-red-600 hover:via-red-500 hover:to-red-600 text-white shadow-lg shadow-red-500/20 hover:shadow-red-500/30"
-                                : "bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white shadow-md hover:shadow-lg"
+                                ? "bg-gradient-to-r from-red-700 via-red-600 to-red-700 hover:from-red-600 hover:via-red-500 hover:to-red-600 text-white shadow-md shadow-red-500/20 hover:shadow-red-500/30"
+                                : "bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white shadow-sm hover:shadow-md"
                             } disabled:opacity-40 disabled:cursor-not-allowed hover:-translate-y-0.5`}
                     >
-                        <span className="relative z-10 flex items-center justify-center gap-2">
+                        <span className="relative z-10 flex items-center justify-center gap-1.5">
                             Delete
-                            <Trash2 size={14} />
+                            <Trash2 size={12} />
                         </span>
                     </button>
                     {deleteSuccess && <p className="text-emerald-400 text-xs mt-1">User deleted successfully</p>}
@@ -131,15 +131,15 @@ export function AdminActionsSection({
                     <button
                         disabled={!selectedUserToVip}
                         onClick={() => setShowVipModal(true)}
-                        className={`group relative h-11 px-5 rounded-xl text-sm font-semibold transition-all duration-300 overflow-hidden
+                        className={`group relative h-9 px-4 rounded-lg text-xs font-semibold transition-all duration-300 overflow-hidden
                             ${isDark
-                                ? "bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700 hover:from-amber-600 hover:via-amber-500 hover:to-amber-600 text-white shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30"
-                                : "bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white shadow-md hover:shadow-lg"
+                                ? "bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700 hover:from-amber-600 hover:via-amber-500 hover:to-amber-600 text-white shadow-md shadow-amber-500/20 hover:shadow-amber-500/30"
+                                : "bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white shadow-sm hover:shadow-md"
                             } disabled:opacity-40 disabled:cursor-not-allowed hover:-translate-y-0.5`}
                     >
-                        <span className="relative z-10 flex items-center justify-center gap-2">
+                        <span className="relative z-10 flex items-center justify-center gap-1.5">
                             Upgrade
-                            <Crown size={14} />
+                            <Crown size={12} />
                         </span>
                     </button>
                     {vipSuccess && <p className="text-emerald-400 text-xs mt-1">User upgraded successfully</p>}
