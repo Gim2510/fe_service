@@ -2,7 +2,6 @@ import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTheme } from "../Context/ThemeContext.tsx";
 import type { ReactNode } from "react";
-import { Badge } from "../Components/Badge.tsx";
 
 export function ContactPage() {
     const { theme } = useTheme();
@@ -10,19 +9,19 @@ export function ContactPage() {
 
     return (
         <main className={`relative min-h-screen flex items-center overflow-hidden ${
-            isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"
+            isDark ? "bg-[#0E0E0D]" : "bg-[#FAFAF8]"
         }`}>
-            {/* Background */}
+            {/* Grid background — same as homepage */}
             <div className="absolute inset-0 pointer-events-none">
                 <div
-                    className="absolute inset-0 opacity-[0.08]"
+                    className={`absolute inset-0 ${isDark ? "opacity-[0.06]" : "opacity-[0.12]"}`}
                     style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%230EA5E9' : '%230369A1'}' stroke-width='0.5'/%3E%3C/svg%3E")`,
-                        backgroundSize: "40px 40px",
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect x='0' y='0' width='32' height='32' fill='none' stroke='${isDark ? '%2306B6D4' : '%23453A30'}' stroke-width='0.4'/%3E%3C/svg%3E")`,
+                        backgroundSize: "32px 32px",
                     }}
                 />
                 {isDark && (
-                    <div className="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.05] bg-sky-700" />
+                    <div className="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.05] bg-cyan-700" />
                 )}
             </div>
 
@@ -37,10 +36,13 @@ export function ContactPage() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                    <Badge label="Contatti" color="sky" theme={theme} />
+                    <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border text-cyan-400 border-cyan-500/20 bg-cyan-950/30">
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
+                        Contatti
+                    </span>
                     <h1 className={`font-fjalla text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         Parliamo del tuo
-                        <span className="block text-sky-600 mt-1">prossimo passo digitale.</span>
+                        <span className={`block mt-1 ${isDark ? "text-cyan-400" : "text-cyan-700"}`}>prossimo passo digitale.</span>
                     </h1>
                     <p className={`text-lg leading-relaxed max-w-md ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                         Se hai domande, vuoi approfondire una soluzione o capire
@@ -59,8 +61,8 @@ export function ContactPage() {
                 >
                     <div className={`rounded-2xl border backdrop-blur-sm p-8 sm:p-10 flex flex-col gap-5 ${
                         isDark
-                            ? "bg-[#1C1C1A]/80 border-stone-800/20 shadow-[0_24px_80px_rgba(0,0,0,0.5)] shadow-sky-700/10"
-                            : "bg-[#F8FAFB] border-slate-200 shadow-[0_8px_40px_rgba(0,0,0,0.06)] shadow-sky-700/5"
+                            ? "bg-[#0E0E0D]/80 border-cyan-500/30 shadow-lg shadow-cyan-500/10"
+                            : "bg-white border-cyan-500/60 shadow-md shadow-cyan-400/15"
                     }`}>
                         <h2 className={`text-xl font-semibold mb-2 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                             I nostri riferimenti
@@ -74,8 +76,8 @@ export function ContactPage() {
                         <a
                             href="mailto:service@axiomlab.it"
                             className="mt-2 inline-flex items-center gap-2 px-6 py-2.5 rounded-xl
-                                bg-sky-700 hover:bg-sky-600 text-white text-sm font-semibold
-                                transition-colors duration-200 shadow-lg shadow-sky-700/20 self-start"
+                                bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-semibold
+                                transition-colors duration-200 shadow-lg shadow-cyan-500/20 self-start"
                         >
                             Scrivici ora
                             <ArrowRight size={14} />
@@ -93,17 +95,17 @@ function ContactItem({ icon, label, value, href, isDark }: {
     return (
         <div className={`flex items-start gap-4 p-4 rounded-xl border transition-colors duration-200 ${
             isDark
-                ? "bg-[#F8FAFB]/3 border-stone-800/20 hover:border-stone-700/30"
-                : "bg-[#EDF2F7] border-slate-200 hover:border-sky-400"
+                ? "bg-[#0E0E0D]/60 border-cyan-500/20 hover:border-cyan-500/40"
+                : "bg-cyan-50/50 border-cyan-200/60 hover:border-cyan-400"
         }`}>
-            <div className={`mt-0.5 ${isDark ? "text-sky-500" : "text-sky-600"}`}>{icon}</div>
+            <div className={`mt-0.5 ${isDark ? "text-cyan-400" : "text-cyan-600"}`}>{icon}</div>
             <div className="flex flex-col gap-0.5">
                 <span className={`text-xs font-medium uppercase tracking-wide ${isDark ? "text-slate-500" : "text-slate-400"}`}>
                     {label}
                 </span>
                 {href ? (
                     <a href={href} className={`text-sm font-medium transition-colors ${
-                        isDark ? "text-slate-200 hover:text-sky-500" : "text-slate-800 hover:text-sky-700"
+                        isDark ? "text-slate-200 hover:text-cyan-400" : "text-slate-800 hover:text-cyan-700"
                     }`}>{value}</a>
                 ) : (
                     <span className={`text-sm font-medium ${isDark ? "text-slate-200" : "text-slate-800"}`}>{value}</span>

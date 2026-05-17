@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { useTheme } from "../Context/ThemeContext.tsx";
 import { CheckCircle2, Zap, Shield, BarChart2, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Badge } from "../Components/Badge.tsx";
 import { GlowButton } from "../Components/Home/GlowButton.tsx";
 
 const fadeUp = (delay = 0) => ({
@@ -104,31 +103,30 @@ export function About() {
     const isDark = theme === "dark";
     const navigate = useNavigate();
 
-    const card = isDark
-        ? "bg-[#1C1C1A]/80 border-stone-800/20"
-        : "bg-white border-slate-200";
-
     return (
-        <main className={`min-h-screen ${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"}`}>
+        <main className={`min-h-screen ${isDark ? "bg-[#0E0E0D] text-white" : "bg-[#FAFAF8] text-slate-900"}`}>
 
-            {/* Dot grid */}
+            {/* Fixed grid background — same as homepage */}
             <div
-                className={`fixed inset-0 pointer-events-none ${isDark ? "opacity-[0.08]" : "opacity-[0.14]"}`}
+                className={`fixed inset-0 pointer-events-none z-0 ${isDark ? "opacity-[0.06]" : "opacity-[0.12]"}`}
                 style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%230EA5E9' : '%230369A1'}' stroke-width='0.5'/%3E%3C/svg%3E")`,
-                    backgroundSize: "40px 40px",
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect x='0' y='0' width='32' height='32' fill='none' stroke='${isDark ? '%2306B6D4' : '%23453A30'}' stroke-width='0.4'/%3E%3C/svg%3E")`,
+                    backgroundSize: "32px 32px",
                 }}
             />
 
-            <div className="relative max-w-5xl mx-auto px-6 sm:px-8 pt-32 pb-24 space-y-32">
+            <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-8 pt-32 pb-24 space-y-32">
 
-                {/* ── Hero ── */}
+                {/* ── Hero ─ */}
                 <section className="max-w-3xl">
                     <motion.div {...fadeUp(0)}>
-                        <Badge label="Chi siamo" color="sky" theme={theme} />
+                        <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border text-cyan-400 border-cyan-500/20 bg-cyan-950/30">
+                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
+                            Chi siamo
+                        </span>
                         <h1 className={`font-fjalla text-5xl sm:text-6xl font-semibold leading-tight mt-4 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                             Colmiamo il gap tra
-                            <span className={` block ${isDark ? "text-sky-500" : "text-sky-700"}`}>
+                            <span className={` block ${isDark ? "text-cyan-400" : "text-cyan-700"}`}>
                                 tecnologia enterprise e PMI.
                             </span>
                         </h1>
@@ -143,9 +141,10 @@ export function About() {
                 </section>
 
                 {/* ── La nostra storia ── */}
-                <section>
+                <section className="relative">
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent pointer-events-none" />
                     <motion.div {...fadeUp(0)} className="mb-12">
-                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-sky-500" : "text-sky-700"}`}>
+                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-cyan-400" : "text-cyan-700"}`}>
                             La nostra storia
                         </span>
                         <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -154,7 +153,7 @@ export function About() {
                     </motion.div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <motion.div {...fadeUp(0.05)} className={`rounded-2xl border backdrop-blur-sm p-8 ${isDark ? `${card} shadow-lg shadow-sky-700/5` : `${card} shadow-lg shadow-sky-700/3`}`}>
+                        <motion.div {...fadeUp(0.05)} className={`rounded-2xl border backdrop-blur-sm p-8 ${isDark ? "bg-[#0E0E0D]/80 border-cyan-500/30 shadow-lg shadow-cyan-500/10" : "bg-white border-cyan-500/60 shadow-md shadow-cyan-400/15"}`}>
                             <p className={`text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                                 AxiomLab nasce dall'incontro di due competenze complementari e di una
                                 frustrazione condivisa: le grandi aziende hanno accesso a metodologie,
@@ -170,7 +169,7 @@ export function About() {
                             </p>
                         </motion.div>
 
-                        <motion.div {...fadeUp(0.1)} className={`rounded-2xl border backdrop-blur-sm p-8 ${isDark ? `${card} shadow-lg shadow-sky-700/5` : `${card} shadow-lg shadow-sky-700/3`}`}>
+                        <motion.div {...fadeUp(0.1)} className={`rounded-2xl border backdrop-blur-sm p-8 ${isDark ? "bg-[#0E0E0D]/80 border-cyan-500/30 shadow-lg shadow-cyan-500/10" : "bg-white border-cyan-500/60 shadow-md shadow-cyan-400/15"}`}>
                             <p className={`text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                                 Il risultato è un team piccolo ma estremamente efficace: niente burocrazia,
                                 niente intermediari, due persone che conoscono il tuo progetto dalla diagnosi
@@ -189,9 +188,10 @@ export function About() {
                 </section>
 
                 {/* ── Metodo in dettaglio ── */}
-                <section>
+                <section className="relative">
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent pointer-events-none" />
                     <motion.div {...fadeUp(0)} className="mb-12">
-                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-sky-500" : "text-sky-700"}`}>
+                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-cyan-400" : "text-cyan-700"}`}>
                             Il metodo
                         </span>
                         <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -208,12 +208,12 @@ export function About() {
                             <motion.div
                                 key={m.step}
                                 {...fadeUp(i * 0.08)}
-                                className={`rounded-2xl border backdrop-blur-sm p-8 ${isDark ? `${card} shadow-lg shadow-sky-700/5` : `${card} shadow-lg shadow-sky-700/3`}`}
+                                className={`rounded-2xl border backdrop-blur-sm p-8 ${isDark ? "bg-[#0E0E0D]/80 border-cyan-500/30 shadow-lg shadow-cyan-500/10" : "bg-white border-cyan-500/60 shadow-md shadow-cyan-400/15"}`}
                             >
                                 <div className="flex flex-col sm:flex-row sm:items-start gap-6">
                                     <div className="shrink-0">
                                         <span className={`font-mono text-5xl font-bold tracking-tight ${
-                                            isDark ? "text-stone-800/60" : "text-sky-300"
+                                            isDark ? "text-cyan-900/60" : "text-cyan-300"
                                         }`}>
                                             {m.step}
                                         </span>
@@ -225,8 +225,8 @@ export function About() {
                                             </h3>
                                             <span className={`text-xs font-medium px-2.5 py-1 rounded-full border ${
                                                 isDark
-                                                    ? "border-stone-700/40 text-slate-500 bg-stone-800/20"
-                                                    : "border-sky-200 text-sky-700 bg-sky-50"
+                                                    ? "border-cyan-500/20 text-cyan-400 bg-cyan-950/30"
+                                                    : "border-cyan-200 text-cyan-700 bg-cyan-50"
                                             }`}>
                                                 {m.duration}
                                             </span>
@@ -235,7 +235,7 @@ export function About() {
                                             {m.description}
                                         </p>
                                         <div className={`flex items-start gap-2 pt-1`}>
-                                            <CheckCircle2 size={14} className="text-sky-600 shrink-0 mt-0.5" />
+                                            <CheckCircle2 size={14} className="text-cyan-500 shrink-0 mt-0.5" />
                                             <span className={`text-sm font-medium ${isDark ? "text-slate-300" : "text-slate-700"}`}>
                                                 Output: {m.output}
                                             </span>
@@ -248,9 +248,10 @@ export function About() {
                 </section>
 
                 {/* ── Tecnologie ── */}
-                <section>
+                <section className="relative">
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent pointer-events-none" />
                     <motion.div {...fadeUp(0)} className="mb-12">
-                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-sky-500" : "text-sky-700"}`}>
+                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-cyan-400" : "text-cyan-700"}`}>
                             Stack tecnologico
                         </span>
                         <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -267,7 +268,7 @@ export function About() {
                             <motion.div
                                 key={t.category}
                                 {...fadeUp(i * 0.07)}
-                                className={`rounded-2xl border backdrop-blur-sm p-6 space-y-4 ${isDark ? `${card} shadow-lg shadow-sky-700/5` : `${card} shadow-lg shadow-sky-700/3`}`}
+                                className={`rounded-2xl border backdrop-blur-sm p-6 space-y-4 ${isDark ? "bg-[#0E0E0D]/80 border-cyan-500/30 shadow-lg shadow-cyan-500/10" : "bg-white border-cyan-500/60 shadow-md shadow-cyan-400/15"}`}
                             >
                                 <div className="flex items-center gap-2">
                                     <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: t.color }} />
@@ -295,9 +296,10 @@ export function About() {
                 </section>
 
                 {/* ── Valori ── */}
-                <section>
+                <section className="relative">
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent pointer-events-none" />
                     <motion.div {...fadeUp(0)} className="mb-12">
-                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-sky-500" : "text-sky-700"}`}>
+                        <span className={`text-xs font-semibold uppercase tracking-widest ${isDark ? "text-cyan-400" : "text-cyan-700"}`}>
                             I nostri principi
                         </span>
                         <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -312,12 +314,12 @@ export function About() {
                                 <motion.div
                                     key={v.title}
                                     {...fadeUp(i * 0.08)}
-                                    className={`rounded-2xl border backdrop-blur-sm p-8 space-y-4 ${isDark ? `${card} shadow-lg shadow-sky-700/5` : `${card} shadow-lg shadow-sky-700/3`}`}
+                                    className={`rounded-2xl border backdrop-blur-sm p-8 space-y-4 ${isDark ? "bg-[#0E0E0D]/80 border-cyan-500/30 shadow-lg shadow-cyan-500/10" : "bg-white border-cyan-500/60 shadow-md shadow-cyan-400/15"}`}
                                 >
                                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                                        isDark ? "bg-sky-700/10" : "bg-sky-50"
+                                        isDark ? "bg-cyan-500/10" : "bg-cyan-50"
                                     }`}>
-                                        <Icon size={18} className={isDark ? "text-sky-500" : "text-sky-700"} />
+                                        <Icon size={18} className={isDark ? "text-cyan-400" : "text-cyan-700"} />
                                     </div>
                                     <h3 className={`text-base font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                                         {v.title}
@@ -334,24 +336,28 @@ export function About() {
                 {/* ── CTA ── */}
                 <motion.section
                     {...fadeUp(0)}
-                    className={`rounded-2xl border backdrop-blur-sm p-10 sm:p-14 text-center flex flex-col items-center gap-6 ${
+                    className={`relative rounded-2xl border backdrop-blur-sm p-10 sm:p-14 text-center flex flex-col items-center gap-6 ${
                         isDark
-                            ? "bg-gradient-to-br from-[#0C0C0B] via-[#161410] to-[#0C0C0B] border-stone-800/20 shadow-lg shadow-sky-700/10"
-                            : "bg-gradient-to-br from-[#FDFAF4] via-[#F2E8D5] to-[#FDFAF4] border-sky-200/60 shadow-lg shadow-sky-700/5"
+                            ? "bg-gradient-to-br from-[#0C0C0B] via-[#0E1218] to-[#0C0C0B] border-cyan-500/30 shadow-lg shadow-cyan-500/10"
+                            : "bg-gradient-to-br from-[#FAFAF8] via-[#EFF8FB] to-[#FAFAF8] border-cyan-500/60 shadow-lg shadow-cyan-400/15"
                     }`}
                 >
-                    <Badge label="Inizia da qui" color="emerald" theme={theme} />
-                    <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold max-w-xl leading-tight ${isDark ? "text-slate-100" : "text-stone-900"}`}>
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent pointer-events-none rounded-t-2xl" />
+                    <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border text-cyan-400 border-cyan-500/20 bg-cyan-950/30">
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
+                        Inizia da qui
+                    </span>
+                    <h2 className={`font-fjalla text-3xl sm:text-4xl font-semibold max-w-xl leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         Vuoi capire dove interveniamo sulla tua azienda?
                     </h2>
-                    <p className={`text-base max-w-lg ${isDark ? "text-slate-400" : "text-stone-600"}`}>
+                    <p className={`text-base max-w-lg ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                         Completa il nostro assessment gratuito in 10 minuti. Ricevi un report
                         personalizzato con le priorità di intervento per il tuo contesto specifico.
                     </p>
                     <GlowButton onClick={() => navigate("/survey/start")}>
                         Ottieni il tuo report gratuito
                     </GlowButton>
-                    <span className={`text-xs ${isDark ? "text-slate-600" : "text-stone-400"}`}>
+                    <span className={`text-xs ${isDark ? "text-slate-600" : "text-slate-400"}`}>
                         10–15 minuti · nessun impegno · nessuna carta di credito
                     </span>
                 </motion.section>

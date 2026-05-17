@@ -48,13 +48,13 @@ export function Survey() {
 
     if (loading) {
         return (
-            <div className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}>
+            <div className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#0E0E0D]" : "bg-[#FAFAF8]"}`}>
                 <FallingLines color={isDark ? "#fff" : "#B45309"} width="60" visible />
             </div>
         );
     }
 
-    if (error) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#111110] text-slate-400" : "bg-[#FAF8F4] text-slate-600"}`}>{error}</div>;
+    if (error) return <div className={`min-h-screen flex items-center justify-center text-sm ${isDark ? "bg-[#0E0E0D] text-slate-400" : "bg-[#FAFAF8] text-slate-600"}`}>{error}</div>;
     if (!surveyId || !survey) return <Navigate to="/survey/start" replace />;
     if (!questions || !questions.length) return <Navigate to="/survey/start" replace />;
 
@@ -72,7 +72,7 @@ export function Survey() {
 
     return (
         <main className={`min-h-screen flex items-center justify-center px-6 py-16
-            ${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"}`}>
+            ${isDark ? "bg-[#0E0E0D] text-white" : "bg-[#FAFAF8] text-slate-900"}`}>
 
             <section className="w-full max-w-2xl">
                 {/* Progress bar */}
@@ -85,10 +85,10 @@ export function Survey() {
                             {currentStep} / {totalSteps}
                         </span>
                     </div>
-                    <div className={`h-0.5 rounded-full ${isDark ? "bg-stone-800/30" : "bg-slate-200"}`}>
+                    <div className={`h-0.5 rounded-full ${isDark ? "bg-cyan-900/30" : "bg-slate-200"}`}>
                         <div
-                            className={`h-full rounded-full bg-sky-700 transition-all duration-500 ${
-                                isDark ? "shadow-[0_0_8px_rgba(56,189,248,0.4)]" : ""
+                            className={`h-full rounded-full bg-cyan-500 transition-all duration-500 ${
+                                isDark ? "shadow-[0_0_8px_rgba(6,182,212,0.4)]" : ""
                             }`}
                             style={{ width: `${progress}%` }}
                         />
@@ -104,7 +104,7 @@ export function Survey() {
                     {isQuestionStep && (
                         <div className="space-y-6">
                             <header className="space-y-3">
-                                <span className={`font-mono text-xs font-medium ${isDark ? "text-sky-600" : "text-sky-700"}`}>
+                                <span className={`font-mono text-xs font-medium ${isDark ? "text-cyan-500" : "text-cyan-700"}`}>
                                     {String(flow.step + 1).padStart(2, "0")}
                                 </span>
                                 <h1 className={`text-2xl md:text-3xl font-semibold leading-tight
@@ -130,7 +130,7 @@ export function Survey() {
                                         onClick={flow.prev}
                                         className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border text-sm font-medium transition-colors
                                             ${isDark
-                                                ? "border-stone-800/30 text-slate-400 hover:text-slate-200 hover:border-sky-800/40"
+                                                ? "border-cyan-500/20 text-slate-400 hover:text-slate-200 hover:border-cyan-500/40"
                                                 : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"
                                             }`}
                                     >
@@ -153,9 +153,9 @@ export function Survey() {
                                     disabled={!flow.canProceed}
                                     onClick={() => flow.next(survey._id)}
                                     className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl
-                                        bg-sky-700 hover:bg-sky-600 disabled:opacity-40 disabled:cursor-not-allowed
+                                        bg-cyan-600 hover:bg-cyan-500 disabled:opacity-40 disabled:cursor-not-allowed
                                         text-white text-sm font-semibold transition-colors
-                                        shadow-lg shadow-sky-700/20 hover:-translate-y-0.5 duration-200"
+                                        shadow-lg shadow-cyan-500/20 hover:-translate-y-0.5 duration-200"
                                 >
                                     {flow.isLast ? "Completa survey" : "Continua"}
                                     <ArrowRight size={14} />
