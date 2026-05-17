@@ -88,7 +88,9 @@ export function CinematicCTA({ theme }: { theme: string }) {
                     : "bg-gradient-to-br from-[#FAFAF8] via-[#F5F5F2] to-[#FAFAF8]"
             }`} />
 
-            <FloatingParticles isDark={isDark} />
+            <div className="hidden md:block">
+                <FloatingParticles isDark={isDark} />
+            </div>
 
             {/* Decorative */}
             <div className="absolute inset-0 pointer-events-none">
