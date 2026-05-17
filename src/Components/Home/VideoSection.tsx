@@ -46,7 +46,7 @@ export function VideoSection({ theme }: { theme: string }) {
 
             {/* Video player */}
             <motion.div
-                className="relative max-w-4xl mx-auto"
+                className="relative max-w-5xl mx-auto"
                 initial={{ opacity: 0, y: 32 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
@@ -121,7 +121,7 @@ export function VideoSection({ theme }: { theme: string }) {
 
                 {/* Caption */}
                 <p className={`mt-4 text-center text-sm ${isDark ? "text-slate-600" : "text-slate-400"}`}>
-                    Durata: ~3 minuti â€¢ Nessuna registrazione richiesta
+                    Durata: ~3 minuti · Nessuna registrazione richiesta
                 </p>
             </motion.div>
         </SectionBase>

@@ -8,7 +8,7 @@ export function SunsetTransition({ theme }: SunsetTransitionProps) {
     const bgRgb = isDark ? "14,14,13" : "250,250,248";
 
     return (
-        <div className="relative z-10 h-10 sm:h-14 pointer-events-none">
+        <div className="relative z-10 h-4 sm:h-6 pointer-events-none">
 
             {/* Bg rising from bottom */}
             <div

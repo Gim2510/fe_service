@@ -1,5 +1,6 @@
 ﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
+import { FloatingShapes, shapesEmerald, lightShapes } from "./FloatingShapes.tsx";
 
 /* ── MaturitySection ─────────────────────────────────────────────────────────
    Visual meter that fills as user scrolls. Level cards scale in from
@@ -178,10 +179,25 @@ export function MaturitySection({ theme }: { theme: string }) {
 
     return (
         <section ref={sectionRef} className="relative overflow-hidden">
-            {isDark && (
+            {isDark ? (
                 <>
                     <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent pointer-events-none" />
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-cyan-950/10 via-transparent to-transparent pointer-events-none" />
+                    {/* Mesh gradient orbs */}
+                    <div className="absolute -top-12 -right-16 w-[420px] h-[420px] rounded-full pointer-events-none opacity-[0.035]"
+                        style={{ background: "radial-gradient(circle, rgba(6,182,212,0.5) 0%, rgba(6,182,212,0) 70%)" }} />
+                    <div className="absolute -bottom-20 -left-12 w-[380px] h-[380px] rounded-full pointer-events-none opacity-[0.03]"
+                        style={{ background: "radial-gradient(circle, rgba(52,211,153,0.4) 0%, rgba(52,211,153,0) 70%)" }} />
+                    <FloatingShapes shapes={shapesEmerald} isDark={true} />
+                </>
+            ) : (
+                <>
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-400/30 to-transparent pointer-events-none" />
+                    <div className="absolute -top-12 -right-16 w-[420px] h-[420px] rounded-full pointer-events-none opacity-[0.045]"
+                        style={{ background: "radial-gradient(circle, rgba(14,165,233,0.6) 0%, rgba(14,165,233,0) 70%)" }} />
+                    <div className="absolute -bottom-20 -left-12 w-[380px] h-[380px] rounded-full pointer-events-none opacity-[0.035]"
+                        style={{ background: "radial-gradient(circle, rgba(52,211,153,0.5) 0%, rgba(52,211,153,0) 70%)" }} />
+                    <FloatingShapes shapes={lightShapes(shapesEmerald)} isDark={false} />
                 </>
             )}
 
