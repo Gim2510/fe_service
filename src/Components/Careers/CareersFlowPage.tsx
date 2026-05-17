@@ -60,7 +60,6 @@ export function CareersFlowPage() {
         getAllJobOffers().then(setJobs).catch(console.error);
     }, []);
 
-    const border    = isDark ? "border-stone-800/30" : "border-slate-200";
     const mutedText = isDark ? "text-slate-500" : "text-slate-400";
     const bodyText  = isDark ? "text-slate-400" : "text-slate-600";
 
