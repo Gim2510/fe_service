@@ -1,6 +1,6 @@
 ﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
-import { FloatingShapes, shapesRed, lightShapes } from "./FloatingShapes.tsx";
+import { FloatingShapes, shapesRed, shapesRedMobile, lightShapes } from "./FloatingShapes.tsx";
 
 const problemi = [
     {
@@ -292,8 +292,14 @@ export function ScrollProblems({ theme }: { theme: string }) {
                         {/* Mesh gradient orb — bottom left */}
                         <div className="absolute -bottom-32 -left-24 w-[400px] h-[400px] rounded-full pointer-events-none opacity-[0.03]"
                             style={{ background: "radial-gradient(circle, rgba(245,158,11,0.6) 0%, rgba(245,158,11,0) 70%)" }} />
-                        {/* Animated floating shapes */}
-                        <FloatingShapes shapes={shapesRed} isDark={true} />
+                        {/* Animated floating shapes — desktop */}
+                        <div className="hidden md:block">
+                            <FloatingShapes shapes={shapesRed} isDark={true} />
+                        </div>
+                        {/* Animated floating shapes — mobile (smaller, tetrahedron higher) */}
+                        <div className="md:hidden">
+                            <FloatingShapes shapes={shapesRedMobile} isDark={true} mobileScale={0.5} />
+                        </div>
                     </>
                 ) : (
                     <>
@@ -303,7 +309,14 @@ export function ScrollProblems({ theme }: { theme: string }) {
                             style={{ background: "radial-gradient(circle, rgba(239,68,68,0.6) 0%, rgba(239,68,68,0) 70%)" }} />
                         <div className="absolute -bottom-32 -left-24 w-[400px] h-[400px] rounded-full pointer-events-none opacity-[0.045]"
                             style={{ background: "radial-gradient(circle, rgba(251,146,60,0.6) 0%, rgba(251,146,60,0) 70%)" }} />
-                        <FloatingShapes shapes={lightShapes(shapesRed)} isDark={false} />
+                        {/* Animated floating shapes — desktop */}
+                        <div className="hidden md:block">
+                            <FloatingShapes shapes={lightShapes(shapesRed)} isDark={false} />
+                        </div>
+                        {/* Animated floating shapes — mobile (smaller, tetrahedron higher) */}
+                        <div className="md:hidden">
+                            <FloatingShapes shapes={lightShapes(shapesRedMobile)} isDark={false} mobileScale={0.5} />
+                        </div>
                     </>
                 )}
 

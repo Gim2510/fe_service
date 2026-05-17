@@ -32,6 +32,8 @@ interface GeomagConfig {
 interface FloatingShapesProps {
     shapes: GeomagConfig[];
     isDark: boolean;
+    /** Scale multiplier for mobile (default 0.5) */
+    mobileScale?: number;
 }
 
 // ── 3D geometry definitions ──
@@ -151,11 +153,12 @@ function Node({ position, color, opacity, radius, glowRadius }: {
 
 // ── Single geomag shape ──
 
-function GeomagMesh({ config, isDark }: { config: GeomagConfig; isDark: boolean }) {
+function GeomagMesh({ config, isDark, mobileScale }: { config: GeomagConfig; isDark: boolean; mobileScale: number }) {
     const groupRef = useRef<THREE.Group>(null);
     const { viewport } = useThree();
     const geo = useMemo(() => getGeo3D(config.type), [config.type]);
     const timeOffset = useMemo(() => config.delay * 3, [config.delay]);
+    const effectiveScale = config.scale * mobileScale;
 
     // Map 0-1 position to world coordinates (orthographic, centered origin)
     const baseX = (config.px - 0.5) * viewport.width;
@@ -165,9 +168,9 @@ function GeomagMesh({ config, isDark }: { config: GeomagConfig; isDark: boolean 
 
     const barOpacity = isDark ? 0.45 : 0.3;
     const nodeOpacity = isDark ? 0.5 : 0.35;
-    const barRadius = 0.012 * config.scale;
-    const nodeRadius = 0.035 * config.scale;
-    const glowNodeRadius = 0.07 * config.scale;
+    const barRadius = 0.012 * effectiveScale;
+    const nodeRadius = 0.035 * effectiveScale;
+    const glowNodeRadius = 0.07 * effectiveScale;
 
     useFrame((state) => {
         if (!groupRef.current) return;
@@ -184,7 +187,7 @@ function GeomagMesh({ config, isDark }: { config: GeomagConfig; isDark: boolean 
     });
 
     return (
-        <group ref={groupRef} scale={config.scale}>
+        <group ref={groupRef} scale={effectiveScale}>
             {geo.edges.map(([i, j], idx) => (
                 <Bar
                     key={`b${idx}`}
@@ -211,11 +214,11 @@ function GeomagMesh({ config, isDark }: { config: GeomagConfig; isDark: boolean 
 
 // ── Scene wrapper ──
 
-function Scene({ shapes, isDark }: FloatingShapesProps) {
+function Scene({ shapes, isDark, mobileScale }: FloatingShapesProps) {
     return (
         <>
             {shapes.map((s, i) => (
-                <GeomagMesh key={i} config={s} isDark={isDark} />
+                <GeomagMesh key={i} config={s} isDark={isDark} mobileScale={mobileScale ?? 1} />
             ))}
         </>
     );
@@ -223,7 +226,7 @@ function Scene({ shapes, isDark }: FloatingShapesProps) {
 
 // ── Main export ──
 
-export function FloatingShapes({ shapes, isDark }: FloatingShapesProps) {
+export function FloatingShapes({ shapes, isDark, mobileScale }: FloatingShapesProps) {
     return (
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
             <Canvas
@@ -233,7 +236,7 @@ export function FloatingShapes({ shapes, isDark }: FloatingShapesProps) {
                 dpr={[1, 1.5]}
                 style={{ background: "transparent" }}
             >
-                <Scene shapes={shapes} isDark={isDark} />
+                <Scene shapes={shapes} isDark={isDark} mobileScale={mobileScale ?? 1} />
             </Canvas>
         </div>
     );
@@ -244,6 +247,10 @@ export function FloatingShapes({ shapes, isDark }: FloatingShapesProps) {
 export const shapesRed: GeomagConfig[] = [
     { type: "tetrahedron", px: 0.18, py: 0.45, scale: 2.0, color: "#EF4444", glowIntensity: 0.4, rotSpeed: [0.12, 0.18, 0.06], floatAmp: [1.0, 0.9], floatFreq: [0.12, 0.16], delay: 0 },
     { type: "diamond3d",   px: 0.80, py: 0.70, scale: 1.8, color: "#F59E0B", glowIntensity: 0.35, rotSpeed: [0.15, 0.1, 0.12], floatAmp: [0.9, 1.0], floatFreq: [0.16, 0.12], delay: 2 },
+];
+
+export const shapesRedMobile: GeomagConfig[] = [
+    { type: "tetrahedron", px: 0.18, py: 0.30, scale: 2.0, color: "#EF4444", glowIntensity: 0.4, rotSpeed: [0.12, 0.18, 0.06], floatAmp: [1.0, 0.9], floatFreq: [0.12, 0.16], delay: 0 },
 ];
 
 export const shapesCyan: GeomagConfig[] = [

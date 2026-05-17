@@ -138,8 +138,10 @@ export function DepthMethod({ theme }: { theme: string }) {
                         style={{ background: "radial-gradient(circle, rgba(6,182,212,0.5) 0%, rgba(6,182,212,0) 70%)" }} />
                     <div className="absolute bottom-[5%] -left-20 w-[380px] h-[380px] rounded-full pointer-events-none opacity-[0.03]"
                         style={{ background: "radial-gradient(circle, rgba(139,92,246,0.5) 0%, rgba(139,92,246,0) 70%)" }} />
-                    {/* Animated floating shapes */}
-                    <FloatingShapes shapes={shapesNone} isDark={true} />
+                    {/* Animated floating shapes — desktop only */}
+                    <div className="hidden md:block">
+                        <FloatingShapes shapes={shapesNone} isDark={true} />
+                    </div>
                 </>
             ) : (
                 <>
@@ -148,7 +150,9 @@ export function DepthMethod({ theme }: { theme: string }) {
                         style={{ background: "radial-gradient(circle, rgba(14,165,233,0.6) 0%, rgba(14,165,233,0) 70%)" }} />
                     <div className="absolute bottom-[5%] -left-20 w-[380px] h-[380px] rounded-full pointer-events-none opacity-[0.04]"
                         style={{ background: "radial-gradient(circle, rgba(139,92,246,0.5) 0%, rgba(139,92,246,0) 70%)" }} />
-                    <FloatingShapes shapes={lightShapes(shapesNone)} isDark={false} />
+                    <div className="hidden md:block">
+                        <FloatingShapes shapes={lightShapes(shapesNone)} isDark={false} />
+                    </div>
                 </>
             )}
 
