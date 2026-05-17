@@ -5,7 +5,6 @@ import { ArrowLeft, MapPin, Clock, Briefcase, DollarSign, ChevronRight } from "l
 import { useTheme } from "../../Context/ThemeContext.tsx";
 import { useGetAllJobOffers } from "../../hooks/useGetJobOffers.ts";
 import { ApplicationForm } from "./ApplicationForm.tsx";
-import { Badge } from "../Badge.tsx";
 
 export type CreateJobPositionDTO = {
     _id: string;
@@ -61,7 +60,6 @@ export function CareersFlowPage() {
         getAllJobOffers().then(setJobs).catch(console.error);
     }, []);
 
-    const border    = isDark ? "border-stone-800/30" : "border-slate-200";
     const mutedText = isDark ? "text-slate-500" : "text-slate-400";
     const bodyText  = isDark ? "text-slate-400" : "text-slate-600";
 
@@ -90,17 +88,17 @@ export function CareersFlowPage() {
     );
 
     return (
-        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"}`}>
-            {/* grid bg */}
+        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#0E0E0D] text-white" : "bg-[#FAFAF8] text-slate-900"}`}>
+            {/* Grid background — same as homepage */}
             <div
-                className="absolute inset-0 opacity-[0.08] pointer-events-none"
+                className={`absolute inset-0 pointer-events-none ${isDark ? "opacity-[0.06]" : "opacity-[0.12]"}`}
                 style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%230EA5E9' : '%230369A1'}' stroke-width='0.5'/%3E%3C/svg%3E")`,
-                    backgroundSize: "40px 40px",
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect x='0' y='0' width='32' height='32' fill='none' stroke='${isDark ? '%2306B6D4' : '%23453A30'}' stroke-width='0.4'/%3E%3C/svg%3E")`,
+                    backgroundSize: "32px 32px",
                 }}
             />
 
-            <div className="relative max-w-5xl mx-auto px-6 py-32 space-y-12">
+            <div className="relative z-10 max-w-5xl mx-auto px-6 py-32 space-y-12">
 
                 {/* Hero */}
                 <motion.section
@@ -109,9 +107,12 @@ export function CareersFlowPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <Badge label="Carriere" color="violet" theme={theme} />
+                    <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border text-cyan-400 border-cyan-500/20 bg-cyan-950/30">
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
+                        Carriere
+                    </span>
                     <h1 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                        Lavora <span className="text-sky-600">con noi</span>
+                        Lavora <span className={isDark ? "text-cyan-400" : "text-cyan-700"}>con noi</span>
                     </h1>
                     <p className={`text-base leading-relaxed ${bodyText}`}>
                         Stiamo costruendo strumenti che trasformano i dati delle survey
@@ -126,11 +127,11 @@ export function CareersFlowPage() {
                     transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                     className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
                         isDark
-                            ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/10`
-                            : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/5`
+                            ? "border-cyan-500/30 bg-[#0E0E0D]/80 shadow-lg shadow-cyan-500/10"
+                            : "border-cyan-500/60 bg-white shadow-md shadow-cyan-400/15"
                     }`}
                 >
-                    <div className="h-[2px] w-full bg-sky-700/60" />
+                    <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
 
                     {/* Back nav */}
                     {step !== "list" && (
@@ -211,8 +212,8 @@ export function CareersFlowPage() {
                                                         className={`shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border
                                                             text-xs font-medium transition-all hover:-translate-y-0.5 duration-200
                                                             ${isDark
-                                                                ? "border-stone-800/30 text-slate-300 hover:border-sky-700/40 hover:text-sky-400"
-                                                                : "border-slate-200 text-slate-700 hover:border-sky-400 hover:bg-sky-50/50"
+                                                                ? "border-cyan-500/20 text-slate-300 hover:border-cyan-500/40 hover:text-cyan-400"
+                                                                : "border-cyan-200 text-slate-700 hover:border-cyan-400 hover:bg-cyan-50/50"
                                                             }`}
                                                     >
                                                         Dettagli <ChevronRight size={12} />
@@ -259,13 +260,13 @@ export function CareersFlowPage() {
 
                                     {/* responsibilities + requirements */}
                                     <div className={`rounded-xl border p-6 grid md:grid-cols-2 gap-8
-                                        ${isDark ? "border-stone-800/20 bg-white/[0.02]" : "border-slate-100 bg-slate-50/50"}`}>
+                                        ${isDark ? "border-cyan-500/20 bg-white/[0.02]" : "border-cyan-200/60 bg-cyan-50/30"}`}>
                                         <div>
                                             {sectionLabel("Responsabilità")}
                                             <ul className="space-y-1.5">
                                                 {selectedJob.responsibilities.map(r => (
                                                     <li key={r} className={`flex items-start gap-2 text-sm ${bodyText}`}>
-                                                        <span className="text-sky-500 mt-0.5 shrink-0">•</span>{r}
+                                                        <span className="text-cyan-400 mt-0.5 shrink-0">•</span>{r}
                                                     </li>
                                                 ))}
                                             </ul>
@@ -275,7 +276,7 @@ export function CareersFlowPage() {
                                             <ul className="space-y-1.5">
                                                 {selectedJob.requirements.map(r => (
                                                     <li key={r} className={`flex items-start gap-2 text-sm ${bodyText}`}>
-                                                        <span className="text-sky-500 mt-0.5 shrink-0">•</span>{r}
+                                                        <span className="text-cyan-400 mt-0.5 shrink-0">•</span>{r}
                                                     </li>
                                                 ))}
                                                 {selectedJob.niceToHave?.map(r => (
@@ -295,7 +296,7 @@ export function CareersFlowPage() {
                                             <ul className="flex flex-wrap gap-2">
                                                 {selectedJob.benefits.map(b => (
                                                     <li key={b} className={`px-3 py-1.5 rounded-lg text-xs font-medium border
-                                                        ${isDark ? "border-stone-800/30 bg-sky-700/10 text-sky-400" : "border-sky-300 bg-sky-50 text-sky-800"}`}>
+                                                        ${isDark ? "border-cyan-500/20 bg-cyan-500/10 text-cyan-400" : "border-cyan-300 bg-cyan-50 text-cyan-800"}`}>
                                                         {b}
                                                     </li>
                                                 ))}
@@ -325,7 +326,7 @@ export function CareersFlowPage() {
                                             <ol className="space-y-2">
                                                 {selectedJob.hiringProcess.steps.map((s, i) => (
                                                     <li key={i} className={`flex items-start gap-3 text-sm ${bodyText}`}>
-                                                        <span className={`font-mono text-xs mt-0.5 shrink-0 ${isDark ? "text-sky-700" : "text-sky-500"}`}>
+                                                        <span className={`font-mono text-xs mt-0.5 shrink-0 ${isDark ? "text-cyan-600" : "text-cyan-500"}`}>
                                                             {String(i + 1).padStart(2, "0")}
                                                         </span>
                                                         {s}
@@ -343,8 +344,8 @@ export function CareersFlowPage() {
                                     <button
                                         onClick={() => setStep("apply")}
                                         className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
-                                            bg-sky-700 hover:bg-sky-600 text-white text-sm font-semibold
-                                            transition-all shadow-lg shadow-sky-700/25 hover:-translate-y-0.5 duration-200"
+                                            bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-semibold
+                                            transition-all shadow-lg shadow-cyan-500/25 hover:-translate-y-0.5 duration-200"
                                     >
                                         Candidati per questa posizione
                                         <ChevronRight size={14} />

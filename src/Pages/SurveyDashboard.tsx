@@ -13,7 +13,6 @@ import {
     ChevronDown, ChevronRight, ArrowLeft, ArrowRight,
     Calendar, RotateCcw, Check,
 } from "lucide-react";
-import { Badge } from "../Components/Badge.tsx";
 
 const CATEGORY_LABELS: Record<string, string> = {
     leadership:   "Leadership",
@@ -36,7 +35,7 @@ const TABS: { id: DashboardTab; label: string; icon: React.ReactNode }[] = [
 
 function scoreGrade(pct: number): { label: string; color: string; barColor: string } {
     if (pct >= 70) return { label: "Avanzato",    color: "#4ade80", barColor: "bg-green-500" };
-    if (pct >= 40) return { label: "In sviluppo", color: "#f59e0b", barColor: "bg-sky-500" };
+    if (pct >= 40) return { label: "In sviluppo", color: "#f59e0b", barColor: "bg-cyan-500" };
     return             { label: "Iniziale",       color: "#f87171", barColor: "bg-red-400" };
 }
 
@@ -82,7 +81,7 @@ export function SurveyDashboard() {
 
     if (loading || !survey) {
         return (
-            <div className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}>
+            <div className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#0E0E0D]" : "bg-[#FAFAF8]"}`}>
                 <FallingLines color={isDark ? "#fff" : "#B45309"} width="60" visible />
             </div>
         );
@@ -103,24 +102,23 @@ export function SurveyDashboard() {
     const [currentQuestionId, currentAnswer] = answerEntries[currentIndex];
     const currentQuestion = questionMap.get(currentQuestionId);
 
-    const border    = isDark ? "border-stone-800/30" : "border-slate-200";
-    const card      = isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200";
+    const card      = isDark ? "bg-[#0E0E0D]/80 border-cyan-500/30 shadow-lg shadow-cyan-500/10" : "bg-white border-cyan-500/60 shadow-md shadow-cyan-400/15";
     const mutedText = isDark ? "text-slate-500" : "text-slate-400";
     const bodyText  = isDark ? "text-slate-300" : "text-slate-600";
 
     return (
-        <main className={`min-h-screen ${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"}`}>
+        <main className={`min-h-screen ${isDark ? "bg-[#0E0E0D] text-white" : "bg-[#FAFAF8] text-slate-900"}`}>
 
-            {/* subtle grid bg */}
+            {/* Grid background — same as homepage */}
             <div
-                className="absolute inset-0 opacity-[0.08] pointer-events-none"
+                className={`absolute inset-0 pointer-events-none ${isDark ? "opacity-[0.06]" : "opacity-[0.12]"}`}
                 style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%230EA5E9' : '%230369A1'}' stroke-width='0.5'/%3E%3C/svg%3E")`,
-                    backgroundSize: "40px 40px",
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect x='0' y='0' width='32' height='32' fill='none' stroke='${isDark ? '%2306B6D4' : '%23453A30'}' stroke-width='0.4'/%3E%3C/svg%3E")`,
+                    backgroundSize: "32px 32px",
                 }}
             />
 
-            <div className="relative max-w-5xl mx-auto px-6 pt-24 pb-20 space-y-6">
+            <div className="relative z-10 max-w-5xl mx-auto px-6 pt-24 pb-20 space-y-6">
 
                 {/* page label */}
                 <motion.div
@@ -129,7 +127,10 @@ export function SurveyDashboard() {
                     transition={{ duration: 0.4 }}
                     className="space-y-3"
                 >
-                    <Badge label="Digital Maturity Dashboard" color="sky" theme={theme} />
+                    <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border text-cyan-400 border-cyan-500/20 bg-cyan-950/30">
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
+                        Digital Maturity Dashboard
+                    </span>
                     <h1 className={`text-2xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         Analisi dettagliata
                     </h1>
@@ -142,19 +143,19 @@ export function SurveyDashboard() {
                     transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                     className={`w-full rounded-2xl border overflow-hidden backdrop-blur-sm ${
                         isDark
-                            ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/10`
-                            : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/5`
+                            ? "border-cyan-500/30 bg-[#0E0E0D]/80 shadow-lg shadow-cyan-500/10"
+                            : "border-cyan-500/60 bg-white shadow-md shadow-cyan-400/15"
                     }`}
                 >
-                    {/* rose accent line */}
-                    <div className="h-[2px] w-full bg-sky-700/60" />
+                    {/* accent line */}
+                    <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
 
                     <div className="flex flex-col lg:flex-row min-h-[320px]">
 
                         {/* LEFT — score */}
                         <div
                             className="relative flex flex-col justify-between p-8 lg:w-[42%] shrink-0 overflow-hidden"
-                            style={{ background: isDark ? "#111110" : "#F0EDE8" }}
+                            style={{ background: isDark ? "#0E0E0D" : "#F0EDE8" }}
                         >
                             {/* grid pattern */}
                             <div
@@ -169,7 +170,7 @@ export function SurveyDashboard() {
                             {/* top label */}
                             <div className="relative">
                                 <div className="flex items-center gap-2">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_#f59e0b]" />
+                                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#06B6D4]" />
                                     <span className={`text-[10px] font-mono uppercase tracking-[0.2em] ${mutedText}`}>
                                         Report completo
                                     </span>
@@ -317,17 +318,17 @@ export function SurveyDashboard() {
                                 whitespace-nowrap transition-all border overflow-hidden
                                 ${activeTab === tab.id
                                     ? isDark
-                                        ? "bg-sky-700/15 border-sky-600/30 text-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.15)]"
-                                        : "bg-sky-50 border-sky-400 text-sky-800"
+                                        ? "bg-cyan-500/15 border-cyan-500/30 text-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.15)]"
+                                        : "bg-cyan-50 border-cyan-400 text-cyan-800"
                                     : isDark
-                                        ? "border-stone-800/20 text-slate-500 hover:text-sky-400 hover:border-stone-800/40"
-                                        : "border-slate-200 text-slate-500 hover:text-sky-700 hover:bg-[#EDF2F7]"
+                                        ? "border-stone-800/20 text-slate-500 hover:text-cyan-400 hover:border-stone-800/40"
+                                        : "border-slate-200 text-slate-500 hover:text-cyan-700 hover:bg-[#EDF2F7]"
                                 }`}
                         >
                             {tab.icon}
                             {tab.label}
                             {activeTab === tab.id && isDark && (
-                                <span className="absolute inset-x-0 bottom-0 h-[2px] bg-sky-500 shadow-[0_0_8px_rgba(56,189,248,0.6)]" />
+                                <span className="absolute inset-x-0 bottom-0 h-[2px] bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.6)]" />
                             )}
                         </button>
                     ))}
@@ -349,10 +350,10 @@ export function SurveyDashboard() {
                                 {byCategory.length > 0 && (
                                     <div className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
                                     isDark
-                                        ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/5`
-                                        : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/3`
+                                        ? "border-cyan-500/30 bg-[#0E0E0D]/80 shadow-lg shadow-cyan-500/10"
+                                        : "border-cyan-500/60 bg-white shadow-md shadow-cyan-400/15"
                                 }`}>
-                                        <div className="h-[2px] w-full bg-sky-700/40" />
+                                        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
                                         <div className="p-7 space-y-5">
                                             <p className={`text-[10px] font-mono uppercase tracking-[0.18em] ${mutedText}`}>
                                                 Analisi per area
@@ -443,8 +444,8 @@ export function SurveyDashboard() {
                                             key={index}
                                             className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
                                                 isDark
-                                                    ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/5`
-                                                    : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/3`
+                                                    ? "border-cyan-500/30 bg-[#0E0E0D]/80 shadow-lg shadow-cyan-500/10"
+                                                    : "border-cyan-500/60 bg-white shadow-md shadow-cyan-400/15"
                                             }`}
                                         >
                                             <button
@@ -452,7 +453,7 @@ export function SurveyDashboard() {
                                                 className="w-full flex justify-between items-center p-5 text-left"
                                             >
                                                 <div className="flex items-center gap-4">
-                                                    <span className={`font-mono text-[10px] uppercase tracking-[0.15em] ${isDark ? "text-sky-600" : "text-sky-500"}`}>
+                                                    <span className={`font-mono text-[10px] uppercase tracking-[0.15em] ${isDark ? "text-cyan-500" : "text-cyan-400"}`}>
                                                         {String(index + 1).padStart(2, "0")}
                                                     </span>
                                                     <span className={`text-sm font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>
@@ -500,7 +501,7 @@ export function SurveyDashboard() {
                                                                     <ul className="space-y-1.5">
                                                                         {detail.actions.map((action, i) => (
                                                                             <li key={i} className={`flex items-start gap-2 text-sm ${bodyText}`}>
-                                                                                <span className="text-sky-500 mt-0.5">•</span>
+                                                                                <span className="text-cyan-400 mt-0.5">•</span>
                                                                                 {action}
                                                                             </li>
                                                                         ))}
@@ -532,7 +533,7 @@ export function SurveyDashboard() {
                                             onClick={() => goTo(idx)}
                                             className={`w-8 h-8 rounded-lg text-xs font-mono font-semibold border transition-colors shrink-0
                                                 ${currentIndex === idx
-                                                    ? "bg-sky-700 border-sky-600 text-white"
+                                                    ? "bg-cyan-600 border-cyan-500 text-white"
                                                     : isDark
                                                         ? "border-stone-800/20 text-slate-500 hover:text-slate-300 hover:border-stone-700/40"
                                                         : "border-slate-200 text-slate-500 hover:bg-[#EDF2F7]"
@@ -547,13 +548,13 @@ export function SurveyDashboard() {
                                 <div
                                     className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
                                         isDark
-                                            ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/5`
-                                            : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/3`
+                                            ? "border-cyan-500/30 bg-[#0E0E0D]/80 shadow-lg shadow-cyan-500/10"
+                                            : "border-cyan-500/60 bg-white shadow-md shadow-cyan-400/15"
                                     }`}
                                 >
-                                    <div className="h-[2px] w-full bg-sky-700/40" />
+                                    <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
                                     <div className="p-7">
-                                        <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-3 ${isDark ? "text-sky-600" : "text-sky-700"}`}>
+                                        <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-3 ${isDark ? "text-cyan-500" : "text-cyan-600"}`}>
                                             Domanda {currentIndex + 1}
                                         </p>
                                         <h3 className={`text-base font-semibold mb-4 ${isDark ? "text-slate-100" : "text-slate-800"}`}>
@@ -600,15 +601,15 @@ export function SurveyDashboard() {
                             <div
                                 className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
                                     isDark
-                                        ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/5`
-                                        : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/3`
+                                        ? "border-cyan-500/30 bg-[#0E0E0D]/80 shadow-lg shadow-cyan-500/10"
+                                        : "border-cyan-500/60 bg-white shadow-md shadow-cyan-400/15"
                                 }`}
                             >
-                                <div className="h-[2px] w-full bg-sky-700/60" />
+                                <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
                                 <div className="p-10 text-center space-y-6">
                                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center mx-auto
-                                        ${isDark ? "bg-sky-700/15 border border-sky-700/20" : "bg-sky-50 border border-sky-300"}`}>
-                                        <TrendingUp size={20} className="text-sky-600" />
+                                        ${isDark ? "bg-cyan-500/15 border border-cyan-500/20" : "bg-cyan-50 border border-cyan-300"}`}>
+                                        <TrendingUp size={20} className="text-cyan-500" />
                                     </div>
                                     <div className="space-y-2">
                                         <h2 className={`text-2xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
@@ -624,8 +625,8 @@ export function SurveyDashboard() {
                                             navigate("/survey");
                                         }}
                                         className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
-                                            bg-sky-700 hover:bg-sky-600 text-white text-sm font-semibold
-                                            transition-all shadow-lg shadow-sky-700/25 hover:-translate-y-0.5 duration-200"
+                                            bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-semibold
+                                            transition-all shadow-lg shadow-cyan-500/25 hover:-translate-y-0.5 duration-200"
                                     >
                                         <Calendar size={14} />
                                         Richiedi consulenza strategica
