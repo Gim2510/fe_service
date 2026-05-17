@@ -3,7 +3,7 @@ import { useTheme } from "../Context/ThemeContext.tsx";
 // Cinematic parallax components
 import { CinematicHero } from "../Components/Home/CinematicHero.tsx";
 import { SunsetTransition } from "../Components/Home/SunsetTransition.tsx";
-import { ScrollProblems } from "../Components/Home/ScrollProblems.tsx";
+import { TimelineProblems } from "../Components/Home/TimelineProblems.tsx";
 import { VideoSection } from "../Components/Home/VideoSection.tsx";
 import { HorizontalSolutions } from "../Components/Home/HorizontalSolutions.tsx";
 import { DepthMethod } from "../Components/Home/DepthMethod.tsx";
@@ -46,8 +46,8 @@ export function Home() {
             {/* ── Content sections — each with unique scroll effects ── */}
             <div className={`relative z-10 ${isDark ? "" : ""}`}>
 
-                {/* 3D card reveals on scroll */}
-                <ScrollProblems theme={theme} />
+                {/* Timeline accordion — problem recognition */}
+                <TimelineProblems theme={theme} />
 
                 {/* Video section (kept as-is) */}
                 <VideoSection theme={theme} />
