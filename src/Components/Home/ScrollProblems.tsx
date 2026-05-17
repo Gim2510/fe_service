@@ -1,5 +1,6 @@
 ﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
+import { FloatingShapes, shapesRed, lightShapes } from "./FloatingShapes.tsx";
 
 const problemi = [
     {
@@ -61,7 +62,7 @@ function ProblemCard({ item, index, isDark, progress }: {
     isDark: boolean;
     progress: ReturnType<typeof useScroll>["scrollYProgress"];
 }) {
-    const sp = { stiffness: 80, damping: 25, mass: 0.6 };
+    const sp = { stiffness: 50, damping: 26, mass: 1 };
     const colors = neonColors[index % neonColors.length];
     const total = problemi.length;
     const step = 1 / total;
@@ -69,25 +70,62 @@ function ProblemCard({ item, index, isDark, progress }: {
     const slotStart = index * step;
     const slotEnd = slotStart + step;
 
+    const isFirst = index === 0;
+    const isLast = index === total - 1;
+
     const fadeInStart = slotStart;
-    const fadeInEnd = slotStart + step * 0.25;
-    const fadeOutStart = slotEnd - step * 0.25;
+    const fadeInEnd = slotStart + step * 0.3;
+    const fadeOutStart = slotEnd - step * 0.3;
     const fadeOutEnd = slotEnd;
 
+    // First: visible from start, exits with flip
+    // Last: flips in, stays fixed (section unstick handles exit)
+    // Middle: flip in + flip out
     const opacity = useSpring(
-        useTransform(progress, [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd], [0, 1, 1, 0]),
+        useTransform(progress,
+            isFirst  ? [fadeOutStart, fadeOutEnd]
+            : isLast ? [fadeInStart, fadeInEnd]
+            :          [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd],
+            isFirst  ? [1, 0]
+            : isLast ? [0, 1]
+            :          [0, 1, 1, 0]
+        ),
         sp
     );
-    const scale = useSpring(
-        useTransform(progress, [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd], [0.88, 1, 1, 0.88]),
+
+    const flipY = useSpring(
+        useTransform(progress,
+            isFirst  ? [fadeOutStart, fadeOutEnd]
+            : isLast ? [fadeInStart, fadeInEnd]
+            :          [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd],
+            isFirst  ? [0, -35]
+            : isLast ? [35, 0]
+            :          [35, 0, 0, -35]
+        ),
         sp
     );
+
     const xShift = useSpring(
-        useTransform(progress, [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd], [200, 0, 0, -200]),
+        useTransform(progress,
+            isFirst  ? [fadeOutStart, fadeOutEnd]
+            : isLast ? [fadeInStart, fadeInEnd]
+            :          [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd],
+            isFirst  ? [0, -60]
+            : isLast ? [80, 0]
+            :          [80, 0, 0, -60]
+        ),
         sp
     );
-    const rotateZ = useSpring(
-        useTransform(progress, [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd], [5, 0, 0, -5]),
+
+    const scale = useSpring(
+        useTransform(progress,
+            isFirst  ? [fadeOutStart, fadeOutEnd]
+            : isLast ? [fadeInStart, fadeInEnd]
+            :          [fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd],
+            isFirst  ? [1, 0.95]
+            : isLast ? [0.95, 1]
+            :          [0.95, 1, 1, 0.95]
+        ),
         sp
     );
 
@@ -95,11 +133,12 @@ function ProblemCard({ item, index, isDark, progress }: {
         <motion.div
             className="absolute inset-0"
             style={{
+                rotateY: flipY,
                 x: xShift,
                 scale,
                 opacity,
-                rotateZ,
-                transformOrigin: "center center",
+                transformOrigin: "left center",
+                transformPerspective: 1400,
             }}
         >
             <div
@@ -242,10 +281,29 @@ export function ScrollProblems({ theme }: { theme: string }) {
             style={{ height: "300vh" }}
         >
             <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
-                {isDark && (
+                {/* Section decorations */}
+                {isDark ? (
                     <>
                         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-red-500/40 to-transparent pointer-events-none" />
                         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-950/10 via-transparent to-transparent pointer-events-none" />
+                        {/* Mesh gradient orb — top right */}
+                        <div className="absolute -top-20 -right-20 w-[500px] h-[500px] rounded-full pointer-events-none opacity-[0.04]"
+                            style={{ background: "radial-gradient(circle, rgba(239,68,68,0.6) 0%, rgba(239,68,68,0) 70%)" }} />
+                        {/* Mesh gradient orb — bottom left */}
+                        <div className="absolute -bottom-32 -left-24 w-[400px] h-[400px] rounded-full pointer-events-none opacity-[0.03]"
+                            style={{ background: "radial-gradient(circle, rgba(245,158,11,0.6) 0%, rgba(245,158,11,0) 70%)" }} />
+                        {/* Animated floating shapes */}
+                        <FloatingShapes shapes={shapesRed} isDark={true} />
+                    </>
+                ) : (
+                    <>
+                        {/* Light mode — boosted contrast */}
+                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-red-400/30 to-transparent pointer-events-none" />
+                        <div className="absolute -top-20 -right-20 w-[500px] h-[500px] rounded-full pointer-events-none opacity-[0.06]"
+                            style={{ background: "radial-gradient(circle, rgba(239,68,68,0.6) 0%, rgba(239,68,68,0) 70%)" }} />
+                        <div className="absolute -bottom-32 -left-24 w-[400px] h-[400px] rounded-full pointer-events-none opacity-[0.045]"
+                            style={{ background: "radial-gradient(circle, rgba(251,146,60,0.6) 0%, rgba(251,146,60,0) 70%)" }} />
+                        <FloatingShapes shapes={lightShapes(shapesRed)} isDark={false} />
                     </>
                 )}
 

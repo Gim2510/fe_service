@@ -2,6 +2,7 @@
 import { ArrowRight } from "lucide-react";
 import { useRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FloatingShapes, shapesCyan, lightShapes } from "./FloatingShapes.tsx";
 
 interface StatConfig {
     prefix: string;
@@ -77,10 +78,25 @@ export function StatsReveal({ theme }: { theme: string }) {
 
     return (
         <section ref={sectionRef} className="relative overflow-hidden">
-            {isDark && (
+            {isDark ? (
                 <>
                     <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent pointer-events-none" />
                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-cyan-950/10 via-transparent to-transparent pointer-events-none" />
+                    {/* Mesh gradient orbs */}
+                    <div className="absolute top-[20%] -right-12 w-[400px] h-[400px] rounded-full pointer-events-none opacity-[0.03]"
+                        style={{ background: "radial-gradient(circle, rgba(6,182,212,0.5) 0%, rgba(6,182,212,0) 70%)" }} />
+                    <div className="absolute -bottom-16 -left-16 w-[350px] h-[350px] rounded-full pointer-events-none opacity-[0.025]"
+                        style={{ background: "radial-gradient(circle, rgba(245,158,11,0.4) 0%, rgba(245,158,11,0) 70%)" }} />
+                    <FloatingShapes shapes={shapesCyan} isDark={true} />
+                </>
+            ) : (
+                <>
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-400/30 to-transparent pointer-events-none" />
+                    <div className="absolute top-[20%] -right-12 w-[400px] h-[400px] rounded-full pointer-events-none opacity-[0.045]"
+                        style={{ background: "radial-gradient(circle, rgba(14,165,233,0.6) 0%, rgba(14,165,233,0) 70%)" }} />
+                    <div className="absolute -bottom-16 -left-16 w-[350px] h-[350px] rounded-full pointer-events-none opacity-[0.035]"
+                        style={{ background: "radial-gradient(circle, rgba(245,158,11,0.5) 0%, rgba(245,158,11,0) 70%)" }} />
+                    <FloatingShapes shapes={lightShapes(shapesCyan)} isDark={false} />
                 </>
             )}
             <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-20 sm:py-32">

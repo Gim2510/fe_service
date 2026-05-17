@@ -21,12 +21,12 @@ export function Home() {
 
     return (
         <main className={`flex flex-col ${isDark ? "bg-[#0E0E0D]" : "bg-[#FAFAF8]"}`}>
-            {/* Fixed hex grid background */}
+            {/* Fixed grid background — z-0 for hero area */}
             <div
-                className={`fixed inset-0 pointer-events-none z-0 ${isDark ? "opacity-[0.05]" : "opacity-[0.10]"}`}
+                className={`fixed inset-0 pointer-events-none z-0 ${isDark ? "opacity-[0.06]" : "opacity-[0.12]"}`}
                 style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%23F59E0B' : '%23B45309'}' stroke-width='0.5'/%3E%3C/svg%3E")`,
-                    backgroundSize: "40px 40px",
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect x='0' y='0' width='32' height='32' fill='none' stroke='${isDark ? '%23A8A39A' : '%23453A30'}' stroke-width='0.4'/%3E%3C/svg%3E")`,
+                    backgroundSize: "32px 32px",
                 }}
             />
             {/* Vignette — fades grid on edges */}
@@ -44,7 +44,7 @@ export function Home() {
             <SunsetTransition theme={theme} />
 
             {/* ── Content sections — each with unique scroll effects ── */}
-            <div className={`relative z-10 ${isDark ? "" : "bg-gradient-to-b from-[#FAFAF8] via-[#F7F7F5] to-[#F2F2F0]"}`}>
+            <div className={`relative z-10 ${isDark ? "" : ""}`}>
 
                 {/* 3D card reveals on scroll */}
                 <ScrollProblems theme={theme} />
