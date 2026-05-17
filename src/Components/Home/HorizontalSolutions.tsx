@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useRef, useEffect } from "react";
+import { FloatingShapes, shapesNone } from "./FloatingShapes.tsx";
 
 /* ── Orbital Solutions ───────────────────────────────────────────────────────
    Solar-system parallax with morphing planet cards. Each solution orbits as
@@ -169,32 +170,19 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
         <section
             ref={containerRef}
             className="relative"
-            style={{ height: "300vh" }}
+            style={{ height: "500vh" }}
         >
             <div className="sticky top-0 h-screen overflow-hidden">
                 {/* ── Background atmosphere ── */}
-                {isDark ? (
-                    <>
-                        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_55%,rgba(6,182,212,0.07)_0%,transparent_70%)] pointer-events-none" />
-                        <div
-                            className="absolute inset-0 pointer-events-none opacity-30"
-                            style={{
-                                backgroundImage: [
-                                    "radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,0.18) 50%, transparent 100%)",
-                                    "radial-gradient(1px 1px at 45% 12%, rgba(255,255,255,0.12) 50%, transparent 100%)",
-                                    "radial-gradient(1.2px 1.2px at 72% 38%, rgba(255,255,255,0.14) 50%, transparent 100%)",
-                                    "radial-gradient(0.8px 0.8px at 88% 62%, rgba(255,255,255,0.10) 50%, transparent 100%)",
-                                    "radial-gradient(1px 1px at 30% 78%, rgba(255,255,255,0.09) 50%, transparent 100%)",
-                                    "radial-gradient(1.5px 1.5px at 62% 85%, rgba(255,255,255,0.07) 50%, transparent 100%)",
-                                    "radial-gradient(0.8px 0.8px at 8% 55%, rgba(255,255,255,0.11) 50%, transparent 100%)",
-                                    "radial-gradient(1px 1px at 95% 20%, rgba(255,255,255,0.08) 50%, transparent 100%)",
-                                ].join(","),
-                            }}
-                        />
-                    </>
-                ) : (
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_55%,rgba(14,165,233,0.04)_0%,transparent_70%)] pointer-events-none" />
-                )}
+                <>
+                    <div className={`absolute inset-0 ${isDark ? "bg-black" : "bg-[#1A1F2E]"} pointer-events-none`} />
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_55%,rgba(6,182,212,0.07)_0%,transparent_70%)] pointer-events-none" />
+                    <div className="absolute -top-16 -right-16 w-[420px] h-[420px] rounded-full pointer-events-none opacity-[0.05]"
+                        style={{ background: "radial-gradient(circle, rgba(6,182,212,0.5) 0%, rgba(6,182,212,0) 70%)" }} />
+                    <div className="absolute -bottom-24 -left-16 w-[350px] h-[350px] rounded-full pointer-events-none opacity-[0.04]"
+                        style={{ background: "radial-gradient(circle, rgba(139,92,246,0.4) 0%, rgba(139,92,246,0) 70%)" }} />
+                    <FloatingShapes shapes={shapesNone} isDark={true} />
+                </>
 
                 {/* ── Header ── */}
                 <motion.div style={{ opacity: exitSunOpacity }} className="absolute top-[12vh] sm:top-[10vh] left-0 right-0 z-30">
@@ -205,33 +193,23 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                     transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                 >
                     <span
-                        className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
-                            isDark
-                                ? "text-cyan-400 border-cyan-500/20 bg-cyan-950/30"
-                                : "text-sky-600 border-sky-200 bg-sky-50"
-                        }`}
+                        className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border text-cyan-400 border-cyan-500/20 bg-cyan-950/30"
                     >
                         <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
                         Soluzioni su misura
                     </span>
                     <h2
-                        className={`font-fjalla text-xl sm:text-3xl md:text-4xl font-semibold leading-tight mt-3 ${
-                            isDark ? "text-slate-100" : "text-slate-900"
-                        }`}
+                        className="font-fjalla text-xl sm:text-3xl md:text-4xl font-semibold leading-tight mt-3 text-slate-100"
                     >
                         Non vendiamo software.{" "}
                         <span
-                            className={
-                                isDark ? "text-cyan-400" : "text-sky-700"
-                            }
+                            className="text-cyan-400"
                         >
                             Risolviamo problemi.
                         </span>
                     </h2>
                     <p
-                        className={`mt-3 text-base leading-relaxed max-w-xl ${
-                            isDark ? "text-slate-400" : "text-slate-600"
-                        }`}
+                        className="mt-3 text-base leading-relaxed max-w-xl text-slate-400"
                     >
                         Ogni soluzione orbita intorno al tuo business,
                         progettata per il tuo contesto, integrata con ciò che
@@ -248,11 +226,7 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                             className="w-[300px] h-[120px] sm:w-[420px] sm:h-[160px] md:w-[560px] md:h-[210px] lg:w-[760px] lg:h-[280px]
                                 rounded-[50%]"
                             style={{
-                                border: `1px dashed ${
-                                    isDark
-                                        ? "rgba(6,182,212,0.22)"
-                                        : "rgba(14,165,233,0.16)"
-                                }`,
+                                border: "1px dashed rgba(6,182,212,0.22)",
                                 opacity: orbitOpacity,
                             }}
                         />
@@ -263,11 +237,7 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                             className="w-[340px] h-[136px] sm:w-[462px] sm:h-[176px] md:w-[616px] md:h-[232px] lg:w-[836px] lg:h-[308px]
                                 rounded-[50%]"
                             style={{
-                                border: `0.5px solid ${
-                                    isDark
-                                        ? "rgba(6,182,212,0.08)"
-                                        : "rgba(14,165,233,0.06)"
-                                }`,
+                                border: "0.5px solid rgba(6,182,212,0.08)",
                                 opacity: orbitOpacity,
                             }}
                         />
@@ -294,9 +264,7 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                                 <div
                                     className="absolute inset-0 rounded-full"
                                     style={{
-                                        background: isDark
-                                            ? "radial-gradient(circle, rgba(6,182,212,0.12) 0%, transparent 70%)"
-                                            : "radial-gradient(circle, rgba(14,165,233,0.08) 0%, transparent 70%)",
+                                        background: "radial-gradient(circle, rgba(6,182,212,0.12) 0%, transparent 70%)",
                                         transform: "scale(3)",
                                         filter: "blur(20px)",
                                     }}
@@ -305,24 +273,16 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                                 <div
                                     className="absolute inset-0 rounded-full"
                                     style={{
-                                        background: isDark
-                                            ? "radial-gradient(circle, rgba(6,182,212,0.25) 0%, transparent 70%)"
-                                            : "radial-gradient(circle, rgba(14,165,233,0.15) 0%, transparent 70%)",
+                                        background: "radial-gradient(circle, rgba(6,182,212,0.25) 0%, transparent 70%)",
                                         transform: "scale(1.8)",
                                         filter: "blur(12px)",
                                     }}
                                 />
                                 {/* Core sphere */}
                                 <div
-                                    className={`absolute inset-0 rounded-full ${
-                                        isDark
-                                            ? "bg-gradient-to-br from-cyan-300 via-cyan-500 to-blue-600"
-                                            : "bg-gradient-to-br from-sky-200 via-sky-400 to-blue-500"
-                                    }`}
+                                    className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-300 via-cyan-500 to-blue-600"
                                     style={{
-                                        boxShadow: isDark
-                                            ? "0 0 40px rgba(6,182,212,0.5), 0 0 100px rgba(6,182,212,0.2), inset 0 -8px 20px rgba(0,0,0,0.3), inset 0 4px 12px rgba(255,255,255,0.15)"
-                                            : "0 0 30px rgba(14,165,233,0.3), 0 0 60px rgba(14,165,233,0.1), inset 0 -6px 16px rgba(0,0,0,0.1), inset 0 4px 10px rgba(255,255,255,0.3)",
+                                        boxShadow: "0 0 40px rgba(6,182,212,0.5), 0 0 100px rgba(6,182,212,0.2), inset 0 -8px 20px rgba(0,0,0,0.3), inset 0 4px 12px rgba(255,255,255,0.15)",
                                     }}
                                 >
                                     <div
@@ -339,20 +299,12 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                                 {/* Label */}
                                 <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
                                     <span
-                                        className={`text-[10px] sm:text-xs font-bold tracking-widest ${
-                                            isDark
-                                                ? "text-white/90"
-                                                : "text-white"
-                                        }`}
+                                        className="text-[10px] sm:text-xs font-bold tracking-widest text-white/90"
                                     >
                                         PMI
                                     </span>
                                     <span
-                                        className={`text-[7px] sm:text-[9px] tracking-wider mt-0.5 ${
-                                            isDark
-                                                ? "text-cyan-100/50"
-                                                : "text-white/60"
-                                        }`}
+                                        className="text-[7px] sm:text-[9px] tracking-wider mt-0.5 text-cyan-100/50"
                                     >
                                         DIGITAL CORE
                                     </span>
@@ -364,9 +316,7 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                             className="absolute inset-0 rounded-full pointer-events-none"
                             style={{
                                 opacity: sunFlare,
-                                boxShadow: isDark
-                                    ? "0 0 80px 30px rgba(6,182,212,0.6), 0 0 160px 60px rgba(6,182,212,0.2)"
-                                    : "0 0 60px 20px rgba(14,165,233,0.4), 0 0 120px 50px rgba(14,165,233,0.1)",
+                                boxShadow: "0 0 80px 30px rgba(6,182,212,0.6), 0 0 160px 60px rgba(6,182,212,0.2)",
                                 transform: "scale(1.5)",
                             }}
                         />
@@ -375,9 +325,7 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                             className="absolute inset-0 rounded-full pointer-events-none"
                             style={{
                                 opacity: exitSunFlare,
-                                boxShadow: isDark
-                                    ? "0 0 120px 50px rgba(6,182,212,0.8), 0 0 250px 100px rgba(6,182,212,0.3), 0 0 400px 150px rgba(6,182,212,0.1)"
-                                    : "0 0 100px 40px rgba(14,165,233,0.6), 0 0 200px 80px rgba(14,165,233,0.2)",
+                                boxShadow: "0 0 120px 50px rgba(6,182,212,0.8), 0 0 250px 100px rgba(6,182,212,0.3), 0 0 400px 150px rgba(6,182,212,0.1)",
                                 transform: "scale(2.5)",
                             }}
                         />
@@ -390,7 +338,6 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                             key={sol.title}
                             solution={sol}
                             index={i}
-                            isDark={isDark}
                             scrollProgress={scrollYProgress}
                             dims={dims}
                             formProgress={formProgress}
@@ -405,14 +352,14 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                         <path
                             d="M 8 46 A 42 42 0 0 1 92 46"
                             fill="none"
-                            stroke={isDark ? "#1e293b" : "#e2e8f0"}
+                            stroke="#1e293b"
                             strokeWidth="2"
                             strokeLinecap="round"
                         />
                         <motion.path
                             d="M 8 46 A 42 42 0 0 1 92 46"
                             fill="none"
-                            stroke={isDark ? "#06b6d4" : "#0ea5e9"}
+                            stroke="#06b6d4"
                             strokeWidth="2"
                             strokeLinecap="round"
                             style={{ pathLength: scrollYProgress }}
@@ -429,7 +376,6 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
 function OrbitalCard({
     solution,
     index,
-    isDark,
     scrollProgress,
     dims,
     formProgress,
@@ -437,7 +383,6 @@ function OrbitalCard({
 }: {
     solution: Solution;
     index: number;
-    isDark: boolean;
     scrollProgress: MotionValue<number>;
     dims: { current: Dims };
     formProgress: MotionValue<number>;
@@ -492,16 +437,17 @@ function OrbitalCard({
         sp
     );
 
-    /** Compute orbital state from scroll progress
+    /** Compute orbital state from scroll progress with magnetic snap
      *  expand: 0.12→0.20 (cards bloom from center)
-     *  rotation: 0.18→0.70 (full 360° orbit) */
+     *  rotation: 0.18→0.70 (full 360° orbit)
+     *  snap: each card's "front" zone is wider, so it stays readable longer */
     const orbital = (p: number) => {
         const expand = clamp01((p - 0.12) / 0.08);
         const rot = clamp01((p - 0.18) / 0.52) * Math.PI * 2;
         const angle = baseAngle - rot;
         const d = Math.sin(angle);
-        // morph: only the single frontmost card opens (d > 0.85)
-        const morph = clamp01((d - 0.85) / 0.15);
+        // morph: wider threshold — card opens earlier and stays open longer
+        const morph = clamp01((d - 0.65) / 0.35);
         return { expand, angle, d, morph };
     };
 
@@ -617,7 +563,7 @@ function OrbitalCard({
     });
 
     const Icon = solution.icon;
-    const num = String(index + 1).padStart(2, "0");
+    const num = String(index === 0 ? TOTAL : index).padStart(2, "0");
     const { accent } = solution;
 
     return (
@@ -673,10 +619,8 @@ function OrbitalCard({
                     <div
                         className="absolute inset-0 rounded-full"
                         style={{
-                            background: isDark
-                                ? `radial-gradient(circle at 50% 50%, ${accent}30 0%, ${accent}10 50%, rgba(0,0,0,0.5) 100%)`
-                                : `radial-gradient(circle at 50% 50%, ${accent}18 0%, ${accent}08 50%, rgba(0,0,0,0.04) 100%)`,
-                            border: `1px solid ${isDark ? `${accent}25` : `${accent}15`}`,
+                            background: `radial-gradient(circle at 50% 50%, ${accent}30 0%, ${accent}10 50%, rgba(0,0,0,0.5) 100%)`,
+                            border: `1px solid ${accent}25`,
                         }}
                     />
                     {/* Crescent highlight — sharp specular on upper-left */}
@@ -687,18 +631,14 @@ function OrbitalCard({
                             height: "70%",
                             top: "4%",
                             left: "4%",
-                            background: isDark
-                                ? `radial-gradient(circle at 30% 25%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.04) 40%, transparent 70%)`
-                                : `radial-gradient(circle at 30% 25%, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.1) 40%, transparent 70%)`,
+                            background: "radial-gradient(circle at 30% 25%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.04) 40%, transparent 70%)",
                         }}
                     />
                     {/* Outer atmosphere halo */}
                     <div
                         className="absolute inset-[-3px] rounded-full pointer-events-none"
                         style={{
-                            boxShadow: isDark
-                                ? `0 0 12px ${accent}20, 0 0 4px ${accent}10`
-                                : `0 0 8px ${accent}10`,
+                            boxShadow: `0 0 12px ${accent}20, 0 0 4px ${accent}10`,
                         }}
                     />
                     {/* Bottom rim light — ground reflection */}
@@ -709,9 +649,7 @@ function OrbitalCard({
                             height: "15%",
                             bottom: "8%",
                             left: "25%",
-                            background: isDark
-                                ? `radial-gradient(ellipse, ${accent}15 0%, transparent 70%)`
-                                : `radial-gradient(ellipse, ${accent}08 0%, transparent 70%)`,
+                            background: `radial-gradient(ellipse, ${accent}15 0%, transparent 70%)`,
                             filter: "blur(2px)",
                         }}
                     />
@@ -723,9 +661,7 @@ function OrbitalCard({
                             height: "10%",
                             bottom: "-8%",
                             left: "20%",
-                            background: isDark
-                                ? "radial-gradient(ellipse, rgba(0,0,0,0.3) 0%, transparent 70%)"
-                                : "radial-gradient(ellipse, rgba(0,0,0,0.08) 0%, transparent 70%)",
+                            background: "radial-gradient(ellipse, rgba(0,0,0,0.3) 0%, transparent 70%)",
                             filter: "blur(3px)",
                         }}
                     />
@@ -734,11 +670,9 @@ function OrbitalCard({
                         size={22}
                         className="relative z-10"
                         style={{
-                            color: isDark ? `${accent}` : `${accent}`,
-                            opacity: isDark ? 0.85 : 0.75,
-                            filter: isDark
-                                ? `drop-shadow(0 0 5px ${accent}50)`
-                                : "none",
+                            color: accent,
+                            opacity: 0.85,
+                            filter: `drop-shadow(0 0 5px ${accent}50)`,
                         }}
                     />
                 </motion.div>
@@ -749,42 +683,32 @@ function OrbitalCard({
                     style={{
                         opacity: cardLayerOpacity,
                         borderRadius,
-                        background: isDark
-                            ? "rgba(14,14,13,0.88)"
-                            : "rgba(255,255,255,0.93)",
-                        boxShadow: isDark
-                            ? `0 0 28px ${accent}10, 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)`
-                            : "0 4px 28px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.04)",
-                        border: `1px solid ${isDark ? `${accent}22` : "rgba(226,232,240,0.8)"}`,
+                        background: "rgba(14,14,13,0.88)",
+                        boxShadow: `0 0 28px ${accent}10, 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)`,
+                        border: `1px solid ${accent}22`,
                     }}
                 >
                     <div className="p-5 flex flex-col h-full">
                         {/* Watermark number */}
                         <span
-                            className={`absolute top-2 right-3 text-4xl font-fjalla font-bold select-none ${
-                                isDark ? "text-white/[0.03]" : "text-slate-900/[0.03]"
-                            }`}
+                            className="absolute top-2 right-3 text-4xl font-fjalla font-bold select-none text-white/[0.05]"
                         >
                             {num}
                         </span>
 
-                        {/* Accent top edge (dark) */}
-                        {isDark && (
-                            <div
-                                className="absolute top-0 left-4 right-4 h-px rounded-full"
-                                style={{
-                                    background: `linear-gradient(90deg, transparent, ${accent}40, transparent)`,
-                                }}
-                            />
-                        )}
+                        {/* Accent top edge */}
+                        <div
+                            className="absolute top-0 left-4 right-4 h-px rounded-full"
+                            style={{
+                                background: `linear-gradient(90deg, transparent, ${accent}40, transparent)`,
+                            }}
+                        />
 
                         {/* Icon in box */}
                         <div
                             className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 shrink-0"
                             style={{
-                                backgroundColor: isDark
-                                    ? `${accent}14`
-                                    : `${accent}0C`,
+                                backgroundColor: `${accent}14`,
                             }}
                         >
                             <Icon size={20} style={{ color: accent }} />
@@ -792,18 +716,14 @@ function OrbitalCard({
 
                         {/* Title */}
                         <h3
-                            className={`text-sm font-semibold mb-1.5 ${
-                                isDark ? "text-slate-100" : "text-slate-800"
-                            }`}
+                            className="text-sm font-semibold mb-1.5 text-slate-100"
                         >
                             {solution.title}
                         </h3>
 
                         {/* Description */}
                         <p
-                            className={`text-xs leading-relaxed flex-1 ${
-                                isDark ? "text-slate-400" : "text-slate-500"
-                            }`}
+                            className="text-xs leading-relaxed flex-1 text-slate-400"
                         >
                             {solution.desc}
                         </p>

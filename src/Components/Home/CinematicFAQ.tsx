@@ -1,6 +1,7 @@
 ﻿import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
 import { useState, useRef } from "react";
+import { FloatingShapes, shapesSky, lightShapes } from "./FloatingShapes.tsx";
 
 /* â”€â”€ CinematicFAQ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    Left label sticks during scroll. FAQ items slide in from right with
@@ -121,8 +122,25 @@ export function CinematicFAQ({ theme }: { theme: string }) {
 
     return (
         <section ref={sectionRef} className="relative overflow-hidden">
-            {isDark && (
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-700/40 to-transparent pointer-events-none" />
+            {isDark ? (
+                <>
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-700/40 to-transparent pointer-events-none" />
+                    {/* Mesh gradient orbs */}
+                    <div className="absolute top-[15%] -left-16 w-[400px] h-[400px] rounded-full pointer-events-none opacity-[0.03]"
+                        style={{ background: "radial-gradient(circle, rgba(14,165,233,0.5) 0%, rgba(14,165,233,0) 70%)" }} />
+                    <div className="absolute -bottom-16 -right-12 w-[350px] h-[350px] rounded-full pointer-events-none opacity-[0.025]"
+                        style={{ background: "radial-gradient(circle, rgba(6,182,212,0.4) 0%, rgba(6,182,212,0) 70%)" }} />
+                    <FloatingShapes shapes={shapesSky} isDark={true} />
+                </>
+            ) : (
+                <>
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-400/30 to-transparent pointer-events-none" />
+                    <div className="absolute top-[15%] -left-16 w-[400px] h-[400px] rounded-full pointer-events-none opacity-[0.045]"
+                        style={{ background: "radial-gradient(circle, rgba(14,165,233,0.5) 0%, rgba(14,165,233,0) 70%)" }} />
+                    <div className="absolute -bottom-16 -right-12 w-[350px] h-[350px] rounded-full pointer-events-none opacity-[0.035]"
+                        style={{ background: "radial-gradient(circle, rgba(6,182,212,0.5) 0%, rgba(6,182,212,0) 70%)" }} />
+                    <FloatingShapes shapes={lightShapes(shapesSky)} isDark={false} />
+                </>
             )}
 
             <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-20 sm:py-32">
@@ -150,15 +168,15 @@ export function CinematicFAQ({ theme }: { theme: string }) {
                             </span>
                         </h2>
                         <p className={`mt-5 text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                            Se non trovi la risposta che cerchi, scrivici â€” rispondiamo entro 24 ore.
+                            Se non trovi la risposta che cerchi, scrivici — rispondiamo entro 24 ore.
                         </p>
                     </motion.div>
 
                     {/* Accordion â€” items slide in from right */}
                     <div className={`rounded-2xl border px-8 ${
                         isDark
-                            ? "bg-[#1C1C1A]/80 border-stone-800/20"
-                            : "bg-white border-slate-200"
+                            ? "bg-[#0E0E0D]/70 border-sky-500/30 shadow-lg shadow-sky-500/10"
+                            : "bg-white/90 border-slate-200 shadow-sm"
                     }`}>
                         {faqs.map((faq, i) => (
                             <FAQItem

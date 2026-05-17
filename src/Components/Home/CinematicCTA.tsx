@@ -137,7 +137,7 @@ export function CinematicCTA({ theme }: { theme: string }) {
                 >
                     Scopri esattamente dove la tua azienda{" "}
                     <span className={isDark ? "text-sky-500" : "text-sky-700"}>
-                        perde efficienza â€” e come recuperarla.
+                        perde efficienza — e come recuperarla.
                     </span>
                 </motion.h2>
 
@@ -199,7 +199,7 @@ export function CinematicCTA({ theme }: { theme: string }) {
                     transition={{ duration: 0.5, delay: 0.35 }}
                 >
                     <Clock size={11} />
-                    10â€“15 minuti Â· report personalizzato Â· nessuna carta di credito
+                    10-15 minuti · report personalizzato · nessuna carta di credito
                 </motion.p>
             </div>
         </motion.section>

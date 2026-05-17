@@ -52,7 +52,7 @@ function FlowChip({ item, isDark, delay }: { item: FlowItem; isDark: boolean; de
     return (
         <motion.div
             className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-                isDark ? "bg-[#0E0E0D]/70 border border-cyan-500/30 hover:border-cyan-500/60 shadow-sm shadow-cyan-500/10" : "bg-white/70 border border-slate-200/60 hover:border-sky-300/60"
+                isDark ? "bg-[#0E0E0D]/70 border border-cyan-500/30 hover:border-cyan-500/60 shadow-sm shadow-cyan-500/10" : "bg-white/80 border border-sky-400/50 hover:border-sky-400/80 shadow-sm shadow-sky-400/15"
             }`}
             initial={{ opacity: 0, y: 16, scale: 0.92 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -121,7 +121,7 @@ export function PrivateAIFlow({ theme }: { theme: string }) {
                 </motion.div>
 
                 <motion.div className="relative mb-16" style={{ y: diagramY, opacity: diagramOpacity, scale: diagramScale }}>
-                    <div className={`relative rounded-3xl border-2 border-dashed px-5 sm:px-10 pt-12 pb-10 ${isDark ? "border-cyan-500/20 bg-cyan-950/[0.06] shadow-lg shadow-cyan-500/5" : "border-sky-600/15 bg-sky-50/40"}`}>
+                    <div className={`relative rounded-3xl border px-5 sm:px-10 pt-12 pb-10 ${isDark ? "border-cyan-500/40 bg-cyan-950/30 shadow-lg shadow-cyan-500/10" : "border-sky-600/30 bg-sky-50/70 shadow-md shadow-sky-100/50"}`}>
                         <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
                             <div className={isDark ? "opacity-[0.02]" : "opacity-[0.04]"} style={{ width: "100%", height: "100%", backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect x='0' y='0' width='20' height='20' fill='none' stroke='%2310B981' stroke-width='0.4'/%3E%3C/svg%3E")`, backgroundSize: "20px 20px" }} />
                         </div>
@@ -166,7 +166,7 @@ export function PrivateAIFlow({ theme }: { theme: string }) {
                         const colors = neonGuaranteeColors[i % neonGuaranteeColors.length];
                         return (
                             <motion.div key={g.title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-40px" }} transition={{ duration: 0.5, delay: i * 0.12, ease: "easeOut" }}>
-                                <motion.div className={`relative rounded-2xl border backdrop-blur-sm p-6 h-full transition-all duration-300 ${isDark ? `bg-[#0E0E0D]/70 ${colors.border} shadow-lg ${colors.glow}` : "bg-white border border-slate-200 hover:border-sky-400"}`} whileHover={isDark ? { y: -6, borderColor: colors.border.replace("/50", "/80") } : { y: -6 }} transition={{ duration: 0.25, ease: "easeOut" }}>
+                                <motion.div className={`relative rounded-2xl border backdrop-blur-sm p-6 h-full transition-all duration-300 ${isDark ? `bg-[#0E0E0D]/70 ${colors.border} shadow-lg ${colors.glow}` : "bg-white/80 border-sky-400/50 shadow-sm shadow-sky-400/15 hover:border-sky-400/80 hover:shadow-md hover:shadow-sky-400/25"}`} whileHover={isDark ? { y: -6, borderColor: colors.border.replace("/50", "/80") } : { y: -6 }} transition={{ duration: 0.25, ease: "easeOut" }}>
                                     {isDark && (<div className={`absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-current to-transparent opacity-15 ${colors.badge}`} />)}
                                     <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${isDark ? colors.bg : "bg-sky-50"}`}><g.icon size={20} className={isDark ? colors.badge : "text-sky-700"} /></div>
                                     <h3 className={`text-base font-semibold mb-2 ${isDark ? "text-slate-100" : "text-slate-900"}`}>{g.title}</h3>

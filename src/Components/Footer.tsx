@@ -1,7 +1,6 @@
 import { Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Badge } from "./Badge.tsx";
 import type { Theme } from "../types/InputTypes.ts";
 
 const fadeUp = {
@@ -20,7 +19,7 @@ export function Footer({ theme }: { theme: Theme }) {
         <footer className={`relative overflow-hidden ${
             isDark
                 ? "bg-[#111110] text-slate-400 border-t border-stone-800/20"
-                : "bg-gradient-to-b from-[#FAF8F4] to-[#F0EAE0] text-stone-500 border-t border-sky-200/60"
+                : "bg-white text-stone-500 border-t border-sky-200/60"
         }`}>
 
             {/* Top glow line */}
@@ -47,7 +46,7 @@ export function Footer({ theme }: { theme: Theme }) {
                         <div className="flex items-center gap-3">
                             {/* Mark */}
                             <div className={`w-16 h-10 rounded-xl flex items-center justify-center border shrink-0 ${
-                                isDark ? "bg-[rgba(201,168,76,0.10)] border-[rgba(201,168,76,0.35)]" : "bg-[rgba(201,168,76,0.12)] border-[rgba(201,168,76,0.4)]"
+                                isDark ? "bg-[rgba(201,168,76,0.10)] border-[rgba(201,168,76,0.35)]" : "bg-sky-50/80 border-sky-300/50"
                             }`}>
                                 <img src="/logoicon.png" alt="AxiomLab" className="w-12 h-7 object-contain"/>
                             </div>
@@ -100,7 +99,7 @@ export function Footer({ theme }: { theme: Theme }) {
                         viewport={{ once: true, amount: 0.2 }}
                         variants={fadeUp}
                     >
-                        <Badge label="Piattaforma" color="sky" theme={theme} pulse={false} />
+                        <h4 className={`text-xs font-bold uppercase tracking-widest ${isDark ? "text-sky-400" : "text-sky-700"}`}>Piattaforma</h4>
                         <nav className="flex flex-col gap-2.5">
                             {[
                                 { to: "/", label: "Home" },
@@ -134,7 +133,7 @@ export function Footer({ theme }: { theme: Theme }) {
                         viewport={{ once: true, amount: 0.2 }}
                         variants={fadeUp}
                     >
-                        <Badge label="Legale" color="violet" theme={theme} pulse={false} />
+                        <h4 className={`text-xs font-bold uppercase tracking-widest ${isDark ? "text-violet-400" : "text-violet-700"}`}>Legale</h4>
                         <nav className="flex flex-col gap-2.5">
                             {[
                                 { to: "/privacy", label: "Privacy Policy" },
@@ -165,7 +164,7 @@ export function Footer({ theme }: { theme: Theme }) {
                         viewport={{ once: true, amount: 0.2 }}
                         variants={fadeUp}
                     >
-                        <Badge label="Inizia ora" color="emerald" theme={theme} pulse={false} />
+                        <h4 className={`text-xs font-bold uppercase tracking-widest ${isDark ? "text-emerald-400" : "text-emerald-700"}`}>Inizia ora</h4>
                         <Link
                             to="/survey/start"
                             className={`inline-flex items-center gap-1.5 text-sm font-medium transition-all duration-200 ${
