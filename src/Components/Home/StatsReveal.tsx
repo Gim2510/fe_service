@@ -87,7 +87,9 @@ export function StatsReveal({ theme }: { theme: string }) {
                         style={{ background: "radial-gradient(circle, rgba(6,182,212,0.5) 0%, rgba(6,182,212,0) 70%)" }} />
                     <div className="absolute -bottom-16 -left-16 w-[350px] h-[350px] rounded-full pointer-events-none opacity-[0.025]"
                         style={{ background: "radial-gradient(circle, rgba(245,158,11,0.4) 0%, rgba(245,158,11,0) 70%)" }} />
-                    <FloatingShapes shapes={shapesCyan} isDark={true} />
+                    <div className="hidden md:block">
+                        <FloatingShapes shapes={shapesCyan} isDark={true} />
+                    </div>
                 </>
             ) : (
                 <>
@@ -96,7 +98,9 @@ export function StatsReveal({ theme }: { theme: string }) {
                         style={{ background: "radial-gradient(circle, rgba(14,165,233,0.6) 0%, rgba(14,165,233,0) 70%)" }} />
                     <div className="absolute -bottom-16 -left-16 w-[350px] h-[350px] rounded-full pointer-events-none opacity-[0.035]"
                         style={{ background: "radial-gradient(circle, rgba(245,158,11,0.5) 0%, rgba(245,158,11,0) 70%)" }} />
-                    <FloatingShapes shapes={lightShapes(shapesCyan)} isDark={false} />
+                    <div className="hidden md:block">
+                        <FloatingShapes shapes={lightShapes(shapesCyan)} isDark={false} />
+                    </div>
                 </>
             )}
             <div className="relative mx-auto max-w-7xl px-6 sm:px-8 py-20 sm:py-32">
