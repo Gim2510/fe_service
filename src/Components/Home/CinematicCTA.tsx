@@ -1,7 +1,7 @@
 ﻿import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Clock, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 import { GlowButton } from "./GlowButton.tsx";
 
 /* â”€â”€ CinematicCTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -9,50 +9,6 @@ import { GlowButton } from "./GlowButton.tsx";
    Floating particles in background. Gradient border pulse. The entire
    section starts small and "opens up" creating a reveal effect.
    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
-
-const PARTICLE_COUNT = 22;
-
-function FloatingParticles({ isDark }: { isDark: boolean }) {
-    const particles = useMemo(() =>
-        Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
-            id: i,
-            x: Math.random() * 100,
-            y: Math.random() * 100,
-            size: 1 + Math.random() * 2.5,
-            duration: 6 + Math.random() * 10,
-            delay: Math.random() * 8,
-            opacity: 0.08 + Math.random() * 0.18,
-        })), []);
-
-    return (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {particles.map((p) => (
-                <motion.div
-                    key={p.id}
-                    className={`absolute rounded-full ${isDark ? "bg-sky-500" : "bg-sky-600"}`}
-                    style={{
-                        left: `${p.x}%`,
-                        top: `${p.y}%`,
-                        width: p.size,
-                        height: p.size,
-                        opacity: p.opacity,
-                    }}
-                    animate={{
-                        y: [0, -28, 0],
-                        x: [0, Math.random() > 0.5 ? 10 : -10, 0],
-                        opacity: [p.opacity, p.opacity * 2.5, p.opacity],
-                    }}
-                    transition={{
-                        duration: p.duration,
-                        delay: p.delay,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                    }}
-                />
-            ))}
-        </div>
-    );
-}
 
 export function CinematicCTA({ theme }: { theme: string }) {
     const isDark = theme === "dark";
@@ -87,10 +43,6 @@ export function CinematicCTA({ theme }: { theme: string }) {
                     ? "bg-gradient-to-br from-[#0C0C0B] via-[#161410] to-[#0C0C0B]"
                     : "bg-gradient-to-br from-[#FAFAF8] via-[#F5F5F2] to-[#FAFAF8]"
             }`} />
-
-            <div className="hidden md:block">
-                <FloatingParticles isDark={isDark} />
-            </div>
 
             {/* Decorative */}
             <div className="absolute inset-0 pointer-events-none">
