@@ -23,6 +23,7 @@ interface Solution {
     desc: string;
     icon: LucideIcon;
     accent: string;
+    sectionId: string;
 }
 
 const solutions: Solution[] = [
@@ -31,42 +32,49 @@ const solutions: Solution[] = [
         desc: "Workflow cartacei trasformati in flussi digitali automatici",
         icon: Workflow,
         accent: "#06b6d4",
+        sectionId: "section-method",
     },
     {
         title: "Integrazioni intelligenti",
         desc: "Tutti i tuoi software collegati, zero doppia digitazione",
         icon: Plug,
         accent: "#8b5cf6",
+        sectionId: "section-ai",
     },
     {
         title: "AI predittiva",
         desc: "Modelli che anticipano domanda, anomalie e opportunità",
         icon: BrainCircuit,
         accent: "#f59e0b",
+        sectionId: "section-ai",
     },
     {
         title: "Business Intelligence",
         desc: "Cruscotti real-time che trasformano dati in decisioni",
         icon: LayoutDashboard,
         accent: "#10b981",
+        sectionId: "section-stats",
     },
     {
         title: "Automazione end-to-end",
         desc: "Dal preventivo alla fattura, senza intervento manuale",
         icon: Repeat,
         accent: "#f43f5e",
+        sectionId: "section-method",
     },
     {
         title: "Infrastruttura dati",
         desc: "Data lake centralizzato, sempre accessibile e governato",
         icon: Server,
         accent: "#3b82f6",
+        sectionId: "section-private-ai",
     },
     {
         title: "Scalabilità garantita",
         desc: "Architetture cloud-native che crescono col tuo business",
         icon: Cloud,
         accent: "#f97316",
+        sectionId: "section-maturity",
     },
 ];
 
@@ -677,15 +685,19 @@ function OrbitalCard({
                     />
                 </motion.div>
 
-                {/* ── Layer 2: Expanded info card ── */}
+                {/* ── Layer 2: Expanded info card (clickable → scrolls to section) ── */}
                 <motion.div
-                    className="absolute inset-0 flex flex-col overflow-hidden"
+                    className="absolute inset-0 flex flex-col overflow-hidden cursor-pointer"
                     style={{
                         opacity: cardLayerOpacity,
                         borderRadius,
                         background: "rgba(14,14,13,0.88)",
                         boxShadow: `0 0 28px ${accent}10, 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04)`,
                         border: `1px solid ${accent}22`,
+                    }}
+                    onClick={() => {
+                        const el = document.getElementById(solution.sectionId);
+                        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
                     }}
                 >
                     <div className="p-5 flex flex-col h-full">
