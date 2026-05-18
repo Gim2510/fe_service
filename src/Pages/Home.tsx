@@ -54,19 +54,19 @@ export function Home() {
                 <HorizontalSolutions theme={theme} />
 
                 {/* 3. Method — "here's HOW we do it" */}
-                <DepthMethod theme={theme} />
+                <div id="section-method"><DepthMethod theme={theme} /></div>
 
                 {/* 4. AI Capabilities — "and with WHAT tools" — differentiator */}
-                <AICapabilities theme={theme} />
+                <div id="section-ai"><AICapabilities theme={theme} /></div>
 
                 {/* 5. Private AI — closes AI block: "your data stays yours" */}
-                <PrivateAIFlow theme={theme} />
+                <div id="section-private-ai"><PrivateAIFlow theme={theme} /></div>
 
                 {/* 6. Self-assessment — interactive engagement before social proof */}
-                <MaturitySection theme={theme} />
+                <div id="section-maturity"><MaturitySection theme={theme} /></div>
 
                 {/* 7. Stats — validate the assessment just completed */}
-                <StatsReveal theme={theme} />
+                <div id="section-stats"><StatsReveal theme={theme} /></div>
 
                 {/* 8. Social proof — "others like you got results" */}
                 <ParallaxTestimonials theme={theme} />
