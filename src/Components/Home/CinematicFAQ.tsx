@@ -168,7 +168,7 @@ export function CinematicFAQ({ theme }: { theme: string }) {
                             </span>
                         </h2>
                         <p className={`mt-5 text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                            Se non trovi la risposta che cerchi, scrivici — rispondiamo entro 24 ore.
+                            Se non trovi la risposta che cerchi, scrivici, rispondiamo entro 24 ore.
                         </p>
                     </motion.div>
 
