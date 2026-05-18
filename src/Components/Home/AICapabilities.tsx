@@ -1,10 +1,10 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
     Bot, Workflow, BrainCircuit, Database,
     BookOpen, ServerCog, ChevronRight, Sparkles,
-    Zap, Target, Layers, Search, Library, Gauge,
+    Zap, Target, Layers, Search, Library, Gauge, X,
 } from "lucide-react";
 
 /* ── AICapabilities ──────────────────────────────────────────────────────
@@ -169,87 +169,63 @@ const neonColors = {
     },
 };
 
-/* ── Capability Card ── */
+/* ── Collapsed Card (in grid) ── */
 
-function CapabilityCard({
+function CollapsedCard({
     cap,
     index,
     isDark,
-    isExpanded,
-    onToggle,
+    onOpen,
 }: {
     cap: Capability;
     index: number;
     isDark: boolean;
-    isExpanded: boolean;
-    onToggle: () => void;
+    onOpen: () => void;
 }) {
     const ref = useRef<HTMLDivElement>(null);
+    const [hovered, setHovered] = useState(false);
     const { scrollYProgress } = useScroll({
         target: ref,
         offset: ["start end", "center center"],
     });
 
     const sp = { stiffness: 80, damping: 28, mass: 0.8 };
-    const scale = useSpring(useTransform(scrollYProgress, [0, 0.7], [0.88, 1]), sp);
-    const opacity = useSpring(useTransform(scrollYProgress, [0, 0.25, 0.7], [0, 0.4, 1]), sp);
-    const y = useSpring(useTransform(scrollYProgress, [0, 0.7], [40, 0]), sp);
+    const scrollOpacity = useSpring(useTransform(scrollYProgress, [0, 0.25, 0.7], [0, 0.4, 1]), sp);
+    const scrollY = useSpring(useTransform(scrollYProgress, [0, 0.7], [40, 0]), sp);
 
     const colors = neonColors[cap.color];
 
     return (
         <motion.div
             ref={ref}
-            style={{ scale, opacity, y }}
-            className="relative"
+            style={{
+                opacity: scrollOpacity,
+                y: scrollY,
+                willChange: "transform, opacity",
+            }}
         >
             <motion.div
-                className={`relative rounded-2xl border backdrop-blur-sm overflow-hidden transition-all duration-300 cursor-pointer ${
+                animate={{ scale: hovered ? 1.03 : 1 }}
+                transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                onClick={onOpen}
+                className={`relative rounded-2xl border backdrop-blur-sm cursor-pointer overflow-hidden ${
                     isDark
                         ? `bg-[#0E0E0D]/70 ${colors.border} shadow-lg ${colors.glow}`
                         : "bg-white/80 border-slate-200 shadow-sm hover:shadow-md"
                 }`}
-                onClick={onToggle}
-                whileHover={
-                    isDark
-                        ? { y: -4, transition: { duration: 0.25 } }
-                        : { y: -4, transition: { duration: 0.25 } }
-                }
-                animate={
-                    isExpanded && isDark
-                        ? { borderColor: "rgba(0,0,0,0)" }
-                        : {}
-                }
-                layout
+                onHoverStart={() => setHovered(true)}
+                onHoverEnd={() => setHovered(false)}
             >
-                {/* Neon corner accent — dark mode */}
+                {/* Neon corner accent */}
                 {isDark && (
                     <div
                         className={`absolute top-0 right-0 w-20 h-20 rounded-bl-3xl rounded-tr-2xl bg-gradient-to-bl ${colors.cornerGrad} to-transparent opacity-[0.08] pointer-events-none`}
                     />
                 )}
 
-                {/* Animated top border glow on expand */}
-                {isDark && isExpanded && (
-                    <motion.div
-                        className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent ${
-                            cap.color === "cyan"
-                                ? "via-cyan-500/60"
-                                : cap.color === "violet"
-                                ? "via-violet-500/60"
-                                : "via-emerald-500/60"
-                        } to-transparent`}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.3 }}
-                    />
-                )}
-
                 <div className="relative z-10 p-6">
-                    {/* Header */}
                     <div className="flex items-start justify-between">
                         <div className="flex items-center gap-4">
-                            {/* Icon container */}
                             <div
                                 className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
                                     isDark ? colors.bg : colors.bgLight
@@ -278,97 +254,225 @@ function CapabilityCard({
                             </div>
                         </div>
 
-                        {/* Expand indicator */}
-                        <motion.div
+                        <div
                             className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
                                 isDark ? "bg-white/[0.03]" : "bg-slate-100"
                             }`}
-                            animate={{ rotate: isExpanded ? 90 : 0 }}
-                            transition={{ duration: 0.25 }}
                         >
                             <ChevronRight
                                 size={14}
                                 className={isDark ? "text-slate-500" : "text-slate-400"}
                             />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Bottom accent line */}
+                <motion.div
+                    className={`absolute bottom-0 inset-x-0 h-0.5 ${colors.lineBg}`}
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: index * 0.1 }}
+                    style={{ transformOrigin: "left" }}
+                />
+            </motion.div>
+        </motion.div>
+    );
+}
+
+/* ── Expanded Overlay — covers entire grid ── */
+
+function ExpandedOverlay({
+    cap,
+    isDark,
+    onClose,
+}: {
+    cap: Capability;
+    isDark: boolean;
+    onClose: () => void;
+}) {
+    const colors = neonColors[cap.color];
+
+    const expandSpring = { type: "spring" as const, stiffness: 400, damping: 32, mass: 0.8 };
+
+    return (
+        <>
+            {/* Backdrop — dims cards behind */}
+            <motion.div
+                className="absolute inset-0 z-20 rounded-2xl"
+                style={{ willChange: "opacity" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={onClose}
+            >
+                <div
+                    className="absolute inset-0 rounded-2xl"
+                    style={{
+                        backgroundColor: isDark
+                            ? "rgba(14,14,13,0.6)"
+                            : "rgba(250,250,248,0.6)",
+                        backdropFilter: "blur(4px)",
+                        WebkitBackdropFilter: "blur(4px)",
+                    }}
+                />
+            </motion.div>
+
+            {/* Expanded card — pure transform animation (GPU-only) */}
+            <motion.div
+                className={`absolute inset-x-0 top-0 z-30 rounded-2xl border cursor-pointer ${
+                    isDark
+                        ? `${colors.border}`
+                        : "border-slate-200"
+                }`}
+                style={{
+                    willChange: "transform, opacity",
+                    transformOrigin: "top center",
+                    backgroundColor: isDark
+                        ? "rgba(14,14,13,0.98)"
+                        : "rgba(255,255,255,0.98)",
+                    boxShadow: isDark
+                        ? `0 30px 80px -16px rgba(0,0,0,0.8), 0 0 40px ${
+                            cap.color === "cyan" ? "rgba(6,182,212,0.12)"
+                            : cap.color === "violet" ? "rgba(139,92,246,0.12)"
+                            : "rgba(16,185,129,0.12)"
+                        }`
+                        : "0 30px 80px -16px rgba(0,0,0,0.18), 0 12px 24px -8px rgba(0,0,0,0.08)",
+                }}
+                initial={{ opacity: 0, scale: 0.92, y: 12 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 8 }}
+                transition={expandSpring}
+                onClick={onClose}
+            >
+                {/* Neon corner accent */}
+                {isDark && (
+                    <div
+                        className={`absolute top-0 right-0 w-24 h-24 rounded-bl-3xl rounded-tr-2xl bg-gradient-to-bl ${colors.cornerGrad} to-transparent opacity-[0.08] pointer-events-none`}
+                    />
+                )}
+
+                {/* Top border glow */}
+                {isDark && (
+                    <motion.div
+                        className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent ${
+                            cap.color === "cyan"
+                                ? "via-cyan-500/60"
+                                : cap.color === "violet"
+                                ? "via-violet-500/60"
+                                : "via-emerald-500/60"
+                        } to-transparent`}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                    />
+                )}
+
+                <div className="relative z-10 p-8">
+                    {/* Header row */}
+                    <div className="flex items-start justify-between mb-6">
+                        <div className="flex items-center gap-4">
+                            <div
+                                className={`w-14 h-14 rounded-xl flex items-center justify-center shrink-0 ${
+                                    isDark ? colors.bg : colors.bgLight
+                                }`}
+                            >
+                                <cap.icon
+                                    size={26}
+                                    className={isDark ? colors.badge : colors.iconLight}
+                                />
+                            </div>
+                            <div>
+                                <h3
+                                    className={`text-lg font-semibold ${
+                                        isDark ? "text-slate-100" : "text-slate-900"
+                                    }`}
+                                >
+                                    {cap.title}
+                                </h3>
+                                <span
+                                    className={`text-xs font-medium ${
+                                        isDark ? colors.tagText : colors.tagTextLight
+                                    }`}
+                                >
+                                    {cap.tagline}
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* Close button */}
+                        <motion.div
+                            className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 cursor-pointer ${
+                                isDark
+                                    ? "bg-white/[0.05] hover:bg-white/[0.1]"
+                                    : "bg-slate-100 hover:bg-slate-200"
+                            } transition-colors`}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <X
+                                size={14}
+                                className={isDark ? "text-slate-400" : "text-slate-500"}
+                            />
                         </motion.div>
                     </div>
 
-                    {/* Expanded content */}
-                    <motion.div
-                        initial={false}
-                        animate={{
-                            height: isExpanded ? "auto" : 0,
-                            opacity: isExpanded ? 1 : 0,
-                        }}
-                        transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-                        className="overflow-hidden"
+                    {/* Description */}
+                    <motion.p
+                        className={`text-sm leading-relaxed mb-6 max-w-2xl ${
+                            isDark ? "text-slate-400" : "text-slate-500"
+                        }`}
+                        style={{ willChange: "transform, opacity" }}
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 30, delay: 0.05 }}
                     >
-                        <div className="pt-5">
-                            {/* Description */}
-                            <p
-                                className={`text-sm leading-relaxed mb-5 ${
-                                    isDark ? "text-slate-400" : "text-slate-500"
+                        {cap.description}
+                    </motion.p>
+
+                    {/* Highlights — horizontal on desktop, vertical on mobile */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        {cap.highlights.map((h, i) => (
+                            <motion.div
+                                key={i}
+                                className={`flex items-center gap-3 px-4 py-3 rounded-xl ${
+                                    isDark
+                                        ? "bg-white/[0.02] border border-white/[0.04]"
+                                        : "bg-slate-50 border border-slate-100"
                                 }`}
+                                style={{ willChange: "transform, opacity" }}
+                                initial={{ opacity: 0, y: 8 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 400,
+                                    damping: 30,
+                                    delay: 0.08 + i * 0.04,
+                                }}
                             >
-                                {cap.description}
-                            </p>
-
-                            {/* Highlights */}
-                            <div className="flex flex-col gap-2.5">
-                                {cap.highlights.map((h, i) => (
-                                    <motion.div
-                                        key={i}
-                                        className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl ${
-                                            isDark
-                                                ? "bg-white/[0.02] border border-white/[0.04]"
-                                                : "bg-slate-50 border border-slate-100"
-                                        }`}
-                                        initial={{ opacity: 0, x: -8 }}
-                                        animate={
-                                            isExpanded
-                                                ? { opacity: 1, x: 0 }
-                                                : { opacity: 0, x: -8 }
-                                        }
-                                        transition={{
-                                            duration: 0.3,
-                                            delay: isExpanded ? 0.1 + i * 0.06 : 0,
-                                        }}
-                                    >
-                                        <h.icon
-                                            size={14}
-                                            className={`shrink-0 ${
-                                                isDark
-                                                    ? colors.highlight
-                                                    : colors.highlightLight
-                                            }`}
-                                        />
-                                        <span
-                                            className={`text-[13px] ${
-                                                isDark ? "text-slate-300" : "text-slate-600"
-                                            }`}
-                                        >
-                                            {h.text}
-                                        </span>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </div>
-                    </motion.div>
+                                <h.icon
+                                    size={14}
+                                    className={`shrink-0 ${
+                                        isDark
+                                            ? colors.highlight
+                                            : colors.highlightLight
+                                    }`}
+                                />
+                                <span
+                                    className={`text-[13px] ${
+                                        isDark ? "text-slate-300" : "text-slate-600"
+                                    }`}
+                                >
+                                    {h.text}
+                                </span>
+                            </motion.div>
+                        ))}
+                    </div>
                 </div>
-
-                {/* Subtle pulse indicator when collapsed — hints at expandability */}
-                {!isExpanded && (
-                    <motion.div
-                        className={`absolute bottom-0 inset-x-0 h-0.5 ${colors.lineBg}`}
-                        initial={{ scaleX: 0 }}
-                        whileInView={{ scaleX: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: index * 0.1 }}
-                        style={{ transformOrigin: "left" }}
-                    />
-                )}
             </motion.div>
-        </motion.div>
+        </>
     );
 }
 
@@ -430,8 +534,8 @@ export function AICapabilities({ theme }: { theme: string }) {
             {/* Background accents */}
             {isDark ? (
                 <>
-                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-500/40 to-transparent pointer-events-none" />
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-violet-950/10 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-500/40 to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-sky-950/10 via-transparent to-transparent pointer-events-none" />
                     {/* Ambient mesh gradient orbs */}
                     <div
                         className="absolute top-[15%] -left-20 w-[500px] h-[500px] rounded-full pointer-events-none opacity-[0.03]"
@@ -450,7 +554,7 @@ export function AICapabilities({ theme }: { theme: string }) {
                 </>
             ) : (
                 <>
-                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-400/30 to-transparent pointer-events-none" />
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-400/30 to-transparent pointer-events-none" />
                     <div
                         className="absolute top-[15%] -left-20 w-[500px] h-[500px] rounded-full pointer-events-none opacity-[0.04]"
                         style={{
@@ -477,13 +581,13 @@ export function AICapabilities({ theme }: { theme: string }) {
                     <span
                         className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
                             isDark
-                                ? "text-violet-400 border-stone-700/40 bg-stone-800/20"
-                                : "text-violet-600 border-violet-300 bg-violet-50"
+                                ? "text-sky-400 border-stone-700/40 bg-stone-800/20"
+                                : "text-sky-600 border-sky-300 bg-sky-50"
                         }`}
                     >
                         <Sparkles
                             size={12}
-                            className={isDark ? "text-violet-400" : "text-violet-500"}
+                            className={isDark ? "text-sky-400" : "text-sky-500"}
                         />
                         Capacità AI
                     </span>
@@ -495,7 +599,7 @@ export function AICapabilities({ theme }: { theme: string }) {
                         Quello che l'AI può fare
                         <span
                             className={`block mt-1 ${
-                                isDark ? "text-violet-400" : "text-violet-600"
+                                isDark ? "text-sky-400" : "text-sky-700"
                             }`}
                         >
                             per la tua azienda.
@@ -519,16 +623,27 @@ export function AICapabilities({ theme }: { theme: string }) {
                     {/* Card grid */}
                     <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                         {capabilities.map((cap, i) => (
-                            <CapabilityCard
+                            <CollapsedCard
                                 key={cap.title}
                                 cap={cap}
                                 index={i}
                                 isDark={isDark}
-                                isExpanded={expandedIndex === i}
-                                onToggle={() => handleToggle(i)}
+                                onOpen={() => handleToggle(i)}
                             />
                         ))}
                     </div>
+
+                    {/* Expanded overlay — renders on top of entire grid */}
+                    <AnimatePresence>
+                        {expandedIndex !== null && (
+                            <ExpandedOverlay
+                                key={`expanded-${expandedIndex}`}
+                                cap={capabilities[expandedIndex]}
+                                isDark={isDark}
+                                onClose={() => setExpandedIndex(null)}
+                            />
+                        )}
+                    </AnimatePresence>
                 </div>
 
                 {/* Bottom tagline */}
