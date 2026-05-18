@@ -7,6 +7,7 @@ import { TimelineProblems } from "../Components/Home/TimelineProblems.tsx";
 import { VideoSection } from "../Components/Home/VideoSection.tsx";
 import { HorizontalSolutions } from "../Components/Home/HorizontalSolutions.tsx";
 import { DepthMethod } from "../Components/Home/DepthMethod.tsx";
+import { AICapabilities } from "../Components/Home/AICapabilities.tsx";
 import { PrivateAIFlow } from "../Components/Home/PrivateAIFlow.tsx";
 import { ParallaxTestimonials } from "../Components/Home/ParallaxTestimonials.tsx";
 import { StatsReveal } from "../Components/Home/StatsReveal.tsx";
@@ -43,31 +44,37 @@ export function Home() {
             {/* ── Gradient transition ── */}
             <SunsetTransition theme={theme} />
 
-            {/* ── Content sections — each with unique scroll effects ── */}
+            {/* ── Content sections — optimized funnel order (TBDO-44 analysis) ── */}
             <div className={`relative z-10 ${isDark ? "" : ""}`}>
 
-                {/* Timeline accordion — problem recognition */}
+                {/* 1. Problem recognition — PAS pattern: agitate pain points */}
                 <TimelineProblems theme={theme} />
 
-                {/* Video section (kept as-is) */}
-                <VideoSection theme={theme} />
-
-                {/* Horizontal scroll gallery — sticky container */}
+                {/* 2. Solutions — immediately after problems (Problem→Solve) */}
                 <HorizontalSolutions theme={theme} />
 
-                {/* Timeline with scroll-driven fill */}
+                {/* 3. Method — "here's HOW we do it" */}
                 <DepthMethod theme={theme} />
 
-                {/* Private AI infrastructure flow — layered architecture diagram */}
+                {/* 4. AI Capabilities — "and with WHAT tools" — differentiator */}
+                <AICapabilities theme={theme} />
+
+                {/* 5. Private AI — closes AI block: "your data stays yours" */}
                 <PrivateAIFlow theme={theme} />
 
-                {/* 3D perspective card parallax */}
-                <ParallaxTestimonials theme={theme} />
+                {/* 6. Self-assessment — interactive engagement before social proof */}
+                <MaturitySection theme={theme} />
 
-                {/* Stats with different parallax speeds */}
+                {/* 7. Stats — validate the assessment just completed */}
                 <StatsReveal theme={theme} />
 
-                {/* Scrolling marquee */}
+                {/* 8. Social proof — "others like you got results" */}
+                <ParallaxTestimonials theme={theme} />
+
+                {/* 9. Video — reinforcement for already-interested users */}
+                <VideoSection theme={theme} />
+
+                {/* 10. Scrolling marquee — transition to close */}
                 <LiquidTextBanner
                     theme={theme}
                     messages={[
@@ -81,9 +88,8 @@ export function Home() {
                         "Nessun impegno iniziale",
                     ]}
                 />
-                <MaturitySection theme={theme} />
 
-                {/* Sticky FAQ with stagger slide-in */}
+                {/* 11. FAQ — handle last objections */}
                 <CinematicFAQ theme={theme} />
             </div>
 
