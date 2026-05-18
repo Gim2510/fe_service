@@ -91,7 +91,7 @@ export function CinematicCTA({ theme }: { theme: string }) {
                 >
                     Scopri esattamente dove la tua azienda{" "}
                     <span className={isDark ? "text-sky-500" : "text-sky-700"}>
-                        perde efficienza — e come recuperarla.
+                        perde efficienza e come recuperarla.
                     </span>
                 </motion.h2>
 
@@ -105,7 +105,7 @@ export function CinematicCTA({ theme }: { theme: string }) {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.15 }}
                 >
-                    In 10 minuti ottieni un report personalizzato sul livello di maturitÃ  digitale della tua azienda: punti critici, opportunitÃ  prioritarie e un piano d'azione concreto.
+                    In 10 minuti ottieni un report personalizzato sul livello di maturità digitale della tua azienda: punti critici, opportunità prioritarie e un piano d'azione concreto.
                 </motion.p>
 
                 {/* Micro-benefits */}

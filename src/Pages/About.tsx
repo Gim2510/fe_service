@@ -72,7 +72,7 @@ const metodoDettaglio = [
         step: "01",
         title: "Diagnosi operativa",
         duration: "1–2 settimane",
-        description: "Mappatura completa dei processi esistenti, audit degli strumenti in uso e analisi dei flussi di dati. Identifichiamo i colli di bottiglia, le duplicazioni e i punti di perdita di margine con dati concreti — non supposizioni.",
+        description: "Mappatura completa dei processi esistenti, audit degli strumenti in uso e analisi dei flussi di dati. Identifichiamo i colli di bottiglia, le duplicazioni e i punti di perdita di margine con dati concreti, non supposizioni.",
         output: "Report diagnostico con priorità di intervento e stima dell'impatto economico recuperabile.",
     },
     {
@@ -134,7 +134,7 @@ export function About() {
                             AxiomLab è una realtà di consulenza digitale specializzata nelle piccole
                             e medie imprese italiane. Non siamo un'agenzia di sviluppo, non siamo un system
                             integrator, non siamo vendor di prodotti. Siamo il partner operativo che ti aiuta
-                            a capire dove perdi efficienza e a recuperarla — con soluzioni costruite
+                            a capire dove perdi efficienza e a recuperarla con soluzioni costruite
                             specificamente per come lavora la tua azienda.
                         </p>
                     </motion.div>
@@ -157,7 +157,7 @@ export function About() {
                             <p className={`text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                                 AxiomLab nasce dall'incontro di due competenze complementari e di una
                                 frustrazione condivisa: le grandi aziende hanno accesso a metodologie,
-                                strumenti e risorse che le PMI non possono permettersi — eppure i problemi
+                                strumenti e risorse che le PMI non possono permettersi, eppure i problemi
                                 operativi sono esattamente gli stessi.
                             </p>
                             <p className={`mt-4 text-base leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
@@ -259,7 +259,7 @@ export function About() {
                         </h2>
                         <p className={`mt-4 text-base max-w-2xl ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                             Non siamo legati a nessun vendor. Scegliamo gli strumenti giusti per il contesto
-                            specifico — non quelli più convenienti per noi o più facili da vendere.
+                            specifico, non quelli più convenienti per noi o più facili da vendere.
                         </p>
                     </motion.div>
 

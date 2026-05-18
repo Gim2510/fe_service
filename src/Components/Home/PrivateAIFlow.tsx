@@ -87,7 +87,7 @@ function LayerLabel({ label, sublabel, isDark }: { label: string; sublabel: stri
         <motion.div className="flex items-center gap-3" initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, ease: "easeOut" }}>
             <div className={`h-px w-8 ${isDark ? "bg-cyan-500/30" : "bg-sky-600/20"}`} />
             <span className={`text-[11px] font-bold uppercase tracking-[0.15em] ${isDark ? "text-cyan-400/60" : "text-sky-700/50"}`}>{label}</span>
-            <span className={`text-[11px] ${isDark ? "text-slate-600" : "text-slate-400"}`}> , {sublabel}</span>
+            <span className={`text-[11px] ${isDark ? "text-slate-600" : "text-slate-400"}`}> {sublabel}</span>
         </motion.div>
     );
 }
