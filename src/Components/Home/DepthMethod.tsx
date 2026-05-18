@@ -101,7 +101,6 @@ function StepCard({ step, index, isDark, theme: _theme }: {
                             </span>
                         </div>
                     </div>
-                    <div className={`w-8 h-0.5 ${isDark ? `bg-gradient-to-r ${colors.line}` : "bg-sky-600/60"} mt-3`} />
                 </div>
                 <p className={`text-sm leading-relaxed ${
                     isDark ? "text-slate-400" : "text-slate-500"
