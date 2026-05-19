@@ -1,12 +1,14 @@
 import { motion, useScroll, useTransform, useSpring, type MotionValue } from "framer-motion";
 import {
-    Workflow,
-    Plug,
+    AlertTriangle,
+    Route,
     BrainCircuit,
-    LayoutDashboard,
-    Repeat,
-    Server,
-    Cloud,
+    ShieldCheck,
+    Gauge,
+    BarChart3,
+    MessageSquare,
+    Play,
+    HelpCircle,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useRef, useEffect } from "react";
@@ -28,53 +30,67 @@ interface Solution {
 
 const solutions: Solution[] = [
     {
-        title: "Processi digitalizzati",
-        desc: "Workflow cartacei trasformati in flussi digitali automatici",
-        icon: Workflow,
+        title: "Problemi reali",
+        desc: "Le inefficienze che frenano la crescita delle PMI ogni giorno",
+        icon: AlertTriangle,
+        accent: "#ef4444",
+        sectionId: "section-problems",
+    },
+    {
+        title: "Il nostro metodo",
+        desc: "Diagnosi, progettazione e attivazione: un percorso in 3 fasi",
+        icon: Route,
         accent: "#06b6d4",
         sectionId: "section-method",
     },
     {
-        title: "Integrazioni intelligenti",
-        desc: "Tutti i tuoi software collegati, zero doppia digitazione",
-        icon: Plug,
+        title: "AI su misura",
+        desc: "Agenti autonomi, workflow automatizzati e modelli sui tuoi dati",
+        icon: BrainCircuit,
         accent: "#8b5cf6",
         sectionId: "section-ai",
     },
     {
-        title: "AI predittiva",
-        desc: "Modelli che anticipano domanda, anomalie e opportunità",
-        icon: BrainCircuit,
+        title: "AI privata",
+        desc: "Infrastruttura dedicata, zero cloud esterni, dati sotto controllo",
+        icon: ShieldCheck,
         accent: "#f59e0b",
-        sectionId: "section-ai",
-    },
-    {
-        title: "Business Intelligence",
-        desc: "Cruscotti real-time che trasformano dati in decisioni",
-        icon: LayoutDashboard,
-        accent: "#10b981",
-        sectionId: "section-stats",
-    },
-    {
-        title: "Automazione end-to-end",
-        desc: "Dal preventivo alla fattura, senza intervento manuale",
-        icon: Repeat,
-        accent: "#f43f5e",
-        sectionId: "section-method",
-    },
-    {
-        title: "Infrastruttura dati",
-        desc: "Data lake centralizzato, sempre accessibile e governato",
-        icon: Server,
-        accent: "#3b82f6",
         sectionId: "section-private-ai",
     },
     {
-        title: "Scalabilità garantita",
-        desc: "Architetture cloud-native che crescono col tuo business",
-        icon: Cloud,
-        accent: "#f97316",
+        title: "Maturità digitale",
+        desc: "Assessment per misurare il livello di digitalizzazione aziendale",
+        icon: Gauge,
+        accent: "#10b981",
         sectionId: "section-maturity",
+    },
+    {
+        title: "I numeri che contano",
+        desc: "100% su misura, zero template, affiancamento post-lancio",
+        icon: BarChart3,
+        accent: "#f43f5e",
+        sectionId: "section-stats",
+    },
+    {
+        title: "Chi ci ha scelto",
+        desc: "PMI che hanno smesso di perdere margine con le nostre soluzioni",
+        icon: MessageSquare,
+        accent: "#a855f7",
+        sectionId: "section-testimonials",
+    },
+    {
+        title: "Come funziona",
+        desc: "Dal problema al risultato in tre passi concreti",
+        icon: Play,
+        accent: "#3b82f6",
+        sectionId: "section-video",
+    },
+    {
+        title: "Domande frequenti",
+        desc: "Risposte chiare ai dubbi più comuni sul nostro approccio",
+        icon: HelpCircle,
+        accent: "#f97316",
+        sectionId: "section-faq",
     },
 ];
 
@@ -204,24 +220,23 @@ export function HorizontalSolutions({ theme }: { theme: string }) {
                         className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border text-cyan-400 border-cyan-500/20 bg-cyan-950/30"
                     >
                         <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
-                        Soluzioni su misura
+                        Esplora la pagina
                     </span>
                     <h2
                         className="font-fjalla text-xl sm:text-3xl md:text-4xl font-semibold leading-tight mt-3 text-slate-100"
                     >
-                        Non vendiamo software.{" "}
+                        Cosa troverai{" "}
                         <span
                             className="text-cyan-400"
                         >
-                            Risolviamo problemi.
+                            in questa pagina.
                         </span>
                     </h2>
                     <p
                         className="mt-3 text-base leading-relaxed max-w-xl text-slate-400"
                     >
-                        Ogni soluzione orbita intorno al tuo business,
-                        progettata per il tuo contesto, integrata con ciò che
-                        già usi.
+                        Esplora ogni sezione per scoprire metodo, strumenti
+                        e risultati concreti che offriamo alle PMI.
                     </p>
                 </motion.div>
                 </motion.div>
