@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
     Bot, Workflow, BrainCircuit, Database,
