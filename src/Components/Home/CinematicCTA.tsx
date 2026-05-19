@@ -37,27 +37,20 @@ export function CinematicCTA({ theme }: { theme: string }) {
                 borderRadius,
             }}
         >
-            {/* Background gradient */}
+            {/* Background gradient — same as About CTA */}
             <div className={`absolute inset-0 ${
                 isDark
-                    ? "bg-gradient-to-br from-[#0C0C0B] via-[#161410] to-[#0C0C0B]"
-                    : "bg-gradient-to-br from-[#FAFAF8] via-[#F5F5F2] to-[#FAFAF8]"
+                    ? "bg-gradient-to-br from-[#0C0C0B] via-[#0E1218] to-[#0C0C0B]"
+                    : "bg-gradient-to-br from-[#FAFAF8] via-[#EFF8FB] to-[#FAFAF8]"
             }`} />
 
             {/* Decorative */}
             <div className="absolute inset-0 pointer-events-none">
                 {isDark && (
-                    <>
-                        <div className="absolute inset-0 bg-gradient-to-br from-stone-800/30 via-transparent to-stone-800/10" />
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full blur-[100px] opacity-10 bg-sky-600" />
-                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-800/60 to-transparent" />
-                    </>
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
                 )}
                 {!isDark && (
-                    <>
-                        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[140px] opacity-20 bg-sky-300" />
-                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-400/60 to-transparent" />
-                    </>
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
                 )}
             </div>
 
@@ -67,15 +60,15 @@ export function CinematicCTA({ theme }: { theme: string }) {
                 <motion.span
                     className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border mb-8 ${
                         isDark
-                            ? "text-sky-500 border-stone-700/40 bg-stone-800/20"
-                            : "text-sky-800 border-sky-300 bg-sky-50"
+                            ? "text-cyan-400 border-cyan-500/20 bg-cyan-950/30"
+                            : "text-cyan-600 border-cyan-300 bg-cyan-50"
                     }`}
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
                 >
-                    <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
                     Assessment gratuito
                 </motion.span>
 
@@ -90,7 +83,7 @@ export function CinematicCTA({ theme }: { theme: string }) {
                     transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
                 >
                     Scopri esattamente dove la tua azienda{" "}
-                    <span className={isDark ? "text-sky-500" : "text-sky-700"}>
+                    <span className={isDark ? "text-cyan-400" : "text-cyan-700"}>
                         perde efficienza e come recuperarla.
                     </span>
                 </motion.h2>
@@ -123,7 +116,7 @@ export function CinematicCTA({ theme }: { theme: string }) {
                                 isDark ? "text-slate-500" : "text-stone-500"
                             }`}
                         >
-                            <CheckCircle size={13} className={isDark ? "text-sky-700" : "text-sky-600"} />
+                            <CheckCircle size={13} className={isDark ? "text-cyan-600" : "text-cyan-600"} />
                             {item}
                         </span>
                     ))}

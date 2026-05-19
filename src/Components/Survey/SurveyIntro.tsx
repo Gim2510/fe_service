@@ -24,14 +24,14 @@ export function SurveyIntro() {
     const isDark = theme === "dark";
 
     const card = isDark
-        ? "bg-[#1C1C1A]/80 border-stone-800/20"
-        : "bg-[#F8FAFB] border-slate-200";
+        ? "bg-[#0E0E0D]/70 border-cyan-500/50 shadow-lg shadow-cyan-500/15"
+        : "bg-white/80 border-sky-400/50 shadow-sm shadow-sky-400/15 hover:border-sky-400/80 hover:shadow-md hover:shadow-sky-400/25";
 
     return (
-        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"} px-6 py-32`}>
+        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#0E0E0D] text-white" : "bg-[#FAF8F4] text-slate-900"} px-6 py-32`}>
             {/* Grid bg */}
-            <div className="absolute inset-0 opacity-[0.08] pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%230EA5E9' : '%230369A1'}' stroke-width='0.5'/%3E%3C/svg%3E")`, backgroundSize: "40px 40px" }} />
-            {isDark && <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-[140px] opacity-[0.05] bg-sky-700 pointer-events-none" />}
+            <div className={`absolute inset-0 pointer-events-none ${isDark ? "opacity-[0.06]" : "opacity-[0.12]"}`} style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect x='0' y='0' width='32' height='32' fill='none' stroke='${isDark ? '%2306B6D4' : '%23453A30'}' stroke-width='0.4'/%3E%3C/svg%3E")`, backgroundSize: "32px 32px" }} />
+            {isDark && <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-950/10 via-transparent to-transparent pointer-events-none" />}
 
             {/* Hero */}
             <motion.section
@@ -70,20 +70,29 @@ export function SurveyIntro() {
                 </Link>
             </motion.section>
 
+            {/* Section separator */}
+            {isDark && <div className="relative z-10 max-w-4xl mx-auto mt-20 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />}
+
             {/* Steps */}
-            <section className="relative z-10 max-w-4xl mx-auto mt-20 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <section className="relative z-10 max-w-4xl mx-auto mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
                 {steps.map((s, i) => (
                     <motion.div
                         key={s.n}
-                        className={`rounded-2xl border p-6 ${card}`}
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 24 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: i * 0.1 }}
+                        viewport={{ once: true, amount: 0.15 }}
+                        transition={{ duration: 0.5, delay: i * 0.12, ease: "easeOut" }}
                     >
-                        <span className={`font-mono text-xs font-medium ${isDark ? "text-sky-700" : "text-sky-500"}`}>{s.n}</span>
-                        <h3 className={`font-semibold mt-2 mb-1 text-sm ${isDark ? "text-slate-200" : "text-slate-800"}`}>{s.title}</h3>
-                        <p className={`text-xs leading-relaxed ${isDark ? "text-slate-500" : "text-slate-500"}`}>{s.desc}</p>
+                        <motion.div
+                            className={`relative rounded-2xl border backdrop-blur-sm p-7 h-full transition-all duration-300 ${card}`}
+                            whileHover={{ y: -6 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                        >
+                            {isDark && <div className="absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-cyan-400 to-transparent opacity-15" />}
+                            <span className={`text-xs font-mono font-medium mb-4 block ${isDark ? "text-cyan-400" : "text-sky-500"}`}>{s.n}</span>
+                            <h3 className={`text-base font-semibold mb-3 leading-snug ${isDark ? "text-slate-100" : "text-slate-800"}`}>{s.title}</h3>
+                            <p className="text-sm leading-relaxed text-slate-500">{s.desc}</p>
+                        </motion.div>
                     </motion.div>
                 ))}
             </section>
@@ -105,7 +114,7 @@ export function SurveyIntro() {
                     <ul className={`space-y-1.5 text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>
                         {["Analisi dei processi aziendali", "Identificazione delle inefficienze operative", "Prioritizzazione delle esigenze software", "Preparazione di un confronto consulenziale mirato"].map(item => (
                             <li key={item} className="flex items-start gap-2">
-                                <span className="text-sky-600 mt-0.5">•</span>
+                                <span className="text-cyan-500 mt-0.5">•</span>
                                 {item}
                             </li>
                         ))}
@@ -113,37 +122,44 @@ export function SurveyIntro() {
                 </motion.div>
 
                 <motion.div
-                    className={`rounded-2xl border p-7 ${card}`}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.08 }}
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
                 >
-                    <h3 className={`text-lg font-semibold mb-4 ${isDark ? "text-slate-100" : "text-slate-900"}`}>Cosa otterrai</h3>
-                    <div className={`space-y-2.5 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                        {["Visione chiara dello stato attuale", "Identificazione delle criticità principali", "Linee guida per evoluzione digitale", "Base concreta per confronto consulenziale"].map(item => (
-                            <p key={item} className="flex items-start gap-2">
-                                <ArrowRight size={13} className="text-sky-600 mt-0.5 shrink-0" />
-                                {item}
-                            </p>
-                        ))}
-                    </div>
-                    <p className={`mt-5 text-xs ${isDark ? "text-slate-600" : "text-slate-400"}`}>
-                        Nessun contatto commerciale viene avviato automaticamente.
-                    </p>
+                    <motion.div
+                        className={`relative rounded-2xl border backdrop-blur-sm p-7 h-full transition-all duration-300 ${card}`}
+                        whileHover={{ y: -6 }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                    >
+                        {isDark && <div className="absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-cyan-400 to-transparent opacity-15" />}
+                        <h3 className={`text-lg font-semibold mb-4 ${isDark ? "text-slate-100" : "text-slate-900"}`}>Cosa otterrai</h3>
+                        <div className={`space-y-2.5 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                            {["Visione chiara dello stato attuale", "Identificazione delle criticità principali", "Linee guida per evoluzione digitale", "Base concreta per confronto consulenziale"].map(item => (
+                                <p key={item} className="flex items-start gap-2">
+                                    <ArrowRight size={13} className="text-cyan-500 mt-0.5 shrink-0" />
+                                    {item}
+                                </p>
+                            ))}
+                        </div>
+                        <p className={`mt-5 text-xs ${isDark ? "text-slate-600" : "text-slate-400"}`}>
+                            Nessun contatto commerciale viene avviato automaticamente.
+                        </p>
+                    </motion.div>
                 </motion.div>
             </section>
 
             {/* Security */}
-            <motion.section
-                className={`relative z-10 max-w-4xl mx-auto mt-12 p-7 rounded-2xl border ${card}`}
-                initial={{ opacity: 0, y: 20 }}
+            <motion.div
+                className="relative z-10 max-w-4xl mx-auto mt-12"
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
             >
+            <div className={`relative rounded-2xl border backdrop-blur-sm p-7 transition-all duration-300 ${card}`}>
                 <div className="flex items-center gap-2 mb-5">
-                    <ShieldCheck size={16} className="text-sky-500" />
+                    <ShieldCheck size={16} className="text-cyan-400" />
                     <h2 className={`text-base font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>Protezione dei dati</h2>
                 </div>
                 <div className="space-y-0">
@@ -154,7 +170,8 @@ export function SurveyIntro() {
                 <p className={`text-xs mt-5 ${isDark ? "text-slate-600" : "text-slate-400"}`}>
                     Infrastruttura basata su servizi cloud moderni con controlli di accesso avanzati e monitoraggio continuo.
                 </p>
-            </motion.section>
+            </div>
+            </motion.div>
         </main>
     );
 }
