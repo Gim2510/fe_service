@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
     Bot, Workflow, BrainCircuit, Database,
@@ -293,8 +293,17 @@ function ExpandedOverlay({
     onClose: () => void;
 }) {
     const colors = neonColors[cap.color];
+    const overlayRef = useRef<HTMLDivElement>(null);
 
     const expandSpring = { type: "spring" as const, stiffness: 400, damping: 32, mass: 0.8 };
+
+    useEffect(() => {
+        // Small delay so the animation starts, then scroll into view
+        const t = setTimeout(() => {
+            overlayRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 80);
+        return () => clearTimeout(t);
+    }, []);
 
     return (
         <>
@@ -322,6 +331,7 @@ function ExpandedOverlay({
 
             {/* Expanded card — pure transform animation (GPU-only) */}
             <motion.div
+                ref={overlayRef}
                 className={`absolute inset-x-0 top-0 z-30 rounded-2xl border cursor-pointer ${
                     isDark
                         ? `${colors.border}`
