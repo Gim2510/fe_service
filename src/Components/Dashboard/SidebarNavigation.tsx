@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { LayoutGrid, Users, Search, Mail, Briefcase, BarChart3 } from "lucide-react";
+import { LayoutGrid, Users, Search, Mail, Briefcase, BarChart3, Calendar } from "lucide-react";
 
 export type AdminTab =
     | "overview"
@@ -8,13 +8,15 @@ export type AdminTab =
     | "messaging"
     | "careers"
     | "update job offers"
-    | "analytics";
+    | "analytics"
+    | "calendar";
 
 const TABS = [
     { key: "overview",  label: "Overview",         icon: LayoutGrid },
     { key: "users",     label: "Utenti",           icon: Users },
     { key: "inspect",   label: "Ispeziona",        icon: Search },
     { key: "analytics", label: "Analytics",        icon: BarChart3 },
+    { key: "calendar",  label: "Calendario",       icon: Calendar },
     { key: "messaging", label: "Messaggi",         icon: Mail },
     { key: "careers",   label: "Careers",          icon: Briefcase },
 ];

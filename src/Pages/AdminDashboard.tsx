@@ -12,6 +12,7 @@ import { DashboardContent } from "../Components/Dashboard/DashboardContent.tsx";
 import { useTheme } from "../Context/ThemeContext.tsx";
 import { useAuth } from "../auth/AuthContext.tsx";
 import { AnalyticsContent } from "../Components/Dashboard/AnalyticsContent.tsx";
+import { CalendarView } from "../Components/Dashboard/CalendarView.tsx";
 
 export function AdminDashboard() {
     const { theme } = useTheme();
@@ -77,6 +78,8 @@ export function AdminDashboard() {
                             >
                                 {activeTab === "analytics" ? (
                                     <AnalyticsContent />
+                                ) : activeTab === "calendar" ? (
+                                    <CalendarView theme={theme} />
                                 ) : (
                                     <DashboardContent
                                         activeTab={activeTab}
