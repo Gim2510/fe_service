@@ -9,6 +9,7 @@ import { FallingLines } from "react-loader-spinner";
 import { useTheme } from "../Context/ThemeContext.tsx";
 import SecurityItem from "../Components/Survey/SecurityItem.tsx";
 import { SurveyIntro } from "../Components/Survey/SurveyIntro.tsx";
+import { GlassCard } from "../Components/Home/GlassCard.tsx";
 
 const steps = [
     { n: "01", title: "Raccolta informazioni", desc: "Inserisci dati su processi, strumenti e organizzazione aziendale." },
@@ -37,8 +38,6 @@ export function SurveyStart() {
     const { survey, loading: loadingSurvey } = useSurvey(surveyId);
     const { initSurvey, loading: initLoading } = useInitSurvey();
 
-    const card = isDark ? "bg-[#0E0E0D]/80 border-cyan-500/30 shadow-lg shadow-cyan-500/10" : "bg-white border-cyan-500/60 shadow-md shadow-cyan-400/15";
-
     const handleStart = async () => {
         try {
             if (survey?._id) {
@@ -65,8 +64,8 @@ export function SurveyStart() {
             )}
 
             {/* Grid background — same as homepage */}
-            <div className={`absolute inset-0 pointer-events-none ${isDark ? "opacity-[0.06]" : "opacity-[0.12]"}`} style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect x='0' y='0' width='32' height='32' fill='none' stroke='${isDark ? '%2306B6D4' : '%23453A30'}' stroke-width='0.4'/%3E%3C/svg%3E")`, backgroundSize: "32px 32px" }} />
-            {isDark && <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-[140px] opacity-[0.05] bg-cyan-700 pointer-events-none" />}
+            <div className={`absolute inset-0 pointer-events-none ${isDark ? "opacity-[0.06]" : "opacity-[0.12]"}`} style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect x='0' y='0' width='32' height='32' fill='none' stroke='${isDark ? '%230284C7' : '%23453A30'}' stroke-width='0.4'/%3E%3C/svg%3E")`, backgroundSize: "32px 32px" }} />
+            {isDark && <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-[140px] opacity-[0.05] bg-sky-700 pointer-events-none" />}
 
             {/* Hero */}
             <motion.section
@@ -75,13 +74,13 @@ export function SurveyStart() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
             >
-                <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border text-cyan-400 border-cyan-500/20 bg-cyan-950/30">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
+                <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border text-sky-400 border-sky-500/20 bg-sky-950/30">
+                    <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
                     Survey digitale
                 </span>
                 <h1 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                     Struttura la tua{" "}
-                    <span className={isDark ? "text-cyan-400" : "text-cyan-700"}>crescita digitale</span>
+                    <span className={isDark ? "text-sky-400" : "text-sky-700"}>crescita digitale</span>
                 </h1>
                 <p className={`text-lg leading-relaxed max-w-2xl mx-auto ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                     Compila il questionario per analizzare processi, strumenti e criticità della tua azienda.
@@ -99,9 +98,9 @@ export function SurveyStart() {
                         onClick={handleStart}
                         disabled={initLoading || loadingSurvey || loadingSurveyId}
                         className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
-                            bg-cyan-600 hover:bg-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed
+                            bg-sky-600 hover:bg-sky-500 disabled:opacity-50 disabled:cursor-not-allowed
                             text-white text-sm font-semibold transition-all
-                            shadow-lg shadow-cyan-500/25 hover:-translate-y-0.5 duration-200"
+                            shadow-lg shadow-sky-500/25 hover:-translate-y-0.5 duration-200"
                     >
                         {initLoading
                             ? <FallingLines width="20" color="#fff" visible />
@@ -115,7 +114,7 @@ export function SurveyStart() {
                     <button
                         disabled
                         className="inline-flex items-center gap-2 px-7 py-3 rounded-xl border
-                            border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-sm font-medium cursor-not-allowed"
+                            border-sky-500/30 bg-sky-500/10 text-sky-400 text-sm font-medium cursor-not-allowed"
                     >
                         Verifica prima la tua email
                     </button>
@@ -124,23 +123,12 @@ export function SurveyStart() {
 
             {/* Steps */}
             <section className="relative z-10 max-w-4xl mx-auto mt-20 grid grid-cols-1 md:grid-cols-3 gap-6">
-                {steps.map((s, i) => (
-                    <motion.div
-                        key={s.n}
-                        className={`rounded-2xl border backdrop-blur-sm p-6 ${
-                            isDark
-                                ? `${card}`
-                                : `${card}`
-                        }`}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: i * 0.1 }}
-                    >
-                        <span className={`font-mono text-xs font-medium ${isDark ? "text-cyan-600" : "text-cyan-500"}`}>{s.n}</span>
+                {steps.map((s) => (
+                    <GlassCard key={s.n} theme={theme} className="backdrop-blur-sm p-6">
+                        <span className={`font-mono text-xs font-medium ${isDark ? "text-sky-600" : "text-sky-500"}`}>{s.n}</span>
                         <h3 className={`font-semibold mt-2 mb-1 text-sm ${isDark ? "text-slate-200" : "text-slate-800"}`}>{s.title}</h3>
                         <p className={`text-xs leading-relaxed ${isDark ? "text-slate-500" : "text-slate-500"}`}>{s.desc}</p>
-                    </motion.div>
+                    </GlassCard>
                 ))}
             </section>
 
@@ -155,23 +143,19 @@ export function SurveyStart() {
                     <ul className="space-y-1.5">
                         {["Analisi dei processi aziendali", "Identificazione delle inefficienze operative", "Prioritizzazione delle esigenze software", "Preparazione di un confronto consulenziale mirato"].map(item => (
                             <li key={item} className={`flex items-start gap-2 text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>
-                                <CheckCircle size={13} className="text-cyan-500 mt-0.5 shrink-0" />
+                                <CheckCircle size={13} className="text-sky-500 mt-0.5 shrink-0" />
                                 {item}
                             </li>
                         ))}
                     </ul>
                 </div>
 
-                <div className={`rounded-2xl border backdrop-blur-sm p-7 ${
-                    isDark
-                        ? `${card}`
-                        : `${card}`
-                }`}>
+                <GlassCard theme={theme} className="backdrop-blur-sm p-7">
                     <h3 className={`text-lg font-semibold mb-4 ${isDark ? "text-slate-100" : "text-slate-900"}`}>Cosa otterrai</h3>
                     <div className="space-y-2.5">
                         {["Visione chiara dello stato attuale", "Identificazione delle criticità principali", "Linee guida per evoluzione digitale", "Base concreta per confronto consulenziale"].map(item => (
                             <p key={item} className={`flex items-start gap-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                                <ArrowRight size={13} className="text-cyan-500 mt-0.5 shrink-0" />
+                                <ArrowRight size={13} className="text-sky-500 mt-0.5 shrink-0" />
                                 {item}
                             </p>
                         ))}
@@ -179,23 +163,13 @@ export function SurveyStart() {
                     <p className={`mt-5 text-xs ${isDark ? "text-slate-600" : "text-slate-400"}`}>
                         Nessun contatto commerciale viene avviato automaticamente.
                     </p>
-                </div>
+                </GlassCard>
             </section>
 
             {/* Security */}
-            <motion.section
-                className={`relative z-10 max-w-4xl mx-auto mt-12 p-7 rounded-2xl border backdrop-blur-sm ${
-                    isDark
-                        ? `${card}`
-                        : `${card}`
-                }`}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-            >
+            <GlassCard theme={theme} className="relative z-10 max-w-4xl mx-auto mt-12 p-7 backdrop-blur-sm">
                 <div className="flex items-center gap-2 mb-5">
-                    <ShieldCheck size={16} className="text-cyan-400" />
+                    <ShieldCheck size={16} className="text-sky-400" />
                     <h2 className={`text-base font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>Protezione dei dati</h2>
                 </div>
                 <div className="space-y-0">
@@ -206,7 +180,7 @@ export function SurveyStart() {
                 <p className={`text-xs mt-5 ${isDark ? "text-slate-600" : "text-slate-400"}`}>
                     Infrastruttura basata su servizi cloud moderni con controlli di accesso avanzati e monitoraggio continuo.
                 </p>
-            </motion.section>
+            </GlassCard>
         </main>
     );
 }
