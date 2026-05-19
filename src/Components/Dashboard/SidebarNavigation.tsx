@@ -35,7 +35,7 @@ export function SidebarNavigation({ activeTab, setActiveTab, theme }: {
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className={`md:w-56 h-fit sm:sticky top-24 rounded-2xl border overflow-hidden backdrop-blur-sm flex flex-col ${
                 isDark
-                    ? "border-stone-800/30 bg-[#161614]/80 shadow-lg shadow-sky-700/5"
+                    ? "border-stone-800/20 bg-[#0E0E0D]/80 shadow-lg shadow-sky-700/5"
                     : "border-slate-200 bg-white/80 shadow-md"
             }`}
         >

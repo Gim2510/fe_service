@@ -222,8 +222,8 @@ export function CalendarView({ theme }: { theme: string }) {
       </div>
 
       {viewMode === "week" ? (
-        <div className={`rounded-2xl border overflow-hidden ${isDark ? "border-stone-800/30 bg-[#161614]/60" : "border-slate-200 bg-white/60"} backdrop-blur-sm`}>
-          <div className={`grid grid-cols-8 border-b ${isDark ? "border-stone-800/30" : "border-slate-200"}`}>
+        <div className={`rounded-2xl border overflow-hidden max-h-[680px] overflow-y-auto scrollbar-calendar ${isDark ? "border-stone-800/20 bg-[#0E0E0D]/60" : "border-slate-200 bg-white/60"} backdrop-blur-sm`}>
+          <div className={`sticky top-0 z-10 grid grid-cols-8 border-b ${isDark ? "border-stone-800/20 bg-[#0E0E0D]" : "border-slate-200 bg-white"}`}>
             <div className={`p-3 text-center text-[10px] font-mono uppercase tracking-wider ${isDark ? "text-stone-600" : "text-slate-400"}`}>
               Ora
             </div>
@@ -246,7 +246,7 @@ export function CalendarView({ theme }: { theme: string }) {
             ))}
           </div>
 
-          <div className="relative overflow-y-auto max-h-[600px]">
+          <div>
             {hours.map((hour) => (
               <div
                 key={hour}
@@ -279,8 +279,8 @@ export function CalendarView({ theme }: { theme: string }) {
           </div>
         </div>
       ) : (
-        <div className={`rounded-2xl border overflow-hidden ${isDark ? "border-stone-800/30 bg-[#161614]/60" : "border-slate-200 bg-white/60"} backdrop-blur-sm`}>
-          <div className={`grid grid-cols-7 border-b ${isDark ? "border-stone-800/30" : "border-slate-200"}`}>
+        <div className={`rounded-2xl border overflow-hidden ${isDark ? "border-stone-800/20 bg-[#0E0E0D]/60" : "border-slate-200 bg-white/60"} backdrop-blur-sm`}>
+          <div className={`grid grid-cols-7 border-b ${isDark ? "border-stone-800/20" : "border-slate-200"}`}>
             {DAYS_IT.map((d) => (
               <div
                 key={d}

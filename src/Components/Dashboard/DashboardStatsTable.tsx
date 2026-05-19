@@ -2,7 +2,7 @@ type Props = { users: any; surveys: any; theme: string };
 
 export function DashboardStatsTable({ users, surveys, theme }: Props) {
     const isDark = theme === "dark";
-    const card = isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200";
+    const card = isDark ? "bg-[#0E0E0D]/80 border-stone-800/20" : "bg-white/80 border-slate-200";
     const rowBorder = isDark ? "border-stone-800/20" : "border-slate-200";
     const head = isDark ? "text-slate-500" : "text-slate-400";
 

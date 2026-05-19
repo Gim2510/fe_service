@@ -63,7 +63,7 @@ export function UserManagementPanel({ allUsers, refreshUsers, theme }: Props) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className={`relative rounded-2xl border overflow-hidden p-7 ${border}`}
-                style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+                style={{ background: isDark ? "#0E0E0D" : "#FAFAF8" }}
             >
                 <div className="absolute top-0 left-0 right-0 h-[2px] bg-sky-700/40" />
 

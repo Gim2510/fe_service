@@ -31,7 +31,7 @@ export function BulkNotificationSection({ theme }: { theme: string }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className={`rounded-2xl border overflow-hidden ${border}`}
-            style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+            style={{ background: isDark ? "#0E0E0D" : "#FAFAF8" }}
         >
             <div className="h-[2px] w-full bg-sky-700/40" />
             <div className="p-7">

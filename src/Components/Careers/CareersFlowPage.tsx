@@ -60,7 +60,7 @@ export function CareersFlowPage() {
         getAllJobOffers().then(setJobs).catch(console.error);
     }, []);
 
-    const mutedText = isDark ? "text-slate-500" : "text-slate-400";
+    const mutedText = isDark ? "text-slate-500" : "text-slate-500";
     const bodyText  = isDark ? "text-slate-400" : "text-slate-600";
 
     const displayLocation = (loc: CreateJobPositionDTO["location"]) => {
@@ -98,7 +98,7 @@ export function CareersFlowPage() {
                 }}
             />
 
-            <div className="relative z-10 max-w-5xl mx-auto px-6 py-32 space-y-12">
+            <div className="relative z-10 max-w-5xl mx-auto px-6 py-24 space-y-12">
 
                 {/* Hero */}
                 <motion.section
@@ -107,7 +107,11 @@ export function CareersFlowPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border text-cyan-400 border-cyan-500/20 bg-cyan-950/30">
+                    <span className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
+                        isDark
+                            ? "text-cyan-400 border-cyan-500/20 bg-cyan-950/30"
+                            : "text-cyan-700 border-cyan-300 bg-cyan-50"
+                    }`}>
                         <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
                         Carriere
                     </span>
@@ -260,7 +264,7 @@ export function CareersFlowPage() {
 
                                     {/* responsibilities + requirements */}
                                     <div className={`rounded-xl border p-6 grid md:grid-cols-2 gap-8
-                                        ${isDark ? "border-cyan-500/20 bg-white/[0.02]" : "border-cyan-200/60 bg-cyan-50/30"}`}>
+                                        ${isDark ? "border-cyan-500/20 bg-white/[0.02]" : "border-slate-200 bg-slate-50/50"}`}>
                                         <div>
                                             {sectionLabel("Responsabilità")}
                                             <ul className="space-y-1.5">

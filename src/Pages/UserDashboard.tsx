@@ -87,13 +87,13 @@ export function UserDashboard() {
                     initial={{ opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.06 }}
-                    className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
+                    className={`rounded-2xl border overflow-hidden backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 ${
                         isDark
-                            ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/10`
+                            ? "bg-[#0E0E0D]/80 border-stone-800/20 shadow-lg"
                             : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/5`
                     }`}
                 >
-                    <div className="h-[2px] w-full bg-sky-700/60" />
+                        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
 
                     <div className="flex flex-col sm:flex-row min-h-[140px]">
                         {/* left — avatar */}
@@ -312,10 +312,12 @@ export function UserDashboard() {
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.96, opacity: 0 }}
                         transition={{ duration: 0.2, ease: "easeOut" as const }}
-                        className={`rounded-2xl border overflow-hidden w-full max-w-sm ${border}`}
-                        style={{ background: isDark ? "#161614" : "#FAFAF8" }}
+                        className={`rounded-2xl border overflow-hidden w-full max-w-sm transition-all duration-300 ${
+                            isDark ? "bg-[#0E0E0D]/80 border-stone-800/20 shadow-lg" : `${border}`
+                        }`}
+                        style={{ background: isDark ? undefined : "#FAFAF8" }}
                     >
-                        <div className="h-[2px] w-full bg-sky-700/60" />
+                    <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
                         <div className="p-8 space-y-6">
                             <h2 className={`text-sm font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                                 Conferma immagine profilo
@@ -361,13 +363,13 @@ function InfoCard({ title, children, isDark, border }: {
 }) {
     return (
         <div
-            className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
+            className={`rounded-2xl border overflow-hidden backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 ${
                 isDark
-                    ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/5`
+                    ? "bg-[#0E0E0D]/80 border-stone-800/20 shadow-lg"
                     : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/3`
             }`}
         >
-            <div className="h-[2px] w-full bg-sky-700/40" />
+            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
             <div className="p-7">
                 <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-6
                     ${isDark ? "text-slate-500" : "text-slate-400"}`}>
@@ -406,17 +408,17 @@ function UserActionCard({ title, description, onClick, isDark, border, icon: Ico
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: index * 0.07 }}
             onClick={onClick}
-            className={`text-left w-full rounded-2xl border overflow-hidden backdrop-blur-sm transition-all duration-200
+            className={`text-left w-full rounded-2xl border overflow-hidden backdrop-blur-sm transition-all duration-300
                 hover:-translate-y-0.5 group ${danger
                     ? isDark
-                        ? "border-red-900/30 bg-[#161614]/80 shadow-lg shadow-red-700/5"
+                        ? "border-red-900/30 bg-[#0E0E0D]/80 shadow-lg"
                         : "border-red-200 bg-[#FAFAF8] shadow-lg shadow-red-700/3"
                     : isDark
-                        ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/5`
+                        ? "bg-[#0E0E0D]/80 border-stone-800/20 shadow-lg"
                         : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/3`
                 }`}
         >
-            <div className={`h-[2px] w-full ${danger ? "bg-red-600/40" : "bg-sky-700/40"}`} />
+            <div className={`h-[2px] w-full ${danger ? "bg-gradient-to-r from-transparent via-red-500/60 to-transparent" : "bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent"}`} />
             <div className="p-6">
                 <div className={`w-8 h-8 rounded-lg flex items-center justify-center mb-5
                     ${danger
