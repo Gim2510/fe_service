@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useAuth } from "../auth/AuthContext";
 
 interface CalendlyInvitee {
   name: string;
@@ -32,12 +33,17 @@ export function useCalendlyEvents(from?: string, to?: string): UseCalendlyEvents
   const [events, setEvents] = useState<CalendlyEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { token } = useAuth();
 
   const fetchEvents = useCallback(async () => {
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError(null);
     try {
-      const token = localStorage.getItem("token") || "";
       const params = new URLSearchParams();
       if (from) params.set("from", from);
       if (to) params.set("to", to);
@@ -58,7 +64,7 @@ export function useCalendlyEvents(from?: string, to?: string): UseCalendlyEvents
     } finally {
       setLoading(false);
     }
-  }, [from, to]);
+  }, [from, to, token]);
 
   useEffect(() => {
     fetchEvents();
