@@ -42,10 +42,12 @@ export function NavbarActions({ closeMenu }: NavbarActionsProps) {
                     <Link
                         to="/register"
                         onClick={closeMenu}
-                        className="text-sm font-medium px-4 py-1.5 rounded-lg
-                            bg-sky-700 hover:bg-sky-600 text-white
-                            transition-colors duration-200 shadow-sm
-                            shadow-sky-700/30 hover:shadow-sky-600/40"
+                        className={`relative text-sm font-semibold px-5 py-1.5 rounded-xl text-white
+                            transition-all duration-300 hover:-translate-y-0.5
+                            ${isDark
+                                ? "bg-gradient-to-r from-sky-700 via-sky-600 to-sky-700 shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 border border-sky-400/30 hover:border-sky-400/60"
+                                : "bg-gradient-to-r from-sky-700 via-sky-600 to-sky-700 shadow-lg shadow-sky-700/20 hover:shadow-sky-600/35 border border-sky-500/20 hover:border-sky-400/40"
+                            }`}
                     >
                         Registrati
                     </Link>
