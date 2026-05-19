@@ -78,20 +78,20 @@ export function Register() {
 
     return (
         <main className={`relative min-h-screen flex items-start overflow-hidden
-            ${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"}`}
+            ${isDark ? "bg-[#0E0E0D]" : "bg-[#FAF8F4]"}`}
             style={{ scrollbarWidth: "none" }}>
 
             {/* grid bg */}
             <div className="absolute inset-0 pointer-events-none">
                 <div
-                    className="absolute inset-0 opacity-[0.08]"
+                    className={`absolute inset-0 ${isDark ? "opacity-[0.06]" : "opacity-[0.12]"}`}
                     style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%230EA5E9' : '%230369A1'}' stroke-width='0.5'/%3E%3C/svg%3E")`,
-                        backgroundSize: "40px 40px",
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect x='0' y='0' width='32' height='32' fill='none' stroke='${isDark ? '%2306B6D4' : '%23453A30'}' stroke-width='0.4'/%3E%3C/svg%3E")`,
+                        backgroundSize: "32px 32px",
                     }}
                 />
                 {isDark && (
-                    <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] rounded-full blur-[160px] opacity-[0.04] bg-sky-700" />
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-950/10 via-transparent to-transparent" />
                 )}
             </div>
 
@@ -121,8 +121,9 @@ export function Register() {
                     </div>
 
                     {/* mini step guide */}
-                    <div className={`rounded-xl border p-5 space-y-3 ${border}`}
-                         style={{ background: isDark ? "#111110" : "#F0EDE8" }}>
+                    <div className={`rounded-xl border p-5 space-y-3 ${
+                        isDark ? "border-cyan-500/30 bg-[#0E0E0D]/70 shadow-md shadow-cyan-500/10" : "border-sky-400/40 bg-white/80"
+                    }`}>
                         <p className={`text-[10px] font-mono uppercase tracking-[0.18em] ${mutedText}`}>
                             Come funziona
                         </p>
@@ -149,11 +150,11 @@ export function Register() {
                     transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.08 }}
                     className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${
                         isDark
-                            ? `${border} bg-[#161614]/80 shadow-lg shadow-sky-700/10`
-                            : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/5`
+                            ? "border-cyan-500/50 bg-[#0E0E0D]/70 shadow-lg shadow-cyan-500/15"
+                            : "border-sky-400/50 bg-white/80 shadow-lg shadow-sky-400/15"
                     }`}
                 >
-                    <div className="h-[2px] w-full bg-sky-700/60" />
+                    <div className={`h-[2px] w-full ${isDark ? "bg-cyan-500/60" : "bg-sky-700/60"}`} />
 
                     <div className="p-7 sm:p-8">
                         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
