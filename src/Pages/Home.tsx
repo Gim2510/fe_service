@@ -6,6 +6,7 @@ import { SunsetTransition } from "../Components/Home/SunsetTransition.tsx";
 import { TimelineProblems } from "../Components/Home/TimelineProblems.tsx";
 import { VideoSection } from "../Components/Home/VideoSection.tsx";
 import { HorizontalSolutions } from "../Components/Home/HorizontalSolutions.tsx";
+import { MobileCircuitSolutions } from "../Components/Home/MobileCircuitSolutions.tsx";
 import { DepthMethod } from "../Components/Home/DepthMethod.tsx";
 import { AICapabilities } from "../Components/Home/AICapabilities.tsx";
 import { PrivateAIFlow } from "../Components/Home/PrivateAIFlow.tsx";
@@ -48,10 +49,11 @@ export function Home() {
             <div className={`relative z-10 ${isDark ? "" : ""}`}>
 
                 {/* 1. Problem recognition — PAS pattern: agitate pain points */}
-                <TimelineProblems theme={theme} />
+                <div id="section-problems"><TimelineProblems theme={theme} /></div>
 
                 {/* 2. Solutions — immediately after problems (Problem→Solve) */}
-                <HorizontalSolutions theme={theme} />
+                <div className="hidden md:block"><HorizontalSolutions theme={theme} /></div>
+                <div className="md:hidden"><MobileCircuitSolutions theme={theme} /></div>
 
                 {/* 3. Method — "here's HOW we do it" */}
                 <div id="section-method"><DepthMethod theme={theme} /></div>
@@ -69,10 +71,10 @@ export function Home() {
                 <div id="section-stats"><StatsReveal theme={theme} /></div>
 
                 {/* 8. Social proof — "others like you got results" */}
-                <ParallaxTestimonials theme={theme} />
+                <div id="section-testimonials"><ParallaxTestimonials theme={theme} /></div>
 
                 {/* 9. Video — reinforcement for already-interested users */}
-                <VideoSection theme={theme} />
+                <div id="section-video"><VideoSection theme={theme} /></div>
 
                 {/* 10. Scrolling marquee — transition to close */}
                 <LiquidTextBanner
@@ -90,7 +92,7 @@ export function Home() {
                 />
 
                 {/* 11. FAQ — handle last objections */}
-                <CinematicFAQ theme={theme} />
+                <div id="section-faq"><CinematicFAQ theme={theme} /></div>
             </div>
 
             {/* ── CTA — scales up from miniature on scroll ── */}
