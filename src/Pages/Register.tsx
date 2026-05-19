@@ -38,7 +38,6 @@ export function Register() {
     const passwordScore   = zxcvbn(form.password).score;
     const passwordsMatch  = form.password === form.confirmPassword;
 
-    const border    = isDark ? "border-stone-800/30" : "border-slate-200";
     const mutedText = isDark ? "text-slate-500" : "text-slate-400";
 
     useEffect(() => {

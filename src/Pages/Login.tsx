@@ -32,7 +32,6 @@ export function Login() {
     const [password,    setPassword]    = useState("");
     const [restoreInfo, setRestoreInfo] = useState<RestoreInfo | null>(null);
 
-    const border    = isDark ? "border-stone-800/30" : "border-slate-200";
     const mutedText = isDark ? "text-slate-500" : "text-slate-400";
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
