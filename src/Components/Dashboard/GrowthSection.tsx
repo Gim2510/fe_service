@@ -11,7 +11,7 @@ export function GrowthSection({ users, theme }: any) {
         if (!active || !payload?.length) return null;
         return (
             <div className={`rounded-xl border px-3 py-2 text-xs shadow-lg backdrop-blur-sm
-                ${isDark ? "bg-[#1C1C1A]/90 border-stone-800/40 text-slate-300" : "bg-white/90 border-slate-200 text-slate-700"}`}>
+                ${isDark ? "bg-[#0E0E0D]/90 border-stone-800/30 text-slate-300" : "bg-white/90 border-slate-200 text-slate-700"}`}>
                 <p className={`font-mono uppercase tracking-widest mb-1 ${isDark ? "text-slate-500" : "text-slate-400"}`}>{label}</p>
                 <p className="font-semibold tabular-nums text-sky-500">{payload[0].value} users</p>
             </div>
@@ -25,7 +25,7 @@ export function GrowthSection({ users, theme }: any) {
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
             className={`group relative rounded-2xl border backdrop-blur-sm overflow-hidden transition-all duration-300 ${
                 isDark
-                    ? "bg-[#161614]/80 border-stone-800/30 hover:border-stone-700/50 shadow-lg shadow-sky-500/10 hover:shadow-sky-500/20"
+                    ? "bg-[#0E0E0D]/80 border-stone-800/20 hover:border-stone-700/40 shadow-lg shadow-sky-500/10 hover:shadow-sky-500/20"
                     : "bg-white/80 border-slate-200 hover:border-slate-300 shadow-md hover:shadow-lg"
             }`}
         >

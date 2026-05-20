@@ -9,7 +9,7 @@ type Props = {
 
 export function SetVipSection({ selectedUserToUpdateToVip, setSelectedUserToUpdateToVip, allUsers, setShowUpdateUserToVipModal, success, theme }: Props) {
     const isDark = theme === "dark";
-    const card = isDark ? "bg-[#1C1C1A]/80 border-stone-800/20" : "bg-[#F8FAFB] border-slate-200";
+    const card = isDark ? "bg-[#0E0E0D]/80 border-stone-800/20" : "bg-white/80 border-slate-200";
     const selectClass = `w-full sm:w-80 h-11 px-4 rounded-xl border text-sm appearance-none cursor-pointer focus:outline-none
         ${isDark ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-sky-700" : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-sky-600"}`;
 

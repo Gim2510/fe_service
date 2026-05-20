@@ -10,7 +10,7 @@ type Props = {
 
 export function SetUserToVipModal({ setShowUpdateUserToVipModal, handleUpdateUserToVip, loadingUpdateToVip, theme }: Props) {
     const isDark = theme === "dark";
-    const card = isDark ? "bg-[#1C1C1A] border-stone-800/30" : "bg-[#F8FAFB] border-slate-200";
+    const card = isDark ? "bg-[#0E0E0D] border-stone-800/30" : "bg-white border-slate-200";
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-50 p-4">

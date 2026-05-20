@@ -11,21 +11,48 @@ interface DashboardCardProps {
 }
 
 const glowColors = {
-    sky: "shadow-sky-500/10 border-sky-500/20",
-    emerald: "shadow-emerald-500/10 border-emerald-500/20",
-    violet: "shadow-violet-500/10 border-violet-500/20",
-    amber: "shadow-amber-500/10 border-amber-500/20",
-    rose: "shadow-rose-500/10 border-rose-500/20",
-    cyan: "shadow-cyan-500/10 border-cyan-500/20",
+    sky: "shadow-sky-500/10",
+    emerald: "shadow-emerald-500/10",
+    violet: "shadow-violet-500/10",
+    amber: "shadow-amber-500/10",
+    rose: "shadow-rose-500/10",
+    cyan: "shadow-cyan-500/10",
 };
 
-const glowBorders = {
-    sky: "hover:border-sky-500/40",
-    emerald: "hover:border-emerald-500/40",
-    violet: "hover:border-violet-500/40",
-    amber: "hover:border-amber-500/40",
-    rose: "hover:border-rose-500/40",
-    cyan: "hover:border-cyan-500/40",
+const glowTopGradients = {
+    sky: "from-transparent via-sky-500/40 to-transparent group-hover:via-sky-400/60",
+    emerald: "from-transparent via-emerald-500/40 to-transparent group-hover:via-emerald-400/60",
+    violet: "from-transparent via-violet-500/40 to-transparent group-hover:via-violet-400/60",
+    amber: "from-transparent via-amber-500/40 to-transparent group-hover:via-amber-400/60",
+    rose: "from-transparent via-rose-500/40 to-transparent group-hover:via-rose-400/60",
+    cyan: "from-transparent via-cyan-500/40 to-transparent group-hover:via-cyan-400/60",
+};
+
+const glowIconColors = {
+    sky: "text-sky-400",
+    emerald: "text-emerald-400",
+    violet: "text-violet-400",
+    amber: "text-amber-400",
+    rose: "text-rose-400",
+    cyan: "text-cyan-400",
+};
+
+const borderColors = {
+    sky: "border-stone-800/20 hover:border-stone-700/40",
+    emerald: "border-stone-800/20 hover:border-stone-700/40",
+    violet: "border-stone-800/20 hover:border-stone-700/40",
+    amber: "border-stone-800/20 hover:border-stone-700/40",
+    rose: "border-stone-800/20 hover:border-stone-700/40",
+    cyan: "border-stone-800/20 hover:border-stone-700/40",
+};
+
+const lightBorders = {
+    sky: "border-slate-200 hover:border-slate-300",
+    emerald: "border-slate-200 hover:border-slate-300",
+    violet: "border-slate-200 hover:border-slate-300",
+    amber: "border-slate-200 hover:border-slate-300",
+    rose: "border-slate-200 hover:border-slate-300",
+    cyan: "border-slate-200 hover:border-slate-300",
 };
 
 export function DashboardCard({ children, title, icon, className = "", theme, delay = 0, glow = "sky" }: DashboardCardProps) {
@@ -33,23 +60,21 @@ export function DashboardCard({ children, title, icon, className = "", theme, de
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay }}
-            className={`group relative rounded-2xl border backdrop-blur-sm overflow-hidden transition-all duration-300 ${
+            className={`group relative rounded-2xl border backdrop-blur-sm overflow-hidden transition-all duration-300 hover:-translate-y-0.5 ${
                 isDark
-                    ? `bg-[#161614]/80 border-stone-800/30 hover:border-stone-700/50 shadow-lg ${glowColors[glow]} hover:${glowBorders[glow]}`
-                    : `bg-white/80 border-slate-200 hover:border-slate-300 shadow-md hover:shadow-lg`
+                    ? `bg-[#0E0E0D]/80 ${borderColors[glow]} shadow-lg ${glowColors[glow]}`
+                    : `bg-white/80 ${lightBorders[glow]} shadow-md`
             } ${className}`}
         >
-            {isDark && (
-                <div className={`absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-${glow}-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-            )}
+            <div className={`h-[2px] w-full bg-gradient-to-r ${glowTopGradients[glow]} transition-all`} />
 
             {(title || icon) && (
-                <div className={`px-5 py-3.5 border-b ${isDark ? "border-stone-800/30" : "border-slate-100"}`}>
+                <div className={`px-5 py-3.5 border-b ${isDark ? "border-stone-800/20" : "border-slate-100"}`}>
                     <div className="flex items-center gap-2.5">
-                        {icon && <span className={isDark ? `text-${glow}-400` : `text-${glow}-600`}>{icon}</span>}
+                        {icon && <span className={isDark ? glowIconColors[glow] : `text-${glow}-600`}>{icon}</span>}
                         {title && (
                             <h3 className={`text-xs font-semibold uppercase tracking-wider ${
                                 isDark ? "text-slate-300" : "text-slate-700"
@@ -61,7 +86,7 @@ export function DashboardCard({ children, title, icon, className = "", theme, de
                 </div>
             )}
 
-            <div className="p-5">
+            <div className="relative p-5">
                 {children}
             </div>
         </motion.div>

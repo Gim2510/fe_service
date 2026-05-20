@@ -9,9 +9,7 @@ type Props = {
     theme: string;
 };
 
-export function NavItem({ to, label, theme }: { to: string; label: string; theme: string }) {
-    const isDark = theme === "dark";
-
+export function NavItem({ to, label }: { to: string; label: string }) {
     return (
         <NavLink to={to}>
             {({ isActive }) => (
@@ -20,12 +18,8 @@ export function NavItem({ to, label, theme }: { to: string; label: string; theme
                         relative px-1 py-1 text-sm font-medium tracking-wide
                         transition-all duration-200
                         ${isActive
-                            ? isDark
-                                ? "text-sky-400 drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]"
-                                : "text-sky-700"
-                            : isDark
-                                ? "text-slate-400 hover:text-sky-400 hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.3)]"
-                                : "text-slate-500 hover:text-sky-700"
+                            ? "text-sky-400 drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]"
+                            : "text-slate-400 hover:text-sky-400 hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.3)]"
                         }
                     `}
                 >
@@ -33,8 +27,7 @@ export function NavItem({ to, label, theme }: { to: string; label: string; theme
                     <motion.span
                         className={`
                             absolute left-0 -bottom-0.5 h-[2px] w-full origin-left rounded-full
-                            bg-sky-600
-                            ${isDark ? "shadow-[0_0_8px_rgba(56,189,248,0.6)]" : ""}
+                            bg-sky-600 shadow-[0_0_8px_rgba(56,189,248,0.6)]
                         `}
                         initial={false}
                         animate={{ scaleX: isActive ? 1 : 0 }}

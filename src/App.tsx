@@ -29,6 +29,8 @@ import {PrivacyPolicy} from "./Pages/PrivacyPolicy.tsx";
 import {TermsOfService} from "./Pages/TermOfService.tsx";
 import {CookiePolicy} from "./Pages/CookiePolicy.tsx";
 import {About} from "./Pages/About.tsx";
+import {BlogPage} from "./Pages/BlogPage.tsx";
+import {BlogArticlePage} from "./Pages/BlogArticlePage.tsx";
 import { Analytics } from "@vercel/analytics/react";
 import { AnalyticsProvider } from "./providers/AnalyticsProvider.tsx";
 
@@ -62,6 +64,8 @@ function App() {
                             <Route path="/terms" element={<LayoutHomepage><TermsOfService /></LayoutHomepage>} />
                             <Route path="/cookies" element={<LayoutHomepage><CookiePolicy /></LayoutHomepage>} />
                             <Route path="/about" element={<LayoutHomepage><About /></LayoutHomepage>} />
+                            <Route path="/blog" element={<LayoutHomepage><BlogPage /></LayoutHomepage>} />
+                            <Route path="/blog/:slug" element={<LayoutHomepage><BlogArticlePage /></LayoutHomepage>} />
                         </Routes>
                     </PremiumProvider>
                 </AuthProvider>

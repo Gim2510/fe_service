@@ -112,7 +112,7 @@ export function AnalyticsContent() {
                         transition={{ duration: 0.4, delay: i * 0.08 }}
                         className={`relative rounded-2xl border backdrop-blur-sm p-4 overflow-hidden transition-all duration-300 ${
                             isDark
-                                ? "bg-[#161614]/80 border-stone-800/30 hover:border-stone-700/50 shadow-lg"
+                                ? "bg-[#0E0E0D]/80 border-stone-800/20 hover:border-stone-700/40 shadow-lg"
                                 : "bg-white/80 border-slate-200 shadow-md"
                         }`}
                     >
