@@ -36,32 +36,20 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
 
                     {/* Drawer */}
                     <motion.div
-                        className={`absolute right-0 top-0 h-full w-80 flex flex-col border-l ${
-                            isDark
-                                ? "bg-[#111110] border-stone-800/20"
-                                : "bg-[#F8FAFB] border-slate-200"
-                        }`}
+                        className={`absolute right-0 top-0 h-full w-80 flex flex-col border-l bg-[#0E0E0D] border-stone-800/20`}
                         initial={{ x: "100%" }}
                         animate={{ x: 0 }}
                         exit={{ x: "100%" }}
                         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                     >
                         {/* Header */}
-                        <div className={`flex items-center justify-between px-6 py-5 border-b ${
-                            isDark ? "border-stone-800/20" : "border-slate-200"
-                        }`}>
-                            <span className={`text-xs uppercase tracking-widest font-medium ${
-                                isDark ? "text-slate-500" : "text-slate-400"
-                            }`}>
+                        <div className={`flex items-center justify-between px-6 py-5 border-b border-stone-800/20`}>
+                            <span className={`text-xs uppercase tracking-widest font-medium text-slate-500`}>
                                 Menu
                             </span>
                             <button
                                 onClick={closeMenu}
-                                className={`p-1.5 rounded-lg transition-colors ${
-                                    isDark
-                                        ? "text-slate-500 hover:text-slate-200 hover:bg-[#F8FAFB]/5"
-                                        : "text-slate-400 hover:text-slate-700 hover:bg-[#EDF2F7]"
-                                }`}
+                                className={`p-1.5 rounded-lg transition-colors text-slate-500 hover:text-slate-200 hover:bg-[#F8FAFB]/5`}
                             >
                                 <X size={18} />
                             </button>
@@ -81,7 +69,7 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
                         </div>
 
                         {/* Divider */}
-                        <div className={`mx-4 mt-6 border-t ${isDark ? "border-stone-800/20" : "border-slate-200"}`} />
+                        <div className={`mx-4 mt-6 border-t border-stone-800/20`} />
 
                         {/* Auth actions */}
                         <div className="flex flex-col gap-2 px-4 pt-4">
@@ -93,11 +81,7 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
                             ) : (
                                 <button
                                     onClick={handleLogout}
-                                    className={`text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 border border-transparent ${
-                                        isDark
-                                            ? "text-red-400 hover:text-red-300 hover:bg-red-500/10"
-                                            : "text-red-500 hover:text-red-600 hover:bg-red-50"
-                                    }`}
+                                    className={`text-left px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 border border-transparent text-red-400 hover:text-red-300 hover:bg-red-500/10`}
                                 >
                                     Logout
                                 </button>
@@ -108,11 +92,7 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
                         <div className="px-4 mt-4">
                             <button
                                 onClick={toggleTheme}
-                                className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 border ${
-                                    isDark
-                                        ? "text-slate-400 bg-[#F8FAFB]/3 border-stone-800/20 hover:border-stone-700/40 hover:text-slate-200"
-                                        : "text-slate-600 bg-[#EDF2F7] border-slate-200 hover:bg-[#EDF2F7]"
-                                }`}
+                                className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 border text-slate-400 bg-[#F8FAFB]/3 border-stone-800/20 hover:border-stone-700/40 hover:text-slate-200`}
                             >
                                 <span>Tema</span>
                                 {isDark ? <Moon size={16} /> : <Sun size={16} />}
@@ -121,7 +101,7 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
 
                         {/* Footer */}
                         <div className="mt-auto px-6 py-6">
-                            <span className={`text-xs ${isDark ? "text-slate-700" : "text-slate-400"}`}>
+                            <span className={`text-xs text-slate-700`}>
                                 © {new Date().getFullYear()} AxiomLab
                             </span>
                         </div>

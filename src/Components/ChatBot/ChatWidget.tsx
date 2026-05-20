@@ -20,8 +20,9 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
 
     const handleSend = async () => {
         if (!input.trim()) return;
-        await sendMessage(input);
+        const messageToSend = input;
         setInput("");
+        await sendMessage(messageToSend);
     };
 
     return (
@@ -34,8 +35,8 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                     flex items-center justify-center border transition-all duration-200
                     hover:scale-105 active:scale-95 shadow-lg
                     ${isDark
-                        ? "bg-[#1C1C1A] border-stone-800/30 text-sky-500 shadow-black/40 hover:border-sky-800/40"
-                        : "bg-[#F8FAFB] border-slate-200 text-sky-700 shadow-slate-200 hover:border-sky-400"
+                        ? "bg-[#0E0E0D]/80 border-stone-800/20 text-sky-500 shadow-black/40 hover:border-sky-800/40"
+                        : "bg-white border-slate-200 text-sky-700 shadow-slate-200 hover:border-sky-400"
                     }`}
             >
                 {open
@@ -52,13 +53,13 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                         transform transition-all duration-300
                         ${open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}
                         ${isDark
-                            ? "bg-[#1C1C1A] border-stone-800/30 shadow-black/60"
-                            : "bg-[#F8FAFB] border-slate-200 shadow-slate-300/50"
+                            ? "bg-[#0E0E0D]/80 border-stone-800/20 shadow-black/60"
+                            : "bg-white border-slate-200 shadow-slate-300/50"
                         }`}
                 >
                     {/* Header */}
                     <div className={`px-5 py-4 border-b flex items-center gap-3
-                        ${isDark ? "border-stone-800/20 bg-[#111110]" : "border-slate-200 bg-[#EDF2F7]"}`}>
+                        ${isDark ? "border-stone-800/20 bg-[#0E0E0D]" : "border-slate-200 bg-[#EDF2F7]"}`}>
                         {/* AI avatar */}
                         <div className="w-8 h-8 shrink-0">
                             <svg viewBox="0 0 100 100" className="w-full h-full">
@@ -104,7 +105,7 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                                             ? "bg-sky-700 text-white"
                                             : "bg-sky-700 text-white"
                                         : isDark
-                                            ? "bg-[#111110] border border-stone-800/20 text-slate-300"
+                                            ? "bg-[#0E0E0D] border border-stone-800/20 text-slate-300"
                                             : "bg-[#EDF2F7] text-slate-700"
                                     }`}>
                                     {msg.content}
@@ -114,9 +115,9 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
 
                         {loading && (
                             <div className="flex justify-start">
-                                <div className={`px-4 py-2.5 rounded-2xl border
-                                    ${isDark ? "bg-[#111110] border-stone-800/20" : "bg-[#EDF2F7]"}`}>
-                                    <FallingLines color={isDark ? "#fff" : "#3B82F6"} width="28" visible ariaLabel="loading" />
+                                <div className={`px-3 py-2 rounded-2xl border
+                                    ${isDark ? "bg-[#0E0E0D] border-stone-800/20" : "bg-[#EDF2F7]"}`}>
+                                    <FallingLines color={isDark ? "#fff" : "#3B82F6"} width="16" visible ariaLabel="loading" />
                                 </div>
                             </div>
                         )}
@@ -138,7 +139,7 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                             className={`flex-1 text-xs px-4 py-2.5 rounded-xl border outline-none transition-colors
                                 focus:ring-2 placeholder:text-slate-500
                                 ${isDark
-                                    ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-sky-700 focus:ring-sky-600/20"
+                                    ? "bg-[#0E0E0D] border-stone-800/30 text-slate-200 focus:border-sky-700 focus:ring-sky-600/20"
                                     : "bg-[#EDF2F7] border-slate-200 text-slate-900 focus:border-sky-600 focus:ring-sky-600/10"
                                 }`}
                         />
