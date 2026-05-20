@@ -14,12 +14,12 @@ export function GlassCard({ title, children, theme, index = 0, glow = "sky" }: {
     };
 
     const glowShadows: Record<string, string> = {
-        sky: "shadow-sky-500/10 hover:shadow-sky-500/20",
-        emerald: "shadow-emerald-500/10 hover:shadow-emerald-500/20",
-        violet: "shadow-violet-500/10 hover:shadow-violet-500/20",
-        amber: "shadow-amber-500/10 hover:shadow-amber-500/20",
-        cyan: "shadow-cyan-500/10 hover:shadow-cyan-500/20",
-        rose: "shadow-rose-500/10 hover:shadow-rose-500/20",
+        sky: "shadow-sky-500/10",
+        emerald: "shadow-emerald-500/10",
+        violet: "shadow-violet-500/10",
+        amber: "shadow-amber-500/10",
+        cyan: "shadow-cyan-500/10",
+        rose: "shadow-rose-500/10",
     };
 
     return (
@@ -27,17 +27,17 @@ export function GlassCard({ title, children, theme, index = 0, glow = "sky" }: {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: index * 0.06 }}
-            className={`group relative rounded-2xl border backdrop-blur-sm overflow-hidden transition-all duration-300 ${
+            className={`group relative rounded-2xl border backdrop-blur-sm overflow-hidden transition-all duration-300 hover:-translate-y-0.5 ${
                 isDark
-                    ? `bg-[#161614]/80 border-stone-800/30 hover:border-stone-700/50 shadow-lg ${glowShadows[glow]}`
-                    : `bg-white/80 border-slate-200 hover:border-slate-300 shadow-md ${glowShadows[glow]}`
+                    ? `bg-[#0E0E0D]/80 border-stone-800/20 hover:border-stone-700/40 shadow-lg ${glowShadows[glow]}`
+                    : `bg-white/80 border-slate-200 hover:border-slate-300 shadow-md`
             }`}
         >
             <div className={`h-[2px] w-full bg-gradient-to-r ${topGlows[glow]} transition-all`} />
             <div className="p-5">
                 {title && (
-                    <h3 className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-4
-                        ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                    <h3 className={`text-xs font-semibold uppercase tracking-wider mb-4
+                        ${isDark ? "text-slate-300" : "text-slate-700"}`}>
                         {title}
                     </h3>
                 )}

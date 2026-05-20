@@ -74,7 +74,11 @@ export function SurveyStart() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
             >
-                <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border text-sky-400 border-sky-500/20 bg-sky-950/30">
+                <span className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
+                    isDark
+                        ? "text-sky-400 border-sky-500/20 bg-sky-950/30"
+                        : "text-sky-700 border-sky-300 bg-sky-50"
+                }`}>
                     <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
                     Survey digitale
                 </span>
@@ -146,7 +150,7 @@ export function SurveyStart() {
                             {isDark && <div className="absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-cyan-400 to-transparent opacity-15" />}
                             <span className={`text-xs font-mono font-medium mb-4 block ${isDark ? "text-cyan-400" : "text-sky-500"}`}>{s.n}</span>
                             <h3 className={`text-base font-semibold mb-3 leading-snug ${isDark ? "text-slate-100" : "text-slate-800"}`}>{s.title}</h3>
-                            <p className="text-sm leading-relaxed text-slate-500">{s.desc}</p>
+                            <p className={`text-sm leading-relaxed ${isDark ? "text-slate-500" : "text-slate-600"}`}>{s.desc}</p>
                         </motion.div>
                     </motion.div>
                 ))}

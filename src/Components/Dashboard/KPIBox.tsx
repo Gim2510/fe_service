@@ -31,7 +31,7 @@ export function KPIBox({ label, value, sub, theme, index = 0, glow = "sky" }: an
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: index * 0.06 }}
             className={`group relative rounded-2xl border backdrop-blur-sm overflow-hidden transition-all duration-300 ${
                 isDark
-                    ? `bg-[#161614]/80 border-stone-800/30 hover:border-stone-700/50 shadow-lg ${glowColors[glow]}`
+                    ? `bg-[#0E0E0D]/80 border-stone-800/20 hover:border-stone-700/40 shadow-lg ${glowColors[glow]}`
                     : `bg-white/80 border-slate-200 hover:border-slate-300 shadow-md ${glowColors[glow]}`
             }`}
         >
