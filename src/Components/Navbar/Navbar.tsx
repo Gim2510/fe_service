@@ -29,8 +29,8 @@ export function Navbar() {
             ? "bg-[#0E0E0D]/95 border-stone-800/20 shadow-[0_4px_32px_rgba(0,0,0,0.7)]"
             : "bg-[#0E0E0D]/80 border-stone-800/15 shadow-none"
         : scrolled
-            ? "bg-[#0E0E0D]/95 border-stone-800/20 shadow-[0_4px_32px_rgba(0,0,0,0.7)]"
-            : "bg-[#0E0E0D]/80 border-stone-800/15 shadow-none";
+            ? "bg-white/95 border-slate-200 shadow-[0_2px_20px_rgba(0,0,0,0.06)]"
+            : "bg-white/75 border-slate-200/60 shadow-none";
 
     return (
         <>

@@ -10,6 +10,7 @@ export function NavbarDesktopMenu() {
                 <NavItem to="/dashboard" label="Dashboard" />
             )}
             <NavItem to="/survey/start" label="Survey" />
+            <NavItem to="/blog" label="Blog" />
             <NavItem to="/contact" label="Contacts" />
             <NavItem to="/careers" label="Careers" />
         </div>

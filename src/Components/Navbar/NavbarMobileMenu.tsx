@@ -61,6 +61,7 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
                                 <MobileNavItem to="/dashboard" label="Dashboard" closeMenu={closeMenu} />
                             )}
                             <MobileNavItem to="/survey/start" label="Survey" closeMenu={closeMenu} />
+                            <MobileNavItem to="/blog" label="Blog" closeMenu={closeMenu} />
                             <MobileNavItem to="/contact" label="Contacts" closeMenu={closeMenu} />
                             <MobileNavItem to="/careers" label="Careers" closeMenu={closeMenu} />
                             {isAuthenticated && (
