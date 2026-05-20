@@ -8,7 +8,7 @@ export function ContactPage() {
     const isDark = theme === "dark";
 
     return (
-        <main className={`relative min-h-screen flex items-center overflow-hidden ${
+        <main className={`relative min-h-screen flex items-center overflow-hidden pt-24 ${
             isDark ? "bg-[#0E0E0D]" : "bg-[#FAFAF8]"
         }`}>
             {/* Grid background — same as homepage */}
@@ -25,7 +25,7 @@ export function ContactPage() {
                 )}
             </div>
 
-            <div className={`relative z-10 mx-auto w-full max-w-6xl px-6 sm:px-8 py-24 grid lg:grid-cols-2 gap-16 items-center ${
+            <div className={`relative z-10 max-w-6xl mx-auto px-6 sm:px-8 py-16 grid lg:grid-cols-2 gap-12 items-center ${
                 isDark ? "text-white" : "text-slate-900"
             }`}>
 
@@ -36,7 +36,11 @@ export function ContactPage() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                    <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border text-cyan-400 border-cyan-500/20 bg-cyan-950/30">
+                    <span className={`inline-flex items-center w-fit gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
+                        isDark
+                            ? "text-cyan-400 border-cyan-500/20 bg-cyan-950/30"
+                            : "text-cyan-700 border-cyan-300 bg-cyan-50"
+                    }`}>
                         <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
                         Contatti
                     </span>

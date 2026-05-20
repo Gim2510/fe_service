@@ -25,7 +25,7 @@ export function InsightsSection({ users, surveys, theme }: any) {
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.28 }}
             className={`group relative rounded-2xl border backdrop-blur-sm overflow-hidden transition-all duration-300 ${
                 isDark
-                    ? "bg-[#161614]/80 border-stone-800/30 hover:border-stone-700/50 shadow-lg shadow-amber-500/10 hover:shadow-amber-500/20"
+                    ? "bg-[#0E0E0D]/80 border-stone-800/20 hover:border-stone-700/40 shadow-lg shadow-amber-500/10 hover:shadow-amber-500/20"
                     : "bg-white/80 border-slate-200 hover:border-slate-300 shadow-md hover:shadow-lg"
             }`}
         >

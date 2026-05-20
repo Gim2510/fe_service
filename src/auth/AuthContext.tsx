@@ -7,7 +7,7 @@ import {
     type ReactNode,
 } from "react";
 import { jwtDecode } from "jwt-decode";
-import { logoutApi } from "../api/auth.api.ts";
+import { logoutApi, restoreSessionApi } from "../api/auth.api.ts";
 
 type JwtPayload = {
     sub: string;
@@ -36,6 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [sessionRestored, setSessionRestored] = useState(false);
 
     const logoutTimer = useRef<number | null>(null);
+    const refreshTimer = useRef<number | null>(null);
 
     const clearLogoutTimer = () => {
         if (logoutTimer.current) {
@@ -44,8 +45,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
+    const clearRefreshTimer = () => {
+        if (refreshTimer.current) {
+            clearTimeout(refreshTimer.current);
+            refreshTimer.current = null;
+        }
+    };
+
     const logout = () => {
         clearLogoutTimer();
+        clearRefreshTimer();
         setToken(null);
         localStorage.removeItem("auth_token");
         logoutApi().catch(() => {});
@@ -53,6 +62,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const login = (newToken: string) => {
         clearLogoutTimer();
+        clearRefreshTimer();
         setToken(newToken);
         localStorage.setItem("auth_token", newToken);
     };
@@ -66,12 +76,58 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setSessionRestored(true);
     }, []);
 
+    // ⏱️ Auto refresh token prima della scadenza
+    useEffect(() => {
+        if (!token) return;
+
+        try {
+            const decoded = jwtDecode<JwtPayload>(token);
+            const expiresAt = decoded.exp * 1000;
+            const now = Date.now();
+            const timeUntilExpiry = expiresAt - now;
+
+            // Refresh 5 minuti prima della scadenza
+            const refreshIn = timeUntilExpiry - 5 * 60 * 1000;
+
+            if (refreshIn <= 0) {
+                // Token quasi scaduto, refresh immediato
+                restoreSessionApi().then((data) => {
+                    if (data?.accessToken) {
+                        login(data.accessToken);
+                    } else {
+                        logout();
+                    }
+                }).catch(() => logout());
+                return;
+            }
+
+            refreshTimer.current = window.setTimeout(async () => {
+                try {
+                    const data = await restoreSessionApi();
+                    if (data?.accessToken) {
+                        login(data.accessToken);
+                    } else {
+                        logout();
+                    }
+                } catch {
+                    logout();
+                }
+            }, refreshIn);
+        } catch {
+            logout();
+        }
+
+        return () => {
+            clearRefreshTimer();
+        };
+    }, [token]);
+
     let role: string | null = null;
     let id: string | null = null;
     let emailVer: boolean | null = null;
     let isPremium: boolean | null = null;
 
-    // ⏱️ Auto logout su scadenza token
+    // ⏱️ Auto logout su scadenza token (fallback)
     useEffect(() => {
         if (!token) return;
 
