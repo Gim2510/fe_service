@@ -13,7 +13,6 @@ const SUGGESTED_MESSAGES = [
 export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (open: boolean) => void; theme: string }) {
     const [input, setInput] = useState("");
     const [show, setShow] = useState(false);
-    const [showSuggestions, setShowSuggestions] = useState(true);
     const [suggestionsCollapsed, setSuggestionsCollapsed] = useState(false);
     const { messages, loading, error, sendMessage, messagesEndRef } = useChatBot();
     const isDark = theme === "dark";
@@ -31,12 +30,10 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
         if (!input.trim()) return;
         const messageToSend = input;
         setInput("");
-        setShowSuggestions(false);
         await sendMessage(messageToSend);
     };
 
     const handleSuggestedMessage = async (message: string) => {
-        setShowSuggestions(false);
         await sendMessage(message);
     };
 
@@ -145,8 +142,7 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                     </div>
 
                     {/* Suggested messages */}
-                    {showSuggestions && messages.length === 0 && (
-                        <div className={`px-4 pb-2 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+                    <div className={`px-4 pb-2 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
                             <button
                                 onClick={() => setSuggestionsCollapsed(!suggestionsCollapsed)}
                                 className={`w-full flex items-center justify-between text-[10px] uppercase tracking-wider font-medium py-1 transition-colors
@@ -175,7 +171,6 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                                 </div>
                             </div>
                         </div>
-                    )}
 
                     {/* Input */}
                     <div className={`p-4 border-t flex gap-2 ${isDark ? "border-stone-800/20" : "border-slate-200"}`}>
