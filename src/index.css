@@ -171,6 +171,29 @@ html, body {
     background-color: rgba(168, 163, 154, 0.5);
 }
 
+/* Scrollbar verticale per chatbot */
+.chat-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(168, 163, 154, 0.25) transparent;
+}
+
+.chat-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(168, 163, 154, 0.25);
+    border-radius: 2px;
+}
+
+.chat-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(168, 163, 154, 0.45);
+}
+
 /* stato iniziale */
 .reveal {
     opacity: 0;
