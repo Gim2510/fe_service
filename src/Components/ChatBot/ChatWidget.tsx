@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FallingLines } from "react-loader-spinner";
-import { MessageCircle, X, Send } from "lucide-react";
+import { MessageCircle, X, Send, ChevronDown } from "lucide-react";
 import { useChatBot } from "../../hooks/useChatBot.ts";
 
 const SUGGESTED_MESSAGES = [
@@ -14,6 +14,7 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
     const [input, setInput] = useState("");
     const [show, setShow] = useState(false);
     const [showSuggestions, setShowSuggestions] = useState(true);
+    const [suggestionsCollapsed, setSuggestionsCollapsed] = useState(false);
     const { messages, loading, error, sendMessage, messagesEndRef } = useChatBot();
     const isDark = theme === "dark";
 
@@ -145,24 +146,33 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
 
                     {/* Suggested messages */}
                     {showSuggestions && messages.length === 0 && (
-                        <div className={`px-4 pb-2 space-y-2 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-                            <p className="text-[10px] uppercase tracking-wider font-medium opacity-60">Domande frequenti</p>
-                            <div className="space-y-1.5">
-                                {SUGGESTED_MESSAGES.map((msg, i) => (
-                                    <button
-                                        key={i}
-                                        onClick={() => handleSuggestedMessage(msg)}
-                                        disabled={loading}
-                                        className={`w-full text-left text-xs px-3 py-2 rounded-xl border transition-all duration-150
-                                            hover:scale-[1.02] active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed
-                                            ${isDark
-                                                ? "bg-[#0E0E0D] border-stone-800/20 text-slate-300 hover:border-sky-700/50 hover:text-sky-400"
-                                                : "bg-[#EDF2F7] border-slate-200 text-slate-700 hover:border-sky-600/50 hover:text-sky-700"
-                                            }`}
-                                    >
-                                        {msg}
-                                    </button>
-                                ))}
+                        <div className={`px-4 pb-2 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+                            <button
+                                onClick={() => setSuggestionsCollapsed(!suggestionsCollapsed)}
+                                className={`w-full flex items-center justify-between text-[10px] uppercase tracking-wider font-medium py-1 transition-colors
+                                    ${isDark ? "hover:text-slate-300" : "hover:text-slate-700"}`}
+                            >
+                                <span className="opacity-60">Domande frequenti</span>
+                                <ChevronDown size={12} className={`transition-transform duration-200 ${suggestionsCollapsed ? "-rotate-90" : ""}`} />
+                            </button>
+                            <div className={`overflow-hidden transition-all duration-300 ${suggestionsCollapsed ? "max-h-0 opacity-0" : "max-h-96 opacity-100"}`}>
+                                <div className="space-y-1.5 pt-1">
+                                    {SUGGESTED_MESSAGES.map((msg, i) => (
+                                        <button
+                                            key={i}
+                                            onClick={() => handleSuggestedMessage(msg)}
+                                            disabled={loading}
+                                            className={`w-full text-left text-xs px-3 py-2 rounded-xl border transition-all duration-150
+                                                hover:scale-[1.02] active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed
+                                                ${isDark
+                                                    ? "bg-[#0E0E0D] border-stone-800/20 text-slate-300 hover:border-sky-700/50 hover:text-sky-400"
+                                                    : "bg-[#EDF2F7] border-slate-200 text-slate-700 hover:border-sky-600/50 hover:text-sky-700"
+                                                }`}
+                                        >
+                                            {msg}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     )}
