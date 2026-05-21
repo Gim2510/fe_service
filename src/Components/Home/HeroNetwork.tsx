@@ -151,9 +151,11 @@ function ctrlPt(a: V2, b: V2, k = 0.22): V2 {
 
 export function HeroNetwork() {
     const canvasRef   = useRef<HTMLCanvasElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
     const { theme }   = useTheme();
     const isDark      = theme === "dark";
     const [visible, setVisible] = useState(false);
+    const isInViewport = useRef(true);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -355,16 +357,30 @@ export function HeroNetwork() {
         canvas.addEventListener("pointerup",    onPointerUp,    { passive: false });
         canvas.addEventListener("pointerleave", onPointerUp,    { passive: false });
 
+        // IntersectionObserver per fermare RAF quando fuori viewport
+        const io = new IntersectionObserver(
+            ([entry]) => { isInViewport.current = entry.isIntersecting; },
+            { threshold: 0.1 }
+        );
+        if (containerRef.current) io.observe(containerRef.current);
+
         // Trigger fade-in
         requestAnimationFrame(() => setVisible(true));
 
         // ── Render loop ────────────────────────────────────────────────────────
         let last = performance.now();
         let raf:  number;
+        let collisionTimer = 0;
 
         const easeInOut = (t: number) => t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
 
         const frame = (now: number) => {
+            // Skip rendering when out of viewport (save CPU/GPU)
+            if (!isInViewport.current) {
+                raf = requestAnimationFrame(frame);
+                return;
+            }
+
             const dt = Math.min((now - last) / 1000, 0.05);
             last = now;
 
@@ -468,44 +484,49 @@ export function HeroNetwork() {
                 ns.cy += ns.vy * dt;
             });
 
-            // ── Collision resolution ───────────────────────────────────────────
-            for (let i = 0; i < NODES.length; i++) {
-                for (let j = i + 1; j < NODES.length; j++) {
-                    const na  = NODES[i];
-                    const nb  = NODES[j];
-                    const nsa = states.get(na.id)!;
-                    const nsb = states.get(nb.id)!;
+            // ── Collision resolution (throttled to 30fps) ───────────────────────────────────────────
+            if (collisionTimer <= 0) {
+                collisionTimer = 1 / 30;
+                for (let i = 0; i < NODES.length; i++) {
+                    for (let j = i + 1; j < NODES.length; j++) {
+                        const na  = NODES[i];
+                        const nb  = NODES[j];
+                        const nsa = states.get(na.id)!;
+                        const nsb = states.get(nb.id)!;
 
-                    const dx   = (nsb.cx - nsa.cx) * W;
-                    const dy   = (nsb.cy - nsa.cy) * H;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    const ra   = na.tier === 0 ? 32 : na.tier === 3 ? 12 : na.tier === 2 ? 18 : 22;
-                    const rb   = nb.tier === 0 ? 32 : nb.tier === 3 ? 12 : nb.tier === 2 ? 18 : 22;
-                    const minD = ra + rb + 8;
+                        const dx   = (nsb.cx - nsa.cx) * W;
+                        const dy   = (nsb.cy - nsa.cy) * H;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        const ra   = na.tier === 0 ? 32 : na.tier === 3 ? 12 : na.tier === 2 ? 18 : 22;
+                        const rb   = nb.tier === 0 ? 32 : nb.tier === 3 ? 12 : nb.tier === 2 ? 18 : 22;
+                        const minD = ra + rb + 8;
 
-                    if (dist < minD && dist > 0.5) {
-                        const nx  = dx / dist;
-                        const ny  = dy / dist;
-                        const pen = minD - dist;
-                        const corr = pen * 0.5;
-                        nsa.cx -= (nx * corr) / W;
-                        nsa.cy -= (ny * corr) / H;
-                        nsb.cx += (nx * corr) / W;
-                        nsb.cy += (ny * corr) / H;
+                        if (dist < minD && dist > 0.5) {
+                            const nx  = dx / dist;
+                            const ny  = dy / dist;
+                            const pen = minD - dist;
+                            const corr = pen * 0.5;
+                            nsa.cx -= (nx * corr) / W;
+                            nsa.cy -= (ny * corr) / H;
+                            nsb.cx += (nx * corr) / W;
+                            nsb.cy += (ny * corr) / H;
 
-                        const dvx = (nsb.vx - nsa.vx) * W;
-                        const dvy = (nsb.vy - nsa.vy) * H;
-                        const dvn = dvx * nx + dvy * ny;
-                        if (dvn < 0) {
-                            const restitution = 0.55;
-                            const impulse = -(1 + restitution) * dvn / 2;
-                            nsa.vx -= (nx * impulse) / W;
-                            nsa.vy -= (ny * impulse) / H;
-                            nsb.vx += (nx * impulse) / W;
-                            nsb.vy += (ny * impulse) / H;
+                            const dvx = (nsb.vx - nsa.vx) * W;
+                            const dvy = (nsb.vy - nsa.vy) * H;
+                            const dvn = dvx * nx + dvy * ny;
+                            if (dvn < 0) {
+                                const restitution = 0.55;
+                                const impulse = -(1 + restitution) * dvn / 2;
+                                nsa.vx -= (nx * impulse) / W;
+                                nsa.vy -= (ny * impulse) / H;
+                                nsb.vx += (nx * impulse) / W;
+                                nsb.vy += (ny * impulse) / H;
+                            }
                         }
                     }
                 }
+            } else {
+                collisionTimer -= dt;
             }
 
             // Helper: normalized → pixels (float on top of physics position)
@@ -674,17 +695,11 @@ export function HeroNetwork() {
                 ctx.fillStyle = ig;
                 ctx.fill();
 
-                // Body
+                // Body - simplified (no expensive ctx.filter blur on every node)
                 ctx.save();
                 ctx.beginPath();
                 ctx.arc(x, y, r, 0, Math.PI * 2);
-                ctx.clip();
-                ctx.filter = `blur(${isHub ? 7 : 5}px)`;
-                ctx.drawImage(canvas, 0, 0, W, H);
-                ctx.filter = "none";
                 ctx.fillStyle = gBg;
-                ctx.beginPath();
-                ctx.arc(x, y, r, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.restore();
 
@@ -806,18 +821,14 @@ export function HeroNetwork() {
                 ctx.fillStyle = og;
                 ctx.fill();
 
-                // Backdrop blur body
+                // Backdrop blur body - simplified for performance
                 ctx.save();
                 ctx.beginPath();
                 ctx.arc(x, y, r, 0, Math.PI * 2);
-                ctx.clip();
-                ctx.filter = `blur(${isHub ? 9 : 7}px)`;
-                ctx.drawImage(canvas, 0, 0, W, H);
-                ctx.filter = "none";
                 ctx.fillStyle = gBg;
-                ctx.beginPath();
-                ctx.arc(x, y, r, 0, Math.PI * 2);
+                ctx.globalAlpha = 0.95;
                 ctx.fill();
+                ctx.globalAlpha = 1;
                 ctx.restore();
 
                 // Border
@@ -874,6 +885,7 @@ export function HeroNetwork() {
         return () => {
             cancelAnimationFrame(raf);
             ro.disconnect();
+            io.disconnect();
             canvas.removeEventListener("pointerdown",  onPointerDown);
             canvas.removeEventListener("pointermove",  onPointerMove);
             canvas.removeEventListener("pointerup",    onPointerUp);
@@ -883,6 +895,7 @@ export function HeroNetwork() {
 
     return (
         <div
+            ref={containerRef}
             className="absolute inset-0 w-full h-full pointer-events-none top-0 left-0 lg:left-[30%] lg:pr-40 z-20"
             style={{
                 opacity:    visible ? 1 : 0,

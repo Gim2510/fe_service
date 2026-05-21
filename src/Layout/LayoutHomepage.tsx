@@ -1,4 +1,4 @@
-import { type ReactNode, useState, useEffect } from "react";
+import { type ReactNode, useState, useEffect, useRef } from "react";
 import { Navbar } from "../Components/Navbar/Navbar.tsx";
 import { Footer } from "../Components/Footer.tsx";
 import { GDPRBanner } from "../Components/GDPRBANNER.tsx";
@@ -8,24 +8,36 @@ import {EmailVerificationBanner} from "../Components/EmailVerificationBanner.tsx
 import {useTheme} from "../Context/ThemeContext.tsx";
 
 function ScrollProgressBar() {
-    const [progress, setProgress] = useState(0);
+    const barRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        let rafId: number;
         const onScroll = () => {
-            const el = document.documentElement;
-            const scrolled = el.scrollTop || document.body.scrollTop;
-            const total = el.scrollHeight - el.clientHeight;
-            setProgress(total > 0 ? (scrolled / total) * 100 : 0);
+            if (rafId) return;
+            rafId = requestAnimationFrame(() => {
+                rafId = 0;
+                const el = document.documentElement;
+                const scrolled = el.scrollTop || document.body.scrollTop;
+                const total = el.scrollHeight - el.clientHeight;
+                const progress = total > 0 ? (scrolled / total) * 100 : 0;
+                if (barRef.current) {
+                    barRef.current.style.width = `${progress}%`;
+                }
+            });
         };
         window.addEventListener("scroll", onScroll, { passive: true });
-        return () => window.removeEventListener("scroll", onScroll);
+        return () => {
+            window.removeEventListener("scroll", onScroll);
+            if (rafId) cancelAnimationFrame(rafId);
+        };
     }, []);
 
     return (
         <div className="fixed top-0 left-0 right-0 z-[9999] h-[2px] bg-transparent pointer-events-none">
             <div
-                className="h-full bg-sky-600 transition-none origin-left"
-                style={{ width: `${progress}%` }}
+                ref={barRef}
+                className="h-full bg-sky-600 will-change-[width]"
+                style={{ width: "0%" }}
             />
         </div>
     );

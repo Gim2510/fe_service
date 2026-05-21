@@ -227,12 +227,14 @@ function Scene({ shapes, isDark, mobileScale }: FloatingShapesProps) {
 // ── Main export ──
 
 export function FloatingShapes({ shapes, isDark, mobileScale }: FloatingShapesProps) {
+    if (shapes.length === 0) return null;
+
     return (
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
             <Canvas
                 orthographic
                 camera={{ zoom: 50, near: 0.1, far: 100, position: [0, 0, 10] }}
-                gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
+                gl={{ alpha: true, antialias: false, powerPreference: "low-power" }}
                 dpr={[1, 1.5]}
                 style={{ background: "transparent" }}
             >
