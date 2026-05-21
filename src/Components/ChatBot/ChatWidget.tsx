@@ -3,9 +3,17 @@ import { FallingLines } from "react-loader-spinner";
 import { MessageCircle, X, Send } from "lucide-react";
 import { useChatBot } from "../../hooks/useChatBot.ts";
 
+const SUGGESTED_MESSAGES = [
+    "Come funziona la piattaforma?",
+    "Quali servizi offrite?",
+    "Come posso prenotare una consulenza?",
+    "Vorrei informazioni sui prezzi"
+];
+
 export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (open: boolean) => void; theme: string }) {
     const [input, setInput] = useState("");
     const [show, setShow] = useState(false);
+    const [showSuggestions, setShowSuggestions] = useState(true);
     const { messages, loading, error, sendMessage, messagesEndRef } = useChatBot();
     const isDark = theme === "dark";
 
@@ -22,7 +30,13 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
         if (!input.trim()) return;
         const messageToSend = input;
         setInput("");
+        setShowSuggestions(false);
         await sendMessage(messageToSend);
+    };
+
+    const handleSuggestedMessage = async (message: string) => {
+        setShowSuggestions(false);
+        await sendMessage(message);
     };
 
     return (
@@ -93,7 +107,7 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
                     </div>
 
                     {/* Messages */}
-                    <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                    <div className="flex-1 overflow-y-auto p-4 space-y-3 chat-scrollbar">
                         {messages.map((msg, i) => (
                             <div
                                 key={i}
@@ -128,6 +142,30 @@ export function ChatWidget({ open, setOpen, theme }: { open: boolean; setOpen: (
 
                         <div ref={messagesEndRef} />
                     </div>
+
+                    {/* Suggested messages */}
+                    {showSuggestions && messages.length === 0 && (
+                        <div className={`px-4 pb-2 space-y-2 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+                            <p className="text-[10px] uppercase tracking-wider font-medium opacity-60">Domande frequenti</p>
+                            <div className="space-y-1.5">
+                                {SUGGESTED_MESSAGES.map((msg, i) => (
+                                    <button
+                                        key={i}
+                                        onClick={() => handleSuggestedMessage(msg)}
+                                        disabled={loading}
+                                        className={`w-full text-left text-xs px-3 py-2 rounded-xl border transition-all duration-150
+                                            hover:scale-[1.02] active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed
+                                            ${isDark
+                                                ? "bg-[#0E0E0D] border-stone-800/20 text-slate-300 hover:border-sky-700/50 hover:text-sky-400"
+                                                : "bg-[#EDF2F7] border-slate-200 text-slate-700 hover:border-sky-600/50 hover:text-sky-700"
+                                            }`}
+                                    >
+                                        {msg}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     {/* Input */}
                     <div className={`p-4 border-t flex gap-2 ${isDark ? "border-stone-800/20" : "border-slate-200"}`}>
