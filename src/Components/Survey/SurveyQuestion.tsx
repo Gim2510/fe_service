@@ -15,6 +15,7 @@ export function SurveyQuestion({ question, lang, answer, setAnswer, theme, onAut
             content = (
                 <MultipleChoiceQuestion
                     options={question.opt?.[lang] ?? []}
+                    descriptions={question.desc?.[lang]}
                     answer={answer}
                     onChange={setAnswer}
                     isDark={isDark}

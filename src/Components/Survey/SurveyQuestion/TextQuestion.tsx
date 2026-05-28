@@ -15,7 +15,7 @@ export const TextQuestion: FC<PropsTextQuestion> = ({ answer, onChange, isDark }
                     focus:outline-none focus:ring-2 transition-colors duration-200
                     placeholder:text-slate-500
                     ${isDark
-                        ? "bg-[#111110] border-stone-800/30 text-slate-200 focus:border-sky-700 focus:ring-sky-600/20"
+                        ? "bg-[#111110] border-stone-800/40 text-slate-200 focus:border-sky-700 focus:ring-sky-600/20"
                         : "bg-[#F8FAFB] border-slate-200 text-slate-900 focus:border-sky-600 focus:ring-sky-600/10"
                     }`}
             />
