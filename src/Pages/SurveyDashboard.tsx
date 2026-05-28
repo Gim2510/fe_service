@@ -61,7 +61,7 @@ export function SurveyDashboard() {
 
     const { survey_id } = useParams();
     const { survey, loading } = useSurvey(survey_id);
-    const { allSurveys } = useUserSurvey();
+    const { allSurveys, refetch: refetchSurveys } = useUserSurvey();
 
     const currentType: SurveyType = useMemo(() => {
         const entry = allSurveys.find(s => s.surveyId === survey_id);
@@ -94,7 +94,9 @@ export function SurveyDashboard() {
         }
     }, [survey]);
 
-    if (loading || !survey) {
+    useEffect(() => {
+        refetchSurveys();
+    }, [survey_id]);
         return (
             <div className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#0E0E0D]" : "bg-[#FAFAF8]"}`}>
                 <FallingLines color={isDark ? "#fff" : "#B45309"} width="60" visible />

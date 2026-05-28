@@ -222,6 +222,7 @@ export function MinorSurvey() {
     };
 
     const handleConfirmSubmit = () => {
+        refetchSurveys();
         if (surveyId) navigate(`/survey/${surveyId}/recap`);
     };
 
