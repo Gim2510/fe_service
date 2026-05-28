@@ -97,6 +97,8 @@ export function SurveyDashboard() {
     useEffect(() => {
         refetchSurveys();
     }, [survey_id]);
+
+    if (loading || !survey) {
         return (
             <div className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#0E0E0D]" : "bg-[#FAFAF8]"}`}>
                 <FallingLines color={isDark ? "#fff" : "#B45309"} width="60" visible />
