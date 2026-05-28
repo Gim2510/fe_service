@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Clock, ShieldCheck, CheckCircle, ClipboardList, ShieldAlert, Settings, TrendingUp, Lock } from "lucide-react";
+import { ArrowRight, ShieldCheck, CheckCircle, ClipboardList, ShieldAlert, Settings, TrendingUp, Lock } from "lucide-react";
 import { useAuth } from "../auth/AuthContext.tsx";
 import { useUserSurvey } from "../hooks/useUserSurvey";
 import { useSurvey } from "../hooks/useSurvey";
@@ -26,6 +26,36 @@ const securityItems = [
     { title: "Gestione dei dati", body: "Nessuna condivisione con terze parti. Cancellazione entro 60 giorni su richiesta." },
 ];
 
+const MINOR_CARD_STYLES = {
+    compliance: {
+        accent: "cyan" as const,
+        gradient: "from-cyan-500/60 via-cyan-500/20 to-transparent",
+        icon: ShieldAlert,
+        colorClass: "text-cyan-400",
+        borderClass: "border-cyan-500/30",
+        glowClass: "shadow-cyan-500/10",
+        bgClass: "bg-cyan-500/10",
+    },
+    processes: {
+        accent: "amber" as const,
+        gradient: "from-amber-500/60 via-amber-500/20 to-transparent",
+        icon: Settings,
+        colorClass: "text-amber-400",
+        borderClass: "border-amber-500/30",
+        glowClass: "shadow-amber-500/10",
+        bgClass: "bg-amber-500/10",
+    },
+    growth: {
+        accent: "emerald" as const,
+        gradient: "from-emerald-500/60 via-emerald-500/20 to-transparent",
+        icon: TrendingUp,
+        colorClass: "text-emerald-400",
+        borderClass: "border-emerald-500/30",
+        glowClass: "shadow-emerald-500/10",
+        bgClass: "bg-emerald-500/10",
+    },
+} as const;
+
 export function SurveyStart() {
     const navigate = useNavigate();
     const { theme } = useTheme();
@@ -40,6 +70,7 @@ export function SurveyStart() {
     const { initSurvey, loading: initLoading } = useInitSurvey();
 
     const mainCompleted = survey?.status === "published";
+    const mainScore = survey?.score ?? null;
 
     const handleStartMain = async () => {
         try {
@@ -58,7 +89,7 @@ export function SurveyStart() {
     const handleMinorClick = async (type: SurveyType) => {
         const existing = findSurveyByType(type);
         if (existing) {
-            navigate(`/survey/minor/${type}`);
+            navigate(existing.status === "published" ? `/survey/${existing.surveyId}/recap` : `/survey/minor/${type}`);
         } else {
             const cfg = getSurveyConfig(type);
             const newId = await initSurvey(cfg.templateId, locale, type);
@@ -71,146 +102,219 @@ export function SurveyStart() {
 
     const minorTypes = ["compliance", "processes", "growth"] as const;
 
-    const getMinorState = (type: SurveyType): "locked" | "available" | "started" => {
+    const getMinorState = (type: SurveyType): "locked" | "available" | "in_progress" | "completed" => {
         if (!mainCompleted) return "locked";
         const existing = findSurveyByType(type);
         if (!existing) return "available";
-        return "started";
+        if (existing.status === "published") return "completed";
+        return "in_progress";
     };
 
     if (!isAuthenticated) return <SurveyIntro />;
 
     return (
-        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#0E0E0D] text-white" : "bg-[#FAFAF8] text-slate-900"} px-6 py-32`}>
-            {/* Overlay loader */}
+        <main className={`relative min-h-screen overflow-hidden ${isDark ? "bg-[#0E0E0D] text-white" : "bg-[#FAFAF8] text-slate-900"} px-6 py-24`}>
             {initLoading && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
                     <FallingLines width="60" color="#fff" visible />
                 </div>
             )}
 
-            {/* Grid background */}
-            <div className={`absolute inset-0 pointer-events-none ${isDark ? "opacity-[0.06]" : "opacity-[0.12]"}`} style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect x='0' y='0' width='32' height='32' fill='none' stroke='${isDark ? '%2306B6D4' : '%23453A30'}' stroke-width='0.4'/%3E%3C/svg%3E")`, backgroundSize: "32px 32px" }} />
-            {isDark && <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-950/10 via-transparent to-transparent pointer-events-none" />}
+            {/* Grid + radial bg */}
+            <div className={`absolute inset-0 pointer-events-none ${isDark ? "opacity-[0.05]" : "opacity-[0.12]"}`} style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%2306B6D4' : '%23453A30'}' stroke-width='0.4'/%3E%3C/svg%3E")`, backgroundSize: "40px 40px" }} />
+            {isDark && <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-950/15 via-transparent to-transparent pointer-events-none" />}
 
-            {/* Hero */}
+            {/* ─── Hero header ─── */}
             <motion.section
-                className="relative z-10 max-w-3xl mx-auto text-center space-y-6"
-                initial={{ opacity: 0, y: 24 }}
+                className="relative z-10 max-w-4xl mx-auto text-center space-y-5 mb-16"
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
             >
-                <span className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full border ${
-                    isDark
-                        ? "text-sky-400 border-sky-500/20 bg-sky-950/30"
-                        : "text-sky-700 border-sky-300 bg-sky-50"
+                <span className={`inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] px-3 py-1.5 rounded-full border ${
+                    isDark ? "text-cyan-400 border-cyan-500/20 bg-cyan-950/30" : "text-sky-700 border-sky-300 bg-sky-50"
                 }`}>
-                    <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" />
-                    Survey digitale
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
+                    Diagnostic Hub
                 </span>
                 <h1 className={`font-fjalla text-4xl sm:text-5xl font-semibold leading-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                    Struttura la tua{" "}
-                    <span className={isDark ? "text-sky-400" : "text-sky-700"}>crescita digitale</span>
+                    Misura la tua{" "}
+                    <span className={isDark ? "text-cyan-400" : "text-sky-700"}>maturità digitale</span>
                 </h1>
-                <p className={`text-lg leading-relaxed max-w-2xl mx-auto ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                    Compila il questionario per analizzare processi, strumenti e criticità della tua azienda.
-                    Le informazioni raccolte verranno utilizzate per preparare un confronto consulenziale mirato.
+                <p className={`text-base leading-relaxed max-w-xl mx-auto ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                    Quattro assessment diagnostici per mappare processi, sicurezza IT ed efficienza operativa.
+                    Ogni survey produce un report con azioni prioritarie.
                 </p>
-                <div className="flex items-center justify-center gap-1.5">
-                    <Clock size={13} className={isDark ? "text-slate-600" : "text-slate-400"} />
-                    <span className={`text-sm ${isDark ? "text-slate-600" : "text-slate-400"}`}>
-                        Tempo richiesto: 8–12 minuti · Nessuna condivisione con terze parti
-                    </span>
-                </div>
+            </motion.section>
 
-                {emailVer ? (
-                    <div className="space-y-3 w-full">
-                        {/* Main diagnostic card */}
-                        <button
-                            onClick={handleStartMain}
-                            disabled={initLoading || loadingSurvey || loadingSurveyId}
-                            className="w-full text-left flex items-center gap-4 p-5 rounded-xl border transition-all duration-200
-                                disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-0.5
-                                bg-sky-600 hover:bg-sky-500 border-sky-500/30 shadow-lg shadow-sky-500/25"
-                        >
-                            <div className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center bg-white/15`}>
-                                <ClipboardList size={20} className="text-white" />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <p className="text-sm font-semibold text-white">Diagnostic Questionnaire</p>
-                                <p className="text-xs text-sky-200/80">Questionario completo su processi e organizzazione</p>
-                            </div>
-                            <div className="shrink-0">
-                                {initLoading
-                                    ? <FallingLines width="20" color="#fff" visible />
-                                    : <span className="text-xs font-medium text-white/80 flex items-center gap-1">
-                                        {survey?.status === "published" ? "Report" : survey ? "Continua" : "Inizia"}
-                                        <ArrowRight size={13} />
-                                    </span>
-                                }
-                            </div>
-                        </button>
-
-                        {/* 3 minor survey cards */}
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            {minorTypes.map((type) => {
-                                const cfg = getSurveyConfig(type);
-                                const state = getMinorState(type);
-                                const iconEl = type === "compliance"
-                                    ? <ShieldAlert size={18} />
-                                    : type === "processes"
-                                        ? <Settings size={18} />
-                                        : <TrendingUp size={18} />;
-
-                                return (
-                                    <button
-                                        key={type}
-                                        onClick={() => handleMinorClick(type)}
-                                        disabled={state === "locked" || initLoading}
-                                        title={state === "locked" ? "Completa prima il Diagnostic Questionnaire" : undefined}
-                                        className={`w-full text-left flex flex-col gap-2 p-4 rounded-xl border transition-all duration-200
-                                            disabled:cursor-not-allowed
-                                            ${state === "locked"
-                                                ? "opacity-40 border-stone-800/20 bg-stone-900/20"
-                                                : isDark
-                                                    ? "border-cyan-500/20 bg-[#0E0E0D]/60 hover:border-cyan-500/40 hover:-translate-y-0.5"
-                                                    : "border-sky-300 bg-white hover:border-sky-400 hover:-translate-y-0.5"
-                                            }`}
-                                    >
-                                        <div className={`shrink-0 w-9 h-9 rounded-lg flex items-center justify-center
-                                            ${state === "locked"
-                                                ? "bg-stone-800/30"
-                                                : isDark ? "bg-cyan-500/10" : "bg-sky-50"
-                                            }`}>
-                                            {state === "locked"
-                                                ? <Lock size={16} className={isDark ? "text-stone-600" : "text-stone-400"} />
-                                                : <span className={isDark ? "text-cyan-400" : "text-sky-600"}>{iconEl}</span>
-                                            }
-                                        </div>
-                                        <div className="min-w-0">
-                                            <p className={`text-xs font-semibold ${state === "locked"
-                                                ? (isDark ? "text-stone-600" : "text-stone-400")
-                                                : (isDark ? "text-slate-200" : "text-slate-800")
-                                            }`}>
-                                                {cfg.label}
-                                            </p>
-                                            <p className={`text-[10px] mt-0.5 line-clamp-2 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-                                                {state === "locked" ? "Completa il Diagnostic prima" : cfg.description}
-                                            </p>
-                                        </div>
-                                        {state !== "locked" && (
-                                            <span className={`text-[11px] font-medium self-end flex items-center gap-1
-                                                ${isDark ? "text-cyan-400" : "text-sky-600"}`}>
-                                                {state === "started" ? "Continua" : "Inizia"}
-                                                <ArrowRight size={11} />
+            {emailVer ? (
+                <div className="relative z-10 max-w-4xl mx-auto space-y-8">
+                    {/* ─── MAIN SURVEY — hero card ─── */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+                    >
+                        <div className={`relative rounded-2xl border overflow-hidden backdrop-blur-sm ${
+                            isDark
+                                ? "border-cyan-500/30 bg-[#0E0E0D]/80 shadow-lg shadow-cyan-500/10"
+                                : "border-cyan-500/60 bg-white shadow-md shadow-cyan-400/15"
+                        }`}>
+                            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
+                            <div className="p-6 sm:p-8">
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-5">
+                                    <div className={`shrink-0 w-12 h-12 rounded-xl flex items-center justify-center ${
+                                        isDark ? "bg-cyan-500/10 border border-cyan-500/20" : "bg-cyan-50 border border-cyan-200"
+                                    }`}>
+                                        <ClipboardList size={22} className={isDark ? "text-cyan-400" : "text-cyan-600"} />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <span className={`text-[10px] font-mono uppercase tracking-widest ${isDark ? "text-cyan-500" : "text-cyan-600"}`}>
+                                                Survey principale
                                             </span>
+                                            {mainCompleted && (
+                                                <span className={`text-[10px] font-mono px-2 py-0.5 rounded-md ${
+                                                    isDark ? "bg-green-500/10 text-green-400 border border-green-500/20" : "bg-green-50 text-green-600 border border-green-200"
+                                                }`}>
+                                                    Completato
+                                                </span>
+                                            )}
+                                            {survey && !mainCompleted && (
+                                                <span className={`text-[10px] font-mono px-2 py-0.5 rounded-md ${
+                                                    isDark ? "bg-amber-500/10 text-amber-400 border border-amber-500/20" : "bg-amber-50 text-amber-600 border border-amber-200"
+                                                }`}>
+                                                    In corso
+                                                </span>
+                                            )}
+                                        </div>
+                                        <h2 className={`text-xl font-semibold mb-1.5 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                                            Diagnostic Questionnaire
+                                        </h2>
+                                        <p className={`text-sm ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+                                            Il questionario completo che analizza processi, strumenti e organizzazione aziendale per individuare le aree di miglioramento prioritarie.
+                                        </p>
+                                    </div>
+                                    <div className="flex items-center gap-3 shrink-0">
+                                        {mainScore !== null && (
+                                            <div className="text-right">
+                                                <p className={`text-[10px] font-mono uppercase tracking-widest ${isDark ? "text-slate-500" : "text-slate-400"}`}>Score</p>
+                                                <p className="text-2xl font-semibold tabular-nums text-cyan-400">{mainScore}%</p>
+                                            </div>
                                         )}
-                                    </button>
-                                );
-                            })}
+                                        <button
+                                            onClick={handleStartMain}
+                                            disabled={initLoading || loadingSurvey || loadingSurveyId}
+                                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl
+                                                bg-cyan-600 hover:bg-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed
+                                                text-white text-sm font-semibold transition-all
+                                                shadow-lg shadow-cyan-500/25 hover:-translate-y-0.5 duration-200 whitespace-nowrap"
+                                        >
+                                            {initLoading
+                                                ? <FallingLines width="20" color="#fff" visible />
+                                                : <>
+                                                    {survey?.status === "published" ? "Vedi report" : survey ? "Continua" : "Inizia"}
+                                                    <ArrowRight size={14} />
+                                                </>
+                                            }
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </motion.div>
+
+                    {/* ─── Connector ─── */}
+                    <div className="flex items-center justify-center gap-3 py-1">
+                        <div className={`h-px flex-1 ${isDark ? "bg-gradient-to-r from-transparent to-cyan-500/20" : "bg-gradient-to-r from-transparent to-sky-300"}`} />
+                        <span className={`text-[10px] font-mono uppercase tracking-widest ${isDark ? "text-slate-600" : "text-slate-400"}`}>Diagnostici specializzati</span>
+                        <div className={`h-px flex-1 ${isDark ? "bg-gradient-to-l from-transparent to-cyan-500/20" : "bg-gradient-to-l from-transparent to-sky-300"}`} />
                     </div>
-                ) : (
+
+                    {/* ─── MINOR SURVEYS — 3 cards ─── */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {minorTypes.map((type, i) => {
+                            const cfg = getSurveyConfig(type);
+                            const state = getMinorState(type);
+                            const st = MINOR_CARD_STYLES[type];
+                            const IconCmp = st.icon;
+
+                            return (
+                                <motion.button
+                                    key={type}
+                                    onClick={() => handleMinorClick(type)}
+                                    disabled={state === "locked" || initLoading}
+                                    initial={{ opacity: 0, y: 16 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.4, delay: 0.2 + i * 0.08, ease: "easeOut" }}
+                                    className={`relative rounded-2xl border overflow-hidden backdrop-blur-sm text-left transition-all duration-300
+                                        disabled:cursor-not-allowed group
+                                        ${state === "locked"
+                                            ? "opacity-30 border-stone-800/20 bg-[#0E0E0D]/40"
+                                            : isDark
+                                                ? `${st.borderClass} bg-[#0E0E0D]/70 hover:-translate-y-1 ${st.glowClass}`
+                                                : "border-sky-300 bg-white hover:-translate-y-1 shadow-sm"
+                                        }`}
+                                >
+                                    {state !== "locked" && (
+                                        <div className={`h-[2px] w-full bg-gradient-to-r from-transparent ${st.gradient}`} />
+                                    )}
+                                    <div className="p-5">
+                                        <div className="flex items-start justify-between mb-3">
+                                            <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                                                state === "locked" ? "bg-stone-800/20" : isDark ? st.bgClass : "bg-sky-50"
+                                            }`}>
+                                                {state === "locked"
+                                                    ? <Lock size={17} className="text-stone-600" />
+                                                    : <IconCmp size={17} className={isDark ? st.colorClass : "text-sky-600"} />
+                                                }
+                                            </div>
+                                            {state === "completed" && (
+                                                <span className={`text-[10px] font-mono px-2 py-0.5 rounded-md flex items-center gap-1
+                                                    ${isDark ? "bg-green-500/10 text-green-400 border border-green-500/20" : "bg-green-50 text-green-600 border border-green-200"}`}>
+                                                    <CheckCircle size={9} />
+                                                    Fatto
+                                                </span>
+                                            )}
+                                            {state === "in_progress" && (
+                                                <span className={`text-[10px] font-mono px-2 py-0.5 rounded-md
+                                                    ${isDark ? "bg-amber-500/10 text-amber-400 border border-amber-500/20" : "bg-amber-50 text-amber-600 border border-amber-200"}`}>
+                                                    In corso
+                                                </span>
+                                            )}
+                                        </div>
+
+                                        <h3 className={`text-sm font-semibold mb-1.5 ${state === "locked"
+                                            ? (isDark ? "text-stone-600" : "text-stone-400")
+                                            : (isDark ? "text-slate-200" : "text-slate-800")
+                                        }`}>
+                                            {cfg.label}
+                                        </h3>
+                                        <p className={`text-xs leading-relaxed mb-4 ${state === "locked"
+                                            ? (isDark ? "text-stone-700" : "text-stone-400")
+                                            : (isDark ? "text-slate-500" : "text-slate-500")
+                                        }`}>
+                                            {state === "locked" ? "Completa il Diagnostic Questionnaire per sbloccare" : cfg.description}
+                                        </p>
+
+                                        <div className={`flex items-center gap-1.5 text-xs font-medium transition-colors ${
+                                            state === "locked"
+                                                ? "text-stone-600"
+                                                : isDark ? `${st.colorClass} group-hover:gap-2` : "text-sky-600 group-hover:gap-2"
+                                        }`}>
+                                            <span className="transition-all group-hover:gap-2">
+                                                {state === "completed" ? "Vedi report" : state === "in_progress" ? "Continua" : state === "available" ? "Inizia" : "Bloccato"}
+                                            </span>
+                                            <ArrowRight size={11} className="transition-transform group-hover:translate-x-0.5" />
+                                        </div>
+                                    </div>
+                                </motion.button>
+                            );
+                        })}
+                    </div>
+                </div>
+            ) : (
+                <div className="relative z-10 max-w-md mx-auto text-center">
                     <button
                         disabled
                         className="inline-flex items-center gap-2 px-7 py-3 rounded-xl border
@@ -218,14 +322,11 @@ export function SurveyStart() {
                     >
                         Verifica prima la tua email
                     </button>
-                )}
-            </motion.section>
+                </div>
+            )}
 
-            {/* Section separator */}
-            {isDark && <div className="relative z-10 max-w-4xl mx-auto mt-20 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />}
-
-            {/* Steps */}
-            <section className="relative z-10 max-w-4xl mx-auto mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* ─── Steps ─── */}
+            <section className="relative z-10 max-w-4xl mx-auto mt-20 grid grid-cols-1 md:grid-cols-3 gap-6">
                 {steps.map((s, i) => (
                     <motion.div
                         key={s.n}
@@ -234,75 +335,18 @@ export function SurveyStart() {
                         viewport={{ once: true, amount: 0.15 }}
                         transition={{ duration: 0.5, delay: i * 0.12, ease: "easeOut" }}
                     >
-                        <motion.div
-                            className={`relative rounded-2xl border backdrop-blur-sm p-7 h-full transition-all duration-300 ${
-                                isDark
-                                    ? "bg-[#0E0E0D]/70 border-cyan-500/50 shadow-lg shadow-cyan-500/15"
-                                    : "bg-white/80 border-sky-400/50 shadow-sm shadow-sky-400/15 hover:border-sky-400/80 hover:shadow-md hover:shadow-sky-400/25"
-                            }`}
-                            whileHover={{ y: -6 }}
-                            transition={{ duration: 0.25, ease: "easeOut" }}
-                        >
-                            {isDark && <div className="absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-cyan-400 to-transparent opacity-15" />}
-                            <span className={`text-xs font-mono font-medium mb-4 block ${isDark ? "text-cyan-400" : "text-sky-500"}`}>{s.n}</span>
-                            <h3 className={`text-base font-semibold mb-3 leading-snug ${isDark ? "text-slate-100" : "text-slate-800"}`}>{s.title}</h3>
-                            <p className={`text-sm leading-relaxed ${isDark ? "text-slate-500" : "text-slate-600"}`}>{s.desc}</p>
-                        </motion.div>
+                        <div className={`relative rounded-2xl border backdrop-blur-sm p-7 h-full ${
+                            isDark ? "bg-[#0E0E0D]/60 border-cyan-500/20" : "bg-white/80 border-sky-400/50 shadow-sm"
+                        }`}>
+                            <span className={`text-xs font-mono font-medium mb-4 block ${isDark ? "text-cyan-500" : "text-sky-500"}`}>{s.n}</span>
+                            <h3 className={`text-base font-semibold mb-3 ${isDark ? "text-slate-200" : "text-slate-800"}`}>{s.title}</h3>
+                            <p className={`text-sm ${isDark ? "text-slate-500" : "text-slate-600"}`}>{s.desc}</p>
+                        </div>
                     </motion.div>
                 ))}
             </section>
 
-            {/* Objective + output */}
-            <section className="relative z-10 max-w-4xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-4">
-                    <h2 className={`text-2xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>Obiettivo del survey</h2>
-                    <p className={`text-sm leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                        Il questionario raccoglie informazioni su CRM, ERP ed E-commerce per comprendere il livello
-                        di digitalizzazione e individuare le aree di miglioramento.
-                    </p>
-                    <ul className="space-y-1.5">
-                        {["Analisi dei processi aziendali", "Identificazione delle inefficienze operative", "Prioritizzazione delle esigenze software", "Preparazione di un confronto consulenziale mirato"].map(item => (
-                            <li key={item} className={`flex items-start gap-2 text-sm ${isDark ? "text-slate-500" : "text-slate-500"}`}>
-                                <CheckCircle size={13} className="text-cyan-500 mt-0.5 shrink-0" />
-                                {item}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-
-                <motion.div
-                    initial={{ opacity: 0, y: 24 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.15 }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
-                >
-                <motion.div
-                    className={`relative rounded-2xl border backdrop-blur-sm p-7 h-full transition-all duration-300 ${
-                        isDark
-                            ? "bg-[#0E0E0D]/70 border-cyan-500/50 shadow-lg shadow-cyan-500/15"
-                            : "bg-white/80 border-sky-400/50 shadow-sm shadow-sky-400/15 hover:border-sky-400/80 hover:shadow-md hover:shadow-sky-400/25"
-                    }`}
-                    whileHover={{ y: -6 }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                >
-                    {isDark && <div className="absolute top-0 right-0 w-14 h-14 rounded-bl-2xl rounded-tr-2xl bg-gradient-to-bl from-cyan-400 to-transparent opacity-15" />}
-                    <h3 className={`text-lg font-semibold mb-4 ${isDark ? "text-slate-100" : "text-slate-900"}`}>Cosa otterrai</h3>
-                    <div className="space-y-2.5">
-                        {["Visione chiara dello stato attuale", "Identificazione delle criticità principali", "Linee guida per evoluzione digitale", "Base concreta per confronto consulenziale"].map(item => (
-                            <p key={item} className={`flex items-start gap-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                                <ArrowRight size={13} className="text-cyan-500 mt-0.5 shrink-0" />
-                                {item}
-                            </p>
-                        ))}
-                    </div>
-                    <p className={`mt-5 text-xs ${isDark ? "text-slate-600" : "text-slate-400"}`}>
-                        Nessun contatto commerciale viene avviato automaticamente.
-                    </p>
-                </motion.div>
-                </motion.div>
-            </section>
-
-            {/* Security */}
+            {/* ─── Security ─── */}
             <motion.div
                 className="relative z-10 max-w-4xl mx-auto mt-12"
                 initial={{ opacity: 0, y: 24 }}
@@ -310,24 +354,22 @@ export function SurveyStart() {
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
             >
-            <div className={`relative rounded-2xl border backdrop-blur-sm p-7 transition-all duration-300 ${
-                isDark
-                    ? "bg-[#0E0E0D]/70 border-cyan-500/50 shadow-lg shadow-cyan-500/15"
-                    : "bg-white/80 border-sky-400/50 shadow-sm shadow-sky-400/15"
-            }`}>
-                <div className="flex items-center gap-2 mb-5">
-                    <ShieldCheck size={16} className="text-cyan-400" />
-                    <h2 className={`text-base font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>Protezione dei dati</h2>
+                <div className={`rounded-2xl border backdrop-blur-sm p-7 ${
+                    isDark ? "bg-[#0E0E0D]/60 border-cyan-500/20" : "bg-white/80 border-sky-400/50"
+                }`}>
+                    <div className="flex items-center gap-2 mb-5">
+                        <ShieldCheck size={16} className="text-cyan-400" />
+                        <h2 className={`text-base font-semibold ${isDark ? "text-slate-200" : "text-slate-800"}`}>Protezione dei dati</h2>
+                    </div>
+                    <div className="space-y-0">
+                        {securityItems.map(item => (
+                            <SecurityItem key={item.title} title={item.title}>{item.body}</SecurityItem>
+                        ))}
+                    </div>
+                    <p className={`text-xs mt-5 ${isDark ? "text-slate-600" : "text-slate-400"}`}>
+                        Infrastruttura basata su servizi cloud moderni con controlli di accesso avanzati e monitoraggio continuo.
+                    </p>
                 </div>
-                <div className="space-y-0">
-                    {securityItems.map(item => (
-                        <SecurityItem key={item.title} title={item.title}>{item.body}</SecurityItem>
-                    ))}
-                </div>
-                <p className={`text-xs mt-5 ${isDark ? "text-slate-600" : "text-slate-400"}`}>
-                    Infrastruttura basata su servizi cloud moderni con controlli di accesso avanzati e monitoraggio continuo.
-                </p>
-            </div>
             </motion.div>
         </main>
     );
