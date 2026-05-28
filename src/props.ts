@@ -12,6 +12,7 @@ export type PropsSurveyQuestion = {
 
 export type PropsMultipleChoiceQuestion = {
     options: string[]
+    descriptions?: string[]
     answer: string | string[] | null
     onChange: (value: string | string[]) => void
     isDark: boolean
