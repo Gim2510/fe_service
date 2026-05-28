@@ -3,6 +3,7 @@ import { MobileNavItem } from "./MobileNavItem";
 import { useAuth } from "../../auth/AuthContext";
 import { Sun, Moon, X } from "lucide-react";
 import { useTheme } from "../../Context/ThemeContext";
+import { useClientData } from "../../hooks/useClientData";
 
 interface NavbarMobileMenuProps {
     open: boolean;
@@ -12,6 +13,7 @@ interface NavbarMobileMenuProps {
 export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
     const { isAuthenticated, role, logout } = useAuth();
     const { theme, toggleTheme } = useTheme();
+    const { client } = useClientData();
 
     const handleLogout = () => {
         logout();
@@ -59,6 +61,9 @@ export function NavbarMobileMenu({ open, closeMenu }: NavbarMobileMenuProps) {
                         <div className="flex flex-col gap-1 px-4 pt-6">
                             {isAuthenticated && role === "ADMIN" && (
                                 <MobileNavItem to="/dashboard" label="Dashboard" closeMenu={closeMenu} />
+                            )}
+                            {client && (
+                                <MobileNavItem to="/client/all_projects" label="I Miei Progetti" closeMenu={closeMenu} />
                             )}
                             <MobileNavItem to="/survey/start" label="Survey" closeMenu={closeMenu} />
                             <MobileNavItem to="/blog" label="Blog" closeMenu={closeMenu} />

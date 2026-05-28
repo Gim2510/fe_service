@@ -32,6 +32,8 @@ import {CookiePolicy} from "./Pages/CookiePolicy.tsx";
 import {About} from "./Pages/About.tsx";
 import {BlogPage} from "./Pages/BlogPage.tsx";
 import {BlogArticlePage} from "./Pages/BlogArticlePage.tsx";
+import {ClientProjects} from "./Pages/ClientProjects.tsx";
+import {ClientProjectDetail} from "./Pages/ClientProjectDetail.tsx";
 import { Analytics } from "@vercel/analytics/react";
 import { AnalyticsProvider } from "./providers/AnalyticsProvider.tsx";
 
@@ -68,6 +70,8 @@ function App() {
                             <Route path="/about" element={<LayoutHomepage><About /></LayoutHomepage>} />
                             <Route path="/blog" element={<LayoutHomepage><BlogPage /></LayoutHomepage>} />
                             <Route path="/blog/:slug" element={<LayoutHomepage><BlogArticlePage /></LayoutHomepage>} />
+                            <Route path="/client/all_projects" element={<Protected><LayoutHomepage><ClientProjects /></LayoutHomepage></Protected>} />
+                            <Route path="/client/:project_id" element={<Protected><LayoutHomepage><ClientProjectDetail /></LayoutHomepage></Protected>} />
                         </Routes>
                     </PremiumProvider>
                 </AuthProvider>
