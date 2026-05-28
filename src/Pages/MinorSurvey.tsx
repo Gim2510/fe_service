@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect, useMemo, useCallback, useRef } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, ChevronDown, AlertCircle, X } from "lucide-react";
 import { useAuth } from "../auth/AuthContext.tsx";
@@ -143,22 +143,73 @@ export function MinorSurvey() {
     }, [surveyId, token]);
 
     const handleAnswer = (questionId: string, value: string | number | boolean | string[] | null) => {
+        const q = questions.find(qq => qq.id === questionId);
+        const shouldAutoAdvance = q && (q.type === "boolean" || q.type === "multipleChoice");
+
         setAnswers(prev => {
             const next = { ...prev, [questionId]: value };
             const newAnsweredCount = Object.values(next).filter(v => v !== undefined && v !== null && v !== "").length;
-            if (newAnsweredCount === totalQuestions && totalQuestions > 0) {
+
+            if (shouldAutoAdvance) {
+                setTimeout(() => {
+                    const currentSection = sections.find(s => s.category === activeTab);
+                    if (!currentSection) return;
+
+                    const allAnswered = newAnsweredCount === totalQuestions && totalQuestions > 0;
+                    if (allAnswered) {
+                        setConfirmMode("complete");
+                        setShowConfirmModal(true);
+                        return;
+                    }
+
+                    const orderedSections = [...sections];
+                    const secIdx = orderedSections.findIndex(s => s.category === activeTab);
+                    if (secIdx === -1) return;
+
+                    const qIdx = orderedSections[secIdx].questions.findIndex(qq => qq.id === questionId);
+                    const afterIdx = qIdx !== -1 ? qIdx + 1 : 0;
+
+                    for (let i = afterIdx; i < orderedSections[secIdx].questions.length; i++) {
+                        const qq = orderedSections[secIdx].questions[i];
+                        const v = next[qq.id];
+                        if (v === undefined || v === null || v === "") {
+                            setExpandedQuestion(qq.id);
+                            return;
+                        }
+                    }
+
+                    for (let s = secIdx + 1; s < orderedSections.length; s++) {
+                        for (const qq of orderedSections[s].questions) {
+                            const v = next[qq.id];
+                            if (v === undefined || v === null || v === "") {
+                                setActiveTab(orderedSections[s].category);
+                                setExpandedQuestion(qq.id);
+                                return;
+                            }
+                        }
+                    }
+
+                    for (let s = 0; s < secIdx; s++) {
+                        for (const qq of orderedSections[s].questions) {
+                            const v = next[qq.id];
+                            if (v === undefined || v === null || v === "") {
+                                setActiveTab(orderedSections[s].category);
+                                setExpandedQuestion(qq.id);
+                                return;
+                            }
+                        }
+                    }
+                }, 250);
+            } else if (newAnsweredCount === totalQuestions && totalQuestions > 0) {
                 setTimeout(() => {
                     setConfirmMode("complete");
                     setShowConfirmModal(true);
                 }, 350);
             }
+
             return next;
         });
         saveAnswer(questionId, value);
-        const q = questions.find(qq => qq.id === questionId);
-        if (q && (q.type === "boolean" || q.type === "multipleChoice")) {
-            setTimeout(() => setExpandedQuestion(null), 200);
-        }
     };
 
     const toggleExpand = (qId: string) => {
