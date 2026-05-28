@@ -1,6 +1,5 @@
 import { UserRoles } from "../../types/userRoles";
 import type { UserType } from "../../types/userTypes";
-import { ActionCard } from "./ActionCard";
 import { Shield, Trash2, Crown, Send } from "lucide-react";
 
 type Props = {
@@ -46,92 +45,72 @@ export function AdminActionsSection({
         }`;
 
     return (
-        <>
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
-                <div>
-                    <h2 className={`text-base font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                        Admin Control Center
-                    </h2>
-                    <p className={`text-xs mt-0.5 ${textSub}`}>
-                        System privileges &amp; user management
-                    </p>
-                </div>
-                <span className={`text-[10px] font-mono uppercase tracking-[0.18em] ${textSub}`}>
-                    Core Actions
-                </span>
-            </div>
+        <div className="space-y-3">
+            <div className={`text-[11px] font-mono uppercase tracking-[0.15em] ${isDark ? "text-slate-500" : "text-slate-400"}`}>Admin Control Center</div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                <button
+                    disabled={!selectedUserId}
+                    onClick={() => setShowPromoteModal(true)}
+                    className={`relative inline-flex flex-col items-center gap-1.5 px-4 py-3 rounded-xl text-xs font-medium whitespace-nowrap transition-all border overflow-hidden
+                        ${selectedUserId
+                            ? (isDark ? "bg-cyan-500/15 border-cyan-500/30 text-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.15)]" : "bg-cyan-50 border-cyan-400 text-cyan-800")
+                            : (isDark ? "border-stone-800/30 text-slate-600 cursor-not-allowed" : "border-slate-200 text-slate-400 cursor-not-allowed")
+                        } ${selectedUserId && isDark ? "" : ""}`}>
+                    <Shield size={16} />
+                    Promote to Admin
+                    {selectedUserId && isDark && <span className="absolute inset-x-0 bottom-0 h-[2px] bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.6)]" />}
+                </button>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <ActionCard title="Promote to Admin" theme={theme} index={0}>
-                    <div className="flex items-center gap-2 mb-1">
-                        <Shield size={14} className={isDark ? "text-cyan-400" : "text-cyan-600"} />
-                        <span className={`text-xs ${isDark ? "text-slate-400" : "text-slate-500"}`}>Select user to promote</span>
-                    </div>
-                    <select value={selectedUserId} onChange={e => setSelectedUserId(e.target.value)} className={selectClass}>
-                        <option value="">Select user</option>
-                        {allUsers.filter(u => u.role !== UserRoles.Admin).map(u => (
-                            <option key={u._id} value={u._id}>{u.email}</option>
-                        ))}
-                    </select>
-                    <button
-                        disabled={!selectedUserId}
-                        onClick={() => setShowPromoteModal(true)}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-semibold transition-all shadow-lg shadow-cyan-500/20 hover:-translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed"
-                    >
-                        Promote <Shield size={12} />
-                    </button>
-                </ActionCard>
+                <button
+                    disabled={!selectedUserToDelete}
+                    onClick={() => setShowDeleteModal(true)}
+                    className={`relative inline-flex flex-col items-center gap-1.5 px-4 py-3 rounded-xl text-xs font-medium whitespace-nowrap transition-all border overflow-hidden
+                        ${selectedUserToDelete
+                            ? (isDark ? "bg-red-500/15 border-red-500/30 text-red-400 shadow-[0_0_12px_rgba(239,68,68,0.15)]" : "bg-red-50 border-red-400 text-red-700")
+                            : (isDark ? "border-stone-800/30 text-slate-600 cursor-not-allowed" : "border-slate-200 text-slate-400 cursor-not-allowed")
+                        }`}>
+                    <Trash2 size={16} />
+                    Delete User
+                    {selectedUserToDelete && isDark && <span className="absolute inset-x-0 bottom-0 h-[2px] bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]" />}
+                </button>
 
-                <ActionCard title="Delete User" theme={theme} index={1}>
-                    <div className="flex items-center gap-2 mb-1">
-                        <Trash2 size={14} className={isDark ? "text-red-400" : "text-red-600"} />
-                        <span className={`text-xs ${isDark ? "text-slate-400" : "text-slate-500"}`}>Select user to delete</span>
-                    </div>
-                    <select value={selectedUserToDelete} onChange={e => setSelectedUserToDelete(e.target.value)} className={selectClass}>
-                        <option value="">Select user</option>
-                        {allUsers.filter(u => u.role !== UserRoles.Admin).map(u => (
-                            <option key={u._id} value={u._id}>{u.email}</option>
-                        ))}
-                    </select>
-                    <button
-                        disabled={!selectedUserToDelete}
-                        onClick={() => setShowDeleteModal(true)}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-semibold transition-all shadow-lg shadow-red-500/20 hover:-translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed"
-                    >
-                        Delete <Trash2 size={12} />
-                    </button>
-                    {deleteSuccess && <p className="text-emerald-400 text-xs mt-1">User deleted successfully</p>}
-                </ActionCard>
+                <button
+                    disabled={!selectedUserToVip}
+                    onClick={() => setShowVipModal(true)}
+                    className={`relative inline-flex flex-col items-center gap-1.5 px-4 py-3 rounded-xl text-xs font-medium whitespace-nowrap transition-all border overflow-hidden
+                        ${selectedUserToVip
+                            ? (isDark ? "bg-amber-500/15 border-amber-500/30 text-amber-400 shadow-[0_0_12px_rgba(245,158,11,0.15)]" : "bg-amber-50 border-amber-400 text-amber-700")
+                            : (isDark ? "border-stone-800/30 text-slate-600 cursor-not-allowed" : "border-slate-200 text-slate-400 cursor-not-allowed")
+                        }`}>
+                    <Crown size={16} />
+                    Assign VIP
+                    {selectedUserToVip && isDark && <span className="absolute inset-x-0 bottom-0 h-[2px] bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.6)]" />}
+                </button>
 
-                <ActionCard title="Assign VIP Status" theme={theme} index={2}>
-                    <div className="flex items-center gap-2 mb-1">
-                        <Crown size={14} className={isDark ? "text-amber-400" : "text-amber-600"} />
-                        <span className={`text-xs ${isDark ? "text-slate-400" : "text-slate-500"}`}>Select user to upgrade</span>
-                    </div>
-                    <select value={selectedUserToVip} onChange={e => setSelectedUserToVip(e.target.value)} className={selectClass}>
-                        <option value="">Select user</option>
-                        {allUsers.filter(u => !u.vip).map(u => (
-                            <option key={u._id} value={u._id}>{u.email}</option>
-                        ))}
-                    </select>
-                    <button
-                        disabled={!selectedUserToVip}
-                        onClick={() => setShowVipModal(true)}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold transition-all shadow-lg shadow-amber-500/20 hover:-translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed"
-                    >
-                        Upgrade <Crown size={12} />
-                    </button>
-                    {vipSuccess && <p className="text-emerald-400 text-xs mt-1">User upgraded successfully</p>}
-                </ActionCard>
-
-                <ActionCard title="Bulk Notifications" theme={theme} index={3}>
-                    <div className="flex items-center gap-2 mb-1">
-                        <Send size={14} className={isDark ? "text-cyan-400" : "text-cyan-600"} />
-                        <span className={`text-xs ${isDark ? "text-slate-400" : "text-slate-500"}`}>Send notifications to users</span>
-                    </div>
+                <div className={`relative inline-flex flex-col items-center gap-1.5 px-4 py-3 rounded-xl text-xs font-medium whitespace-nowrap transition-all border ${isDark ? "border-stone-800/30 text-slate-500" : "border-slate-200 text-slate-400"}`}>
+                    <Send size={16} />
+                    Notifiche
                     {BulkEmailComponent}
-                </ActionCard>
+                </div>
             </div>
-        </>
+
+            {/* Select dropdowns row */}
+            <div className="flex flex-wrap gap-3 mt-3">
+                <select value={selectedUserId} onChange={e => setSelectedUserId(e.target.value)} className={selectClass + " flex-1 min-w-[200px]"}>
+                    <option value="">Select user to promote</option>
+                    {allUsers.filter(u => u.role !== UserRoles.Admin).map(u => (<option key={u._id} value={u._id}>{u.email}</option>))}
+                </select>
+                <select value={selectedUserToDelete} onChange={e => setSelectedUserToDelete(e.target.value)} className={selectClass + " flex-1 min-w-[200px]"}>
+                    <option value="">Select user to delete</option>
+                    {allUsers.filter(u => u.role !== UserRoles.Admin).map(u => (<option key={u._id} value={u._id}>{u.email}</option>))}
+                </select>
+                <select value={selectedUserToVip} onChange={e => setSelectedUserToVip(e.target.value)} className={selectClass + " flex-1 min-w-[200px]"}>
+                    <option value="">Select user for VIP</option>
+                    {allUsers.filter(u => !u.vip).map(u => (<option key={u._id} value={u._id}>{u.email}</option>))}
+                </select>
+            </div>
+            {deleteSuccess && <p className="text-emerald-400 text-xs mt-1">User deleted successfully</p>}
+            {vipSuccess && <p className="text-emerald-400 text-xs mt-1">User upgraded successfully</p>}
+        </div>
     );
 }
