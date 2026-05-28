@@ -377,10 +377,10 @@ function SectionBlock({
                                             : isMain
                                                 ? "bg-cyan-600 hover:bg-cyan-500 text-white shadow-lg shadow-cyan-500/25 hover:-translate-y-0.5"
                                                 : isDark
-                                                    ? "bg-white/10 hover:bg-white/15 text-slate-200 border border-white/10"
+                                                    ? `${accent?.btnBg ?? "bg-cyan-600 hover:bg-cyan-500"} text-white ${accent?.btnShadow ?? "shadow-lg shadow-cyan-500/25"} hover:-translate-y-0.5`
                                                     : "bg-sky-600 hover:bg-sky-500 text-white shadow-md hover:-translate-y-0.5"
                                     }`}
-                                >
+                            >
                                     {state === "completed" ? info.ctaCompleted : state === "in_progress" ? "Continua" : info.ctaLabel}
                                     <ArrowRight size={14} />
                                 </button>
@@ -445,7 +445,7 @@ function SectionBlock({
 }
 
 const ACCENT_COLORS = {
-    compliance: { bar: "from-cyan-500/60 via-cyan-500/20 to-transparent", border: "border-cyan-500/20", bg: "bg-cyan-500/5", text: "text-cyan-400", badge: "border-cyan-500/20 bg-cyan-500/10 text-cyan-400" },
-    processes:  { bar: "from-amber-500/60 via-amber-500/20 to-transparent", border: "border-amber-500/20", bg: "bg-amber-500/5", text: "text-amber-400", badge: "border-amber-500/20 bg-amber-500/10 text-amber-400" },
-    growth:     { bar: "from-emerald-500/60 via-emerald-500/20 to-transparent", border: "border-emerald-500/20", bg: "bg-emerald-500/5", text: "text-emerald-400", badge: "border-emerald-500/20 bg-emerald-500/10 text-emerald-400" },
+    compliance: { bar: "from-cyan-500/60 via-cyan-500/20 to-transparent", border: "border-cyan-500/20", bg: "bg-cyan-500/5", text: "text-cyan-400", badge: "border-cyan-500/20 bg-cyan-500/10 text-cyan-400", btnBg: "bg-cyan-600 hover:bg-cyan-500", btnShadow: "shadow-lg shadow-cyan-500/25" },
+    processes:  { bar: "from-amber-500/60 via-amber-500/20 to-transparent", border: "border-amber-500/20", bg: "bg-amber-500/5", text: "text-amber-400", badge: "border-amber-500/20 bg-amber-500/10 text-amber-400", btnBg: "bg-amber-600 hover:bg-amber-500", btnShadow: "shadow-lg shadow-amber-500/25" },
+    growth:     { bar: "from-emerald-500/60 via-emerald-500/20 to-transparent", border: "border-emerald-500/20", bg: "bg-emerald-500/5", text: "text-emerald-400", badge: "border-emerald-500/20 bg-emerald-500/10 text-emerald-400", btnBg: "bg-emerald-600 hover:bg-emerald-500", btnShadow: "shadow-lg shadow-emerald-500/25" },
 } as const;
