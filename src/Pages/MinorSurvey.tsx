@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Check, ChevronDown, AlertTriangle, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ChevronDown, AlertTriangle, X } from "lucide-react";
 import { useAuth } from "../auth/AuthContext.tsx";
 import { useSurveyTemplate } from "../hooks/useSurveyTemplate";
 import { useUserSurvey } from "../hooks/useUserSurvey";
@@ -165,11 +165,6 @@ export function MinorSurvey() {
         setExpandedQuestion(prev => prev === qId ? null : qId);
     };
 
-    const handleCompleteClick = () => {
-        setConfirmMode("complete");
-        setShowConfirmModal(true);
-    };
-
     const handleSubmitClick = () => {
         setConfirmMode("submit");
         setShowConfirmModal(true);
@@ -178,6 +173,35 @@ export function MinorSurvey() {
     const handleConfirmSubmit = () => {
         if (surveyId) navigate(`/survey/${surveyId}/recap`);
     };
+
+    const goToNextSection = () => {
+        const currentIdx = sections.findIndex(s => s.category === activeTab);
+        if (currentIdx === -1) return;
+        for (let i = currentIdx + 1; i < sections.length; i++) {
+            if (sections[i].answered < sections[i].total) {
+                setActiveTab(sections[i].category);
+                return;
+            }
+        }
+        for (let i = 0; i < currentIdx; i++) {
+            if (sections[i].answered < sections[i].total) {
+                setActiveTab(sections[i].category);
+                return;
+            }
+        }
+    };
+
+    const hasNextIncomplete = useMemo(() => {
+        const currentIdx = sections.findIndex(s => s.category === activeTab);
+        if (currentIdx === -1) return false;
+        for (let i = currentIdx + 1; i < sections.length; i++) {
+            if (sections[i].answered < sections[i].total) return true;
+        }
+        for (let i = 0; i < currentIdx; i++) {
+            if (sections[i].answered < sections[i].total) return true;
+        }
+        return false;
+    }, [sections, activeTab]);
 
     const loading = loadingTemplate || loadingUserSurveys || initLoading || phase === "init";
 
@@ -366,22 +390,25 @@ export function MinorSurvey() {
                         }
                     </p>
                     <div className="flex items-center gap-2">
+                        {hasNextIncomplete && (
+                            <button
+                                onClick={goToNextSection}
+                                className={`inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border text-xs font-medium transition-colors
+                                    ${isDark
+                                        ? "border-stone-800/30 text-slate-400 hover:text-slate-200 hover:border-stone-700/50"
+                                        : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"
+                                    }`}
+                            >
+                                Prossima sezione
+                                <ArrowRight size={12} />
+                            </button>
+                        )}
                         <button
                             onClick={handleSubmitClick}
-                            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border text-xs font-medium transition-colors
-                                border-stone-800/30 text-slate-500 hover:text-slate-300 hover:border-stone-700/40"
+                            className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-sm font-semibold transition-all shadow-lg shadow-sky-500/25"
                         >
                             Invia survey
                         </button>
-                        {allAnswered && (
-                            <button
-                                onClick={handleCompleteClick}
-                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-sm font-semibold transition-all shadow-lg shadow-sky-500/25"
-                            >
-                                <Check size={14} />
-                                Completa survey
-                            </button>
-                        )}
                     </div>
                 </div>
             </div>
