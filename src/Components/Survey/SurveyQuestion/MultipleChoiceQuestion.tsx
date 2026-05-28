@@ -29,13 +29,13 @@ export const MultipleChoiceQuestion: FC<PropsMultipleChoiceQuestion> = ({ option
                         key={option}
                         type="button"
                         onClick={() => handleClick(option)}
-                        className={`w-full text-left px-4 py-3 rounded-xl border transition-all duration-200 cursor-pointer group
+                        className={`w-full text-left px-4 py-3 rounded-2xl border transition-all duration-200 cursor-pointer backdrop-blur-sm
                             ${isSelected
                                 ? isDark
-                                    ? "bg-sky-700/20 border-sky-500/50 shadow-[0_0_10px_rgba(6,182,212,0.08)]"
+                                    ? "bg-sky-700/20 border-cyan-500/40 shadow-lg shadow-cyan-500/10"
                                     : "bg-sky-50 border-sky-500 text-sky-800"
                                 : isDark
-                                    ? "bg-[#111110] border-stone-800/40 hover:border-stone-700/60"
+                                    ? "bg-[#0E0E0D]/80 border-cyan-500/20 hover:border-cyan-500/40"
                                     : "bg-[#F8FAFB] border-slate-200 text-slate-700 hover:border-sky-400 hover:bg-sky-50/50"
                             }`}
                     >
@@ -43,7 +43,7 @@ export const MultipleChoiceQuestion: FC<PropsMultipleChoiceQuestion> = ({ option
                             <span className={`mt-0.5 shrink-0 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
                                 ${isSelected
                                     ? "border-sky-500 bg-sky-500"
-                                    : isDark ? "border-stone-700" : "border-slate-300"
+                                    : isDark ? "border-stone-600" : "border-slate-300"
                                 }`}>
                                 {isSelected && <Check size={10} className="text-white" />}
                             </span>

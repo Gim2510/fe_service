@@ -17,14 +17,14 @@ export const ScaleQuestion: FC<PropsScaleQuestion> = ({ min = 1, max = 5, answer
                             onClick={() => { onChange(n); onAutoSelect?.(n); }}
                             className={`
                                 ${isWide ? "min-w-[2.75rem]" : "flex-1"}
-                                py-3 rounded-xl border text-sm font-semibold
-                                transition-all duration-200 cursor-pointer
+                                py-3 rounded-2xl border text-sm font-semibold
+                                transition-all duration-200 cursor-pointer backdrop-blur-sm
                                 ${isSelected
                                     ? isDark
-                                        ? "bg-sky-700/20 border-sky-500/50 text-sky-300 shadow-[0_0_10px_rgba(6,182,212,0.1)]"
+                                        ? "bg-sky-700/20 border-cyan-500/40 text-sky-300 shadow-lg shadow-cyan-500/10"
                                         : "bg-sky-50 border-sky-500 text-sky-800"
                                     : isDark
-                                        ? "bg-[#111110] border-stone-800/40 text-slate-400 hover:border-stone-700/60 hover:text-slate-200"
+                                        ? "bg-[#0E0E0D]/80 border-cyan-500/20 text-slate-400 hover:border-cyan-500/40 hover:text-slate-200"
                                         : "bg-[#F8FAFB] border-slate-200 text-slate-600 hover:border-sky-400 hover:bg-sky-50/50"
                                 }`}
                         >

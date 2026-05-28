@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, ChevronDown, AlertCircle, X } from "lucide-react";
 import { useAuth } from "../auth/AuthContext.tsx";
@@ -36,7 +36,7 @@ export function MinorSurvey() {
     const [phase, setPhase] = useState<"init" | "ready">("init");
     const [activeTab, setActiveTab] = useState<string>("");
     const [expandedQuestion, setExpandedQuestion] = useState<string | null>(null);
-    const [savingQuestion, setSavingQuestion] = useState<string | null>(null);
+    const savingRef = useRef(false);
     const [initiated, setInitiated] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [confirmMode, setConfirmMode] = useState<"complete" | "submit">("complete");
@@ -121,8 +121,8 @@ export function MinorSurvey() {
     const activeSection = sections.find(s => s.category === activeTab);
 
     const saveAnswer = useCallback(async (questionId: string, value: string | number | boolean | string[] | null) => {
-        if (!surveyId || savingQuestion) return;
-        setSavingQuestion(questionId);
+        if (!surveyId || savingRef.current) return;
+        savingRef.current = true;
         try {
             await fetch(`${SURVEY_BASE_URL}/v1/survey/save/${surveyId}`, {
                 method: "POST",
@@ -138,9 +138,9 @@ export function MinorSurvey() {
         } catch {
             // keep local state even if save fails
         } finally {
-            setSavingQuestion(null);
+            savingRef.current = false;
         }
-    }, [surveyId, token, savingQuestion]);
+    }, [surveyId, token]);
 
     const handleAnswer = (questionId: string, value: string | number | boolean | string[] | null) => {
         setAnswers(prev => {
@@ -244,7 +244,7 @@ export function MinorSurvey() {
                 }}
             />
 
-            <div className="relative z-10 max-w-3xl mx-auto px-6 pt-20 pb-16 space-y-6">
+            <div className="relative z-10 max-w-3xl mx-auto px-6 pt-28 pb-16 space-y-6">
                 <div className="flex items-center justify-between">
                     <button
                         onClick={() => navigate("/survey/start")}
@@ -269,7 +269,7 @@ export function MinorSurvey() {
                     {config.label}
                 </h1>
 
-                <div className="flex gap-1 overflow-x-auto pb-1 scrollbar-none">
+                <div className="flex gap-1 overflow-x-auto pb-1 scrollbar-theme">
                     {sections.map(s => {
                         const done = sectionComplete(s.category);
                         return (
@@ -307,7 +307,6 @@ export function MinorSurvey() {
                         {activeSection.questions.map((q) => {
                             const isAnswered = answers[q.id] !== undefined && answers[q.id] !== null && answers[q.id] !== "";
                             const isExpanded = expandedQuestion === q.id;
-                            const isSaving = savingQuestion === q.id;
 
                             return (
                                 <div
@@ -361,12 +360,6 @@ export function MinorSurvey() {
                                             className="overflow-hidden"
                                         >
                                             <div className={`px-4 pb-5 border-t ${divider}`}>
-                                                {isSaving && (
-                                                    <div className="flex justify-center pt-4">
-                                                        <FallingLines color={isDark ? "#fff" : "#000"} width="20" visible />
-                                                    </div>
-                                                )}
-                                                {!isSaving && (
                                                     <SurveyQuestion
                                                         question={q}
                                                         lang="it"
@@ -375,7 +368,6 @@ export function MinorSurvey() {
                                                         theme={theme}
                                                         onAutoSelect={() => {}}
                                                     />
-                                                )}
                                             </div>
                                         </motion.div>
                                     )}
@@ -427,26 +419,31 @@ export function MinorSurvey() {
                             onClick={() => setShowConfirmModal(false)}
                         />
                         <motion.div
-                            className={`relative z-10 w-full max-w-md rounded-2xl border p-8 space-y-5
-                                ${isDark ? "bg-[#1C1C1A] border-stone-800/30" : "bg-[#F8FAFB] border-slate-200"}`}
+                            className={`relative z-10 w-full max-w-md rounded-2xl border overflow-hidden backdrop-blur-sm ${
+                                isDark
+                                    ? "border-cyan-500/30 bg-[#0E0E0D]/80 shadow-lg shadow-cyan-500/10"
+                                    : "border-cyan-500/60 bg-white shadow-md shadow-cyan-400/15"
+                            }`}
                             initial={{ scale: 0.96, opacity: 0, y: 8 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.96, opacity: 0, y: 8 }}
                             transition={{ duration: 0.2, ease: "easeOut" as const }}
                         >
+                            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
+                            <div className="p-8 space-y-5">
                             <button
                                 onClick={() => setShowConfirmModal(false)}
-                                className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors
+                                className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors z-10
                                     ${isDark ? "text-slate-500 hover:text-slate-300 hover:bg-white/5" : "text-slate-400 hover:text-slate-700 hover:bg-[#EDF2F7]"}`}
                             >
                                 <X size={16} />
                             </button>
 
                             <div className={`w-11 h-11 rounded-xl flex items-center justify-center
-                                ${isDark ? "bg-sky-500/10 border border-sky-500/20" : "bg-sky-50 border border-sky-200"}`}>
+                                ${isDark ? "bg-cyan-500/10 border border-cyan-500/20" : "bg-cyan-50 border border-cyan-200"}`}>
                                 {confirmMode === "submit" && !allAnswered
-                                    ? <AlertCircle size={20} className="text-sky-400" />
-                                    : <Check size={20} className="text-sky-400" />
+                                    ? <AlertCircle size={20} className="text-cyan-400" />
+                                    : <Check size={20} className="text-cyan-400" />
                                 }
                             </div>
 
@@ -482,6 +479,7 @@ export function MinorSurvey() {
                                 >
                                     {confirmMode === "submit" && !allAnswered ? "Invia comunque" : "Conferma e invia"}
                                 </button>
+                            </div>
                             </div>
                         </motion.div>
                     </div>
