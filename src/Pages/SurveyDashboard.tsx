@@ -1,10 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useSurvey } from "../hooks/useSurvey";
+import { useUserSurvey } from "../hooks/useUserSurvey";
 import { useSurveyTemplate } from "../hooks/useSurveyTemplate";
 import { formatAnswer } from "../utils/formatAnswer";
 import { useResetSurvey } from "../hooks/useResetSurvey";
 import { FallingLines } from "react-loader-spinner";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { actionDetails } from "../utils/actionDetails";
 import { useTheme } from "../Context/ThemeContext.tsx";
 import { motion, AnimatePresence, useMotionValue, useTransform, animate } from "framer-motion";
@@ -13,6 +14,7 @@ import {
     ChevronDown, ChevronRight, ArrowLeft, ArrowRight,
     Calendar, RotateCcw, Check,
 } from "lucide-react";
+import { getSurveyConfig, ALL_SURVEY_TYPES, type SurveyType } from "../types/survey.ts";
 
 const CATEGORY_LABELS: Record<string, string> = {
     leadership:   "Leadership",
@@ -59,8 +61,21 @@ export function SurveyDashboard() {
 
     const { survey_id } = useParams();
     const { survey, loading } = useSurvey(survey_id);
+    const { allSurveys, refetch: refetchSurveys } = useUserSurvey();
 
-    const survey_template_id = import.meta.env.VITE_SURVEY_TEMPLATE_ID;
+    const currentType: SurveyType = useMemo(() => {
+        const entry = allSurveys.find(s => s.surveyId === survey_id);
+        if (entry && ['compliance', 'processes', 'growth'].includes(entry.surveyType)) {
+            return entry.surveyType as SurveyType;
+        }
+        return 'diagnostic';
+    }, [allSurveys, survey_id]);
+
+    const survey_template_id = useMemo(() => {
+        if (currentType === 'diagnostic') return import.meta.env.VITE_SURVEY_TEMPLATE_ID;
+        const cfg = getSurveyConfig(currentType);
+        return cfg.templateId;
+    }, [currentType]);
     const { questions } = useSurveyTemplate(survey_template_id);
 
     const { resetSurvey, loading: resetting } = useResetSurvey();
@@ -78,6 +93,10 @@ export function SurveyDashboard() {
             return () => clearTimeout(t);
         }
     }, [survey]);
+
+    useEffect(() => {
+        refetchSurveys();
+    }, [survey_id]);
 
     if (loading || !survey) {
         return (
@@ -134,6 +153,53 @@ export function SurveyDashboard() {
                     <h1 className={`text-2xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                         Analisi dettagliata
                     </h1>
+                </motion.div>
+
+                {/* ── Survey type tabs ── */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.15, duration: 0.3 }}
+                    className="flex gap-1 overflow-x-auto pb-1 scrollbar-none"
+                >
+                    {ALL_SURVEY_TYPES.map(type => {
+                        const cfg = getSurveyConfig(type);
+                        const entry = allSurveys.find(s => s.surveyType === type);
+                        const isActive = type === currentType;
+                        const isPublished = entry?.status === "published";
+                        const isClickable = isPublished || isActive;
+                        return (
+                            <button
+                                key={type}
+                                onClick={() => {
+                                    if (isClickable && entry) navigate(`/survey/${entry.surveyId}/recap`);
+                                }}
+                                disabled={!isClickable}
+                                className={`relative inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-medium
+                                    whitespace-nowrap transition-all shrink-0 border
+                                    ${isActive
+                                        ? isDark
+                                            ? "bg-cyan-500/15 border-cyan-500/30 text-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.15)]"
+                                            : "bg-cyan-50 border-cyan-400 text-cyan-800"
+                                        : isPublished
+                                            ? isDark
+                                                ? "border-stone-800/30 text-slate-500 hover:text-cyan-400 hover:border-stone-700/40"
+                                                : "border-slate-200 text-slate-500 hover:text-cyan-700 hover:bg-[#EDF2F7]"
+                                            : "border-stone-800/10 text-slate-700/30 cursor-not-allowed opacity-50"
+                                    }`}
+                            >
+                                <span className="truncate max-w-[120px]">{cfg.label}</span>
+                                {isPublished && (
+                                    <span className="text-[10px] font-mono opacity-70 ml-0.5">
+                                        {isActive && survey ? `${survey.score ?? "?"}%` : " "}
+                                    </span>
+                                )}
+                                {!isPublished && (
+                                    <span className="text-[9px] opacity-50">—</span>
+                                )}
+                            </button>
+                        );
+                    })}
                 </motion.div>
 
                 {/* ── Hero card — split layout ── */}
@@ -294,10 +360,17 @@ export function SurveyDashboard() {
                                         {survey._id}
                                     </p>
                                 </div>
-                                <div className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-widest
-                                    ${isDark ? "bg-green-500/10 text-green-400 border border-green-500/20" : "bg-green-50 text-green-600 border border-green-200"}`}>
-                                    <Check size={9} strokeWidth={3} /> Pubblicato
-                                </div>
+                                {survey.status === "published" ? (
+                                    <div className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-widest
+                                        ${isDark ? "bg-green-500/10 text-green-400 border border-green-500/20" : "bg-green-50 text-green-600 border border-green-200"}`}>
+                                        <Check size={9} strokeWidth={3} /> Pubblicato
+                                    </div>
+                                ) : (
+                                    <div className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-widest
+                                        ${isDark ? "bg-amber-500/10 text-amber-400 border border-amber-500/20" : "bg-amber-50 text-amber-600 border border-amber-200"}`}>
+                                        Bozza
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

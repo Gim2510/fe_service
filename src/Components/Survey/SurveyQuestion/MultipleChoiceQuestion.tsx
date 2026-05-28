@@ -1,7 +1,8 @@
 import type { FC } from "react";
 import type { PropsMultipleChoiceQuestion } from "../../../props.ts";
+import { Check } from "lucide-react";
 
-export const MultipleChoiceQuestion: FC<PropsMultipleChoiceQuestion> = ({ options, answer, onChange, isDark, multiple = false, onAutoSelect }) => {
+export const MultipleChoiceQuestion: FC<PropsMultipleChoiceQuestion> = ({ options, descriptions, answer, onChange, isDark, multiple = false, onAutoSelect }) => {
     const handleClick = (option: string) => {
         if (multiple) {
             const current = Array.isArray(answer) ? answer : [];
@@ -16,41 +17,53 @@ export const MultipleChoiceQuestion: FC<PropsMultipleChoiceQuestion> = ({ option
     };
 
     return (
-        <div className="grid gap-3">
-            {options.map(option => {
+        <div className="grid gap-2">
+            {options.map((option, idx) => {
                 const isSelected = multiple
                     ? Array.isArray(answer) && answer.includes(option)
                     : answer === option;
+                const desc = descriptions?.[idx];
 
                 return (
                     <button
                         key={option}
                         type="button"
                         onClick={() => handleClick(option)}
-                        className={`w-full text-left px-5 py-4 rounded-xl border text-sm font-medium
-                            transition-all duration-200 cursor-pointer
+                        className={`w-full text-left px-4 py-3 rounded-2xl border transition-all duration-200 cursor-pointer backdrop-blur-sm
                             ${isSelected
                                 ? isDark
-                                    ? "bg-sky-700/15 border-sky-600/40 text-sky-400"
+                                    ? "bg-sky-700/20 border-cyan-500/40 shadow-lg shadow-cyan-500/10"
                                     : "bg-sky-50 border-sky-500 text-sky-800"
                                 : isDark
-                                    ? "bg-[#1C1C1A]/60 border-stone-800/20 text-slate-300 hover:border-sky-800/30 hover:bg-[#1C1C1A]"
+                                    ? "bg-[#0E0E0D]/80 border-cyan-500/20 hover:border-cyan-500/40"
                                     : "bg-[#F8FAFB] border-slate-200 text-slate-700 hover:border-sky-400 hover:bg-sky-50/50"
                             }`}
                     >
-                        <span className="flex items-center gap-3">
-                            <span className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center
+                        <div className="flex items-start gap-3">
+                            <span className={`mt-0.5 shrink-0 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors
                                 ${isSelected
-                                    ? "border-sky-600 bg-sky-600"
-                                    : isDark ? "border-stone-800/40" : "border-slate-300"
-                                }`}
-                            >
-                                {isSelected && (
-                                    <span className="w-1.5 h-1.5 rounded-full bg-[#F8FAFB]" />
-                                )}
+                                    ? "border-sky-500 bg-sky-500"
+                                    : isDark ? "border-stone-600" : "border-slate-300"
+                                }`}>
+                                {isSelected && <Check size={10} className="text-white" />}
                             </span>
-                            {option}
-                        </span>
+                            <div className="min-w-0">
+                                <span className={`text-sm font-medium leading-snug ${isSelected
+                                    ? isDark ? "text-sky-300" : "text-sky-800"
+                                    : isDark ? "text-slate-300" : "text-slate-700"
+                                }`}>
+                                    {option}
+                                </span>
+                                {desc && (
+                                    <p className={`text-[11px] mt-1 leading-relaxed ${isSelected
+                                        ? isDark ? "text-sky-400/60" : "text-sky-600/70"
+                                        : isDark ? "text-slate-600" : "text-slate-400"
+                                    }`}>
+                                        {desc}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
                     </button>
                 );
             })}

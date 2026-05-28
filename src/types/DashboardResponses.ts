@@ -13,6 +13,19 @@ export type SurveyDashboardStats = {
     minScore: number | null;
     maxScore: number | null;
 
+    scoreDistribution?: {
+        range: string;
+        count: number;
+    }[];
+
+    averageScoreByCategory?: {
+        category: string;
+        averagePercentage: number;
+        minPercentage: number;
+        maxPercentage: number;
+        responseCount: number;
+    }[];
+
     responsesByMonth: {
         month: string;
         count: number;

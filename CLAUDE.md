@@ -29,6 +29,10 @@ npm run preview    # preview production build
 | Var | Purpose |
 |-----|---------|
 | `VITE_REPORT_BASE_URL` | report_service URL (default: http://localhost:3003) |
+| `VITE_SURVEY_TEMPLATE_ID` | Main diagnostic survey template MongoDB ID |
+| `VITE_SURVEY_COMPLIANCE_TEMPLATE_ID` | IT Compliance minor survey template ID |
+| `VITE_SURVEY_PROCESSES_TEMPLATE_ID` | Process Maturity minor survey template ID |
+| `VITE_SURVEY_GROWTH_TEMPLATE_ID` | Digital Growth minor survey template ID |
 | `VITE_SURVEY_REPORT_TO_EMAIL` | survey report recipient email |
 | `VITE_*_BASE_URL` | other service base URLs |
 

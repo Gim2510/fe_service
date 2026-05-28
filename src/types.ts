@@ -9,6 +9,8 @@ export type Question = {
     text: { it: string; en: string }
     type: QuestionType
     opt?: { it: string[]; en: string[] }
+    desc?: { it: string[]; en: string[] }
     min?: number
     max?: number
+    category?: string
 }

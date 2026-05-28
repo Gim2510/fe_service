@@ -15,6 +15,7 @@ export function SurveyQuestion({ question, lang, answer, setAnswer, theme, onAut
             content = (
                 <MultipleChoiceQuestion
                     options={question.opt?.[lang] ?? []}
+                    descriptions={question.desc?.[lang]}
                     answer={answer}
                     onChange={setAnswer}
                     isDark={isDark}
@@ -61,5 +62,5 @@ export function SurveyQuestion({ question, lang, answer, setAnswer, theme, onAut
             return null
     }
 
-    return <div className="py-8">{content}</div>
+    return <div className="pt-3 pb-4">{content}</div>
 }
