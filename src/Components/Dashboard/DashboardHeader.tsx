@@ -19,7 +19,7 @@ export function DashboardHeader({ users, surveys, theme }: { users: any; surveys
                 <p className={`mt-1 text-sm ${isDark ? "text-slate-500" : "text-slate-400"}`}>Monitora utenti, survey, crescita e metriche di sistema</p>
             </motion.div>
 
-            <KPISection users={users} surveys={surveys} />
+            <KPISection users={users} surveys={surveys} theme={theme} />
 
             <div className="grid lg:grid-cols-2 gap-6">
                 <GrowthSection users={users} theme={theme} />
