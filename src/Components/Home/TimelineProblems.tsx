@@ -58,17 +58,22 @@ function ProblemCard({ item, index, isDark }: {
     const ref = useRef<HTMLDivElement>(null);
     const colors = neonColors[index % neonColors.length];
 
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ["start end", "center center"],
+    });
+
+    const sp = { stiffness: 80, damping: 28, mass: 0.8 };
+    const scale   = useSpring(useTransform(scrollYProgress, [0, 0.7], [0.85, 1]), sp);
+    const opacity = useSpring(useTransform(scrollYProgress, [0, 0.2, 0.7], [0, 0.5, 1]), sp);
+    const y       = useSpring(useTransform(scrollYProgress, [0, 0.7], [35, 0]), sp);
+    const rotateX = useSpring(useTransform(scrollYProgress, [0, 0.7], [8, 0]), sp);
+
     return (
         <motion.div
             ref={ref}
-            initial={{ opacity: 0, y: 40, scale: 0.92 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{
-                duration: 0.5,
-                delay: index * 0.1,
-                ease: [0.22, 1, 0.36, 1],
-            }}
+            className="relative"
+            style={{ scale, opacity, y, rotateX, transformStyle: "preserve-3d", perspective: "1000px" }}
         >
             <motion.div
                 className={`relative rounded-2xl border backdrop-blur-sm transition-all duration-300 p-5 sm:p-8 ${
@@ -76,14 +81,10 @@ function ProblemCard({ item, index, isDark }: {
                         ? `bg-[#0E0E0D]/70 ${colors.border} shadow-lg hover:shadow-xl`
                         : "bg-white border-slate-200 hover:border-slate-300 hover:shadow-lg"
                 }`}
-                whileHover={{
-                    y: -6,
-                    boxShadow: isDark
-                        ? `0 0 30px rgba(var(--tw-shadow-color), 0.15)`
-                        : undefined,
-                }}
+                whileHover={{ y: -6 }}
                 transition={{ duration: 0.25, ease: "easeOut" }}
             >
+                {/* Hover glow overlay — dark mode only */}
                 {isDark && (
                     <motion.div
                         className="absolute inset-0 rounded-2xl pointer-events-none"
