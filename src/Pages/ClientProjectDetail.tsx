@@ -83,9 +83,8 @@ export function ClientProjectDetail() {
   ) => {
     try {
       await updateTask(taskId, payload);
-      await refetch();
     } catch {
-      // error handled in hook
+      await refetch();
     }
   };
 
