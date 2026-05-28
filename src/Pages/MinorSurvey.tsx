@@ -226,15 +226,13 @@ export function MinorSurvey() {
         return s ? s.answered === s.total : false;
     };
 
-    const cardBg = isDark ? "bg-[#111110]" : "bg-white";
-    const cardBorder = isDark ? "border-stone-800/40" : "border-slate-200";
-    const expandedBg = isDark ? "bg-[#111110]" : "bg-white";
-    const expandedBorder = isDark ? "border-cyan-500/30" : "border-cyan-400";
-    const hoverBg = isDark ? "hover:border-stone-700/60" : "hover:border-cyan-300";
+    const cardBg = isDark ? "bg-[#0E0E0D]/80 border-cyan-500/30 shadow-lg shadow-cyan-500/10" : "bg-white border-cyan-500/60 shadow-md shadow-cyan-400/15";
+    const expandedBg = isDark ? "bg-[#0E0E0D]/80 border-cyan-500/30" : "bg-white border-cyan-400";
+    const hoverBg = isDark ? "hover:border-cyan-500/40" : "hover:border-cyan-400";
     const divider = isDark ? "border-stone-800/20" : "border-slate-200";
     const mutedText = isDark ? "text-slate-500" : "text-slate-400";
-    const bodyText = isDark ? "text-slate-200" : "text-slate-800";
-    const pageBg = isDark ? "bg-[#0A0A09]" : "bg-[#FAFAF8]";
+    const bodyText = isDark ? "text-slate-300" : "text-slate-600";
+    const pageBg = isDark ? "bg-[#0E0E0D]" : "bg-[#FAFAF8]";
 
     return (
         <main className={`min-h-screen ${pageBg} ${isDark ? "text-white" : "text-slate-900"}`}>
@@ -314,10 +312,15 @@ export function MinorSurvey() {
                             return (
                                 <div
                                     key={q.id}
-                                    className={`rounded-xl border overflow-hidden transition-all
-                                        ${isExpanded ? expandedBg + ' ' + expandedBorder : cardBg + ' ' + cardBorder + ' ' + hoverBg}
-                                        cursor-pointer`}
+                                    className={`rounded-2xl border overflow-hidden backdrop-blur-sm transition-all
+                                        ${isExpanded
+                                            ? expandedBg + ' ' + hoverBg
+                                            : cardBg + ' cursor-pointer ' + hoverBg
+                                        }`}
                                 >
+                                    {isExpanded && (
+                                        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
+                                    )}
                                     <div
                                         onClick={() => toggleExpand(q.id)}
                                         className="flex items-start gap-3 p-4"
