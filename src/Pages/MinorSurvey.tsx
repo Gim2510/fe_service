@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { motion } from "framer-motion";
-import { ArrowLeft, Check, ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft, Check, ChevronDown, AlertTriangle, X } from "lucide-react";
 import { useAuth } from "../auth/AuthContext.tsx";
 import { useSurveyTemplate } from "../hooks/useSurveyTemplate";
 import { useUserSurvey } from "../hooks/useUserSurvey";
@@ -33,11 +33,13 @@ export function MinorSurvey() {
 
     const [surveyId, setSurveyId] = useState<string | null>(null);
     const [answers, setAnswers] = useState<Record<string, string | number | boolean | string[] | null>>({});
-    const [phase, setPhase] = useState<"init" | "ready" | "complete">("init");
+    const [phase, setPhase] = useState<"init" | "ready">("init");
     const [activeTab, setActiveTab] = useState<string>("");
     const [expandedQuestion, setExpandedQuestion] = useState<string | null>(null);
     const [savingQuestion, setSavingQuestion] = useState<string | null>(null);
     const [initiated, setInitiated] = useState(false);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [confirmMode, setConfirmMode] = useState<"complete" | "submit">("complete");
 
     useEffect(() => {
         if (!surveyType) navigate("/survey/start", { replace: true });
@@ -49,6 +51,10 @@ export function MinorSurvey() {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const data = await res.json();
+            if (data.status === "published") {
+                navigate(`/survey/${sid}/recap`, { replace: true });
+                return;
+            }
             const loaded: Record<string, string | number | boolean | string[] | null> = {};
             if (data.answers) {
                 for (const [qid, a] of Object.entries(data.answers) as [string, { filled?: boolean; value?: unknown }][]) {
@@ -57,12 +63,12 @@ export function MinorSurvey() {
             }
             setAnswers(loaded);
             setSurveyId(sid);
-            setPhase(data.status === "published" ? "complete" : "ready");
+            setPhase("ready");
         } catch {
             setSurveyId(sid);
             setPhase("ready");
         }
-    }, [token]);
+    }, [token, navigate]);
 
     useEffect(() => {
         if (!surveyType || !config || loadingUserSurveys || !token || !userId || initiated) return;
@@ -118,7 +124,7 @@ export function MinorSurvey() {
         if (!surveyId || savingQuestion) return;
         setSavingQuestion(questionId);
         try {
-            const res = await fetch(`${SURVEY_BASE_URL}/v1/survey/save/${surveyId}`, {
+            await fetch(`${SURVEY_BASE_URL}/v1/survey/save/${surveyId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -129,10 +135,6 @@ export function MinorSurvey() {
                     answer: { value, filled: true },
                 }),
             });
-            const data = await res.json();
-            if (data.score !== undefined || data.survey?.score !== undefined) {
-                setPhase("complete");
-            }
         } catch {
             // keep local state even if save fails
         } finally {
@@ -141,7 +143,17 @@ export function MinorSurvey() {
     }, [surveyId, token, savingQuestion]);
 
     const handleAnswer = (questionId: string, value: string | number | boolean | string[] | null) => {
-        setAnswers(prev => ({ ...prev, [questionId]: value }));
+        setAnswers(prev => {
+            const next = { ...prev, [questionId]: value };
+            const newAnsweredCount = Object.values(next).filter(v => v !== undefined && v !== null && v !== "").length;
+            if (newAnsweredCount === totalQuestions && totalQuestions > 0) {
+                setTimeout(() => {
+                    setConfirmMode("complete");
+                    setShowConfirmModal(true);
+                }, 350);
+            }
+            return next;
+        });
         saveAnswer(questionId, value);
         const q = questions.find(qq => qq.id === questionId);
         if (q && (q.type === "boolean" || q.type === "multipleChoice")) {
@@ -153,7 +165,17 @@ export function MinorSurvey() {
         setExpandedQuestion(prev => prev === qId ? null : qId);
     };
 
-    const handleComplete = () => {
+    const handleCompleteClick = () => {
+        setConfirmMode("complete");
+        setShowConfirmModal(true);
+    };
+
+    const handleSubmitClick = () => {
+        setConfirmMode("submit");
+        setShowConfirmModal(true);
+    };
+
+    const handleConfirmSubmit = () => {
         if (surveyId) navigate(`/survey/${surveyId}/recap`);
     };
 
@@ -161,7 +183,7 @@ export function MinorSurvey() {
 
     if (!surveyType || !config) {
         return (
-            <main className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#0E0E0D]" : "bg-[#FAFAF8]"}`}>
+            <main className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#0A0A09]" : "bg-[#FAFAF8]"}`}>
                 <FallingLines color={isDark ? "#fff" : "#B45309"} width="60" visible />
             </main>
         );
@@ -169,37 +191,8 @@ export function MinorSurvey() {
 
     if (loading) {
         return (
-            <main className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#0E0E0D]" : "bg-[#FAFAF8]"}`}>
+            <main className={`min-h-screen flex items-center justify-center ${isDark ? "bg-[#0A0A09]" : "bg-[#FAFAF8]"}`}>
                 <FallingLines color={isDark ? "#fff" : "#B45309"} width="60" visible />
-            </main>
-        );
-    }
-
-    if (phase === "complete") {
-        return (
-            <main className={`min-h-screen flex items-center justify-center px-6 py-16 ${isDark ? "bg-[#0E0E0D] text-white" : "bg-[#FAFAF8] text-slate-900"}`}>
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
-                    className="w-full max-w-md text-center space-y-6"
-                >
-                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl ${isDark ? "bg-green-500/15 border border-green-500/20" : "bg-green-50 border border-green-300"}`}>
-                        <Check size={28} className="text-green-400" />
-                    </div>
-                    <h2 className={`text-2xl font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                        {config.label} completato
-                    </h2>
-                    <p className={`text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                        Hai risposto a tutte le {totalQuestions} domande. Visualizza il report dettagliato con i punteggi per area.
-                    </p>
-                    <button
-                        onClick={handleComplete}
-                        className="inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-sm font-semibold transition-all shadow-lg shadow-sky-500/25 hover:-translate-y-0.5 duration-200"
-                    >
-                        Vedi report
-                    </button>
-                </motion.div>
             </main>
         );
     }
@@ -209,10 +202,20 @@ export function MinorSurvey() {
         return s ? s.answered === s.total : false;
     };
 
+    const cardBg = isDark ? "bg-[#111110]" : "bg-white";
+    const cardBorder = isDark ? "border-stone-800/40" : "border-slate-200";
+    const expandedBg = isDark ? "bg-[#111110]" : "bg-white";
+    const expandedBorder = isDark ? "border-cyan-500/30" : "border-cyan-400";
+    const hoverBg = isDark ? "hover:border-stone-700/60" : "hover:border-cyan-300";
+    const divider = isDark ? "border-stone-800/20" : "border-slate-200";
+    const mutedText = isDark ? "text-slate-500" : "text-slate-400";
+    const bodyText = isDark ? "text-slate-200" : "text-slate-800";
+    const pageBg = isDark ? "bg-[#0A0A09]" : "bg-[#FAFAF8]";
+
     return (
-        <main className={`min-h-screen ${isDark ? "bg-[#0E0E0D] text-white" : "bg-[#FAFAF8] text-slate-900"}`}>
+        <main className={`min-h-screen ${pageBg} ${isDark ? "text-white" : "text-slate-900"}`}>
             <div
-                className={`absolute inset-0 pointer-events-none ${isDark ? "opacity-[0.06]" : "opacity-[0.12]"}`}
+                className={`absolute inset-0 pointer-events-none ${isDark ? "opacity-[0.03]" : "opacity-[0.12]"}`}
                 style={{
                     backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect x='0' y='0' width='32' height='32' fill='none' stroke='${isDark ? '%2306B6D4' : '%23453A30'}' stroke-width='0.4'/%3E%3C/svg%3E")`,
                     backgroundSize: "32px 32px",
@@ -228,7 +231,7 @@ export function MinorSurvey() {
                         <ArrowLeft size={13} />
                         Torna ai survey
                     </button>
-                    <span className={`text-xs font-mono ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                    <span className={`text-xs font-mono ${mutedText}`}>
                         {totalAnswered}/{totalQuestions}
                     </span>
                 </div>
@@ -274,8 +277,8 @@ export function MinorSurvey() {
                 </div>
 
                 {activeSection && (
-                    <div className="space-y-0.5">
-                        <p className={`text-[10px] font-mono uppercase tracking-widest px-1 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                    <div className="space-y-1">
+                        <p className={`text-[10px] font-mono uppercase tracking-widest px-1 ${mutedText}`}>
                             {activeSection.category}
                         </p>
 
@@ -287,14 +290,9 @@ export function MinorSurvey() {
                             return (
                                 <div
                                     key={q.id}
-                                    className={`rounded-xl border overflow-hidden transition-all ${isExpanded
-                                        ? isDark
-                                            ? "border-cyan-500/30 bg-[#1C1C1A]/80"
-                                            : "border-cyan-400 bg-white"
-                                        : isDark
-                                            ? "border-stone-800/30 bg-[#0E0E0D]/60 hover:border-cyan-500/20"
-                                            : "border-slate-200 bg-white hover:border-cyan-300"
-                                        } cursor-pointer`}
+                                    className={`rounded-xl border overflow-hidden transition-all
+                                        ${isExpanded ? expandedBg + ' ' + expandedBorder : cardBg + ' ' + cardBorder + ' ' + hoverBg}
+                                        cursor-pointer`}
                                 >
                                     <div
                                         onClick={() => toggleExpand(q.id)}
@@ -309,11 +307,11 @@ export function MinorSurvey() {
                                             }
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <p className={`text-sm leading-snug ${isDark ? "text-slate-200" : "text-slate-800"}`}>
+                                            <p className={`text-sm leading-snug ${bodyText}`}>
                                                 {q.text.it}
                                             </p>
                                             {isAnswered && !isExpanded && (
-                                                <p className={`text-xs mt-1 truncate ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                                                <p className={`text-xs mt-1 truncate ${mutedText}`}>
                                                     {typeof answers[q.id] === 'boolean'
                                                         ? (answers[q.id] ? 'Si' : 'No')
                                                         : Array.isArray(answers[q.id])
@@ -324,7 +322,7 @@ export function MinorSurvey() {
                                             )}
                                         </div>
                                         <div className={`mt-0.5 shrink-0 transition-transform ${isExpanded ? "rotate-180" : ""}`}>
-                                            <ChevronDown size={14} className={isDark ? "text-slate-600" : "text-slate-400"} />
+                                            <ChevronDown size={14} className={mutedText} />
                                         </div>
                                     </div>
 
@@ -335,7 +333,7 @@ export function MinorSurvey() {
                                             transition={{ duration: 0.2 }}
                                             className="overflow-hidden"
                                         >
-                                            <div className={`px-4 pb-5 border-t ${isDark ? "border-stone-800/20" : "border-slate-200"}`}>
+                                            <div className={`px-4 pb-5 border-t ${divider}`}>
                                                 {isSaving && (
                                                     <div className="flex justify-center pt-4">
                                                         <FallingLines color={isDark ? "#fff" : "#000"} width="20" visible />
@@ -361,23 +359,104 @@ export function MinorSurvey() {
                 )}
 
                 <div className={`flex items-center justify-between pt-4 border-t ${isDark ? "border-stone-800/30" : "border-slate-200"}`}>
-                    <p className={`text-xs ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                    <p className={`text-xs ${mutedText}`}>
                         {allAnswered
                             ? "Tutte le domande hanno una risposta"
                             : `Rispondi a ${totalQuestions - totalAnswered} domande per completare`
                         }
                     </p>
-                    {allAnswered && (
+                    <div className="flex items-center gap-2">
                         <button
-                            onClick={handleComplete}
-                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-semibold transition-all shadow-lg shadow-cyan-500/25"
+                            onClick={handleSubmitClick}
+                            className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border text-xs font-medium transition-colors
+                                border-stone-800/30 text-slate-500 hover:text-slate-300 hover:border-stone-700/40"
                         >
-                            <Check size={14} />
-                            Completa survey
+                            Invia survey
                         </button>
-                    )}
+                        {allAnswered && (
+                            <button
+                                onClick={handleCompleteClick}
+                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-sm font-semibold transition-all shadow-lg shadow-sky-500/25"
+                            >
+                                <Check size={14} />
+                                Completa survey
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
+
+            <AnimatePresence>
+                {showConfirmModal && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                        <motion.div
+                            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setShowConfirmModal(false)}
+                        />
+                        <motion.div
+                            className={`relative z-10 w-full max-w-md rounded-2xl border p-8 space-y-5
+                                ${isDark ? "bg-[#1C1C1A] border-stone-800/40" : "bg-[#F8FAFB] border-slate-200"}`}
+                            initial={{ scale: 0.96, opacity: 0, y: 8 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.96, opacity: 0, y: 8 }}
+                            transition={{ duration: 0.2, ease: "easeOut" }}
+                        >
+                            <button
+                                onClick={() => setShowConfirmModal(false)}
+                                className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors
+                                    ${isDark ? "text-slate-500 hover:text-slate-300 hover:bg-white/5" : "text-slate-400 hover:text-slate-700 hover:bg-[#EDF2F7]"}`}
+                            >
+                                <X size={16} />
+                            </button>
+
+                            <div className={`w-11 h-11 rounded-xl flex items-center justify-center
+                                ${isDark ? "bg-sky-700/15 border border-sky-700/20" : "bg-sky-50 border border-sky-200"}`}>
+                                {confirmMode === "submit" && !allAnswered
+                                    ? <AlertTriangle size={20} className="text-sky-400" />
+                                    : <Check size={20} className="text-sky-400" />
+                                }
+                            </div>
+
+                            <div className="space-y-1.5">
+                                <h3 className={`text-base font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                                    {confirmMode === "submit" && !allAnswered
+                                        ? "Survey incompleto"
+                                        : "Conferma invio"
+                                    }
+                                </h3>
+                                <p className={`text-sm leading-relaxed ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                                    {confirmMode === "submit" && !allAnswered
+                                        ? `Hai risposto a ${totalAnswered} domande su ${totalQuestions}. Le domande senza risposta saranno considerate come non compilate. Vuoi inviare comunque il survey?`
+                                        : allAnswered
+                                            ? "Hai risposto a tutte le domande. Confermando, il survey verrà completato e potrai visualizzare il report dettagliato."
+                                            : "Vuoi inviare il survey? Potrai visualizzare il report con i punteggi per area."
+                                    }
+                                </p>
+                            </div>
+
+                            <div className="flex gap-2.5 pt-1">
+                                <button
+                                    onClick={() => setShowConfirmModal(false)}
+                                    className={`flex-1 px-4 py-2.5 rounded-xl border text-sm font-medium transition-colors
+                                        ${isDark ? "border-stone-800/40 text-slate-400 hover:text-slate-200" : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"}`}
+                                >
+                                    Annulla
+                                </button>
+                                <button
+                                    onClick={handleConfirmSubmit}
+                                    className="flex-1 px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500
+                                        text-white text-sm font-semibold transition-colors"
+                                >
+                                    {confirmMode === "submit" && !allAnswered ? "Invia comunque" : "Conferma e invia"}
+                                </button>
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
         </main>
     );
 }
