@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, ChevronDown, AlertTriangle, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ChevronDown, AlertCircle, X } from "lucide-react";
 import { useAuth } from "../auth/AuthContext.tsx";
 import { useSurveyTemplate } from "../hooks/useSurveyTemplate";
 import { useUserSurvey } from "../hooks/useUserSurvey";
@@ -425,11 +425,11 @@ export function MinorSurvey() {
                         />
                         <motion.div
                             className={`relative z-10 w-full max-w-md rounded-2xl border p-8 space-y-5
-                                ${isDark ? "bg-[#1C1C1A] border-stone-800/40" : "bg-[#F8FAFB] border-slate-200"}`}
+                                ${isDark ? "bg-[#1C1C1A] border-stone-800/30" : "bg-[#F8FAFB] border-slate-200"}`}
                             initial={{ scale: 0.96, opacity: 0, y: 8 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.96, opacity: 0, y: 8 }}
-                            transition={{ duration: 0.2, ease: "easeOut" }}
+                            transition={{ duration: 0.2, ease: "easeOut" as const }}
                         >
                             <button
                                 onClick={() => setShowConfirmModal(false)}
@@ -440,9 +440,9 @@ export function MinorSurvey() {
                             </button>
 
                             <div className={`w-11 h-11 rounded-xl flex items-center justify-center
-                                ${isDark ? "bg-sky-700/15 border border-sky-700/20" : "bg-sky-50 border border-sky-200"}`}>
+                                ${isDark ? "bg-sky-500/10 border border-sky-500/20" : "bg-sky-50 border border-sky-200"}`}>
                                 {confirmMode === "submit" && !allAnswered
-                                    ? <AlertTriangle size={20} className="text-sky-400" />
+                                    ? <AlertCircle size={20} className="text-sky-400" />
                                     : <Check size={20} className="text-sky-400" />
                                 }
                             </div>
@@ -474,7 +474,7 @@ export function MinorSurvey() {
                                 </button>
                                 <button
                                     onClick={handleConfirmSubmit}
-                                    className="flex-1 px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500
+                                    className="flex-1 px-4 py-2.5 rounded-xl bg-sky-700 hover:bg-sky-600
                                         text-white text-sm font-semibold transition-colors"
                                 >
                                     {confirmMode === "submit" && !allAnswered ? "Invia comunque" : "Conferma e invia"}
