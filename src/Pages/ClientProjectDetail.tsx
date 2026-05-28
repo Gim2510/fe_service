@@ -83,9 +83,8 @@ export function ClientProjectDetail() {
   ) => {
     try {
       await updateTask(taskId, payload);
-      await refetch();
     } catch {
-      // error handled in hook
+      await refetch();
     }
   };
 
@@ -302,6 +301,27 @@ function BoardView({
   onTaskClick: (task: Task) => void;
 }) {
   const tasksByStatus = (status: TaskStatus) => tasks.filter((t) => t.status === status);
+  const [dragOverStatus, setDragOverStatus] = useState<TaskStatus | null>(null);
+
+  const handleDragStart = (e: React.DragEvent, taskId: string) => {
+    e.dataTransfer.setData("text/plain", taskId);
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleDragOver = (e: React.DragEvent, status: TaskStatus) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    setDragOverStatus(status);
+  };
+
+  const handleDragLeave = () => setDragOverStatus(null);
+
+  const handleDrop = (e: React.DragEvent, status: TaskStatus) => {
+    e.preventDefault();
+    setDragOverStatus(null);
+    const taskId = e.dataTransfer.getData("text/plain");
+    if (taskId) onStatusChange(taskId, status);
+  };
 
   return (
     <motion.div
@@ -314,6 +334,7 @@ function BoardView({
       {BOARD_COLUMNS.map((status, colIdx) => {
         const colTasks = tasksByStatus(status);
         const st = STATUS_COLORS[status];
+        const isDragTarget = dragOverStatus === status;
 
         return (
           <motion.div
@@ -321,7 +342,14 @@ function BoardView({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: colIdx * 0.06 }}
-            className={`rounded-2xl border backdrop-blur-sm p-4 ${isDark ? "bg-[#0E0E0D]/50 border-stone-800/30" : "bg-white/70 border-slate-200"}`}
+            onDragOver={isAdmin ? (e) => handleDragOver(e, status) : undefined}
+            onDragLeave={isAdmin ? handleDragLeave : undefined}
+            onDrop={isAdmin ? (e) => handleDrop(e, status) : undefined}
+            className={`rounded-2xl border backdrop-blur-sm p-4 transition-all duration-200 ${
+              isDragTarget
+                ? (isDark ? "border-cyan-500/60 bg-cyan-500/5 shadow-lg shadow-cyan-500/10" : "border-cyan-400 bg-cyan-50")
+                : (isDark ? "bg-[#0E0E0D]/50 border-stone-800/30" : "bg-white/70 border-slate-200")
+            }`}
           >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
@@ -335,7 +363,7 @@ function BoardView({
               </span>
             </div>
 
-            <div className="space-y-3 min-h-[120px]">
+            <div className={`space-y-3 min-h-[120px] rounded-xl transition-colors duration-200 ${isDragTarget && isDark ? "bg-cyan-500/3" : ""} ${isDragTarget && !isDark ? "bg-cyan-50/50" : ""}`}>
               {colTasks.map((task, taskIdx) => (
                 <BoardTaskCard
                   key={task._id}
@@ -345,11 +373,14 @@ function BoardView({
                   isAdmin={isAdmin}
                   onStatusChange={onStatusChange}
                   onClick={() => onTaskClick(task)}
+                  onDragStart={isAdmin ? (e) => handleDragStart(e, task._id) : undefined}
                 />
               ))}
               {colTasks.length === 0 && (
                 <div className={`text-center py-8 rounded-xl border border-dashed ${isDark ? "border-stone-800/30" : "border-slate-200"}`}>
-                  <p className={`text-xs font-mono ${isDark ? "text-slate-700" : "text-slate-400"}`}>Nessun task</p>
+                  <p className={`text-xs font-mono ${isDark ? "text-slate-700" : "text-slate-400"}`}>
+                    {isDragTarget ? "Rilascia qui" : "Nessun task"}
+                  </p>
                 </div>
               )}
             </div>
@@ -368,6 +399,7 @@ function BoardTaskCard({
   isAdmin,
   onStatusChange,
   onClick,
+  onDragStart,
 }: {
   task: Task;
   index: number;
@@ -375,9 +407,11 @@ function BoardTaskCard({
   isAdmin: boolean;
   onStatusChange: (taskId: string, newStatus: TaskStatus) => void;
   onClick: () => void;
+  onDragStart?: (e: React.DragEvent) => void;
 }) {
   const pr = PRIORITY_COLORS[task.priority];
   const statusIdx = BOARD_COLUMNS.indexOf(task.status);
+  const [isDragging, setIsDragging] = useState(false);
 
   return (
     <motion.button
@@ -385,7 +419,12 @@ function BoardTaskCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2, delay: index * 0.04 }}
       onClick={onClick}
-      className={`w-full text-left rounded-xl border p-3.5 backdrop-blur-sm transition-all duration-200 ${
+      draggable={!!onDragStart}
+      onDragStart={(e) => { setIsDragging(true); onDragStart?.(e); }}
+      onDragEnd={() => setIsDragging(false)}
+      className={`w-full text-left rounded-xl border p-3.5 backdrop-blur-sm transition-all duration-200 cursor-grab active:cursor-grabbing ${
+        isDragging ? "opacity-50" : ""
+      } ${
         isDark
           ? "bg-[#0A0A09]/60 border-stone-800/30 hover:border-cyan-500/30 hover:bg-stone-900/40"
           : "bg-white border-slate-200 hover:border-sky-300 hover:shadow-sm"
@@ -412,12 +451,6 @@ function BoardTaskCard({
             {new Date(task.deadline).toLocaleDateString("it-IT")}
           </span>
         )}
-        {task.comments && task.comments.length > 0 && (
-          <span className={`flex items-center gap-1 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-            <MessageSquare size={10} />
-            {task.comments.length}
-          </span>
-        )}
       </div>
 
       {isAdmin && (
@@ -431,10 +464,11 @@ function BoardTaskCard({
               ←
             </button>
           )}
+          <div className="flex-1" />
           {statusIdx < BOARD_COLUMNS.length - 1 && (
             <button
               onClick={(e) => { e.stopPropagation(); onStatusChange(task._id, BOARD_COLUMNS[statusIdx + 1]); }}
-              className={`text-[10px] font-mono px-2 py-0.5 rounded hover:bg-stone-800/30 ml-auto ${isDark ? "text-slate-500 hover:text-slate-300" : "text-slate-400 hover:text-slate-600"}`}
+              className={`text-[10px] font-mono px-2 py-0.5 rounded hover:bg-stone-800/30 ${isDark ? "text-slate-500 hover:text-slate-300" : "text-slate-400 hover:text-slate-600"}`}
               title={`Sposta a ${TASK_STATUS_LABELS[BOARD_COLUMNS[statusIdx + 1]]}`}
             >
               →

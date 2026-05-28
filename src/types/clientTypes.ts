@@ -13,6 +13,20 @@ export interface Client {
 
 export type ProjectStatus = "planning" | "active" | "on_hold" | "completed" | "cancelled";
 
+export interface TeamMember {
+  user_id: string;
+  role: string;
+  is_lead: boolean;
+}
+
+export interface ProjectDocument {
+  name: string;
+  url: string;
+  type: "pdf" | "xlsx" | "docx" | "txt" | "other";
+  category: "requirements" | "contract" | "report" | "other";
+  uploaded_at: string;
+}
+
 export interface Project {
   _id: string;
   client_id: string;
@@ -20,9 +34,9 @@ export interface Project {
   description?: string;
   status: ProjectStatus;
   start_date?: string;
-  deadline?: string;
-  task_count?: number;
-  progress?: number;
+  end_date?: string;
+  team_members?: TeamMember[];
+  documents?: ProjectDocument[];
   created_at?: string;
   updated_at?: string;
 }
