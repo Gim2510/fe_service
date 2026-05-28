@@ -33,23 +33,25 @@ export function ClientProjects() {
   const BASE_URL = (import.meta as Record<string, unknown> & { env: Record<string, string> }).env.VITE_CLIENT_BASE_URL || "http://localhost:3010";
 
   const [uploadingDoc, setUploadingDoc] = useState<string | null>(null);
-  const [newDocName, setNewDocName] = useState("");
-  const [newDocType, setNewDocType] = useState<ProjectDocument["type"]>("pdf");
+  const [newDocFile, setNewDocFile] = useState<File | null>(null);
   const [newDocCategory, setNewDocCategory] = useState<ProjectDocument["category"]>("requirements");
   const [addDocProjectId, setAddDocProjectId] = useState<string | null>(null);
 
   if (loadingClient || loadingProjects) return <div className={`min-h-screen flex items-center justify-center ${A ? "bg-[#0E0E0D]" : "bg-[#FAFAF8]"}`}><FallingLines color={A ? "#fff" : "#B45309"} width="60" visible /></div>;
 
   const handleAddDocument = async (projectId: string) => {
-    if (!newDocName.trim() || !token) return;
+    if (!newDocFile || !token) return;
     setUploadingDoc(projectId);
     try {
+      const formData = new FormData();
+      formData.append("file", newDocFile);
+      formData.append("category", newDocCategory);
       await fetch(`${BASE_URL}/v1/project/${projectId}/document`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ name: newDocName.trim(), url: "#", type: newDocType, category: newDocCategory }),
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
       });
-      setNewDocName("");
+      setNewDocFile(null);
       setAddDocProjectId(null);
       refetchProjects();
     } catch { /* ignore */ }
@@ -241,28 +243,29 @@ export function ClientProjects() {
               {addDocProjectId ? (
                 <div className={`rounded-xl border p-4 space-y-3 backdrop-blur-sm ${A ? "border-cyan-500/20 bg-[#0E0E0D]/60" : "border-sky-200 bg-white"}`}>
                   <p className={`text-[11px] font-mono uppercase tracking-widest ${mute}`}>Nuovo documento</p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <select value={addDocProjectId} onChange={e => setAddDocProjectId(e.target.value)} className={`h-9 px-3 rounded-lg border text-xs ${A ? "bg-[#111110] border-stone-800/30 text-slate-200" : "bg-white border-slate-200 text-slate-900"}`}>
                       {projects.map((p: Project) => <option key={p._id} value={p._id}>{p.name}</option>)}
                     </select>
                     <select value={newDocCategory} onChange={e => setNewDocCategory(e.target.value as ProjectDocument["category"])} className={`h-9 px-3 rounded-lg border text-xs ${A ? "bg-[#111110] border-stone-800/30 text-slate-200" : "bg-white border-slate-200 text-slate-900"}`}>
                       <option value="requirements">Requisiti</option><option value="contract">Contratto</option><option value="report">Report</option><option value="other">Altro</option>
                     </select>
-                    <select value={newDocType} onChange={e => setNewDocType(e.target.value as ProjectDocument["type"])} className={`h-9 px-3 rounded-lg border text-xs ${A ? "bg-[#111110] border-stone-800/30 text-slate-200" : "bg-white border-slate-200 text-slate-900"}`}>
-                      <option value="pdf">PDF</option><option value="xlsx">Excel</option><option value="docx">Word</option><option value="txt">TXT</option><option value="other">Altro</option>
-                    </select>
-                    <input value={newDocName} onChange={e => setNewDocName(e.target.value)} placeholder="Nome documento" className={`h-9 px-3 rounded-lg border text-xs flex-1 min-w-[200px] ${A ? "bg-[#111110] border-stone-800/30 text-slate-200 placeholder:text-slate-600" : "bg-white border-slate-200 text-slate-900"}`} />
-                    <button onClick={() => handleAddDocument(addDocProjectId)} disabled={uploadingDoc === addDocProjectId || !newDocName.trim()}
+                    <label className={`h-9 px-3 rounded-lg border text-xs flex items-center gap-1.5 cursor-pointer transition-colors ${A ? "border-stone-800/30 text-slate-400 hover:text-slate-200 hover:border-stone-700/50" : "border-slate-200 text-slate-500 hover:text-slate-700"}`}>
+                      <Upload size={11} />
+                      {newDocFile ? newDocFile.name : "Scegli file"}
+                      <input type="file" className="hidden" accept=".pdf,.xlsx,.docx,.txt" onChange={e => setNewDocFile(e.target.files?.[0] ?? null)} />
+                    </label>
+                    <button onClick={() => handleAddDocument(addDocProjectId)} disabled={uploadingDoc === addDocProjectId || !newDocFile}
                       className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-medium transition-colors disabled:opacity-40">
                       <Upload size={11} /> Carica
                     </button>
-                    <button onClick={() => setAddDocProjectId(null)} className="px-2 py-1.5 rounded-lg text-xs text-slate-500 hover:text-slate-300">
+                    <button onClick={() => { setAddDocProjectId(null); setNewDocFile(null); }} className="px-2 py-1.5 rounded-lg text-xs text-slate-500 hover:text-slate-300">
                       Annulla
                     </button>
                   </div>
                 </div>
               ) : (
-                <button onClick={() => { setAddDocProjectId(projects[0]?._id ?? ""); setNewDocName(""); }} className={`inline-flex items-center gap-1.5 text-xs font-medium transition-colors ${A ? "text-cyan-400 hover:text-cyan-300" : "text-cyan-600 hover:text-cyan-700"}`}>
+                <button onClick={() => { setAddDocProjectId(projects[0]?._id ?? ""); setNewDocFile(null); }} className={`inline-flex items-center gap-1.5 text-xs font-medium transition-colors ${A ? "text-cyan-400 hover:text-cyan-300" : "text-cyan-600 hover:text-cyan-700"}`}>
                   <Plus size={12} /> Aggiungi documento
                 </button>
               )}
