@@ -144,7 +144,7 @@ export function MinorSurvey() {
 
     const handleAnswer = (questionId: string, value: string | number | boolean | string[] | null) => {
         const q = questions.find(qq => qq.id === questionId);
-        const shouldAutoAdvance = q && (q.type === "boolean" || q.type === "multipleChoice");
+        const shouldAutoAdvance = q && (q.type === "boolean" || q.type === "multipleChoice" || q.type === "scale");
 
         setAnswers(prev => {
             const next = { ...prev, [questionId]: value };
