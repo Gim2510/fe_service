@@ -36,7 +36,6 @@ export function AdminActionsSection({
     theme,
 }: Props) {
     const isDark = theme === "dark";
-    const textSub = isDark ? "text-slate-500" : "text-slate-400";
 
     const selectClass = `w-full h-11 px-4 rounded-xl border text-sm appearance-none cursor-pointer focus:outline-none transition-colors
         ${isDark

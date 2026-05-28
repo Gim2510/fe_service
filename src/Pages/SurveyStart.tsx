@@ -445,6 +445,7 @@ function SectionBlock({
 }
 
 const ACCENT_COLORS = {
+    diagnostic: { bar: "from-cyan-500/60 via-cyan-500/20 to-transparent", border: "border-cyan-500/20", bg: "bg-cyan-500/5", text: "text-cyan-400", badge: "border-cyan-500/20 bg-cyan-500/10 text-cyan-400", btnBg: "bg-cyan-600 hover:bg-cyan-500", btnShadow: "shadow-lg shadow-cyan-500/25" },
     compliance: { bar: "from-cyan-500/60 via-cyan-500/20 to-transparent", border: "border-cyan-500/20", bg: "bg-cyan-500/5", text: "text-cyan-400", badge: "border-cyan-500/20 bg-cyan-500/10 text-cyan-400", btnBg: "bg-cyan-600 hover:bg-cyan-500", btnShadow: "shadow-lg shadow-cyan-500/25" },
     processes:  { bar: "from-amber-500/60 via-amber-500/20 to-transparent", border: "border-amber-500/20", bg: "bg-amber-500/5", text: "text-amber-400", badge: "border-amber-500/20 bg-amber-500/10 text-amber-400", btnBg: "bg-amber-600 hover:bg-amber-500", btnShadow: "shadow-lg shadow-amber-500/25" },
     growth:     { bar: "from-emerald-500/60 via-emerald-500/20 to-transparent", border: "border-emerald-500/20", bg: "bg-emerald-500/5", text: "text-emerald-400", badge: "border-emerald-500/20 bg-emerald-500/10 text-emerald-400", btnBg: "bg-emerald-600 hover:bg-emerald-500", btnShadow: "shadow-lg shadow-emerald-500/25" },

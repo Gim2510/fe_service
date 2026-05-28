@@ -47,8 +47,6 @@ export function AdminDashboard() {
 
     if (loadingUsers || loadingSurveys) return <div className={`min-h-screen flex items-center justify-center ${A ? "bg-[#0E0E0D]" : "bg-[#FAF8F4]"}`}><FallingLines color={A ? "#fff" : "#B45309"} width="60" visible /></div>;
 
-    const mute = A ? "text-slate-500" : "text-slate-400";
-
     return (
         <main className={`min-h-screen ${A ? "bg-[#0E0E0D] text-white" : "bg-[#FAF8F4] text-slate-900"}`}>
             <div className="fixed inset-0 pointer-events-none opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect x='0' y='0' width='48' height='48' fill='none' stroke='%2306B6D4' stroke-width='0.4'/%3E%3C/svg%3E")`, backgroundSize: "48px 48px" }} />

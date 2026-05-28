@@ -5,7 +5,7 @@ import { useSelectedUser } from "../../hooks/useUserById.ts";
 import { useUserSurveyById } from "../../hooks/useUserSurveyById.ts";
 import { FallingLines } from "react-loader-spinner";
 import { CATEGORY_LABELS, scoreGrade } from "../../utils/surveyUtils.ts";
-import { getSurveyConfig, ALL_SURVEY_TYPES } from "../../types/survey.ts";
+import { getSurveyConfig } from "../../types/survey.ts";
 import { ClipboardList, ShieldAlert, Settings, TrendingUp } from "lucide-react";
 
 type Props = {

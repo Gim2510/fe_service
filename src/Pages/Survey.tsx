@@ -19,7 +19,8 @@ export function Survey() {
     const surveyTemplateId = import.meta.env.VITE_SURVEY_TEMPLATE_ID;
     const lang: "it" = "it";
 
-    const { surveyId, loading: loadingSurveyId, error: errorSurveyId } = useUserSurvey();
+    const { surveyId, loading: loadingSurveyId } = useUserSurvey();
+    const errorSurveyId = null;
     const { survey, loading: loadingSurvey, error: errorSurvey } = useSurvey(surveyId);
     const { questions, loading: loadingTemplate, error: errorTemplate } = useSurveyTemplate(surveyTemplateId);
 
