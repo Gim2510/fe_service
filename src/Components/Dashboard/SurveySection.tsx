@@ -1,69 +1,74 @@
 import { motion } from "framer-motion";
 
-export function SurveySection({ surveys, theme }: any) {
+const CAT_LABELS: Record<string, string> = {
+    leadership: "Leadership", azienda: "Maturità aziendale", software: "Software & Strumenti",
+    processi: "Processi operativi", integrazione: "Integrazione sistemi", it_security: "Sicurezza IT", budget: "Readiness investimenti",
+};
+
+export function SurveySection({ surveys, theme }: { surveys: any; theme: string }) {
     const isDark = theme === "dark";
+    const dist = surveys?.scoreDistribution ?? [];
+    const maxDist = Math.max(...dist.map((d: any) => d.count), 1);
+    const catAvgs = surveys?.averageScoreByCategory ?? [];
 
     const stats = [
-        { label: "Risposte Totali",  value: surveys.totalResponses },
-        { label: "Pubblicate",        value: surveys.publishedResponses },
-        { label: "Punteggio Medio",    value: surveys.averageScore != null ? `${surveys.averageScore.toFixed(1)}%` : "—" },
+        { label: "Risposte Totali", value: surveys.totalResponses },
+        { label: "Pubblicate", value: surveys.publishedResponses },
+        { label: "Punteggio Medio", value: surveys.averageScore != null ? `${surveys.averageScore.toFixed(1)}%` : "—" },
     ];
-
-    const publishRate = surveys.totalResponses > 0
-        ? Math.round((surveys.publishedResponses / surveys.totalResponses) * 100)
-        : 0;
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.22 }}
-            className={`group relative rounded-2xl border backdrop-blur-sm overflow-hidden transition-all duration-300 ${
-                isDark
-                    ? "bg-[#0E0E0D]/80 border-stone-800/20 hover:border-stone-700/40 shadow-lg shadow-violet-500/10 hover:shadow-violet-500/20"
-                    : "bg-white/80 border-slate-200 hover:border-slate-300 shadow-md hover:shadow-lg"
-            }`}
-        >
-            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-violet-500/50 to-transparent group-hover:via-violet-400/70 transition-all" />
-            <div className="p-5">
-                <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-5
-                    ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-                    Performance Survey
-                </p>
+            className={`rounded-2xl border overflow-hidden backdrop-blur-sm ${isDark ? "border-cyan-500/30 bg-[#0E0E0D]/80 shadow-lg shadow-cyan-500/10" : "border-cyan-500/60 bg-white shadow-md shadow-cyan-400/15"}`}>
+            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
+            <div className="p-6 space-y-5">
+                <p className={`text-[10px] font-mono uppercase tracking-[0.18em] ${isDark ? "text-slate-500" : "text-slate-400"}`}>Performance Survey</p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-5">
-                    {stats.map((s) => (
+                <div className="grid grid-cols-3 gap-4">
+                    {stats.map(s => (
                         <div key={s.label}>
-                            <p className={`text-[10px] font-mono uppercase tracking-widest mb-1
-                                ${isDark ? "text-slate-600" : "text-slate-400"}`}>
-                                {s.label}
-                            </p>
-                            <p className={`text-xl font-semibold font-fjalla tabular-nums ${isDark ? "text-violet-400" : "text-violet-700"}`}>
-                                {s.value ?? "—"}
-                            </p>
+                            <p className={`text-[10px] font-mono uppercase tracking-widest mb-1 ${isDark ? "text-slate-600" : "text-slate-400"}`}>{s.label}</p>
+                            <p className={`text-xl font-semibold tabular-nums ${isDark ? "text-cyan-400" : "text-cyan-700"}`}>{s.value ?? "—"}</p>
                         </div>
                     ))}
                 </div>
 
-                {/* publish rate bar */}
-                <div className="space-y-1.5">
-                    <div className="flex justify-between">
-                        <span className={`text-[10px] font-mono uppercase tracking-widest ${isDark ? "text-slate-600" : "text-slate-400"}`}>
-                            Tasso pubblicazione
-                        </span>
-                        <span className={`text-[10px] font-mono ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-                            {publishRate}%
-                        </span>
+                {/* Score distribution */}
+                {dist.length > 0 && (
+                    <div className="space-y-1.5 pt-2 border-t border-stone-800/20">
+                        <p className={`text-[10px] font-mono uppercase tracking-widest mb-2 ${isDark ? "text-slate-600" : "text-slate-400"}`}>Distribuzione score</p>
+                        {dist.map((d: any) => {
+                            const pct = Math.round((d.count / maxDist) * 100);
+                            return (
+                                <div key={d.range} className="flex items-center gap-2">
+                                    <span className={`text-[10px] font-mono w-14 text-right ${isDark ? "text-slate-500" : "text-slate-400"}`}>{d.range}</span>
+                                    <div className="flex-1 h-2.5 rounded-full overflow-hidden bg-white/5">
+                                        <motion.div className="h-full rounded-full bg-cyan-500/60" initial={{ width: 0 }} animate={{ width: `${pct}%` }} transition={{ duration: 0.8, delay: 0.3 }} />
+                                    </div>
+                                    <span className={`text-[10px] font-mono tabular-nums w-6 text-right ${isDark ? "text-slate-500" : "text-slate-400"}`}>{d.count}</span>
+                                </div>
+                            );
+                        })}
                     </div>
-                    <div className={`h-[3px] rounded-full overflow-hidden ${isDark ? "bg-white/6" : "bg-black/8"}`}>
-                        <motion.div
-                            className="h-full rounded-full bg-gradient-to-r from-violet-600 to-violet-500"
-                            initial={{ width: 0 }}
-                            animate={{ width: `${publishRate}%` }}
-                            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-                        />
+                )}
+
+                {/* Category averages */}
+                {catAvgs.length > 0 && (
+                    <div className="space-y-1.5 pt-2 border-t border-stone-800/20">
+                        <p className={`text-[10px] font-mono uppercase tracking-widest mb-2 ${isDark ? "text-slate-600" : "text-slate-400"}`}>Score medio per categoria</p>
+                        {catAvgs.slice(0, 7).map((c: any) => (
+                            <div key={c.category} className="flex items-center gap-2">
+                                <span className={`text-[10px] font-medium w-24 truncate ${isDark ? "text-slate-400" : "text-slate-600"}`}>{CAT_LABELS[c.category] ?? c.category}</span>
+                                <div className="flex-1 h-2.5 rounded-full overflow-hidden bg-white/5">
+                                    <motion.div className="h-full rounded-full bg-cyan-500/60" initial={{ width: 0 }} animate={{ width: `${c.averagePercentage}%` }} transition={{ duration: 0.8, delay: 0.3 }} />
+                                </div>
+                                <span className={`text-[10px] font-mono tabular-nums w-9 text-right ${isDark ? "text-slate-500" : "text-slate-400"}`}>{Math.round(c.averagePercentage)}%</span>
+                            </div>
+                        ))}
                     </div>
-                </div>
+                )}
             </div>
         </motion.div>
     );
