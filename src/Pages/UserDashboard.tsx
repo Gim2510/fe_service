@@ -165,7 +165,7 @@ export function UserDashboard() {
                                                 return (
                                                     <div key={d.range} className="flex items-center gap-3">
                                                         <span className={`text-[10px] font-mono w-14 text-right ${mute}`}>{d.range}</span>
-                                                        <div className="flex-1 h-5 rounded-full overflow-hidden bg-white/5">
+                                                        <div className="flex-1 h-3 rounded-full overflow-hidden bg-white/5">
                                                             <motion.div className="h-full rounded-full bg-cyan-500/60" initial={{ width: 0 }} animate={{ width: `${pct}%` }} transition={{ duration: 0.8, delay: 0.2 }} />
                                                         </div>
                                                         <span className={`text-xs font-mono tabular-nums w-8 ${body}`}>{d.count}</span>
@@ -185,7 +185,7 @@ export function UserDashboard() {
                                             {stats.averageScoreByCategory.slice(0, 7).map(c => (
                                                 <div key={c.category} className="flex items-center gap-3">
                                                     <span className={`text-[11px] font-medium w-28 truncate ${body}`}>{c.category}</span>
-                                                    <div className="flex-1 h-5 rounded-full overflow-hidden bg-white/5">
+                                                    <div className="flex-1 h-3 rounded-full overflow-hidden bg-white/5">
                                                         <motion.div className="h-full rounded-full bg-cyan-500/60" initial={{ width: 0 }} animate={{ width: `${c.averagePercentage}%` }} transition={{ duration: 0.8, delay: 0.2 }} />
                                                     </div>
                                                     <span className={`text-xs font-mono tabular-nums w-10 text-right ${body}`}>{Math.round(c.averagePercentage)}%</span>
