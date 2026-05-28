@@ -3,7 +3,7 @@ import { useAuth } from "../auth/AuthContext.tsx";
 import type { Client } from "../types/clientTypes.ts";
 
 const BASE_URL: string =
-  (import.meta as Record<string, unknown> & { env: Record<string, string> }).env.VITE_CLIENT_BASE_URL ||
+  (import.meta as any).env.VITE_CLIENT_BASE_URL ||
   "http://localhost:3010";
 
 export function useClientData() {

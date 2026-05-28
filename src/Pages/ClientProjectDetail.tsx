@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -303,9 +303,10 @@ function BoardView({
   const tasksByStatus = (status: TaskStatus) => tasks.filter((t) => t.status === status);
   const [dragOverStatus, setDragOverStatus] = useState<TaskStatus | null>(null);
 
-  const handleDragStart = (e: React.DragEvent, taskId: string) => {
-    e.dataTransfer.setData("text/plain", taskId);
-    e.dataTransfer.effectAllowed = "move";
+  const dragTaskId = useRef<string | null>(null);
+
+  const handleDragStart = (_e: MouseEvent | TouchEvent | PointerEvent, taskId: string) => {
+    dragTaskId.current = taskId;
   };
 
   const handleDragOver = (e: React.DragEvent, status: TaskStatus) => {
@@ -319,8 +320,9 @@ function BoardView({
   const handleDrop = (e: React.DragEvent, status: TaskStatus) => {
     e.preventDefault();
     setDragOverStatus(null);
-    const taskId = e.dataTransfer.getData("text/plain");
+    const taskId = dragTaskId.current;
     if (taskId) onStatusChange(taskId, status);
+    dragTaskId.current = null;
   };
 
   return (
@@ -407,7 +409,7 @@ function BoardTaskCard({
   isAdmin: boolean;
   onStatusChange: (taskId: string, newStatus: TaskStatus) => void;
   onClick: () => void;
-  onDragStart?: (e: React.DragEvent) => void;
+  onDragStart?: (e: MouseEvent | TouchEvent | PointerEvent) => void;
 }) {
   const pr = PRIORITY_COLORS[task.priority];
   const statusIdx = BOARD_COLUMNS.indexOf(task.status);
@@ -420,7 +422,7 @@ function BoardTaskCard({
       transition={{ duration: 0.2, delay: index * 0.04 }}
       onClick={onClick}
       draggable={!!onDragStart}
-      onDragStart={(e) => { setIsDragging(true); onDragStart?.(e); }}
+      onDragStart={(e: MouseEvent | TouchEvent | PointerEvent) => { setIsDragging(true); onDragStart?.(e); }}
       onDragEnd={() => setIsDragging(false)}
       className={`w-full text-left rounded-xl border p-3.5 backdrop-blur-sm transition-all duration-200 cursor-grab active:cursor-grabbing ${
         isDragging ? "opacity-50" : ""

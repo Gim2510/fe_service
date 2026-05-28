@@ -15,6 +15,7 @@ const STATUS_STYLES: Record<ProjectStatus, { color: string; bg: string; border: 
   completed: { color: "text-emerald-400", bg: "bg-emerald-500/10", border: "border-emerald-500/30", icon: <CheckCircle size={11} /> },
   on_hold:   { color: "text-amber-400",  bg: "bg-amber-500/10",  border: "border-amber-500/30",  icon: <AlertCircle size={11} /> },
   planning:  { color: "text-slate-400",  bg: "bg-slate-500/10",  border: "border-slate-500/30",  icon: <Calendar size={11} /> },
+  cancelled: { color: "text-red-400",    bg: "bg-red-500/10",    border: "border-red-500/30",    icon: <AlertCircle size={11} /> },
 };
 
 const DOC_TYPE_ICONS: Record<string, string> = { pdf: "PDF", xlsx: "XLSX", docx: "DOCX", txt: "TXT", other: "FILE" };
@@ -30,7 +31,7 @@ export function ClientProjects() {
   const mute = A ? "text-slate-500" : "text-slate-400";
   const body = A ? "text-slate-300" : "text-slate-600";
   const isAdmin = role === "ADMIN";
-  const BASE_URL = (import.meta as Record<string, unknown> & { env: Record<string, string> }).env.VITE_CLIENT_BASE_URL || "http://localhost:3010";
+  const BASE_URL = (import.meta as any).env.VITE_CLIENT_BASE_URL || "http://localhost:3010";
 
   const [uploadingDoc, setUploadingDoc] = useState<string | null>(null);
   const [newDocFile, setNewDocFile] = useState<File | null>(null);
@@ -71,8 +72,6 @@ export function ClientProjects() {
 
   const allTeamMembers = projects.flatMap((p: Project) => p.team_members ?? []);
   const uniqueTeam = allTeamMembers.filter((m: TeamMember, i: number, arr: TeamMember[]) => arr.findIndex((x: TeamMember) => x.user_id === m.user_id) === i);
-  const allDocs = projects.flatMap((p: Project) => ({ ...{} as Record<string, unknown>, projectId: "", projectName: "" }));
-
   return (
     <main className={`min-h-screen ${A ? "bg-[#0E0E0D] text-white" : "bg-[#FAFAF8] text-slate-900"}`}>
       <div className="fixed inset-0 pointer-events-none opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect x='0' y='0' width='48' height='48' fill='none' stroke='%2306B6D4' stroke-width='0.4'/%3E%3C/svg%3E")`, backgroundSize: "48px 48px" }} />
@@ -220,7 +219,7 @@ export function ClientProjects() {
             <div className={card}>
               <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
               <div className="p-6 space-y-1">
-                {projects.flatMap((p: Project) => (p.documents ?? []).map((d: ProjectDocument, j: number) => ({ ...d, projectId: p._id, projectName: p.name, idx: j }))).map((doc, i) => (
+                {projects.flatMap((p: Project) => (p.documents ?? []).map((d: ProjectDocument, j: number) => ({ ...d, projectId: p._id, projectName: p.name, idx: j }))).map((doc, _i) => (
                   <div key={`${doc.projectId}-${doc.idx}`} className={`flex items-center gap-3 p-2.5 rounded-lg group ${A ? "hover:bg-stone-800/20" : "hover:bg-slate-50"}`}>
                     <span className={`w-7 h-6 rounded flex items-center justify-center text-[9px] font-mono font-bold shrink-0 ${A ? "bg-stone-800/40 text-slate-400" : "bg-slate-100 text-slate-500"}`}>{DOC_TYPE_ICONS[doc.type] ?? "FILE"}</span>
                     <div className="flex-1 min-w-0">

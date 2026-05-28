@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../auth/AuthContext.tsx";
-import type { Task, TaskStatus, TaskPriority } from "../types/clientTypes.ts";
+import type { Task, TaskPriority } from "../types/clientTypes.ts";
 
 const BASE_URL: string =
-  (import.meta as Record<string, unknown> & { env: Record<string, string> }).env.VITE_CLIENT_BASE_URL ||
+  (import.meta as any).env.VITE_CLIENT_BASE_URL ||
   "http://localhost:3010";
 
 export function useProjectTasks(projectId: string | null) {

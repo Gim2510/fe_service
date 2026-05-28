@@ -35,6 +35,7 @@ export interface Project {
   status: ProjectStatus;
   start_date?: string;
   end_date?: string;
+  deadline?: string;
   team_members?: TeamMember[];
   documents?: ProjectDocument[];
   created_at?: string;
