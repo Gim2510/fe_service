@@ -150,10 +150,11 @@ export function ClientProjects() {
                         <div>
                           <p className={`text-[11px] font-mono uppercase tracking-widest mb-2 ${mute}`}>Documenti ({(project.documents ?? []).length})</p>
                           {(project.documents ?? []).slice(0, 3).map((d: ProjectDocument, j: number) => (
-                            <div key={j} className={`flex items-center gap-2 text-[11px] py-0.5 ${body}`}>
+                            <a key={j} href={`${BASE_URL}${d.url ?? ''}`} target="_blank" rel="noopener noreferrer"
+                              className={`flex items-center gap-2 text-[11px] py-0.5 ${body} hover:text-cyan-400 transition-colors`}>
                               <span className={`w-6 h-5 rounded flex items-center justify-center text-[8px] font-mono font-bold ${A ? "bg-stone-800/40 text-slate-400" : "bg-slate-100 text-slate-500"}`}>{DOC_TYPE_ICONS[d.type] ?? "FILE"}</span>
                               <span className="truncate">{d.name}</span>
-                            </div>
+                            </a>
                           ))}
                           {(project.documents ?? []).length > 3 && <p className={`text-[11px] ${mute}`}>+{(project.documents ?? []).length - 3} altri</p>}
                         </div>
@@ -223,7 +224,7 @@ export function ClientProjects() {
                   <div key={`${doc.projectId}-${doc.idx}`} className={`flex items-center gap-3 p-2.5 rounded-lg group ${A ? "hover:bg-stone-800/20" : "hover:bg-slate-50"}`}>
                     <span className={`w-7 h-6 rounded flex items-center justify-center text-[9px] font-mono font-bold shrink-0 ${A ? "bg-stone-800/40 text-slate-400" : "bg-slate-100 text-slate-500"}`}>{DOC_TYPE_ICONS[doc.type] ?? "FILE"}</span>
                     <div className="flex-1 min-w-0">
-                      <p className={`text-sm truncate ${body}`}>{doc.name}</p>
+                      <a href={`${BASE_URL}${doc.url ?? ''}`} target="_blank" rel="noopener noreferrer" className={`text-sm truncate ${body} hover:text-cyan-400 transition-colors`}>{doc.name}</a>
                       <p className={`text-[10px] font-mono ${mute}`}>{doc.projectName} • {new Date(doc.uploaded_at).toLocaleDateString("it-IT")}</p>
                     </div>
                     <span className={`text-[10px] font-mono uppercase ${A ? "text-slate-600" : "text-slate-400"}`}>{doc.category === "requirements" ? "Requisiti" : doc.category === "contract" ? "Contratto" : doc.category === "report" ? "Report" : "Altro"}</span>
