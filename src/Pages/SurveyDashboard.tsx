@@ -360,10 +360,17 @@ export function SurveyDashboard() {
                                         {survey._id}
                                     </p>
                                 </div>
-                                <div className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-widest
-                                    ${isDark ? "bg-green-500/10 text-green-400 border border-green-500/20" : "bg-green-50 text-green-600 border border-green-200"}`}>
-                                    <Check size={9} strokeWidth={3} /> Pubblicato
-                                </div>
+                                {survey.status === "published" ? (
+                                    <div className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-widest
+                                        ${isDark ? "bg-green-500/10 text-green-400 border border-green-500/20" : "bg-green-50 text-green-600 border border-green-200"}`}>
+                                        <Check size={9} strokeWidth={3} /> Pubblicato
+                                    </div>
+                                ) : (
+                                    <div className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-widest
+                                        ${isDark ? "bg-amber-500/10 text-amber-400 border border-amber-500/20" : "bg-amber-50 text-amber-600 border border-amber-200"}`}>
+                                        Bozza
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
