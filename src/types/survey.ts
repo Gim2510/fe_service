@@ -51,4 +51,5 @@ export type UserSurveyEntry = {
   surveyId: string;
   surveyType: string;
   status?: string;
+  hasAnswers?: boolean;
 };

@@ -163,6 +163,7 @@ export function SurveyStart() {
         const existing = findSurveyByType(type);
         if (!existing) return "available";
         if (existing.status === "published") return "completed";
+        if (!existing.hasAnswers) return "available";
         return "in_progress";
     };
 

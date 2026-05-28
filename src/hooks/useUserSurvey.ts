@@ -24,6 +24,7 @@ export function useUserSurvey() {
                         surveyId: String(s._id || s),
                         surveyType: String(s.survey_type || 'diagnostic'),
                         status: String(s.status || 'draft'),
+                        hasAnswers: Boolean(s.hasAnswers),
                     })));
                 } else if (typeof data === 'string') {
                     setAllSurveys([{ surveyId: data, surveyType: 'diagnostic' }]);
