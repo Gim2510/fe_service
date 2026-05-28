@@ -367,11 +367,10 @@ function SectionBlock({
                                     </p>
                                 </div>
                             )}
-                            {emailVer ? (
-                                <button
-                                    onClick={onCta}
-                                    disabled={ctaDisabled}
-                                    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap ${
+                            <button
+                                onClick={onCta}
+                                disabled={ctaDisabled}
+                                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap ${
                                         state === "locked"
                                             ? (isDark ? "bg-stone-800/40 text-stone-500 cursor-not-allowed" : "bg-stone-100 text-stone-400 cursor-not-allowed")
                                             : isMain
@@ -384,7 +383,6 @@ function SectionBlock({
                                     {state === "completed" ? info.ctaCompleted : state === "in_progress" ? "Continua" : info.ctaLabel}
                                     <ArrowRight size={14} />
                                 </button>
-                            ) : null}
                         </div>
                     </div>
 
