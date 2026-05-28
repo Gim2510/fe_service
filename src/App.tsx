@@ -8,6 +8,7 @@ import {SurveyStart} from "./Pages/SurveyStart.tsx";
 import {Login} from "./Pages/Login.tsx";
 import {Register} from "./Pages/Register.tsx";
 import {SurveyDashboard} from "./Pages/SurveyDashboard.tsx";
+import {MinorSurvey} from "./Pages/MinorSurvey.tsx";
 import {Home} from "./Pages/Home.tsx";
 import {VerifyEmailPage} from "./Pages/VerifyEmailPage.tsx";
 import {ContactPage} from "./Pages/ContactPage.tsx";
@@ -50,6 +51,7 @@ function App() {
                             <Route path="/register" element={<LayoutHomepage><Register /></LayoutHomepage>} />
                             <Route path="/survey" element={<Protected><LayoutSurvey><Survey /></LayoutSurvey></Protected>}/>
                             <Route path="/survey/:survey_id/recap" element={<Protected><LayoutSurvey><SurveyDashboard/></LayoutSurvey></Protected>} />
+                            <Route path="/survey/minor/:surveyType" element={<Protected><LayoutSurvey><MinorSurvey/></LayoutSurvey></Protected>} />
                             <Route path="/contact" element={<LayoutHomepage><ContactPage/></LayoutHomepage>} />
                             <Route path="/user" element={<Protected><LayoutHomepage><UserDashboard/></LayoutHomepage></Protected>} />
                             <Route path="/password-reset" element={<LayoutHomepage><PasswordResetRequest/></LayoutHomepage>} />

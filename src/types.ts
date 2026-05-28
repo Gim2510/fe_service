@@ -11,4 +11,5 @@ export type Question = {
     opt?: { it: string[]; en: string[] }
     min?: number
     max?: number
+    category?: string
 }

@@ -16,7 +16,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 export function Survey() {
     const { theme } = useTheme();
     const isDark = theme === "dark";
-    const surveyTemplateId = "6980ad77de0a1489a3663896";
+    const surveyTemplateId = import.meta.env.VITE_SURVEY_TEMPLATE_ID;
     const lang: "it" = "it";
 
     const { surveyId, loading: loadingSurveyId, error: errorSurveyId } = useUserSurvey();

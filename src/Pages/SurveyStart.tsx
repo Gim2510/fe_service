@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Clock, ShieldCheck, CheckCircle } from "lucide-react";
+import { ArrowRight, Clock, ShieldCheck, CheckCircle, ClipboardList, ShieldAlert, Settings, TrendingUp, Lock } from "lucide-react";
 import { useAuth } from "../auth/AuthContext.tsx";
 import { useUserSurvey } from "../hooks/useUserSurvey";
 import { useSurvey } from "../hooks/useSurvey";
@@ -9,6 +9,7 @@ import { FallingLines } from "react-loader-spinner";
 import { useTheme } from "../Context/ThemeContext.tsx";
 import SecurityItem from "../Components/Survey/SecurityItem.tsx";
 import { SurveyIntro } from "../Components/Survey/SurveyIntro.tsx";
+import { getSurveyConfig, type SurveyType } from "../types/survey.ts";
 
 
 const steps = [
@@ -32,13 +33,15 @@ export function SurveyStart() {
     const { isAuthenticated, emailVer } = useAuth();
 
     const templateId = import.meta.env.VITE_SURVEY_TEMPLATE_ID;
-    const locale: "it" = "it";
+    const locale = "it" as const;
 
-    const { surveyId, loading: loadingSurveyId, refetch } = useUserSurvey();
+    const { surveyId, loading: loadingSurveyId, refetch, findSurveyByType } = useUserSurvey();
     const { survey, loading: loadingSurvey } = useSurvey(surveyId);
     const { initSurvey, loading: initLoading } = useInitSurvey();
 
-    const handleStart = async () => {
+    const mainCompleted = survey?.status === "published";
+
+    const handleStartMain = async () => {
         try {
             if (survey?._id) {
                 navigate(survey.status === "published" ? `/survey/${survey._id}/recap` : `/survey`);
@@ -50,6 +53,29 @@ export function SurveyStart() {
                 navigate(`/survey`);
             }
         } catch (e) { console.error("Errore avvio survey:", e); }
+    };
+
+    const handleMinorClick = async (type: SurveyType) => {
+        const existing = findSurveyByType(type);
+        if (existing) {
+            navigate(`/survey/minor/${type}`);
+        } else {
+            const cfg = getSurveyConfig(type);
+            const newId = await initSurvey(cfg.templateId, locale, type);
+            if (newId) {
+                refetch();
+                navigate(`/survey/minor/${type}`);
+            }
+        }
+    };
+
+    const minorTypes = ["compliance", "processes", "growth"] as const;
+
+    const getMinorState = (type: SurveyType): "locked" | "available" | "started" => {
+        if (!mainCompleted) return "locked";
+        const existing = findSurveyByType(type);
+        if (!existing) return "available";
+        return "started";
     };
 
     if (!isAuthenticated) return <SurveyIntro />;
@@ -98,22 +124,92 @@ export function SurveyStart() {
                 </div>
 
                 {emailVer ? (
-                    <button
-                        onClick={handleStart}
-                        disabled={initLoading || loadingSurvey || loadingSurveyId}
-                        className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
-                            bg-sky-600 hover:bg-sky-500 disabled:opacity-50 disabled:cursor-not-allowed
-                            text-white text-sm font-semibold transition-all
-                            shadow-lg shadow-sky-500/25 hover:-translate-y-0.5 duration-200"
-                    >
-                        {initLoading
-                            ? <FallingLines width="20" color="#fff" visible />
-                            : <>
-                                {survey?.status === "published" ? "Vai ai risultati" : survey ? "Riprendi la compilazione" : "Inizia il questionario"}
-                                <ArrowRight size={15} />
-                            </>
-                        }
-                    </button>
+                    <div className="space-y-3 w-full">
+                        {/* Main diagnostic card */}
+                        <button
+                            onClick={handleStartMain}
+                            disabled={initLoading || loadingSurvey || loadingSurveyId}
+                            className="w-full text-left flex items-center gap-4 p-5 rounded-xl border transition-all duration-200
+                                disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-0.5
+                                bg-sky-600 hover:bg-sky-500 border-sky-500/30 shadow-lg shadow-sky-500/25"
+                        >
+                            <div className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center bg-white/15`}>
+                                <ClipboardList size={20} className="text-white" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-sm font-semibold text-white">Diagnostic Questionnaire</p>
+                                <p className="text-xs text-sky-200/80">Questionario completo su processi e organizzazione</p>
+                            </div>
+                            <div className="shrink-0">
+                                {initLoading
+                                    ? <FallingLines width="20" color="#fff" visible />
+                                    : <span className="text-xs font-medium text-white/80 flex items-center gap-1">
+                                        {survey?.status === "published" ? "Report" : survey ? "Continua" : "Inizia"}
+                                        <ArrowRight size={13} />
+                                    </span>
+                                }
+                            </div>
+                        </button>
+
+                        {/* 3 minor survey cards */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            {minorTypes.map((type) => {
+                                const cfg = getSurveyConfig(type);
+                                const state = getMinorState(type);
+                                const iconEl = type === "compliance"
+                                    ? <ShieldAlert size={18} />
+                                    : type === "processes"
+                                        ? <Settings size={18} />
+                                        : <TrendingUp size={18} />;
+
+                                return (
+                                    <button
+                                        key={type}
+                                        onClick={() => handleMinorClick(type)}
+                                        disabled={state === "locked" || initLoading}
+                                        title={state === "locked" ? "Completa prima il Diagnostic Questionnaire" : undefined}
+                                        className={`w-full text-left flex flex-col gap-2 p-4 rounded-xl border transition-all duration-200
+                                            disabled:cursor-not-allowed
+                                            ${state === "locked"
+                                                ? "opacity-40 border-stone-800/20 bg-stone-900/20"
+                                                : isDark
+                                                    ? "border-cyan-500/20 bg-[#0E0E0D]/60 hover:border-cyan-500/40 hover:-translate-y-0.5"
+                                                    : "border-sky-300 bg-white hover:border-sky-400 hover:-translate-y-0.5"
+                                            }`}
+                                    >
+                                        <div className={`shrink-0 w-9 h-9 rounded-lg flex items-center justify-center
+                                            ${state === "locked"
+                                                ? "bg-stone-800/30"
+                                                : isDark ? "bg-cyan-500/10" : "bg-sky-50"
+                                            }`}>
+                                            {state === "locked"
+                                                ? <Lock size={16} className={isDark ? "text-stone-600" : "text-stone-400"} />
+                                                : <span className={isDark ? "text-cyan-400" : "text-sky-600"}>{iconEl}</span>
+                                            }
+                                        </div>
+                                        <div className="min-w-0">
+                                            <p className={`text-xs font-semibold ${state === "locked"
+                                                ? (isDark ? "text-stone-600" : "text-stone-400")
+                                                : (isDark ? "text-slate-200" : "text-slate-800")
+                                            }`}>
+                                                {cfg.label}
+                                            </p>
+                                            <p className={`text-[10px] mt-0.5 line-clamp-2 ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                                                {state === "locked" ? "Completa il Diagnostic prima" : cfg.description}
+                                            </p>
+                                        </div>
+                                        {state !== "locked" && (
+                                            <span className={`text-[11px] font-medium self-end flex items-center gap-1
+                                                ${isDark ? "text-cyan-400" : "text-sky-600"}`}>
+                                                {state === "started" ? "Continua" : "Inizia"}
+                                                <ArrowRight size={11} />
+                                            </span>
+                                        )}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
                 ) : (
                     <button
                         disabled
