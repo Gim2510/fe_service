@@ -23,6 +23,7 @@ export function useUserSurvey() {
                     setAllSurveys((data as Array<Record<string, unknown>>).map((s) => ({
                         surveyId: String(s._id || s),
                         surveyType: String(s.survey_type || 'diagnostic'),
+                        status: String(s.status || 'draft'),
                     })));
                 } else if (typeof data === 'string') {
                     setAllSurveys([{ surveyId: data, surveyType: 'diagnostic' }]);

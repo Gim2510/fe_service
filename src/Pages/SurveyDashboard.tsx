@@ -162,20 +162,22 @@ export function SurveyDashboard() {
                         const cfg = getSurveyConfig(type);
                         const entry = allSurveys.find(s => s.surveyType === type);
                         const isActive = type === currentType;
+                        const isPublished = entry?.status === "published";
+                        const isClickable = isPublished || isActive;
                         return (
                             <button
                                 key={type}
                                 onClick={() => {
-                                    if (entry) navigate(`/survey/${entry.surveyId}/recap`);
+                                    if (isClickable && entry) navigate(`/survey/${entry.surveyId}/recap`);
                                 }}
-                                disabled={!entry}
+                                disabled={!isClickable}
                                 className={`relative inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-medium
                                     whitespace-nowrap transition-all shrink-0 border
                                     ${isActive
                                         ? isDark
                                             ? "bg-cyan-500/15 border-cyan-500/30 text-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.15)]"
                                             : "bg-cyan-50 border-cyan-400 text-cyan-800"
-                                        : entry
+                                        : isPublished
                                             ? isDark
                                                 ? "border-stone-800/30 text-slate-500 hover:text-cyan-400 hover:border-stone-700/40"
                                                 : "border-slate-200 text-slate-500 hover:text-cyan-700 hover:bg-[#EDF2F7]"
@@ -183,12 +185,12 @@ export function SurveyDashboard() {
                                     }`}
                             >
                                 <span className="truncate max-w-[120px]">{cfg.label}</span>
-                                {entry && (
+                                {isPublished && (
                                     <span className="text-[10px] font-mono opacity-70 ml-0.5">
                                         {isActive && survey ? `${survey.score ?? "?"}%` : " "}
                                     </span>
                                 )}
-                                {!entry && (
+                                {!isPublished && (
                                     <span className="text-[9px] opacity-50">—</span>
                                 )}
                             </button>
