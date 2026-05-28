@@ -1,6 +1,5 @@
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
-import { Plus } from "lucide-react";
-import { useState, useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useRef } from "react";
 import { FloatingShapes, shapesCyan, lightShapes } from "./FloatingShapes.tsx";
 
 const problemi = [
@@ -51,140 +50,111 @@ const neonColors = [
     { border: "border-violet-500/50", glow: "shadow-violet-500/20", badge: "text-violet-400", bg: "bg-violet-950/40", dot: "border-violet-500", line: "from-violet-500", statColor: "text-violet-400", lightBadge: "text-violet-600", lightDot: "border-violet-500", lightStat: "text-violet-600", lightBg: "bg-violet-50" },
 ];
 
-function ProblemCard({ item, index, isDark, isOpen, onToggle }: {
+function ProblemCard({ item, index, isDark }: {
     item: typeof problemi[0];
     index: number;
     isDark: boolean;
-    isOpen: boolean;
-    onToggle: () => void;
 }) {
     const ref = useRef<HTMLDivElement>(null);
     const colors = neonColors[index % neonColors.length];
 
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["start end", "center center"],
-    });
-
-    const sp = { stiffness: 80, damping: 28, mass: 0.8 };
-    const scale   = useSpring(useTransform(scrollYProgress, [0, 0.7], [0.85, 1]), sp);
-    const opacity = useSpring(useTransform(scrollYProgress, [0, 0.2, 0.7], [0, 0.5, 1]), sp);
-    const y       = useSpring(useTransform(scrollYProgress, [0, 0.7], [35, 0]), sp);
-    const rotateX = useSpring(useTransform(scrollYProgress, [0, 0.7], [8, 0]), sp);
-
     return (
         <motion.div
             ref={ref}
-            className="relative"
-            style={{ scale, opacity, y, rotateX, transformStyle: "preserve-3d", perspective: "1000px" }}
+            initial={{ opacity: 0, y: 40, scale: 0.92 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{
+                duration: 0.5,
+                delay: index * 0.1,
+                ease: [0.22, 1, 0.36, 1],
+            }}
         >
             <motion.div
-                className={`relative rounded-2xl border backdrop-blur-sm transition-all duration-300 overflow-hidden ${
+                className={`relative rounded-2xl border backdrop-blur-sm transition-all duration-300 p-5 sm:p-8 ${
                     isDark
-                        ? `bg-[#0E0E0D]/70 ${colors.border} shadow-lg ${colors.glow}`
-                        : "bg-white border-slate-200 hover:border-slate-300"
+                        ? `bg-[#0E0E0D]/70 ${colors.border} shadow-lg hover:shadow-xl`
+                        : "bg-white border-slate-200 hover:border-slate-300 hover:shadow-lg"
                 }`}
-                whileHover={{ y: -6 }}
+                whileHover={{
+                    y: -6,
+                    boxShadow: isDark
+                        ? `0 0 30px rgba(var(--tw-shadow-color), 0.15)`
+                        : undefined,
+                }}
                 transition={{ duration: 0.25, ease: "easeOut" }}
             >
+                {isDark && (
+                    <motion.div
+                        className="absolute inset-0 rounded-2xl pointer-events-none"
+                        initial={{ opacity: 0 }}
+                        whileHover={{ opacity: 1 }}
+                        transition={{ duration: 0.3 }}
+                        style={{
+                            boxShadow: `0 0 40px -10px currentColor`,
+                            color: colors.badge.startsWith("text-")
+                                ? `var(--color-${colors.badge.replace("text-", "")})`
+                                : undefined,
+                        }}
+                    />
+                )}
+
                 {/* Top accent line */}
                 {isDark && (
                     <div className={`absolute top-0 left-0 w-full h-px bg-gradient-to-r ${colors.line} to-transparent opacity-40`} />
                 )}
 
-                {/* Plus button — top right corner */}
-                <motion.div
-                    animate={{ rotate: isOpen ? 45 : 0 }}
-                    transition={{ duration: 0.25, type: "spring", stiffness: 200 }}
-                    className={`absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center z-10 ${
+                {/* Header row: badge + title */}
+                <div className="flex items-center gap-4 sm:gap-5 mb-4">
+                    <div className={`relative flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center ${
                         isDark ? colors.bg : colors.lightBg
-                    } ${isDark ? colors.badge : colors.lightBadge}`}
-                >
-                    <Plus size={24} strokeWidth={2.5} />
-                    {isDark && (
-                        <motion.div
-                            className={`absolute inset-0 rounded-2xl border-2 ${colors.border}`}
-                            animate={{ opacity: [0.2, 0.6, 0.2] }}
-                            transition={{ duration: 2.5, repeat: Infinity, delay: index * 0.4 }}
-                        />
-                    )}
-                </motion.div>
-
-                {/* Clickable header */}
-                <button
-                    onClick={onToggle}
-                    className="w-full p-5 sm:p-8 pr-16 sm:pr-20 text-left"
-                    aria-expanded={isOpen}
-                >
-                    <div className="flex items-center gap-4 sm:gap-5">
-                        {/* Number badge */}
-                        <div className={`relative flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center ${
-                            isDark ? colors.bg : colors.lightBg
+                    }`}>
+                        <span className={`font-mono text-xl sm:text-2xl font-bold tracking-tight ${
+                            isDark ? colors.badge : colors.lightBadge
                         }`}>
-                            <span className={`font-mono text-xl sm:text-2xl font-bold tracking-tight ${
-                                isDark ? colors.badge : colors.lightBadge
-                            }`}>
-                                {String(index + 1).padStart(2, "0")}
-                            </span>
-                            {isDark && (
-                                <motion.div
-                                    className={`absolute inset-0 rounded-2xl border-2 ${colors.border}`}
-                                    animate={{ opacity: [0.2, 0.6, 0.2] }}
-                                    transition={{ duration: 2.5, repeat: Infinity, delay: index * 0.4 }}
-                                />
-                            )}
-                        </div>
-
-                        {/* Title */}
-                        <h3 className={`flex-1 text-base sm:text-xl font-semibold leading-snug transition-colors duration-200 ${
-                            isOpen
-                                ? isDark ? colors.badge : colors.lightBadge
-                                : isDark ? "text-slate-100" : "text-slate-900"
-                        }`}>
-                            {item.title}
-                        </h3>
+                            {String(index + 1).padStart(2, "0")}
+                        </span>
+                        {isDark && (
+                            <motion.div
+                                className={`absolute inset-0 rounded-2xl border-2 ${colors.border}`}
+                                animate={{ opacity: [0.2, 0.6, 0.2] }}
+                                transition={{ duration: 2.5, repeat: Infinity, delay: index * 0.4 }}
+                            />
+                        )}
                     </div>
-                </button>
 
-                {/* Expanded content */}
-                <AnimatePresence initial={false}>
-                    {isOpen && (
-                        <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{
-                                height: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
-                                opacity: { duration: 0.25, delay: 0.05 },
-                            }}
-                            className="overflow-hidden"
-                        >
-                            <div className={`px-5 sm:px-8 pb-6 sm:pb-8 pt-0 border-t ${
-                                isDark ? "border-stone-800/40" : "border-slate-100"
-                            }`}>
-                                <p className={`text-sm leading-relaxed mt-5 mb-5 ${
-                                    isDark ? "text-slate-400" : "text-slate-500"
-                                }`}>
-                                    {item.text}
-                                </p>
+                    <h3 className={`flex-1 text-base sm:text-xl font-semibold leading-snug ${
+                        isDark ? colors.badge : colors.lightBadge
+                    }`}>
+                        {item.title}
+                    </h3>
+                </div>
 
-                                {/* Stat highlight */}
-                                <div className="flex items-center gap-3 sm:gap-4">
-                                    <span className={`text-2xl sm:text-3xl font-bold font-mono ${
-                                        isDark ? colors.statColor : colors.lightStat
-                                    }`}>
-                                        {item.stat}
-                                    </span>
-                                    <span className={`text-xs sm:text-sm leading-tight ${
-                                        isDark ? "text-slate-500" : "text-slate-500"
-                                    }`}>
-                                        {item.statLabel}
-                                    </span>
-                                </div>
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                {/* Description */}
+                <p className={`text-sm leading-relaxed mb-5 ml-16 sm:ml-[4.5rem] ${
+                    isDark ? "text-slate-400" : "text-slate-500"
+                }`}>
+                    {item.text}
+                </p>
+
+                {/* Divider */}
+                <div className={`border-t mb-5 ml-16 sm:ml-[4.5rem] ${
+                    isDark ? "border-stone-800/40" : "border-slate-100"
+                }`} />
+
+                {/* Stat highlight */}
+                <div className="flex items-center gap-3 sm:gap-4 ml-16 sm:ml-[4.5rem]">
+                    <span className={`text-2xl sm:text-3xl font-bold font-mono ${
+                        isDark ? colors.statColor : colors.lightStat
+                    }`}>
+                        {item.stat}
+                    </span>
+                    <span className={`text-xs sm:text-sm leading-tight ${
+                        isDark ? "text-slate-500" : "text-slate-500"
+                    }`}>
+                        {item.statLabel}
+                    </span>
+                </div>
             </motion.div>
         </motion.div>
     );
@@ -192,7 +162,6 @@ function ProblemCard({ item, index, isDark, isOpen, onToggle }: {
 
 export function TimelineProblems({ theme }: { theme: string }) {
     const isDark = theme === "dark";
-    const [openIndex, setOpenIndex] = useState<number | null>(null);
     const sectionRef = useRef<HTMLElement>(null);
 
     const { scrollYProgress } = useScroll({
@@ -201,11 +170,8 @@ export function TimelineProblems({ theme }: { theme: string }) {
     });
 
     const sp = { stiffness: 80, damping: 28, mass: 0.8 };
-    const timelineHeight = useSpring(useTransform(scrollYProgress, [0.05, 0.85], ["0%", "100%"]), sp);
-    const headerY        = useSpring(useTransform(scrollYProgress, [0, 0.2], [35, 0]), sp);
-    const headerOpacity  = useSpring(useTransform(scrollYProgress, [0, 0.12], [0, 1]), sp);
-
-    const isAnyOpen = openIndex !== null;
+    const headerY       = useSpring(useTransform(scrollYProgress, [0, 0.2], [35, 0]), sp);
+    const headerOpacity = useSpring(useTransform(scrollYProgress, [0, 0.12], [0, 1]), sp);
 
     return (
         <section ref={sectionRef} className="relative overflow-hidden">
@@ -218,20 +184,12 @@ export function TimelineProblems({ theme }: { theme: string }) {
                         style={{ background: "radial-gradient(circle, rgba(14,165,233,0.6) 0%, rgba(14,165,233,0) 70%)" }} />
                     <div className="absolute -bottom-32 -left-24 w-[400px] h-[400px] rounded-full pointer-events-none opacity-[0.03]"
                         style={{ background: "radial-gradient(circle, rgba(139,92,246,0.5) 0%, rgba(139,92,246,0) 70%)" }} />
-                    <motion.div
-                        className="absolute inset-0 hidden md:block pointer-events-none"
-                        animate={{ y: isAnyOpen ? 60 : 0 }}
-                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    >
+                    <div className="absolute inset-0 hidden md:block pointer-events-none">
                         <FloatingShapes shapes={shapesCyan} isDark={true} />
-                    </motion.div>
-                    <motion.div
-                        className="absolute inset-0 md:hidden pointer-events-none"
-                        animate={{ y: isAnyOpen ? 40 : 0 }}
-                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    >
+                    </div>
+                    <div className="absolute inset-0 md:hidden pointer-events-none">
                         <FloatingShapes shapes={[shapesCyan[0]]} isDark={true} mobileScale={0.5} />
-                    </motion.div>
+                    </div>
                 </>
             ) : (
                 <>
@@ -240,20 +198,12 @@ export function TimelineProblems({ theme }: { theme: string }) {
                         style={{ background: "radial-gradient(circle, rgba(14,165,233,0.6) 0%, rgba(14,165,233,0) 70%)" }} />
                     <div className="absolute -bottom-32 -left-24 w-[400px] h-[400px] rounded-full pointer-events-none opacity-[0.045]"
                         style={{ background: "radial-gradient(circle, rgba(139,92,246,0.5) 0%, rgba(139,92,246,0) 70%)" }} />
-                    <motion.div
-                        className="absolute inset-0 hidden md:block pointer-events-none"
-                        animate={{ y: isAnyOpen ? 60 : 0 }}
-                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    >
+                    <div className="absolute inset-0 hidden md:block pointer-events-none">
                         <FloatingShapes shapes={lightShapes(shapesCyan)} isDark={false} />
-                    </motion.div>
-                    <motion.div
-                        className="absolute inset-0 md:hidden pointer-events-none"
-                        animate={{ y: isAnyOpen ? 40 : 0 }}
-                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    >
+                    </div>
+                    <div className="absolute inset-0 md:hidden pointer-events-none">
                         <FloatingShapes shapes={lightShapes([shapesCyan[0]])} isDark={false} mobileScale={0.5} />
-                    </motion.div>
+                    </div>
                 </>
             )}
 
@@ -286,47 +236,16 @@ export function TimelineProblems({ theme }: { theme: string }) {
                     </p>
                 </motion.div>
 
-                {/* Timeline + problems */}
-                <div className="relative">
-                    {/* Vertical timeline line */}
-                    <div className={`absolute left-5 sm:left-6 top-0 bottom-0 w-0.5 ${
-                        isDark ? "bg-stone-800" : "bg-slate-200"
-                    }`}>
-                        <motion.div
-                            className="w-full bg-gradient-to-b from-sky-500 via-emerald-500 to-violet-500 rounded-full"
-                            style={{ height: timelineHeight }}
+                {/* Problems grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {problemi.map((item, i) => (
+                        <ProblemCard
+                            key={item.title}
+                            item={item}
+                            index={i}
+                            isDark={isDark}
                         />
-                    </div>
-
-                    {/* Problem cards with inline dots */}
-                    <div className="flex flex-col gap-6 pl-12 sm:pl-16">
-                        {problemi.map((item, i) => {
-                            const dotColors = neonColors[i % neonColors.length];
-                            return (
-                                <div key={item.title} className="relative">
-                                    {/* Timeline dot — aligned to card top */}
-                                    <motion.div
-                                        className={`absolute -left-[33px] sm:-left-[41px] top-7 sm:top-9 w-3 h-3 rounded-full border-2 z-10 ${
-                                            isDark
-                                                ? `bg-[#0E0E0D] ${dotColors.dot}`
-                                                : `bg-[#FAFAF8] ${dotColors.lightDot}`
-                                        }`}
-                                        initial={{ scale: 0 }}
-                                        whileInView={{ scale: 1 }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 0.4, delay: i * 0.1 }}
-                                    />
-                                    <ProblemCard
-                                        item={item}
-                                        index={i}
-                                        isDark={isDark}
-                                        isOpen={openIndex === i}
-                                        onToggle={() => setOpenIndex(openIndex === i ? null : i)}
-                                    />
-                                </div>
-                            );
-                        })}
-                    </div>
+                    ))}
                 </div>
             </div>
         </section>
