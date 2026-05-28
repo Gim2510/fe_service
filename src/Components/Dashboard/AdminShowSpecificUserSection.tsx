@@ -5,6 +5,8 @@ import { useSelectedUser } from "../../hooks/useUserById.ts";
 import { useUserSurveyById } from "../../hooks/useUserSurveyById.ts";
 import { FallingLines } from "react-loader-spinner";
 import { CATEGORY_LABELS, scoreGrade } from "../../utils/surveyUtils.ts";
+import { getSurveyConfig, ALL_SURVEY_TYPES } from "../../types/survey.ts";
+import { ClipboardList, ShieldAlert, Settings, TrendingUp } from "lucide-react";
 
 type Props = {
     allUsers: UserType[];
@@ -16,7 +18,7 @@ type Props = {
 export function AdminShowSpecificUserSection({ allUsers, selectedUserIdToShow, setSelectedUserIdToShow, theme }: Props) {
     const { id } = useAuth();
     const { user, loading, error } = useSelectedUser(selectedUserIdToShow);
-    const { survey: userSurvey, loading: surveyLoading } = useUserSurveyById(selectedUserIdToShow);
+    const { survey: userSurvey, surveys: allUserSurveys, loading: surveyLoading } = useUserSurveyById(selectedUserIdToShow);
     const isDark = theme === "dark";
 
     const border   = isDark ? "border-stone-800/30" : "border-slate-200";
@@ -136,12 +138,46 @@ export function AdminShowSpecificUserSection({ allUsers, selectedUserIdToShow, s
                     </div>
                 )}
 
-                {/* Survey Recap Section */}
+                {/* Main Survey Recap */}
                 {userSurvey && !surveyLoading && (
                     <SurveyRecapSection survey={userSurvey} theme={theme} />
                 )}
 
-                {!surveyLoading && !userSurvey && user && (
+                {/* Minor Survey Mini Cards */}
+                {!surveyLoading && allUserSurveys.filter(s => s.surveyType !== 'diagnostic' && s.survey).length > 0 && (
+                    <div className="space-y-3">
+                        <p className={`text-[11px] font-mono uppercase tracking-[0.15em] ${isDark ? "text-slate-500" : "text-slate-400"}`}>
+                            Survey specialistici
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            {allUserSurveys.filter(s => s.surveyType !== 'diagnostic' && s.survey).map(s => {
+                                const cfg = getSurveyConfig(s.surveyType as any);
+                                const score = s.survey?.score ?? 0;
+                                const grade = scoreGrade(score);
+                                const icons: Record<string, React.ReactNode> = { compliance: <ShieldAlert size={14} />, processes: <Settings size={14} />, growth: <TrendingUp size={14} /> };
+                                return (
+                                    <div key={s.surveyId} className={`rounded-xl border p-4 backdrop-blur-sm ${isDark ? "bg-[#0E0E0D]/60 border-cyan-500/20" : "bg-white border-slate-200"}`}>
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <span className="text-cyan-400">{icons[s.surveyType] || <ClipboardList size={14} />}</span>
+                                            <p className="text-xs font-semibold truncate">{cfg.label}</p>
+                                        </div>
+                                        <div className="flex items-end justify-between">
+                                            <div>
+                                                <p className="text-lg font-semibold tabular-nums" style={{ color: grade.color }}>{score}%</p>
+                                                <p className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{grade.label}</p>
+                                            </div>
+                                            <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${s.survey?.status === "published" ? "bg-green-500/10 text-green-400" : "bg-amber-500/10 text-amber-400"}`}>
+                                                {s.survey?.status === "published" ? "Pub." : "Draft"}
+                                            </span>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+
+                {!surveyLoading && !userSurvey && allUserSurveys.length === 0 && user && (
                     <div className={`rounded-2xl border p-6 text-center ${border}`}>
                         <p className={`text-sm ${isDark ? "text-slate-500" : "text-slate-400"}`}>
                             Nessun survey completato da questo utente

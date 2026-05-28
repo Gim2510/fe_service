@@ -1,21 +1,31 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { User, ShieldCheck, Activity, Settings, LogOut, Upload, BarChart2, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { User, Activity, Settings, LogOut, Upload, BarChart2, ArrowRight, ClipboardList, ShieldAlert, TrendingUp, Check, Target } from "lucide-react";
 import { useUser } from "../hooks/useUser";
 import { useAuth } from "../auth/AuthContext.tsx";
 import { FallingLines } from "react-loader-spinner";
 import { useTheme } from "../Context/ThemeContext";
 import { useSetUserImage } from "../hooks/useSetUserImage";
-import { Badge } from "../Components/Badge.tsx";
+import { useSurveyDashboard } from "../hooks/useSurveyDashboard";
+import { useUserSurvey } from "../hooks/useUserSurvey";
+import { getSurveyConfig, ALL_SURVEY_TYPES } from "../types/survey.ts";
 
-const TABS = [
-    { id: "account",  label: "Account",   icon: User },
-    { id: "status",   label: "Stato",     icon: ShieldCheck },
-    { id: "security", label: "Sicurezza", icon: ShieldCheck },
-    { id: "activity", label: "Attività",  icon: Activity },
-    { id: "actions",  label: "Azioni",    icon: Settings },
-];
+const SURVEY_ICONS: Record<string, React.ReactNode> = { diagnostic: <ClipboardList size={18} />, compliance: <ShieldAlert size={18} />, processes: <Settings size={18} />, growth: <TrendingUp size={18} /> };
+const SURVEY_COLORS: Record<string, string> = { diagnostic: "#06b6d4", compliance: "#38bdf8", processes: "#f59e0b", growth: "#10b981" };
+
+function StatCard({ label, value, sub, icon, color }: { label: string; value: string | number; sub?: string; icon: React.ReactNode; color?: string }) {
+    return (
+        <div className={`flex items-center gap-3 p-4 rounded-xl border backdrop-blur-sm bg-[#0E0E0D]/60 border-cyan-500/20`}>
+            <div className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center bg-cyan-500/10"><span style={{ color }}>{icon}</span></div>
+            <div className="min-w-0">
+                <p className="text-lg font-semibold tabular-nums text-slate-100">{value}</p>
+                <p className="text-[10px] font-mono uppercase tracking-wider text-slate-500">{label}</p>
+                {sub && <p className="text-[10px] text-slate-600 mt-0.5">{sub}</p>}
+            </div>
+        </div>
+    );
+}
 
 export function UserDashboard() {
     const { setUserImage, loading: uploading } = useSetUserImage();
@@ -24,419 +34,241 @@ export function UserDashboard() {
     const { id, logout, token } = useAuth();
     const navigate = useNavigate();
     const isDark = theme === "dark";
-
-    const [selectedImage,  setSelectedImage]  = useState<string | null>(null);
+    const { data: stats } = useSurveyDashboard();
+    const { allSurveys } = useUserSurvey();
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [showImageModal, setShowImageModal] = useState(false);
-    const [activeTab,      setActiveTab]      = useState("account");
+    const [showAccountDetails, setShowAccountDetails] = useState(false);
 
-    const border    = isDark ? "border-stone-800/30" : "border-slate-200";
-    const mutedText = isDark ? "text-slate-500" : "text-slate-400";
+    const A = isDark;
+    const mute = A ? "text-slate-500" : "text-slate-400";
+    const body = A ? "text-slate-300" : "text-slate-600";
+    const card = `rounded-2xl border overflow-hidden backdrop-blur-sm ${A ? "border-cyan-500/30 bg-[#0E0E0D]/80 shadow-lg shadow-cyan-500/10" : "border-cyan-500/60 bg-white shadow-md shadow-cyan-400/15"}`;
 
-    if (loading) {
-        return (
-            <main className={`${isDark ? "bg-[#111110]" : "bg-[#FAF8F4]"} min-h-screen flex items-center justify-center`}>
-                <FallingLines color={isDark ? "#fff" : "#B45309"} width={60} visible ariaLabel="loading" />
-            </main>
-        );
-    }
+    if (loading) return <main className={`${A ? "bg-[#0E0E0D]" : "bg-[#FAF8F4]"} min-h-screen flex items-center justify-center`}><FallingLines color={A ? "#fff" : "#B45309"} width={60} visible /></main>;
+    if (error || !user) return <main className={`${A ? "bg-[#0E0E0D] text-white" : "bg-[#FAF8F4] text-slate-900"} min-h-screen flex items-center justify-center`}><div className="text-center space-y-4"><p className="text-sm text-red-400">{error || "Utente non trovato"}</p><button onClick={refetch} className="px-5 py-2.5 rounded-xl bg-sky-700 hover:bg-sky-600 text-white text-sm font-semibold">Riprova</button></div></main>;
 
-    if (error || !user) {
-        return (
-            <main className={`${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"} min-h-screen flex items-center justify-center`}>
-                <div className="text-center space-y-4">
-                    <p className="text-sm text-red-400">{error || "Utente non trovato"}</p>
-                    <button onClick={refetch} className="px-5 py-2.5 rounded-xl bg-sky-700 hover:bg-sky-600 text-white text-sm font-semibold transition-colors">
-                        Riprova
-                    </button>
-                </div>
-            </main>
-        );
-    }
+    const publishedSurveys = allSurveys.filter(s => s.status === "published");
+    const completedCount = publishedSurveys.length;
 
     return (
-        <main className={`${isDark ? "bg-[#111110] text-white" : "bg-[#FAF8F4] text-slate-900"} min-h-screen`}>
+        <main className={`min-h-screen ${A ? "bg-[#0E0E0D] text-white" : "bg-[#FAF8F4] text-slate-900"}`}>
+            <div className="fixed inset-0 pointer-events-none opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect x='0' y='0' width='48' height='48' fill='none' stroke='%2306B6D4' stroke-width='0.4'/%3E%3C/svg%3E")`, backgroundSize: "48px 48px" }} />
+            {A && <div className="fixed inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-950/15 via-transparent to-transparent" />}
 
-            {/* grid bg */}
-            <div
-                className="fixed inset-0 opacity-[0.08] pointer-events-none"
-                style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='40' height='40' fill='none' stroke='${isDark ? '%230EA5E9' : '%230369A1'}' stroke-width='0.5'/%3E%3C/svg%3E")`,
-                    backgroundSize: "40px 40px",
-                }}
-            />
+            <div className="relative z-10 max-w-5xl mx-auto px-6 pt-24 pb-20 space-y-10">
 
-            <div className="relative max-w-4xl mx-auto px-6 pt-24 pb-20 space-y-6">
-
-                {/* Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: -8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                >
-                    <Badge label="Pannello personale" color="sky" theme={theme} />
-                    <h1 className={`text-2xl font-semibold mt-3 ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                        Area personale
-                    </h1>
-                    <p className={`mt-1 text-sm ${mutedText}`}>
-                        Panoramica completa del tuo account e delle attività collegate.
-                    </p>
-                </motion.div>
-
-                {/* Profile hero card */}
-                <motion.div
-                    initial={{ opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.06 }}
-                    className={`rounded-2xl border overflow-hidden backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 ${
-                        isDark
-                            ? "bg-[#0E0E0D]/80 border-stone-800/20 shadow-lg"
-                            : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/5`
-                    }`}
-                >
-                        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
-
-                    <div className="flex flex-col sm:flex-row min-h-[140px]">
-                        {/* left — avatar */}
-                        <div
-                            className="relative flex flex-col justify-center items-center p-8 sm:w-[220px] shrink-0 overflow-hidden gap-4"
-                            style={{ background: isDark ? "#111110" : "#F0EDE8" }}
-                        >
-                            {/* grid pattern */}
-                            <div
-                                className="absolute inset-0 opacity-[0.035] pointer-events-none"
-                                style={{
-                                    backgroundImage: `linear-gradient(${isDark ? "#fff" : "#000"} 1px, transparent 1px),
-                                                      linear-gradient(90deg, ${isDark ? "#fff" : "#000"} 1px, transparent 1px)`,
-                                    backgroundSize: "32px 32px",
-                                }}
-                            />
-                            <div className={`relative w-20 h-20 rounded-full overflow-hidden border-2 flex items-center justify-center
-                                ${isDark ? "border-stone-700/40 bg-stone-900" : "border-slate-300 bg-slate-200"}`}>
-                                {selectedImage ? (
-                                    <img alt="profile" src={selectedImage} className="w-full h-full object-cover" />
-                                ) : user.user_image ? (
-                                    <img alt="profile" src={user.user_image} className="w-full h-full object-cover" />
-                                ) : (
-                                    <User size={28} className={isDark ? "text-slate-600" : "text-slate-400"} />
-                                )}
+                {/* ═══ SECTION: PROFILE HERO ═══ */}
+                <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: "easeOut" }} className={card}>
+                    <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
+                    <div className="p-6 sm:p-8">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+                            <div className="relative">
+                                <div className={`w-16 h-16 rounded-full overflow-hidden border-2 flex items-center justify-center ${A ? "border-cyan-500/30 bg-stone-900" : "border-sky-300 bg-slate-200"}`}>
+                                    {selectedImage ? <img alt="" src={selectedImage} className="w-full h-full object-cover" /> : user.user_image ? <img alt="" src={user.user_image} className="w-full h-full object-cover" /> : <User size={24} className="text-slate-600" />}
+                                </div>
+                                <label className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center cursor-pointer border ${A ? "bg-cyan-600 border-cyan-500 hover:bg-cyan-500" : "bg-sky-500 border-sky-400 hover:bg-sky-400"}`}>
+                                    <Upload size={10} className="text-white" />
+                                    <input type="file" accept="image/*" className="hidden" onChange={e => { const f = e.target.files?.[0]; if (!f) return; const r = new FileReader(); r.onloadend = () => { setSelectedImage(r.result as string); setShowImageModal(true); }; r.readAsDataURL(f); }} />
+                                </label>
                             </div>
-
-                            <label className={`relative inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium cursor-pointer transition-colors
-                                ${isDark
-                                    ? "border-stone-800/40 text-slate-500 hover:text-slate-300 hover:border-stone-700/60"
-                                    : "border-slate-300 text-slate-500 hover:bg-slate-200/60"
-                                }`}>
-                                <Upload size={12} />
-                                Carica foto
-                                <input type="file" accept="image/*" className="hidden" onChange={e => {
-                                    const file = e.target.files?.[0];
-                                    if (!file) return;
-                                    const reader = new FileReader();
-                                    reader.onloadend = () => {
-                                        setSelectedImage(reader.result as string);
-                                        setShowImageModal(true);
-                                    };
-                                    reader.readAsDataURL(file);
-                                }} />
-                            </label>
-                        </div>
-
-                        {/* vertical divider */}
-                        <div className={`hidden sm:block w-px shrink-0 ${isDark ? "bg-stone-800/40" : "bg-slate-200"}`} />
-
-                        {/* right — name + quick info */}
-                        <div className="flex flex-col justify-center p-8 gap-3">
-                            <div>
-                                <h2 className={`text-lg font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                                    {user.given_name} {user.family_name}
-                                </h2>
-                                <p className={`text-xs mt-0.5 font-mono ${mutedText}`}>{user.email}</p>
+                            <div className="flex-1 min-w-0">
+                                <h2 className={`text-xl font-semibold ${A ? "text-slate-100" : "text-slate-900"}`}>{user.given_name} {user.family_name}</h2>
+                                <p className={`text-sm font-mono mt-0.5 ${mute}`}>{user.email}</p>
+                                <div className="flex flex-wrap gap-1.5 mt-2">
+                                    {user.vip && <span className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-widest rounded-full border bg-sky-500/15 text-sky-400 border-sky-500/30">VIP</span>}
+                                    {user.emailVerified ? <span className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-widest rounded-full border bg-green-500/15 text-green-400 border-green-500/30">Verificato</span> : <span className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-widest rounded-full border bg-red-500/15 text-red-400 border-red-500/30">Non verificato</span>}
+                                    <span className={`px-2 py-0.5 text-[10px] font-mono uppercase tracking-widest rounded-full border ${A ? "border-stone-800/40 text-slate-400" : "border-slate-200 text-slate-500"}`}>{user.role}</span>
+                                    {user.company_name && <span className={`px-2 py-0.5 text-[10px] font-mono uppercase tracking-widest rounded-full border ${A ? "border-stone-800/40 text-slate-400" : "border-slate-200 text-slate-500"}`}>{user.company_name.toLowerCase()}</span>}
+                                </div>
                             </div>
-                            <div className="flex flex-wrap gap-2 mt-1">
-                                <span className={`px-2.5 py-0.5 text-[10px] font-mono uppercase tracking-widest rounded-full border
-                                    ${isDark ? "border-stone-800/40 text-slate-400" : "border-slate-200 text-slate-500"}`}>
-                                    {user.role}
-                                </span>
-                                {user.vip && (
-                                    <span className={`px-2.5 py-0.5 text-[10px] font-mono uppercase tracking-widest rounded-full border
-                                        ${isDark ? "bg-sky-500/15 text-sky-400 border-sky-500/30" : "bg-sky-50 text-sky-700 border-sky-200"}`}>
-                                        VIP
-                                    </span>
-                                )}
-                                {user.emailVerified && (
-                                    <span className={`px-2.5 py-0.5 text-[10px] font-mono uppercase tracking-widest rounded-full border
-                                        ${isDark ? "bg-green-500/15 text-green-400 border-green-500/30" : "bg-green-50 text-green-700 border-green-200"}`}>
-                                        Verificato
-                                    </span>
-                                )}
-                                {user.isSuspended && (
-                                    <span className={`px-2.5 py-0.5 text-[10px] font-mono uppercase tracking-widest rounded-full border
-                                        ${isDark ? "bg-red-500/15 text-red-400 border-red-500/30" : "bg-red-50 text-red-700 border-red-200"}`}>
-                                        Sospeso
-                                    </span>
-                                )}
+                            <div className="flex items-center gap-2 shrink-0">
+                                <button onClick={() => navigate("/user/edit")} className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border text-xs font-medium transition-colors ${A ? "border-stone-800/30 text-slate-400 hover:text-slate-200" : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"}`}><Settings size={13} /> Modifica</button>
+                                <button onClick={logout} className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border text-xs font-medium transition-colors ${A ? "border-red-900/30 text-red-400 hover:text-red-300" : "border-red-200 text-red-500 hover:text-red-700"}`}><LogOut size={13} /> Esci</button>
                             </div>
-                            <p className={`text-[10px] font-mono mt-1 ${isDark ? "text-slate-700" : "text-slate-400"}`}>
-                                ID: {user._id}
-                            </p>
                         </div>
                     </div>
-                </motion.div>
+                </motion.section>
 
-                {/* Tabs */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2, duration: 0.3 }}
-                    className="flex gap-1 overflow-x-auto"
-                >
-                    {TABS.map(tab => {
-                        const Icon = tab.icon;
-                        const isActive = activeTab === tab.id;
-                        return (
-                            <button
-                                key={tab.id}
-                                onClick={() => setActiveTab(tab.id)}
-                                className={`relative inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-medium
-                                    whitespace-nowrap transition-all border overflow-hidden
-                                    ${isActive
-                                        ? isDark
-                                            ? "bg-sky-700/15 border-sky-600/30 text-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.15)]"
-                                            : "bg-sky-50 border-sky-400 text-sky-800"
-                                        : isDark
-                                            ? "border-stone-800/20 text-slate-500 hover:text-sky-400 hover:border-stone-800/40"
-                                            : "border-slate-200 text-slate-500 hover:text-sky-700 hover:bg-[#EDF2F7]"
-                                    }`}
-                            >
-                                <Icon size={13} />
-                                {tab.label}
-                                {isActive && isDark && (
-                                    <span className="absolute inset-x-0 bottom-0 h-[2px] bg-sky-500 shadow-[0_0_8px_rgba(56,189,248,0.6)]" />
-                                )}
-                            </button>
-                        );
-                    })}
-                </motion.div>
+                {/* ═══ SECTION: I TUOI ASSESSMENT ═══ */}
+                <motion.section initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }} className="space-y-4">
+                    <div className="flex items-center gap-3">
+                        <div className={`h-px flex-1 ${A ? "bg-gradient-to-r from-cyan-500/30 to-transparent" : "bg-gradient-to-r from-sky-300 to-transparent"}`} />
+                        <span className={`text-[10px] font-mono uppercase tracking-[0.2em] whitespace-nowrap ${mute}`}>I tuoi assessment</span>
+                        <div className={`h-px flex-1 ${A ? "bg-gradient-to-l from-cyan-500/30 to-transparent" : "bg-gradient-to-l from-sky-300 to-transparent"}`} />
+                    </div>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                        {ALL_SURVEY_TYPES.map((type, i) => {
+                            const cfg = getSurveyConfig(type);
+                            const entry = allSurveys.find(s => s.surveyType === type);
+                            const isPublished = entry?.status === "published";
+                            const color = SURVEY_COLORS[type];
+                            return (
+                                <motion.div key={type} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 + i * 0.06 }}
+                                    className={`rounded-2xl border overflow-hidden backdrop-blur-sm transition-all duration-300 group cursor-pointer ${isPublished
+                                        ? `${A ? "border-cyan-500/30 bg-[#0E0E0D]/70 shadow-lg shadow-cyan-500/10" : "border-cyan-500/60 bg-white shadow-md shadow-cyan-400/15"} hover:-translate-y-1`
+                                        : entry
+                                            ? `${A ? "border-amber-500/20 bg-[#0E0E0D]/50" : "border-amber-200 bg-amber-50"} hover:-translate-y-0.5`
+                                            : `${A ? "border-stone-800/20 bg-[#0E0E0D]/30 opacity-60" : "border-stone-200 bg-stone-50 opacity-60"}`}`}
+                                    onClick={() => {
+                                        if (isPublished && entry) navigate(`/survey/${entry.surveyId}/recap`);
+                                        else if (entry) navigate(`/survey/minor/${type}`);
+                                        else navigate("/survey/start");
+                                    }}>
+                                    <div className="h-[2px] w-full" style={{ background: `linear-gradient(90deg, transparent, ${color}88, transparent)` }} />
+                                    <div className="p-5">
+                                        <div className="flex items-start justify-between mb-3">
+                                            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: `${color}20` }}><span style={{ color }}>{SURVEY_ICONS[type]}</span></div>
+                                            {isPublished && <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-green-500/10 text-green-400 border border-green-500/20"><Check size={9} className="inline mr-0.5" />Fatto</span>}
+                                            {entry && !isPublished && <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20">In corso</span>}
+                                        </div>
+                                        <h3 className={`text-sm font-semibold mb-1.5 ${A ? "text-slate-200" : "text-slate-800"}`}>{cfg.label}</h3>
+                                        <p className={`text-xs leading-relaxed mb-3 ${mute}`}>{isPublished ? "Completato" : entry ? "Riprendi la compilazione" : "Non ancora iniziato"}</p>
+                                        <div className={`flex items-center gap-1.5 text-xs font-medium ${isPublished ? "text-cyan-400" : entry ? "text-amber-400" : "text-stone-500"}`}>
+                                            {isPublished ? "Vedi report" : entry ? "Continua" : "Inizia"} <ArrowRight size={11} className="group-hover:translate-x-0.5 transition-transform" />
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            );
+                        })}
+                    </div>
+                </motion.section>
 
-                {/* Tab content */}
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={activeTab}
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -8 }}
-                        transition={{ duration: 0.2, ease: "easeOut" as const }}
-                    >
-                        {activeTab === "account" && (
-                            <InfoCard title="Informazioni account" isDark={isDark} border={border}>
-                                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    <InfoRow isDark={isDark} label="Nome"             value={user.given_name} />
-                                    <InfoRow isDark={isDark} label="Cognome"          value={user.family_name} />
-                                    <InfoRow isDark={isDark} label="Email"            value={user.email} />
-                                    <InfoRow isDark={isDark} label="Codice fiscale"   value={user.fiscal_code} />
-                                    <InfoRow isDark={isDark} label="Partita IVA"      value={user.partita_iva || "—"} />
-                                    <InfoRow isDark={isDark} label="Azienda"          value={user.company_name?.toLowerCase() || "—"} />
-                                    <InfoRow isDark={isDark} label="Ruolo aziendale"  value={user.company_role?.toLowerCase() || "—"} />
-                                    <InfoRow isDark={isDark} label="Email verificata" value={user.emailVerified ? "Sì" : "No"} highlight={!user.emailVerified} />
-                                    <InfoRow isDark={isDark} label="Ruolo piattaforma" value={user.role} />
-                                    <InfoRow isDark={isDark} label="VIP"              value={user.vip ? "Sì" : "No"} />
+                {/* ═══ SECTION: STATISTICHE ═══ */}
+                {stats && (
+                    <motion.section initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.14 }} className="space-y-4">
+                        <div className="flex items-center gap-3">
+                            <div className={`h-px flex-1 ${A ? "bg-gradient-to-r from-cyan-500/30 to-transparent" : ""}`} />
+                            <span className={`text-[10px] font-mono uppercase tracking-[0.2em] whitespace-nowrap ${mute}`}>Statistiche piattaforma</span>
+                            <div className={`h-px flex-1 ${A ? "bg-gradient-to-l from-cyan-500/30 to-transparent" : ""}`} />
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            {[
+                                { icon: <Target size={15} />, label: "Score medio", value: `${Math.round(stats.averageScore)}%`, color: "#06b6d4" },
+                                { icon: <BarChart2 size={15} />, label: "Survey pubblicati", value: stats.publishedResponses, color: "#4ade80" },
+                                { icon: <Activity size={15} />, label: "Ultimi 7 giorni", value: stats.responsesLast7Days, color: "#f59e0b" },
+                                { icon: <Check size={15} />, label: "Completati da te", value: `${completedCount}/${allSurveys.length}`, color: "#38bdf8" },
+                            ].map(k => <StatCard key={k.label} {...k} />)}
+                        </div>
+
+                        {/* Score distribution + Category averages */}
+                        <div className="grid md:grid-cols-2 gap-4">
+                            {stats.scoreDistribution && stats.scoreDistribution.length > 0 && (
+                                <div className={card}>
+                                    <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
+                                    <div className="p-6">
+                                        <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-4 ${mute}`}>Distribuzione score</p>
+                                        <div className="space-y-2">
+                                            {stats.scoreDistribution.map(d => {
+                                                const max = Math.max(...stats.scoreDistribution!.map(x => x.count), 1);
+                                                const pct = Math.round((d.count / max) * 100);
+                                                return (
+                                                    <div key={d.range} className="flex items-center gap-3">
+                                                        <span className={`text-[10px] font-mono w-14 text-right ${mute}`}>{d.range}</span>
+                                                        <div className="flex-1 h-3 rounded-full overflow-hidden bg-white/5">
+                                                            <motion.div className="h-full rounded-full bg-cyan-500/60" initial={{ width: 0 }} animate={{ width: `${pct}%` }} transition={{ duration: 0.8, delay: 0.2 }} />
+                                                        </div>
+                                                        <span className={`text-xs font-mono tabular-nums w-8 ${body}`}>{d.count}</span>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
                                 </div>
-                            </InfoCard>
-                        )}
-
-                        {activeTab === "status" && (
-                            <InfoCard title="Stato account" isDark={isDark} border={border}>
-                                <div className="grid sm:grid-cols-3 gap-6">
-                                    <InfoRow isDark={isDark} label="Sospeso"  value={user.isSuspended ? "Sì" : "No"} highlight={user.isSuspended} />
-                                    <InfoRow isDark={isDark} label="Inattivo" value={user.inactive ? "Sì" : "No"} highlight={user.inactive} />
-                                    <InfoRow isDark={isDark} label="Scadenza" value={user.expirationDate ? new Date(user.expirationDate).toLocaleDateString() : "Nessuna"} />
+                            )}
+                            {stats.averageScoreByCategory && stats.averageScoreByCategory.length > 0 && (
+                                <div className={card}>
+                                    <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
+                                    <div className="p-6">
+                                        <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-4 ${mute}`}>Score medio per categoria</p>
+                                        <div className="space-y-2">
+                                            {stats.averageScoreByCategory.slice(0, 7).map(c => (
+                                                <div key={c.category} className="flex items-center gap-3">
+                                                    <span className={`text-[11px] font-medium w-28 truncate ${body}`}>{c.category}</span>
+                                                    <div className="flex-1 h-3 rounded-full overflow-hidden bg-white/5">
+                                                        <motion.div className="h-full rounded-full bg-cyan-500/60" initial={{ width: 0 }} animate={{ width: `${c.averagePercentage}%` }} transition={{ duration: 0.8, delay: 0.2 }} />
+                                                    </div>
+                                                    <span className={`text-xs font-mono tabular-nums w-10 text-right ${body}`}>{Math.round(c.averagePercentage)}%</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
-                            </InfoCard>
-                        )}
+                            )}
+                        </div>
 
-                        {activeTab === "security" && (
-                            <InfoCard title="Sicurezza e accesso" isDark={isDark} border={border}>
-                                <div className="grid sm:grid-cols-2 gap-6">
-                                    <InfoRow isDark={isDark} label="Metodo accesso"       value={user.auth.type} />
-                                    {user.auth.provider && <InfoRow isDark={isDark} label="Provider OAuth" value={user.auth.provider} />}
-                                    <InfoRow isDark={isDark} label="Ultimo accesso"       value={user.last_login ? new Date(user.last_login).toLocaleString() : "Mai"} />
-                                    <InfoRow isDark={isDark} label="Ultima modifica email" value={user.lastEmailChange ? new Date(user.lastEmailChange).toLocaleString() : "—"} />
-                                </div>
-                            </InfoCard>
-                        )}
-
-                        {activeTab === "activity" && (
-                            <InfoCard title="Attività" isDark={isDark} border={border}>
-                                <div className="grid sm:grid-cols-3 gap-6">
-                                    <InfoRow isDark={isDark} label="Score proprietario" value={user.ownerTotalScore?.toString() || "—"} />
-                                    <InfoRow isDark={isDark} label="Score utente"       value={user.userTotalScore?.toString() || "—"} />
-                                    <InfoRow isDark={isDark} label="Preferiti"          value={user.favorites?.length?.toString() || "0"} />
-                                </div>
-                            </InfoCard>
-                        )}
-
-                        {activeTab === "actions" && (
-                            <div className="grid sm:grid-cols-3 gap-4">
-                                <UserActionCard
-                                    isDark={isDark} border={border}
-                                    icon={Settings} title="Modifica profilo"
-                                    description="Aggiorna le informazioni del tuo account."
-                                    onClick={() => navigate("/user/edit")}
-                                    index={0}
-                                />
-                                <UserActionCard
-                                    isDark={isDark} border={border}
-                                    icon={BarChart2} title="Maturità digitale"
-                                    description="Consulta i risultati del tuo assessment."
-                                    onClick={() => navigate("/survey")}
-                                    index={1}
-                                />
-                                <UserActionCard
-                                    isDark={isDark} border={border}
-                                    icon={LogOut} title="Logout"
-                                    description="Termina la sessione corrente."
-                                    onClick={logout}
-                                    danger index={2}
-                                />
+                        {/* Min/Max score */}
+                        <div className="grid grid-cols-2 gap-3">
+                            <div className={`rounded-xl border p-4 backdrop-blur-sm ${A ? "bg-[#0E0E0D]/60 border-cyan-500/20" : "bg-white border-slate-200"}`}>
+                                <p className={`text-[10px] font-mono uppercase tracking-wider mb-1 ${mute}`}>Score minimo</p>
+                                <p className={`text-lg font-semibold tabular-nums ${body}`}>{stats.minScore != null ? `${stats.minScore}%` : "N/D"}</p>
                             </div>
-                        )}
-                    </motion.div>
-                </AnimatePresence>
+                            <div className={`rounded-xl border p-4 backdrop-blur-sm ${A ? "bg-[#0E0E0D]/60 border-cyan-500/20" : "bg-white border-slate-200"}`}>
+                                <p className={`text-[10px] font-mono uppercase tracking-wider mb-1 ${mute}`}>Score massimo</p>
+                                <p className={`text-lg font-semibold tabular-nums ${body}`}>{stats.maxScore != null ? `${stats.maxScore}%` : "N/D"}</p>
+                            </div>
+                        </div>
+                    </motion.section>
+                )}
+
+                {/* ═══ SECTION: DETTAGLIO ACCOUNT ═══ */}
+                <motion.section initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18 }} className="space-y-4">
+                    <button onClick={() => setShowAccountDetails(!showAccountDetails)}
+                        className={`flex items-center gap-3 w-full group ${A ? "text-slate-400 hover:text-slate-200" : "text-slate-500 hover:text-slate-700"}`}>
+                        <div className={`h-px flex-1 ${A ? "bg-gradient-to-r from-cyan-500/20 to-transparent" : ""}`} />
+                        <span className={`text-[10px] font-mono uppercase tracking-[0.2em] whitespace-nowrap flex items-center gap-1.5`}>
+                            Dettaglio account
+                            <span className={`transition-transform ${showAccountDetails ? "rotate-180" : ""}`}>
+                                <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                            </span>
+                        </span>
+                        <div className={`h-px flex-1 ${A ? "bg-gradient-to-l from-cyan-500/20 to-transparent" : ""}`} />
+                    </button>
+                    {showAccountDetails && (
+                        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} transition={{ duration: 0.3 }} className="overflow-hidden space-y-4">
+                            <div className={card}>
+                                <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
+                                <div className="p-6">
+                                    <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-5 ${mute}`}>Informazioni account</p>
+                                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        {[
+                                            ["Nome", user.given_name], ["Cognome", user.family_name], ["Email", user.email],
+                                            ["Azienda", user.company_name || "—"], ["Ruolo aziendale", user.company_role || "—"],
+                                            ["Codice fiscale", user.fiscal_code], ["Partita IVA", user.partita_iva || "—"],
+                                            ["Ruolo", user.role], ["VIP", user.vip ? "Si" : "No"],
+                                            ["Email verificata", user.emailVerified ? "Si" : "No"], ["Sospeso", user.isSuspended ? "Si" : "No"],
+                                            ["Metodo accesso", user.auth.type], ["Ultimo accesso", user.last_login ? new Date(user.last_login).toLocaleString() : "Mai"],
+                                        ].map(([label, value]) => (
+                                            <div key={label}>
+                                                <span className={`text-[10px] font-mono uppercase tracking-[0.12em] text-slate-600`}>{label}</span>
+                                                <p className={`mt-0.5 text-sm font-medium ${A ? "text-slate-200" : "text-slate-800"}`}>{value || "—"}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+                </motion.section>
+
             </div>
 
             {/* Image modal */}
             {showImageModal && selectedImage && (
                 <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                    <motion.div
-                        initial={{ scale: 0.96, opacity: 0, y: 8 }}
-                        animate={{ scale: 1, opacity: 1, y: 0 }}
-                        exit={{ scale: 0.96, opacity: 0 }}
-                        transition={{ duration: 0.2, ease: "easeOut" as const }}
-                        className={`rounded-2xl border overflow-hidden w-full max-w-sm transition-all duration-300 ${
-                            isDark ? "bg-[#0E0E0D]/80 border-stone-800/20 shadow-lg" : `${border}`
-                        }`}
-                        style={{ background: isDark ? undefined : "#FAFAF8" }}
-                    >
-                    <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
-                        <div className="p-8 space-y-6">
-                            <h2 className={`text-sm font-semibold ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                                Conferma immagine profilo
-                            </h2>
-                            <img alt="preview" src={selectedImage} className="w-28 h-28 rounded-full object-cover mx-auto border-2 border-sky-600/20" />
-                            <p className={`text-xs text-center ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-                                Vuoi impostare questa immagine come foto profilo?
-                            </p>
+                    <motion.div initial={{ scale: 0.96, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className={`rounded-2xl border overflow-hidden w-full max-w-sm ${A ? "bg-[#0E0E0D]/80 border-stone-800/20 shadow-lg" : "bg-white border-slate-200"}`}>
+                        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
+                        <div className="p-8 space-y-5">
+                            <h2 className={`text-sm font-semibold ${A ? "text-slate-100" : "text-slate-900"}`}>Conferma immagine profilo</h2>
+                            <img alt="" src={selectedImage} className="w-24 h-24 rounded-full object-cover mx-auto border-2 border-sky-600/20" />
                             <div className="flex gap-3">
-                                <button
-                                    onClick={() => { setShowImageModal(false); setSelectedImage(null); }}
-                                    className={`flex-1 py-2.5 rounded-xl border text-sm font-medium transition-colors
-                                        ${isDark ? "border-stone-800/30 text-slate-400 hover:text-slate-200" : "border-slate-200 text-slate-600 hover:bg-[#EDF2F7]"}`}
-                                >
-                                    Annulla
-                                </button>
-                                <button
-                                    onClick={async () => {
-                                        await setUserImage(id, selectedImage, token);
-                                        setShowImageModal(false);
-                                        setSelectedImage(null);
-                                        refetch();
-                                    }}
-                                    disabled={uploading}
-                                    className="flex-1 py-2.5 rounded-xl bg-sky-700 hover:bg-sky-600 disabled:opacity-40 text-white text-sm font-semibold transition-colors flex items-center justify-center"
-                                >
-                                    {uploading
-                                        ? <FallingLines color="white" width="15" visible ariaLabel="loading" />
-                                        : "Conferma"
-                                    }
-                                </button>
+                                <button onClick={() => { setShowImageModal(false); setSelectedImage(null); }} className={`flex-1 py-2.5 rounded-xl border text-sm font-medium ${A ? "border-stone-800/30 text-slate-400" : "border-slate-200 text-slate-600"}`}>Annulla</button>
+                                <button onClick={async () => { await setUserImage(id, selectedImage, token); setShowImageModal(false); setSelectedImage(null); refetch(); }} disabled={uploading} className="flex-1 py-2.5 rounded-xl bg-sky-700 hover:bg-sky-600 disabled:opacity-40 text-white text-sm font-semibold flex items-center justify-center">{uploading ? <FallingLines color="white" width="15" visible /> : "Conferma"}</button>
                             </div>
                         </div>
                     </motion.div>
                 </div>
             )}
         </main>
-    );
-}
-
-function InfoCard({ title, children, isDark, border }: {
-    title: string; children: React.ReactNode; isDark: boolean; border: string;
-}) {
-    return (
-        <div
-            className={`rounded-2xl border overflow-hidden backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 ${
-                isDark
-                    ? "bg-[#0E0E0D]/80 border-stone-800/20 shadow-lg"
-                    : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/3`
-            }`}
-        >
-            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
-            <div className="p-7">
-                <p className={`text-[10px] font-mono uppercase tracking-[0.18em] mb-6
-                    ${isDark ? "text-slate-500" : "text-slate-400"}`}>
-                    {title}
-                </p>
-                {children}
-            </div>
-        </div>
-    );
-}
-
-function InfoRow({ label, value, highlight, isDark }: {
-    label: string; value?: string; highlight?: boolean; isDark: boolean;
-}) {
-    return (
-        <div>
-            <span className={`text-[10px] font-mono uppercase tracking-[0.15em]
-                ${isDark ? "text-slate-600" : "text-slate-400"}`}>
-                {label}
-            </span>
-            <p className={`mt-1 text-sm font-medium
-                ${highlight ? "text-sky-400" : isDark ? "text-slate-200" : "text-slate-800"}`}>
-                {value || "Non impostato"}
-            </p>
-        </div>
-    );
-}
-
-function UserActionCard({ title, description, onClick, isDark, border, icon: Icon, danger = false, index = 0 }: {
-    title: string; description: string; onClick: () => void; isDark: boolean; border: string;
-    icon: React.ComponentType<{ size?: number; className?: string }>; danger?: boolean; index?: number;
-}) {
-    return (
-        <motion.button
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: index * 0.07 }}
-            onClick={onClick}
-            className={`text-left w-full rounded-2xl border overflow-hidden backdrop-blur-sm transition-all duration-300
-                hover:-translate-y-0.5 group ${danger
-                    ? isDark
-                        ? "border-red-900/30 bg-[#0E0E0D]/80 shadow-lg"
-                        : "border-red-200 bg-[#FAFAF8] shadow-lg shadow-red-700/3"
-                    : isDark
-                        ? "bg-[#0E0E0D]/80 border-stone-800/20 shadow-lg"
-                        : `${border} bg-[#FAFAF8] shadow-lg shadow-sky-700/3`
-                }`}
-        >
-            <div className={`h-[2px] w-full ${danger ? "bg-gradient-to-r from-transparent via-red-500/60 to-transparent" : "bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent"}`} />
-            <div className="p-6">
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center mb-5
-                    ${danger
-                        ? isDark ? "bg-red-500/10 border border-red-900/30" : "bg-red-50 border border-red-200"
-                        : isDark ? "bg-sky-700/10 border border-sky-700/20" : "bg-sky-50 border border-sky-200"
-                    }`}>
-                    <Icon size={15} className={danger ? "text-red-400" : isDark ? "text-sky-500" : "text-sky-700"} />
-                </div>
-                <h3 className={`text-sm font-semibold mb-1 ${isDark ? "text-slate-200" : "text-slate-800"}`}>{title}</h3>
-                <p className={`text-xs ${isDark ? "text-slate-500" : "text-slate-500"}`}>{description}</p>
-                <div className={`flex items-center gap-1 mt-4 text-[10px] font-mono uppercase tracking-widest
-                    ${danger
-                        ? "text-red-400"
-                        : isDark ? "text-sky-600" : "text-sky-700"
-                    } opacity-0 group-hover:opacity-100 transition-opacity duration-200`}>
-                    Vai <ArrowRight size={10} />
-                </div>
-            </div>
-        </motion.button>
     );
 }
