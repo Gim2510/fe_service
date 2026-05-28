@@ -158,30 +158,12 @@ export function MobileCircuitSolutions({ theme }: { theme: string }) {
                             fill="none"
                             style={{ pathLength: traceDraw }}
                         />
-                        {/* Glow layer */}
-                        <motion.path
-                            d={pathD}
-                            stroke="url(#circuit-grad)"
-                            strokeWidth="6"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            fill="none"
-                            style={{ pathLength: traceDraw, opacity: 0.3 }}
-                            filter="url(#glow)"
-                        />
                         <defs>
                             <linearGradient id="circuit-grad" x1="0" y1="0" x2="0" y2="1">
                                 <stop offset="0%" stopColor="#06b6d4" />
                                 <stop offset="50%" stopColor="#8b5cf6" />
                                 <stop offset="100%" stopColor="#f59e0b" />
                             </linearGradient>
-                            <filter id="glow">
-                                <feGaussianBlur stdDeviation="3" result="blur" />
-                                <feMerge>
-                                    <feMergeNode in="blur" />
-                                    <feMergeNode in="SourceGraphic" />
-                                </feMerge>
-                            </filter>
                         </defs>
                     </svg>
 
@@ -199,13 +181,6 @@ export function MobileCircuitSolutions({ theme }: { theme: string }) {
                 </div>
             </div>
 
-            {/* Keyframes */}
-            <style>{`
-                @keyframes circuit-pulse {
-                    0%, 100% { box-shadow: 0 0 8px var(--accent), 0 0 20px color-mix(in srgb, var(--accent) 30%, transparent); }
-                    50% { box-shadow: 0 0 14px var(--accent), 0 0 32px color-mix(in srgb, var(--accent) 45%, transparent); }
-                }
-            `}</style>
         </section>
     );
 }
@@ -227,16 +202,13 @@ function CircuitNode({
     const Icon = solution.icon;
     const isLeft = index % 2 === 0;
 
-    // Node activates when trace reaches it — spread evenly across scroll range
     const activateAt = (index + 0.3) / solutions.length;
-    const nodeOpacity = useSpring(
+    const nodeProgress = useSpring(
         useTransform(scrollProgress, [activateAt - 0.06, activateAt], [0, 1]),
         { stiffness: 80, damping: 25 }
     );
-    const nodeScale = useSpring(
-        useTransform(scrollProgress, [activateAt - 0.06, activateAt], [0.5, 1]),
-        { stiffness: 80, damping: 25 }
-    );
+    const nodeOpacity = useTransform(nodeProgress, [0, 1], [0, 1]);
+    const nodeScale = useTransform(nodeProgress, [0, 1], [0.5, 1]);
 
     const handleClick = () => {
         const el = document.getElementById(solution.sectionId);
@@ -251,22 +223,9 @@ function CircuitNode({
                 y: nodePos.y,
                 opacity: nodeOpacity,
                 scale: nodeScale,
+                willChange: "transform, opacity",
             }}
         >
-            {/* Glow ring */}
-            <div
-                className="absolute rounded-full -translate-x-1/2 -translate-y-1/2"
-                style={{
-                    width: NODE_R * 2 + 12,
-                    height: NODE_R * 2 + 12,
-                    left: 0,
-                    top: 0,
-                    ["--accent" as string]: solution.accent,
-                    animation: "circuit-pulse 2.5s ease-in-out infinite",
-                    animationDelay: `${index * 0.3}s`,
-                }}
-            />
-
             {/* Node circle */}
             <div
                 className="absolute rounded-full flex items-center justify-center -translate-x-1/2 -translate-y-1/2 cursor-pointer"
@@ -295,10 +254,10 @@ function CircuitNode({
                 onClick={handleClick}
                 whileTap={{ scale: 0.97 }}
             >
-                <div className={`rounded-xl border p-3 backdrop-blur-sm transition-all ${
+                <div className={`rounded-xl border p-3 ${
                     isDark
-                        ? "bg-[#0E0E0D]/80 border-stone-800/30"
-                        : "bg-white/80 border-slate-200/60"
+                        ? "bg-[#0E0E0D]/90 border-stone-800/30"
+                        : "bg-white/90 border-slate-200/60"
                 }`}
                     style={{
                         borderColor: `${solution.accent}20`,
